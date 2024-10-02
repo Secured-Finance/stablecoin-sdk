@@ -1,6 +1,6 @@
 import { useContext } from "react";
 
-import { LiquityStore } from "@liquity/lib-base";
+import { LiquityStore } from "@secured-finance/lib-base";
 
 import { LiquityStoreContext } from "../components/LiquityStoreProvider";
 

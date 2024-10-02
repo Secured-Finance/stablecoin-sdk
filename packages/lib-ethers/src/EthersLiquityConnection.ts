@@ -1,16 +1,11 @@
 import { Block, BlockTag } from "@ethersproject/abstract-provider";
 import { Signer } from "@ethersproject/abstract-signer";
 
-import { Decimal } from "@liquity/lib-base";
+import { Decimal } from "@secured-finance/lib-base";
 
 import devOrNull from "../deployments/dev.json";
-import goerli from "../deployments/goerli.json";
-import kovan from "../deployments/kovan.json";
-import rinkeby from "../deployments/rinkeby.json";
-import ropsten from "../deployments/ropsten.json";
 import mainnet from "../deployments/mainnet.json";
-import kiln from "../deployments/kiln.json";
-import sepolia from "../deployments/sepolia.json";
+import testnet from "../deployments/testnet.json";
 
 import { numberify, panic } from "./_utils";
 import { EthersProvider, EthersSigner } from "./types";
@@ -30,12 +25,7 @@ const deployments: {
   [chainId: number]: _LiquityDeploymentJSON | undefined;
 } = {
   [mainnet.chainId]: mainnet,
-  [ropsten.chainId]: ropsten,
-  [rinkeby.chainId]: rinkeby,
-  [goerli.chainId]: goerli,
-  [kovan.chainId]: kovan,
-  [kiln.chainId]: kiln,
-  [sepolia.chainId]: sepolia,
+  [testnet.chainId]: testnet,
 
   ...(dev !== null ? { [dev.chainId]: dev } : {})
 };
@@ -272,7 +262,7 @@ export interface EthersLiquityConnectionOptionalParams {
   readonly frontendTag?: string;
 
   /**
-   * Create a {@link @liquity/lib-base#LiquityStore} and expose it as the `store` property.
+   * Create a {@link @secured-finance/lib-base#LiquityStore} and expose it as the `store` property.
    *
    * @remarks
    * When set to one of the available {@link EthersLiquityStoreOption | options},
@@ -282,7 +272,7 @@ export interface EthersLiquityConnectionOptionalParams {
    * {@link EthersLiquityWithStore}.
    *
    * Note that the store won't start monitoring the blockchain until its
-   * {@link @liquity/lib-base#LiquityStore.start | start()} function is called.
+   * {@link @secured-finance/lib-base#LiquityStore.start | start()} function is called.
    */
   readonly useStore?: EthersLiquityStoreOption;
 }

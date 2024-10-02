@@ -1,30 +1,29 @@
-import React, { useState, useCallback, useEffect, useRef, useMemo } from "react";
+import type { ERC20Faucet } from "@liquity/chicken-bonds/lusd/types";
+import { Decimal } from "@secured-finance/lib-base";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useChainId } from "wagmi";
+import { useLiquity } from "../../../hooks/LiquityContext";
+import { useTransaction } from "../../../hooks/useTransaction";
+import { _getProtocolInfo, api } from "./api";
+import { useBondAddresses } from "./BondAddressesContext";
 import { BondViewContext, BondViewContextType } from "./BondViewContext";
 import type {
-  Stats,
-  BondView,
-  BondEvent,
-  Payload,
-  Bond,
-  BondTransactionStatuses,
-  CreateBondPayload,
-  ProtocolInfo,
-  OptimisticBond,
-  SwapPayload,
-  ApprovePressedPayload,
-  ManageLiquidityPayload,
-  BLusdLpRewards
+    ApprovePressedPayload,
+    BLusdLpRewards,
+    Bond,
+    BondEvent,
+    BondTransactionStatuses,
+    BondView,
+    CreateBondPayload,
+    ManageLiquidityPayload,
+    OptimisticBond,
+    Payload,
+    ProtocolInfo,
+    Stats,
+    SwapPayload
 } from "./transitions";
-import { BLusdAmmTokenIndex } from "./transitions";
-import { transitions } from "./transitions";
-import { Decimal } from "@liquity/lib-base";
-import { useLiquity } from "../../../hooks/LiquityContext";
-import { api, _getProtocolInfo } from "./api";
-import { useTransaction } from "../../../hooks/useTransaction";
-import type { ERC20Faucet } from "@liquity/chicken-bonds/lusd/types";
+import { BLusdAmmTokenIndex, transitions } from "./transitions";
 import { useBondContracts } from "./useBondContracts";
-import { useChainId } from "wagmi";
-import { useBondAddresses } from "./BondAddressesContext";
 
 // Refresh backend values every 15 seconds
 const SYNCHRONIZE_INTERVAL_MS = 15 * 1000;

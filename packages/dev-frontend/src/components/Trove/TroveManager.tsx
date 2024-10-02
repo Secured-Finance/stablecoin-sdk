@@ -1,15 +1,25 @@
 import { useCallback, useEffect } from "react";
-import { Flex, Button } from "theme-ui";
+import { Button, Flex } from "theme-ui";
 
-import { LiquityStoreState, Decimal, Trove, Decimalish, LUSD_MINIMUM_DEBT } from "@liquity/lib-base";
+import {
+  Decimal,
+  Decimalish,
+  LiquityStoreState,
+  LUSD_MINIMUM_DEBT,
+  Trove
+} from "@secured-finance/lib-base";
 
-import { LiquityStoreUpdate, useLiquityReducer, useLiquitySelector } from "@liquity/lib-react";
+import {
+  LiquityStoreUpdate,
+  useLiquityReducer,
+  useLiquitySelector
+} from "@secured-finance/lib-react";
 
 import { InfoBubble } from "../InfoBubble";
 import { useMyTransactionState } from "../Transaction";
 
-import { TroveEditor } from "./TroveEditor";
 import { TroveAction } from "./TroveAction";
+import { TroveEditor } from "./TroveEditor";
 import { useTroveView } from "./context/TroveViewContext";
 
 import {

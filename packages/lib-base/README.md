@@ -1,8 +1,8 @@
-# @liquity/lib-base
+# @secured-finance/lib-base
 
 Shared interfaces and classes of the Liquity SDK.
 
-Needs to be installed in order to use other Liquity SDK packages, for example [@liquity/lib-ethers](https://www.npmjs.com/package/@liquity/lib-ethers).
+Needs to be installed in order to use other Liquity SDK packages, for example [@secured-finance/lib-ethers](https://www.npmjs.com/package/@secured-finance/lib-ethers).
 
 ## API Reference
 

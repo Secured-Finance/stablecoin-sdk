@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { Card, Heading, Box, Flex, Input, Label, Paragraph, Button, Spinner } from "theme-ui";
+import { Box, Button, Card, Flex, Heading, Input, Label, Paragraph, Spinner } from "theme-ui";
 
-import { Decimal } from "@liquity/lib-base";
+import { Decimal } from "@secured-finance/lib-base";
 
-import { shortenAddress } from "../utils/shortenAddress";
-import { useLiquity } from "../hooks/LiquityContext";
-import { Transaction, useMyTransactionState } from "../components/Transaction";
 import { Icon } from "../components/Icon";
+import { Transaction, useMyTransactionState } from "../components/Transaction";
+import { useLiquity } from "../hooks/LiquityContext";
+import { shortenAddress } from "../utils/shortenAddress";
 
 type FrontendRegistrationActionProps = {
   kickbackRate: Decimal;

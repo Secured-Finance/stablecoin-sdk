@@ -1,9 +1,9 @@
+import { Decimal, LiquityStoreState } from "@secured-finance/lib-base";
+import { useLiquitySelector } from "@secured-finance/lib-react";
 import React, { useEffect, useState } from "react";
 import { Card, Paragraph, Text } from "theme-ui";
-import { Decimal, LiquityStoreState } from "@liquity/lib-base";
-import { useLiquitySelector } from "@liquity/lib-react";
-import { InfoIcon } from "../InfoIcon";
 import { Badge } from "../Badge";
+import { InfoIcon } from "../InfoIcon";
 import { fetchLqtyPrice } from "./context/fetchLqtyPrice";
 
 const selector = ({ lusdInStabilityPool, remainingStabilityPoolLQTYReward }: LiquityStoreState) => ({

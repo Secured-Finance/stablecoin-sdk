@@ -1,23 +1,23 @@
 import React from "react";
-import { Heading, Box, Card } from "theme-ui";
+import { Box, Card, Heading } from "theme-ui";
 
 import {
-  Percent,
-  Difference,
-  Decimalish,
   Decimal,
-  Trove,
+  Decimalish,
+  Difference,
   LiquityStoreState,
-  LUSD_LIQUIDATION_RESERVE
-} from "@liquity/lib-base";
-import { useLiquitySelector } from "@liquity/lib-react";
+  LUSD_LIQUIDATION_RESERVE,
+  Percent,
+  Trove
+} from "@secured-finance/lib-base";
+import { useLiquitySelector } from "@secured-finance/lib-react";
 
 import { COIN } from "../../strings";
 
-import { StaticRow } from "./Editor";
+import { InfoIcon } from "../InfoIcon";
 import { LoadingOverlay } from "../LoadingOverlay";
 import { CollateralRatio } from "./CollateralRatio";
-import { InfoIcon } from "../InfoIcon";
+import { StaticRow } from "./Editor";
 
 type TroveEditorProps = React.PropsWithChildren<{
   original: Trove;

@@ -1,26 +1,26 @@
-import React from "react";
-import { Flex, Container } from "theme-ui";
-import { HashRouter as Router, Switch, Route } from "react-router-dom";
 import { Wallet } from "@ethersproject/wallet";
+import React from "react";
+import { Route, HashRouter as Router, Switch } from "react-router-dom";
+import { Container, Flex } from "theme-ui";
 
-import { Decimal, Difference, Trove } from "@liquity/lib-base";
-import { LiquityStoreProvider } from "@liquity/lib-react";
+import { Decimal, Difference, Trove } from "@secured-finance/lib-base";
+import { LiquityStoreProvider } from "@secured-finance/lib-react";
 
-import { useLiquity } from "./hooks/LiquityContext";
+import { Header } from "./components/Header";
+import { SystemStatsPopup } from "./components/SystemStatsPopup";
 import { TransactionMonitor } from "./components/Transaction";
 import { UserAccount } from "./components/UserAccount";
-import { SystemStatsPopup } from "./components/SystemStatsPopup";
-import { Header } from "./components/Header";
+import { useLiquity } from "./hooks/LiquityContext";
 
+import { Bonds } from "./pages/Bonds";
 import { PageSwitcher } from "./pages/PageSwitcher";
 import { RiskyTrovesPage } from "./pages/RiskyTrovesPage";
-import { Bonds } from "./pages/Bonds";
 
-import { TroveViewProvider } from "./components/Trove/context/TroveViewProvider";
-import { StabilityViewProvider } from "./components/Stability/context/StabilityViewProvider";
-import { StakingViewProvider } from "./components/Staking/context/StakingViewProvider";
 import "tippy.js/dist/tippy.css"; // Tooltip default style
 import { BondsProvider } from "./components/Bonds/context/BondsProvider";
+import { StabilityViewProvider } from "./components/Stability/context/StabilityViewProvider";
+import { StakingViewProvider } from "./components/Staking/context/StakingViewProvider";
+import { TroveViewProvider } from "./components/Trove/context/TroveViewProvider";
 
 type LiquityFrontendProps = {
   loader?: React.ReactNode;

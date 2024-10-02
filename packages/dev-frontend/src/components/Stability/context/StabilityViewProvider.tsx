@@ -1,8 +1,8 @@
-import React, { useState, useCallback, useEffect, useRef } from "react";
-import { useLiquitySelector } from "@liquity/lib-react";
-import { LiquityStoreState, StabilityDeposit } from "@liquity/lib-base";
+import { LiquityStoreState, StabilityDeposit } from "@secured-finance/lib-base";
+import { useLiquitySelector } from "@secured-finance/lib-react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { StabilityViewContext } from "./StabilityViewContext";
-import type { StabilityView, StabilityEvent } from "./types";
+import type { StabilityEvent, StabilityView } from "./types";
 
 type StabilityEventTransitions = Record<
   StabilityView,

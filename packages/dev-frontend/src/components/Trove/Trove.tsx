@@ -1,13 +1,13 @@
+import { Decimal } from "@secured-finance/lib-base";
 import React from "react";
-import { TroveManager } from "./TroveManager";
-import { ReadOnlyTrove } from "./ReadOnlyTrove";
-import { NoTrove } from "./NoTrove";
-import { Opening } from "./Opening";
 import { Adjusting } from "./Adjusting";
-import { RedeemedTrove } from "./RedeemedTrove";
 import { useTroveView } from "./context/TroveViewContext";
 import { LiquidatedTrove } from "./LiquidatedTrove";
-import { Decimal } from "@liquity/lib-base";
+import { NoTrove } from "./NoTrove";
+import { Opening } from "./Opening";
+import { ReadOnlyTrove } from "./ReadOnlyTrove";
+import { RedeemedTrove } from "./RedeemedTrove";
+import { TroveManager } from "./TroveManager";
 
 export const Trove: React.FC = props => {
   const { view } = useTroveView();

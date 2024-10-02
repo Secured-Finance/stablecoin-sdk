@@ -1,10 +1,10 @@
 import fs from "fs";
 
 import { BigNumber, BigNumberish } from "@ethersproject/bignumber";
-import { Contract, CallOverrides, EventFilter } from "@ethersproject/contracts";
+import { CallOverrides, Contract, EventFilter } from "@ethersproject/contracts";
 import { AlchemyProvider } from "@ethersproject/providers";
 
-import { Decimal } from "@liquity/lib-base";
+import { Decimal } from "@secured-finance/lib-base";
 
 const outputFile = "eth-usd.csv";
 

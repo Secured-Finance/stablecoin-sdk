@@ -1,17 +1,21 @@
-import WebSocket from "ws";
 import { TransactionResponse } from "@ethersproject/abstract-provider";
 import { JsonRpcProvider } from "@ethersproject/providers";
 import { Wallet } from "@ethersproject/wallet";
+import WebSocket from "ws";
 
-import { Decimal, LUSD_MINIMUM_DEBT, Trove } from "@liquity/lib-base";
-import { EthersLiquity, EthersLiquityWithStore, BlockPolledLiquityStore } from "@liquity/lib-ethers";
+import { Decimal, LUSD_MINIMUM_DEBT, Trove } from "@secured-finance/lib-base";
+import {
+  BlockPolledLiquityStore,
+  EthersLiquity,
+  EthersLiquityWithStore
+} from "@secured-finance/lib-ethers";
 
 import {
   Batched,
   BatchedProvider,
   WebSocketAugmented,
   WebSocketAugmentedProvider
-} from "@liquity/providers";
+} from "@secured-finance/providers";
 
 const BatchedWebSocketAugmentedJsonRpcProvider = Batched(WebSocketAugmented(JsonRpcProvider));
 

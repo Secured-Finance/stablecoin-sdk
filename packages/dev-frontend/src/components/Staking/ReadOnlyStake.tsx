@@ -1,13 +1,13 @@
-import { Heading, Box, Card, Flex, Button } from "theme-ui";
+import { Box, Button, Card, Flex, Heading } from "theme-ui";
 
-import { LiquityStoreState } from "@liquity/lib-base";
-import { useLiquitySelector } from "@liquity/lib-react";
+import { LiquityStoreState } from "@secured-finance/lib-base";
+import { useLiquitySelector } from "@secured-finance/lib-react";
 
 import { COIN, GT } from "../../strings";
 
-import { DisabledEditableRow, StaticRow } from "../Trove/Editor";
-import { LoadingOverlay } from "../LoadingOverlay";
 import { Icon } from "../Icon";
+import { LoadingOverlay } from "../LoadingOverlay";
+import { DisabledEditableRow, StaticRow } from "../Trove/Editor";
 
 import { useStakingView } from "./context/StakingViewContext";
 import { StakingGainsAction } from "./StakingGainsAction";

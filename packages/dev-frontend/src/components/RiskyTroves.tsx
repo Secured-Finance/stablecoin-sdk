@@ -1,26 +1,26 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import CopyToClipboard from "react-copy-to-clipboard";
-import { Card, Button, Text, Box, Heading, Flex } from "theme-ui";
+import { Box, Button, Card, Flex, Heading, Text } from "theme-ui";
 
 import {
-  Percent,
-  MINIMUM_COLLATERAL_RATIO,
   CRITICAL_COLLATERAL_RATIO,
-  UserTrove,
-  Decimal
-} from "@liquity/lib-base";
-import { BlockPolledLiquityStoreState } from "@liquity/lib-ethers";
-import { useLiquitySelector } from "@liquity/lib-react";
+  Decimal,
+  MINIMUM_COLLATERAL_RATIO,
+  Percent,
+  UserTrove
+} from "@secured-finance/lib-base";
+import { BlockPolledLiquityStoreState } from "@secured-finance/lib-ethers";
+import { useLiquitySelector } from "@secured-finance/lib-react";
 
-import { shortenAddress } from "../utils/shortenAddress";
 import { useLiquity } from "../hooks/LiquityContext";
 import { COIN } from "../strings";
+import { shortenAddress } from "../utils/shortenAddress";
 
+import { Abbreviation } from "./Abbreviation";
 import { Icon } from "./Icon";
 import { LoadingOverlay } from "./LoadingOverlay";
-import { Transaction } from "./Transaction";
 import { Tooltip } from "./Tooltip";
-import { Abbreviation } from "./Abbreviation";
+import { Transaction } from "./Transaction";
 
 const rowHeight = "40px";
 

@@ -1,6 +1,6 @@
-import { Decimal } from "@liquity/lib-base";
+import { Decimal } from "@secured-finance/lib-base";
 import React, { useState } from "react";
-import { Flex, Button, Spinner } from "theme-ui";
+import { Button, Flex, Spinner } from "theme-ui";
 import { Amount } from "../../../ActionDescription";
 import { ErrorDescription } from "../../../ErrorDescription";
 import { EditableRow, StaticAmounts, StaticRow } from "../../../Trove/Editor";

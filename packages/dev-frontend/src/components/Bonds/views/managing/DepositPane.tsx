@@ -1,15 +1,15 @@
-import { Decimal } from "@liquity/lib-base";
+import { Decimal } from "@secured-finance/lib-base";
 import React, { useEffect, useState } from "react";
-import { Flex, Button, Spinner, Checkbox, Label, Card, Text } from "theme-ui";
+import { Button, Card, Checkbox, Flex, Label, Spinner, Text } from "theme-ui";
 import { Amount } from "../../../ActionDescription";
 import { ErrorDescription } from "../../../ErrorDescription";
 import { Icon } from "../../../Icon";
 import { InfoIcon } from "../../../InfoIcon";
 import { DisabledEditableRow, EditableRow } from "../../../Trove/Editor";
 import { useBondView } from "../../context/BondViewContext";
+import type { Address, ApprovePressedPayload } from "../../context/transitions";
 import { BLusdAmmTokenIndex } from "../../context/transitions";
 import { PoolDetails } from "./PoolDetails";
-import type { Address, ApprovePressedPayload } from "../../context/transitions";
 
 export const DepositPane: React.FC = () => {
   const {

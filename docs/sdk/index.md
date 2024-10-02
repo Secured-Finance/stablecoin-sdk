@@ -6,8 +6,33 @@
 
 ## Packages
 
-|  Package | Description |
-|  --- | --- |
-|  [@liquity/lib-base](./lib-base.md) |  |
-|  [@liquity/lib-ethers](./lib-ethers.md) |  |
+<table><thead><tr><th>
 
+Package
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[@secured-finance/lib-base](./lib-base.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@secured-finance/lib-ethers](./lib-ethers.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

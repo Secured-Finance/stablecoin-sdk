@@ -1,12 +1,12 @@
+import { LiquityStoreState } from "@secured-finance/lib-base";
+import { useLiquitySelector } from "@secured-finance/lib-react";
 import React, { useCallback } from "react";
-import { Card, Heading, Box, Flex, Button } from "theme-ui";
-import { useLiquitySelector } from "@liquity/lib-react";
-import { LiquityStoreState } from "@liquity/lib-base";
+import { Box, Button, Card, Flex, Heading } from "theme-ui";
+import { COIN } from "../../strings";
+import { Icon } from "../Icon";
+import { CollateralRatio, CollateralRatioInfoBubble } from "./CollateralRatio";
 import { DisabledEditableRow } from "./Editor";
 import { useTroveView } from "./context/TroveViewContext";
-import { Icon } from "../Icon";
-import { COIN } from "../../strings";
-import { CollateralRatio, CollateralRatioInfoBubble } from "./CollateralRatio";
 
 const select = ({ trove, price }: LiquityStoreState) => ({ trove, price });
 

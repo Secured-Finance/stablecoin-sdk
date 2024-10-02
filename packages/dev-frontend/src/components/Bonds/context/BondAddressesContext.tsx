@@ -1,8 +1,8 @@
+import React, { createContext, useContext } from "react";
 import { useChainId } from "wagmi";
-import React, { useContext, createContext } from "react";
 
-import mainnet from "@liquity/chicken-bonds/lusd/addresses/mainnet.json";
 import goerli from "@liquity/chicken-bonds/lusd/addresses/goerli.json";
+import mainnet from "@liquity/chicken-bonds/lusd/addresses/mainnet.json";
 import { Addresses } from "./transitions";
 
 const nullAddresses: Addresses = {

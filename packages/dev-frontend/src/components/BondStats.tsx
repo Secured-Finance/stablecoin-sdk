@@ -1,10 +1,10 @@
+import { Decimal } from "@secured-finance/lib-base";
 import React from "react";
-import { Card, Heading, Text, Flex } from "theme-ui";
-import { Decimal } from "@liquity/lib-base";
+import { Card, Flex, Heading, Text } from "theme-ui";
 import * as l from "../components/Bonds/lexicon";
+import { useBondView } from "./Bonds/context/BondViewContext";
 import { Statistic } from "./Statistic";
 import { TreasuryChart } from "./TreasuryChart";
-import { useBondView } from "./Bonds/context/BondViewContext";
 
 type BondStatsProps = {
   variant?: string;

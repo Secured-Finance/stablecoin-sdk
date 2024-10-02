@@ -1,6 +1,6 @@
-import { Decimal } from "@liquity/lib-base";
-import { Text, Box, Flex } from "theme-ui";
-import { StaticRow, StaticAmounts } from "../../../Trove/Editor";
+import { Decimal } from "@secured-finance/lib-base";
+import { Box, Flex, Text } from "theme-ui";
+import { StaticAmounts, StaticRow } from "../../../Trove/Editor";
 import { useBondView } from "../../context/BondViewContext";
 import { PoolBalance } from "./PoolBalance";
 

@@ -3,7 +3,7 @@ import {
   LiquityStoreState,
   StabilityDeposit,
   StabilityDepositChange
-} from "@liquity/lib-base";
+} from "@secured-finance/lib-base";
 
 import { COIN } from "../../../strings";
 import { Amount } from "../../ActionDescription";

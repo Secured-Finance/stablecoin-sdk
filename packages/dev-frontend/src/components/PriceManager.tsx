@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { Card, Box, Heading, Flex, Button, Label, Input } from "theme-ui";
+import React, { useEffect, useState } from "react";
+import { Box, Button, Card, Flex, Heading, Input, Label } from "theme-ui";
 
-import { Decimal, LiquityStoreState } from "@liquity/lib-base";
-import { useLiquitySelector } from "@liquity/lib-react";
+import { Decimal, LiquityStoreState } from "@secured-finance/lib-base";
+import { useLiquitySelector } from "@secured-finance/lib-react";
 
 import { useLiquity } from "../hooks/LiquityContext";
 

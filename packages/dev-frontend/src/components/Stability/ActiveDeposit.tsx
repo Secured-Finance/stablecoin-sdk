@@ -1,11 +1,12 @@
 import React, { useCallback, useEffect } from "react";
-import { Card, Heading, Box, Flex, Button } from "theme-ui";
+import { Box, Button, Card, Flex, Heading } from "theme-ui";
 
-import { LiquityStoreState } from "@liquity/lib-base";
-import { useLiquitySelector } from "@liquity/lib-react";
+import { LiquityStoreState } from "@secured-finance/lib-base";
+import { useLiquitySelector } from "@secured-finance/lib-react";
 
 import { COIN, GT } from "../../strings";
 import { Icon } from "../Icon";
+import { InfoIcon } from "../InfoIcon";
 import { LoadingOverlay } from "../LoadingOverlay";
 import { useMyTransactionState } from "../Transaction";
 import { DisabledEditableRow, StaticRow } from "../Trove/Editor";
@@ -14,7 +15,6 @@ import { ClaimRewards } from "./actions/ClaimRewards";
 import { useStabilityView } from "./context/StabilityViewContext";
 import { RemainingLQTY } from "./RemainingLQTY";
 import { Yield } from "./Yield";
-import { InfoIcon } from "../InfoIcon";
 
 const selector = ({ stabilityDeposit, trove, lusdInStabilityPool }: LiquityStoreState) => ({
   stabilityDeposit,

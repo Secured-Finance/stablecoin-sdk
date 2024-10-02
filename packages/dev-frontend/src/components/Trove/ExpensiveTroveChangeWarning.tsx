@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 
-import { Decimal, TroveChange } from "@liquity/lib-base";
-import { PopulatedEthersLiquityTransaction } from "@liquity/lib-ethers";
+import { Decimal, TroveChange } from "@secured-finance/lib-base";
+import { PopulatedEthersLiquityTransaction } from "@secured-finance/lib-ethers";
 
 import { useLiquity } from "../../hooks/LiquityContext";
 import { WarningBubble } from "../WarningBubble";

@@ -1,10 +1,10 @@
+import { LiquityStoreState } from "@secured-finance/lib-base";
+import { useLiquitySelector } from "@secured-finance/lib-react";
 import React, { useCallback } from "react";
-import { Card, Heading, Box, Button, Flex } from "theme-ui";
+import { Box, Button, Card, Flex, Heading } from "theme-ui";
 import { CollateralSurplusAction } from "../CollateralSurplusAction";
-import { LiquityStoreState } from "@liquity/lib-base";
-import { useLiquitySelector } from "@liquity/lib-react";
-import { useTroveView } from "./context/TroveViewContext";
 import { InfoMessage } from "../InfoMessage";
+import { useTroveView } from "./context/TroveViewContext";
 
 const select = ({ collateralSurplusBalance }: LiquityStoreState) => ({
   hasSurplusCollateral: !collateralSurplusBalance.isZero

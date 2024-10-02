@@ -7,18 +7,22 @@ import {
   LiquityStoreState,
   LQTYStake,
   LQTYStakeChange
-} from "@liquity/lib-base";
+} from "@secured-finance/lib-base";
 
-import { LiquityStoreUpdate, useLiquityReducer, useLiquitySelector } from "@liquity/lib-react";
+import {
+  LiquityStoreUpdate,
+  useLiquityReducer,
+  useLiquitySelector
+} from "@secured-finance/lib-react";
 
-import { GT, COIN } from "../../strings";
+import { COIN, GT } from "../../strings";
 
-import { useStakingView } from "./context/StakingViewContext";
-import { StakingEditor } from "./StakingEditor";
-import { StakingManagerAction } from "./StakingManagerAction";
 import { ActionDescription, Amount } from "../ActionDescription";
 import { ErrorDescription } from "../ErrorDescription";
 import { InfoBubble } from "../InfoBubble";
+import { useStakingView } from "./context/StakingViewContext";
+import { StakingEditor } from "./StakingEditor";
+import { StakingManagerAction } from "./StakingManagerAction";
 
 const init = ({ lqtyStake }: LiquityStoreState) => ({
   originalStake: lqtyStake,

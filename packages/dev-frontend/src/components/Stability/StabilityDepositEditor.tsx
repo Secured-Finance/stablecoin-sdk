@@ -1,22 +1,22 @@
 import React, { useState } from "react";
-import { Heading, Box, Card, Button } from "theme-ui";
+import { Box, Button, Card, Heading } from "theme-ui";
 
 import {
   Decimal,
   Decimalish,
-  StabilityDeposit,
+  Difference,
   LiquityStoreState,
-  Difference
-} from "@liquity/lib-base";
+  StabilityDeposit
+} from "@secured-finance/lib-base";
 
-import { useLiquitySelector } from "@liquity/lib-react";
+import { useLiquitySelector } from "@secured-finance/lib-react";
 
 import { COIN, GT } from "../../strings";
 
 import { Icon } from "../Icon";
-import { EditableRow, StaticRow } from "../Trove/Editor";
-import { LoadingOverlay } from "../LoadingOverlay";
 import { InfoIcon } from "../InfoIcon";
+import { LoadingOverlay } from "../LoadingOverlay";
+import { EditableRow, StaticRow } from "../Trove/Editor";
 
 const select = ({ lusdBalance, lusdInStabilityPool }: LiquityStoreState) => ({
   lusdBalance,

@@ -4,7 +4,6 @@
 
 ## PopulatedEthersRedemption.increaseAmountByMinimumNetDebt() method
 
-Prepare a new transaction by increasing the attempted amount to the next lowest redeemable value.
 
 <b>Signature:</b>
 
@@ -16,13 +15,9 @@ increaseAmountByMinimumNetDebt(maxRedemptionRate?: Decimalish): Promise<Populate
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  maxRedemptionRate | [Decimalish](./lib-base.decimalish.md) | Maximum acceptable [redemption rate](./lib-base.fees.redemptionrate.md) to use in the new transaction. |
+|  maxRedemptionRate | Decimalish |  |
 
 <b>Returns:</b>
 
 Promise&lt;[PopulatedEthersRedemption](./lib-ethers.populatedethersredemption.md)<!-- -->&gt;
-
-## Remarks
-
-If `maxRedemptionRate` is omitted, the original transaction's `maxRedemptionRate` is reused unless that was also omitted, in which case the current redemption rate (based on the increased amount) plus 0.1% is used as maximum acceptable rate.
 

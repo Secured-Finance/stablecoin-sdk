@@ -4,8 +4,6 @@
 
 ## EthersLiquity.claimCollateralSurplus() method
 
-Claim leftover collateral after a liquidation or redemption.
-
 <b>Signature:</b>
 
 ```typescript
@@ -25,8 +23,4 @@ Promise&lt;void&gt;
 ## Exceptions
 
 Throws [EthersTransactionFailedError](./lib-ethers.etherstransactionfailederror.md) in case of transaction failure. Throws [EthersTransactionCancelledError](./lib-ethers.etherstransactioncancellederror.md) if the transaction is cancelled or replaced.
-
-## Remarks
-
-Use [getCollateralSurplusBalance()](./lib-base.readableliquity.getcollateralsurplusbalance.md) to check the amount of collateral available for withdrawal.
 

@@ -1,19 +1,19 @@
-import { Signer } from "@ethersproject/abstract-signer";
 import { Provider } from "@ethersproject/abstract-provider";
+import { Signer } from "@ethersproject/abstract-signer";
 import { Wallet } from "@ethersproject/wallet";
 
 import {
   Decimal,
   Decimalish,
   Difference,
+  LUSD_LIQUIDATION_RESERVE,
   Percent,
-  Trove,
-  TroveWithPendingRedistribution,
   ReadableLiquity,
-  LUSD_LIQUIDATION_RESERVE
-} from "@liquity/lib-base";
-import { EthersLiquity, ReadableEthersLiquity } from "@liquity/lib-ethers";
-import { SubgraphLiquity } from "@liquity/lib-subgraph";
+  Trove,
+  TroveWithPendingRedistribution
+} from "@secured-finance/lib-base";
+import { EthersLiquity, ReadableEthersLiquity } from "@secured-finance/lib-ethers";
+import { SubgraphLiquity } from "@secured-finance/lib-subgraph";
 
 export const objToString = (o: Record<string, unknown>) =>
   "{ " +

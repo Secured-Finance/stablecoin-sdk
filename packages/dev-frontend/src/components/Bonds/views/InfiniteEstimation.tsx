@@ -1,4 +1,4 @@
-import { Decimal, Decimalish } from "@liquity/lib-base";
+import { Decimal, Decimalish } from "@secured-finance/lib-base";
 import { InfoIcon } from "../../InfoIcon";
 import * as l from "../lexicon";
 

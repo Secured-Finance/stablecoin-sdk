@@ -4,7 +4,6 @@
 
 ## EthersLiquity.getTotal() method
 
-Get the total amount of collateral and debt in the Liquity system.
 
 <b>Signature:</b>
 
@@ -20,5 +19,5 @@ getTotal(overrides?: EthersCallOverrides): Promise<Trove>;
 
 <b>Returns:</b>
 
-Promise&lt;[Trove](./lib-base.trove.md)<!-- -->&gt;
+Promise&lt;Trove&gt;
 

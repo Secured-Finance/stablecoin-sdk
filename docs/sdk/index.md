@@ -8,6 +8,6 @@
 
 |  Package | Description |
 |  --- | --- |
-|  [@liquity/lib-base](./lib-base.md) |  |
 |  [@liquity/lib-ethers](./lib-ethers.md) |  |
+|  [@secured-finance/lib-base](./lib-base.md) |  |
 

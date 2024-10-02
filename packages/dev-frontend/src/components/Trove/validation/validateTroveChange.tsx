@@ -1,17 +1,17 @@
 import {
+  CRITICAL_COLLATERAL_RATIO,
   Decimal,
+  LiquityStoreState,
   LUSD_MINIMUM_DEBT,
   LUSD_MINIMUM_NET_DEBT,
+  MINIMUM_COLLATERAL_RATIO,
+  Percent,
   Trove,
   TroveAdjustmentParams,
   TroveChange,
-  Percent,
-  MINIMUM_COLLATERAL_RATIO,
-  CRITICAL_COLLATERAL_RATIO,
-  LiquityStoreState,
   TroveClosureParams,
   TroveCreationParams
-} from "@liquity/lib-base";
+} from "@secured-finance/lib-base";
 
 import { COIN } from "../../../strings";
 

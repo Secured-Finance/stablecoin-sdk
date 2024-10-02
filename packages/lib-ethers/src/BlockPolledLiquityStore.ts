@@ -1,24 +1,24 @@
-import assert from "assert";
 import { AddressZero } from "@ethersproject/constants";
+import assert from "assert";
 
 import {
   Decimal,
-  LiquityStoreState,
-  LiquityStoreBaseState,
-  TroveWithPendingRedistribution,
-  StabilityDeposit,
+  Fees,
   LQTYStake,
   LiquityStore,
-  Fees
-} from "@liquity/lib-base";
+  LiquityStoreBaseState,
+  LiquityStoreState,
+  StabilityDeposit,
+  TroveWithPendingRedistribution
+} from "@secured-finance/lib-base";
 
 import { decimalify, promiseAllValues } from "./_utils";
-import { ReadableEthersLiquity } from "./ReadableEthersLiquity";
 import { EthersLiquityConnection, _getProvider } from "./EthersLiquityConnection";
+import { ReadableEthersLiquity } from "./ReadableEthersLiquity";
 import { EthersCallOverrides, EthersProvider } from "./types";
 
 /**
- * Extra state added to {@link @liquity/lib-base#LiquityStoreState} by
+ * Extra state added to {@link @secured-finance/lib-base#LiquityStoreState} by
  * {@link BlockPolledLiquityStore}.
  *
  * @public
@@ -43,14 +43,14 @@ export interface BlockPolledLiquityStoreExtraState {
 
 /**
  * The type of {@link BlockPolledLiquityStore}'s
- * {@link @liquity/lib-base#LiquityStore.state | state}.
+ * {@link @secured-finance/lib-base#LiquityStore.state | state}.
  *
  * @public
  */
 export type BlockPolledLiquityStoreState = LiquityStoreState<BlockPolledLiquityStoreExtraState>;
 
 /**
- * Ethers-based {@link @liquity/lib-base#LiquityStore} that updates state whenever there's a new
+ * Ethers-based {@link @secured-finance/lib-base#LiquityStore} that updates state whenever there's a new
  * block.
  *
  * @public

@@ -4,14 +4,14 @@
 
 ## BlockPolledLiquityStore class
 
-Ethers-based [LiquityStore](./lib-base.liquitystore.md) that updates state whenever there's a new block.
+Ethers-based  that updates state whenever there's a new block.
 
 <b>Signature:</b>
 
 ```typescript
 export declare class BlockPolledLiquityStore extends LiquityStore<BlockPolledLiquityStoreExtraState> 
 ```
-<b>Extends:</b> [LiquityStore](./lib-base.liquitystore.md)<!-- -->&lt;[BlockPolledLiquityStoreExtraState](./lib-ethers.blockpolledliquitystoreextrastate.md)<!-- -->&gt;
+<b>Extends:</b> LiquityStore&lt;[BlockPolledLiquityStoreExtraState](./lib-ethers.blockpolledliquitystoreextrastate.md)<!-- -->&gt;
 
 ## Constructors
 

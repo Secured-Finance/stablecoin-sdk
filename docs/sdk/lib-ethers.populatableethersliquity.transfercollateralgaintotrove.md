@@ -4,7 +4,6 @@
 
 ## PopulatableEthersLiquity.transferCollateralGainToTrove() method
 
-Transfer [collateral gain](./lib-base.stabilitydeposit.collateralgain.md) from Stability Deposit to Trove.
 
 <b>Signature:</b>
 
@@ -20,11 +19,5 @@ transferCollateralGainToTrove(overrides?: EthersTransactionOverrides): Promise<P
 
 <b>Returns:</b>
 
-Promise&lt;[PopulatedEthersLiquityTransaction](./lib-ethers.populatedethersliquitytransaction.md)<!-- -->&lt;[CollateralGainTransferDetails](./lib-base.collateralgaintransferdetails.md)<!-- -->&gt;&gt;
-
-## Remarks
-
-The collateral gain is transfered to the Trove as additional collateral.
-
-As a side-effect, the transaction will also pay out the Stability Deposit's [LQTY reward](./lib-base.stabilitydeposit.lqtyreward.md)<!-- -->.
+Promise&lt;[PopulatedEthersLiquityTransaction](./lib-ethers.populatedethersliquitytransaction.md)<!-- -->&lt;CollateralGainTransferDetails&gt;&gt;
 

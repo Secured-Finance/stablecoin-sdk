@@ -4,7 +4,6 @@
 
 ## ReadableEthersLiquity.getPrice() method
 
-Get the current price of the native currency (e.g. Ether) in USD.
 
 <b>Signature:</b>
 
@@ -20,5 +19,5 @@ getPrice(overrides?: EthersCallOverrides): Promise<Decimal>;
 
 <b>Returns:</b>
 
-Promise&lt;[Decimal](./lib-base.decimal.md)<!-- -->&gt;
+Promise&lt;Decimal&gt;
 

@@ -1,8 +1,8 @@
-import { expect } from "vitest";
 import { render, screen } from "@testing-library/react";
-import { userEvent, PointerEventsCheckLevel } from "@testing-library/user-event";
+import { PointerEventsCheckLevel, userEvent } from "@testing-library/user-event";
+import { expect } from "vitest";
 
-import { Decimal, LUSD_MINIMUM_NET_DEBT, Trove } from "@liquity/lib-base";
+import { Decimal, LUSD_MINIMUM_NET_DEBT, Trove } from "@secured-finance/lib-base";
 
 import App from "./App";
 

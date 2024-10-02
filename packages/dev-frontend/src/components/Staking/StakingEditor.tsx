@@ -1,14 +1,20 @@
 import React, { useState } from "react";
-import { Heading, Box, Card, Button } from "theme-ui";
+import { Box, Button, Card, Heading } from "theme-ui";
 
-import { Decimal, Decimalish, Difference, LiquityStoreState, LQTYStake } from "@liquity/lib-base";
-import { useLiquitySelector } from "@liquity/lib-react";
+import {
+  Decimal,
+  Decimalish,
+  Difference,
+  LiquityStoreState,
+  LQTYStake
+} from "@secured-finance/lib-base";
+import { useLiquitySelector } from "@secured-finance/lib-react";
 
 import { COIN, GT } from "../../strings";
 
 import { Icon } from "../Icon";
-import { EditableRow, StaticRow } from "../Trove/Editor";
 import { LoadingOverlay } from "../LoadingOverlay";
+import { EditableRow, StaticRow } from "../Trove/Editor";
 
 import { useStakingView } from "./context/StakingViewContext";
 

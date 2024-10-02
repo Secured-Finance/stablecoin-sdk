@@ -4,7 +4,7 @@
 
 ## BlockPolledLiquityStoreExtraState interface
 
-Extra state added to [LiquityStoreState](./lib-base.liquitystorestate.md) by [BlockPolledLiquityStore](./lib-ethers.blockpolledliquitystore.md)<!-- -->.
+Extra state added to  by [BlockPolledLiquityStore](./lib-ethers.blockpolledliquitystore.md)<!-- -->.
 
 <b>Signature:</b>
 

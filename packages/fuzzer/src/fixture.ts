@@ -9,20 +9,20 @@ import {
   TransactableLiquity,
   Trove,
   TroveAdjustmentParams
-} from "@liquity/lib-base";
+} from "@secured-finance/lib-base";
 
-import { EthersLiquity as Liquity } from "@liquity/lib-ethers";
+import { EthersLiquity as Liquity } from "@secured-finance/lib-ethers";
 
 import {
-  createRandomTrove,
-  shortenAddress,
   benford,
+  createRandomTrove,
   getListOfTroveOwners,
-  listDifference,
   getListOfTroves,
+  listDifference,
+  objToString,
   randomCollateralChange,
   randomDebtChange,
-  objToString
+  shortenAddress
 } from "./utils";
 
 import { GasHistogram } from "./GasHistogram";

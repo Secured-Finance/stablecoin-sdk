@@ -4,7 +4,6 @@
 
 ## ReadableEthersLiquity.getTotalStakedUniTokens() method
 
-Get the total amount of Uniswap ETH/LUSD LP tokens currently staked in liquidity mining.
 
 <b>Signature:</b>
 
@@ -20,5 +19,5 @@ getTotalStakedUniTokens(overrides?: EthersCallOverrides): Promise<Decimal>;
 
 <b>Returns:</b>
 
-Promise&lt;[Decimal](./lib-base.decimal.md)<!-- -->&gt;
+Promise&lt;Decimal&gt;
 

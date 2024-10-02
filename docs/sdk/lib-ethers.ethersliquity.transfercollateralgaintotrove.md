@@ -4,8 +4,6 @@
 
 ## EthersLiquity.transferCollateralGainToTrove() method
 
-Transfer [collateral gain](./lib-base.stabilitydeposit.collateralgain.md) from Stability Deposit to Trove.
-
 <b>Signature:</b>
 
 ```typescript
@@ -20,15 +18,9 @@ transferCollateralGainToTrove(overrides?: EthersTransactionOverrides): Promise<C
 
 <b>Returns:</b>
 
-Promise&lt;[CollateralGainTransferDetails](./lib-base.collateralgaintransferdetails.md)<!-- -->&gt;
+Promise&lt;CollateralGainTransferDetails&gt;
 
 ## Exceptions
 
 Throws [EthersTransactionFailedError](./lib-ethers.etherstransactionfailederror.md) in case of transaction failure. Throws [EthersTransactionCancelledError](./lib-ethers.etherstransactioncancellederror.md) if the transaction is cancelled or replaced.
-
-## Remarks
-
-The collateral gain is transfered to the Trove as additional collateral.
-
-As a side-effect, the transaction will also pay out the Stability Deposit's [LQTY reward](./lib-base.stabilitydeposit.lqtyreward.md)<!-- -->.
 

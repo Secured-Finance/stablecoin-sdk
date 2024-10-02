@@ -4,7 +4,6 @@
 
 ## PopulatableEthersLiquity.withdrawGainsFromStabilityPool() method
 
-Withdraw [collateral gain](./lib-base.stabilitydeposit.collateralgain.md) and [LQTY reward](./lib-base.stabilitydeposit.lqtyreward.md) from Stability Deposit.
 
 <b>Signature:</b>
 
@@ -20,5 +19,5 @@ withdrawGainsFromStabilityPool(overrides?: EthersTransactionOverrides): Promise<
 
 <b>Returns:</b>
 
-Promise&lt;[PopulatedEthersLiquityTransaction](./lib-ethers.populatedethersliquitytransaction.md)<!-- -->&lt;[StabilityPoolGainsWithdrawalDetails](./lib-base.stabilitypoolgainswithdrawaldetails.md)<!-- -->&gt;&gt;
+Promise&lt;[PopulatedEthersLiquityTransaction](./lib-ethers.populatedethersliquitytransaction.md)<!-- -->&lt;StabilityPoolGainsWithdrawalDetails&gt;&gt;
 

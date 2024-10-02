@@ -4,7 +4,6 @@
 
 ## PopulatableEthersLiquity.claimCollateralSurplus() method
 
-Claim leftover collateral after a liquidation or redemption.
 
 <b>Signature:</b>
 
@@ -21,8 +20,4 @@ claimCollateralSurplus(overrides?: EthersTransactionOverrides): Promise<Populate
 <b>Returns:</b>
 
 Promise&lt;[PopulatedEthersLiquityTransaction](./lib-ethers.populatedethersliquitytransaction.md)<!-- -->&lt;void&gt;&gt;
-
-## Remarks
-
-Use [getCollateralSurplusBalance()](./lib-base.readableliquity.getcollateralsurplusbalance.md) to check the amount of collateral available for withdrawal.
 

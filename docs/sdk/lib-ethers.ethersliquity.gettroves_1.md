@@ -4,7 +4,6 @@
 
 ## EthersLiquity.getTroves() method
 
-Get a slice from the list of Troves.
 
 <b>Signature:</b>
 
@@ -16,12 +15,10 @@ getTroves(params: TroveListingParams, overrides?: EthersCallOverrides): Promise<
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  params | [TroveListingParams](./lib-base.trovelistingparams.md) | Controls how the list is sorted, and where the slice begins and ends. |
+|  params | TroveListingParams |  |
 |  overrides | [EthersCallOverrides](./lib-ethers.etherscalloverrides.md) |  |
 
 <b>Returns:</b>
 
-Promise&lt;[UserTrove](./lib-base.usertrove.md)<!-- -->\[\]&gt;
-
-Pairs of owner addresses and their Troves.
+Promise&lt;UserTrove\[\]&gt;
 

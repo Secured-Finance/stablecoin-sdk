@@ -1,11 +1,11 @@
 import assert from "assert";
 
 import { Decimal } from "./Decimal";
-import { StabilityDeposit } from "./StabilityDeposit";
-import { Trove, TroveWithPendingRedistribution, UserTrove } from "./Trove";
 import { Fees } from "./Fees";
 import { LQTYStake } from "./LQTYStake";
 import { FrontendStatus } from "./ReadableLiquity";
+import { StabilityDeposit } from "./StabilityDeposit";
+import { Trove, TroveWithPendingRedistribution, UserTrove } from "./Trove";
 
 /**
  * State variables read from the blockchain.
@@ -204,7 +204,7 @@ const difference = <T>(a: T, b: T) =>
  * The type parameter `T` may be used to type extra state added to {@link LiquityStoreState} by the
  * subclass.
  *
- * Implemented by {@link @liquity/lib-ethers#BlockPolledLiquityStore}.
+ * Implemented by {@link @secured-finance/lib-ethers#BlockPolledLiquityStore}.
  *
  * @public
  */

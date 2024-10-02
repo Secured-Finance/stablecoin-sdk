@@ -1,22 +1,27 @@
 import assert from "assert";
+import "colors";
+import dotenv from "dotenv";
 import fs from "fs";
 import path from "path";
-import dotenv from "dotenv";
-import "colors";
 
 import { JsonFragment } from "@ethersproject/abi";
-import { Wallet } from "@ethersproject/wallet";
 import { Signer } from "@ethersproject/abstract-signer";
 import { ContractFactory, Overrides } from "@ethersproject/contracts";
+import { Wallet } from "@ethersproject/wallet";
 
-import { task, HardhatUserConfig, types, extendEnvironment } from "hardhat/config";
-import { HardhatRuntimeEnvironment, NetworkUserConfig } from "hardhat/types";
 import "@nomiclabs/hardhat-ethers";
+import { extendEnvironment, HardhatUserConfig, task, types } from "hardhat/config";
+import { HardhatRuntimeEnvironment } from "hardhat/types";
 
-import { Decimal } from "@liquity/lib-base";
+import { Decimal } from "@secured-finance/lib-base";
 
-import { deployAndSetupContracts, deployTellorCaller, setSilent } from "./utils/deploy";
 import { _connectToContracts, _LiquityDeploymentJSON, _priceFeedIsTestnet } from "./src/contracts";
+import {
+  deployAndSetupContracts,
+  deployPythCaller,
+  deployTellorCaller,
+  setSilent
+} from "./utils/deploy";
 
 import accounts from "./accounts.json";
 
@@ -27,7 +32,10 @@ const numAccounts = 100;
 const useLiveVersionEnv = (process.env.USE_LIVE_VERSION ?? "false").toLowerCase();
 const useLiveVersion = !["false", "no", "0"].includes(useLiveVersionEnv);
 
-const contractsDir = path.join("..", "contracts");
+// const contractsDir = path.join("..", "contracts");
+const contractsDir = require
+  .resolve("@secured-finance/stablecoin-contracts/package.json")
+  .replace("/package.json", "");
 const artifacts = path.join(contractsDir, "artifacts");
 const cache = path.join(contractsDir, "cache");
 
@@ -53,51 +61,31 @@ const generateRandomAccounts = (numberOfAccounts: number) => {
 const deployerAccount = process.env.DEPLOYER_PRIVATE_KEY || Wallet.createRandom().privateKey;
 const devChainRichAccount = "0x4d5db4107d237df6a3d58ee5f70ae63d73d7658d4026f2eefd2f204c81682cb7";
 
-const infuraApiKey = "ad9cef41c9c844a7b54d10be24d416e5";
-
-const infuraNetwork = (name: string): { [name: string]: NetworkUserConfig } => ({
-  [name]: {
-    url: `https://${name}.infura.io/v3/${infuraApiKey}`,
-    accounts: [deployerAccount]
-  }
-});
-
 // https://docs.chain.link/docs/ethereum-addresses
 // https://docs.tellor.io/tellor/integration/reference-page
 
 const oracleAddresses = {
   mainnet: {
-    chainlink: "0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
+    pyth: "0xA2aa501b19aff244D90cc15a4Cf739D2725B5729",
     tellor: "0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0"
   },
-  rinkeby: {
-    chainlink: "0x8A753747A1Fa494EC906cE90E9f37563A8AF630e",
-    tellor: "0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0" // Core
-  },
-  kovan: {
-    chainlink: "0x9326BFA02ADD2366b30bacB125260Af641031331",
-    tellor: "0x20374E579832859f180536A69093A126Db1c8aE9" // Playground
-  },
-  goerli: {
-    chainlink: "0xD4a33860578De61DBAbDc8BFdb98FD742fA7028e",
-    tellor: "0x51c59c6cAd28ce3693977F2feB4CfAebec30d8a2"
-  },
-  sepolia: {
-    chainlink: "0x694AA1769357215DE4FAC081bf1f309aDC325306",
-    tellor: "0x80fc34a2f9FfE86F41580F47368289C402DEc660"
+  testnet: {
+    pyth: "0xA2aa501b19aff244D90cc15a4Cf739D2725B5729",
+    tellor: "0xb2CB696fE5244fB9004877e58dcB680cB86Ba444"
   }
+};
+
+const pythPriceIds = {
+  mainnet: "0x150ac9b959aee0051e4091f0ef5216d941f590e1c5e7f91cf7635b5c11628c0e",
+  testnet: "0x150ac9b959aee0051e4091f0ef5216d941f590e1c5e7f91cf7635b5c11628c0e"
 };
 
 const hasOracles = (network: string): network is keyof typeof oracleAddresses =>
   network in oracleAddresses;
 
 const wethAddresses = {
-  mainnet: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-  ropsten: "0xc778417E063141139Fce010982780140Aa0cD5Ab",
-  rinkeby: "0xc778417E063141139Fce010982780140Aa0cD5Ab",
-  goerli: "0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6",
-  kovan: "0xd0A1E359811322d97991E03f863a0C30C2cF029C",
-  sepolia: "0xfFf9976782d46CC05630D1f6eBAb18b2324d6B14"
+  mainnet: "0x60E1773636CF5E4A227d9AC24F20fEca034ee25A",
+  testnet: "0xaC26a4Ab9cF2A8c5DBaB6fb4351ec0F4b07356c4"
 };
 
 const hasWETH = (network: string): network is keyof typeof wethAddresses => network in wethAddresses;
@@ -121,15 +109,13 @@ const config: HardhatUserConfig = {
       accounts: [deployerAccount, devChainRichAccount, ...generateRandomAccounts(numAccounts - 2)]
     },
 
-    ...infuraNetwork("ropsten"),
-    ...infuraNetwork("rinkeby"),
-    ...infuraNetwork("goerli"),
-    ...infuraNetwork("kovan"),
-    ...infuraNetwork("sepolia"),
-    ...infuraNetwork("mainnet"),
+    mainnet: {
+      url: process.env.RPC_ENDPOINT || "http://localhost:8545",
+      accounts: [deployerAccount]
+    },
 
-    kiln: {
-      url: "https://rpc.kiln.themerge.dev",
+    testnet: {
+      url: process.env.RPC_ENDPOINT || "http://localhost:8545",
       accounts: [deployerAccount]
     },
 
@@ -178,7 +164,7 @@ extendEnvironment(env => {
       deployer,
       getContractFactory(env),
       !useRealPriceFeed,
-      env.network.name === "dev",
+      env.network.name,
       wethAddress,
       overrides
     );
@@ -240,6 +226,14 @@ task("deploy", "Deploys the contracts to the network")
         assert(!_priceFeedIsTestnet(contracts.priceFeed));
 
         if (hasOracles(env.network.name)) {
+          const pythCallerAddress = await deployPythCaller(
+            deployer,
+            getContractFactory(env),
+            oracleAddresses[env.network.name].pyth,
+            pythPriceIds[env.network.name],
+            overrides
+          );
+
           const tellorCallerAddress = await deployTellorCaller(
             deployer,
             getContractFactory(env),
@@ -250,7 +244,7 @@ task("deploy", "Deploys the contracts to the network")
           console.log(`Hooking up PriceFeed with oracles ...`);
 
           const tx = await contracts.priceFeed.setAddresses(
-            oracleAddresses[env.network.name].chainlink,
+            pythCallerAddress,
             tellorCallerAddress,
             overrides
           );

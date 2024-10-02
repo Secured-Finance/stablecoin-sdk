@@ -11,7 +11,7 @@ A transaction that has been prepared for sending.
 ```typescript
 export declare class PopulatedEthersLiquityTransaction<T = unknown> implements PopulatedLiquityTransaction<EthersPopulatedTransaction, SentEthersLiquityTransaction<T>> 
 ```
-<b>Implements:</b> [PopulatedLiquityTransaction](./lib-base.populatedliquitytransaction.md)<!-- -->&lt;[EthersPopulatedTransaction](./lib-ethers.etherspopulatedtransaction.md)<!-- -->, [SentEthersLiquityTransaction](./lib-ethers.sentethersliquitytransaction.md)<!-- -->&lt;T&gt;&gt;
+<b>Implements:</b> PopulatedLiquityTransaction&lt;[EthersPopulatedTransaction](./lib-ethers.etherspopulatedtransaction.md)<!-- -->, [SentEthersLiquityTransaction](./lib-ethers.sentethersliquitytransaction.md)<!-- -->&lt;T&gt;&gt;
 
 ## Remarks
 
@@ -30,5 +30,5 @@ The constructor for this class is marked as internal. Third-party code should no
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [send()](./lib-ethers.populatedethersliquitytransaction.send.md) |  | Send the transaction. |
+|  [send()](./lib-ethers.populatedethersliquitytransaction.send.md) |  |  |
 

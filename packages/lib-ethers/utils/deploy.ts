@@ -1,8 +1,10 @@
 import { Signer } from "@ethersproject/abstract-signer";
-import { ContractTransaction, ContractFactory, Overrides } from "@ethersproject/contracts";
+import { ContractFactory, ContractTransaction, Overrides } from "@ethersproject/contracts";
 import { Wallet } from "@ethersproject/wallet";
+import dotenv from "dotenv";
+import fs from "fs-extra";
 
-import { Decimal } from "@liquity/lib-base";
+import { Decimal } from "@secured-finance/lib-base";
 
 import {
   _LiquityContractAddresses,
@@ -25,27 +27,69 @@ export const setSilent = (s: boolean): void => {
   silent = s;
 };
 
+dotenv.config();
+
+const useDeployedContractsEnv = (process.env.USE_DEPLOYED_CONTRACTS ?? "false").toLowerCase();
+const useDeployedContracts = !["false", "no", "0"].includes(useDeployedContractsEnv);
+
+const deploymentsDir = require
+  .resolve("@secured-finance/stablecoin-contracts/package.json")
+  .replace("/package.json", "/mainnetDeployment");
+
 const deployContractAndGetBlockNumber = async (
   deployer: Signer,
   getContractFactory: (name: string, signer: Signer) => Promise<ContractFactory>,
+  networkName: string,
   contractName: string,
+  deploymentKey: string,
   ...args: unknown[]
 ): Promise<[address: string, blockNumber: number]> => {
-  log(`Deploying ${contractName} ...`);
-  const contract = await (await getContractFactory(contractName, deployer)).deploy(...args);
+  let contractAddress: string;
+  let blockNumber: number;
 
-  log(`Waiting for transaction ${contract.deployTransaction.hash} ...`);
-  const receipt = await contract.deployTransaction.wait();
+  if (useDeployedContracts && !!deploymentKey) {
+    log(`Fetching ${contractName} ...`);
+    const fileContent = fs.readFileSync(
+      `${deploymentsDir}/${networkName}DeploymentOutput.json`,
+      "utf-8"
+    );
+    const deployments = JSON.parse(fileContent);
+    contractAddress = deployments[deploymentKey].address;
+    // const tx = await deployer.provider?.getTransaction(deployments[deploymentKey].txHash);
 
-  log({
-    contractAddress: contract.address,
-    blockNumber: receipt.blockNumber,
-    gasUsed: receipt.gasUsed.toNumber()
-  });
+    // if (!tx?.blockNumber) {
+    //   throw new Error("Invalid block number.");
+    // }
+
+    // blockNumber = tx?.blockNumber;
+
+    blockNumber = 0;
+
+    log({
+      contractAddress,
+      blockNumber
+    });
+  } else {
+    log(`Deploying ${contractName} ...`);
+    const contract = await (await getContractFactory(contractName, deployer)).deploy(...args);
+
+    log(`Waiting for transaction ${contract.deployTransaction.hash} ...`);
+    const receipt = await contract.deployTransaction.wait();
+
+    log({
+      contractAddress: contract.address,
+      blockNumber: receipt.blockNumber,
+      gasUsed: receipt.gasUsed.toNumber()
+    });
+
+    contractAddress = contract.address;
+    blockNumber = receipt.blockNumber;
+  }
 
   log();
 
-  return [contract.address, receipt.blockNumber];
+  // return [contract.address, receipt.blockNumber];
+  return [contractAddress, blockNumber];
 };
 
 const deployContract: (
@@ -55,55 +99,133 @@ const deployContract: (
 const deployContracts = async (
   deployer: Signer,
   getContractFactory: (name: string, signer: Signer) => Promise<ContractFactory>,
+  networkName: string,
   priceFeedIsTestnet = true,
   overrides?: Overrides
 ): Promise<[addresses: Omit<_LiquityContractAddresses, "uniToken">, startBlock: number]> => {
   const [activePoolAddress, startBlock] = await deployContractAndGetBlockNumber(
     deployer,
     getContractFactory,
+    networkName,
     "ActivePool",
+    "activePool",
     { ...overrides }
   );
 
   const addresses = {
     activePool: activePoolAddress,
-    borrowerOperations: await deployContract(deployer, getContractFactory, "BorrowerOperations", {
-      ...overrides
-    }),
-    troveManager: await deployContract(deployer, getContractFactory, "TroveManager", {
-      ...overrides
-    }),
-    collSurplusPool: await deployContract(deployer, getContractFactory, "CollSurplusPool", {
-      ...overrides
-    }),
-    communityIssuance: await deployContract(deployer, getContractFactory, "CommunityIssuance", {
-      ...overrides
-    }),
-    defaultPool: await deployContract(deployer, getContractFactory, "DefaultPool", { ...overrides }),
-    hintHelpers: await deployContract(deployer, getContractFactory, "HintHelpers", { ...overrides }),
+    borrowerOperations: await deployContract(
+      deployer,
+      getContractFactory,
+      networkName,
+      "BorrowerOperations",
+      "borrowerOperations",
+      {
+        ...overrides
+      }
+    ),
+    troveManager: await deployContract(
+      deployer,
+      getContractFactory,
+      networkName,
+      "TroveManager",
+      "troveManager",
+      {
+        ...overrides
+      }
+    ),
+    collSurplusPool: await deployContract(
+      deployer,
+      getContractFactory,
+      networkName,
+      "CollSurplusPool",
+      "collSurplusPool",
+      {
+        ...overrides
+      }
+    ),
+    communityIssuance: await deployContract(
+      deployer,
+      getContractFactory,
+      networkName,
+      "CommunityIssuance",
+      "communityIssuance",
+      {
+        ...overrides
+      }
+    ),
+    defaultPool: await deployContract(
+      deployer,
+      getContractFactory,
+      networkName,
+      "DefaultPool",
+      "defaultPool",
+      {
+        ...overrides
+      }
+    ),
+    hintHelpers: await deployContract(
+      deployer,
+      getContractFactory,
+      networkName,
+      "HintHelpers",
+      "hintHelpers",
+      {
+        ...overrides
+      }
+    ),
     lockupContractFactory: await deployContract(
       deployer,
       getContractFactory,
+      networkName,
       "LockupContractFactory",
+      "lockupContractFactory",
       { ...overrides }
     ),
-    lqtyStaking: await deployContract(deployer, getContractFactory, "LQTYStaking", { ...overrides }),
+    lqtyStaking: await deployContract(
+      deployer,
+      getContractFactory,
+      networkName,
+      "LQTYStaking",
+      "lqtyStaking",
+      {
+        ...overrides
+      }
+    ),
     priceFeed: await deployContract(
       deployer,
       getContractFactory,
+      networkName,
       priceFeedIsTestnet ? "PriceFeedTestnet" : "PriceFeed",
+      "priceFeed",
       { ...overrides }
     ),
-    sortedTroves: await deployContract(deployer, getContractFactory, "SortedTroves", {
+    sortedTroves: await deployContract(
+      deployer,
+      getContractFactory,
+      networkName,
+      "SortedTroves",
+      "sortedTroves",
+      {
+        ...overrides
+      }
+    ),
+    stabilityPool: await deployContract(
+      deployer,
+      getContractFactory,
+      networkName,
+      "StabilityPool",
+      "stabilityPool",
+      {
+        ...overrides
+      }
+    ),
+    gasPool: await deployContract(deployer, getContractFactory, networkName, "GasPool", "gasPool", {
       ...overrides
     }),
-    stabilityPool: await deployContract(deployer, getContractFactory, "StabilityPool", {
+    unipool: await deployContract(deployer, getContractFactory, networkName, "Unipool", "unipool", {
       ...overrides
-    }),
-    gasPool: await deployContract(deployer, getContractFactory, "GasPool", {
-      ...overrides
-    }),
-    unipool: await deployContract(deployer, getContractFactory, "Unipool", { ...overrides })
+    })
   };
 
   return [
@@ -112,7 +234,9 @@ const deployContracts = async (
       lusdToken: await deployContract(
         deployer,
         getContractFactory,
+        networkName,
         "LUSDToken",
+        "lusdToken",
         addresses.troveManager,
         addresses.stabilityPool,
         addresses.borrowerOperations,
@@ -122,7 +246,9 @@ const deployContracts = async (
       lqtyToken: await deployContract(
         deployer,
         getContractFactory,
+        networkName,
         "LQTYToken",
+        "lqtyToken",
         addresses.communityIssuance,
         addresses.lqtyStaking,
         addresses.lockupContractFactory,
@@ -135,7 +261,9 @@ const deployContracts = async (
       multiTroveGetter: await deployContract(
         deployer,
         getContractFactory,
+        networkName,
         "MultiTroveGetter",
+        "multiTroveGetter",
         addresses.troveManager,
         addresses.sortedTroves,
         { ...overrides }
@@ -152,7 +280,28 @@ export const deployTellorCaller = (
   tellorAddress: string,
   overrides?: Overrides
 ): Promise<string> =>
-  deployContract(deployer, getContractFactory, "TellorCaller", tellorAddress, { ...overrides });
+  deployContract(deployer, getContractFactory, "TellorCaller", "tellorCaller", tellorAddress, {
+    ...overrides
+  });
+
+export const deployPythCaller = (
+  deployer: Signer,
+  getContractFactory: (name: string, signer: Signer) => Promise<ContractFactory>,
+  pythPriceFeedAddress: string,
+  pythPriceId: string,
+  overrides?: Overrides
+): Promise<string> =>
+  deployContract(
+    deployer,
+    getContractFactory,
+    "PythCaller",
+    "pythCaller",
+    pythPriceFeedAddress,
+    pythPriceId,
+    {
+      ...overrides
+    }
+  );
 
 const connectContracts = async (
   {
@@ -183,7 +332,7 @@ const connectContracts = async (
 
   const txCount = await deployer.provider.getTransactionCount(deployer.getAddress());
 
-  const connections: ((nonce: number) => Promise<ContractTransaction>)[] = [
+  const connections: ((nonce: number) => Promise<ContractTransaction | undefined>)[] = [
     nonce =>
       sortedTroves.setParams(1e6, troveManager.address, borrowerOperations.address, {
         ...overrides,
@@ -294,18 +443,38 @@ const connectContracts = async (
   const txs = await Promise.all(connections.map((connect, i) => connect(txCount + i)));
 
   let i = 0;
-  await Promise.all(txs.map(tx => tx.wait().then(() => log(`Connected ${++i}`))));
+  await Promise.all(txs.map(tx => tx?.wait().then(() => log(`Connected ${++i}`))));
+};
+
+const connectUniswapPoolContract = async (
+  { lqtyToken, unipool, uniToken }: _LiquityContracts,
+  deployer: Signer,
+  overrides?: Overrides
+) => {
+  if (!deployer.provider) {
+    throw new Error("Signer must have a provider.");
+  }
+
+  const txCount = await deployer.provider.getTransactionCount(deployer.getAddress());
+
+  await unipool.setParams(lqtyToken.address, uniToken.address, 2 * 30 * 24 * 60 * 60, {
+    ...overrides,
+    nonce: txCount
+  });
 };
 
 const deployMockUniToken = (
   deployer: Signer,
   getContractFactory: (name: string, signer: Signer) => Promise<ContractFactory>,
+  networkName: string,
   overrides?: Overrides
 ) =>
   deployContract(
     deployer,
     getContractFactory,
+    networkName,
     "ERC20Mock",
+    "",
     "Mock Uniswap V2",
     "UNI-V2",
     Wallet.createRandom().address, // initialAccount
@@ -317,7 +486,7 @@ export const deployAndSetupContracts = async (
   deployer: Signer,
   getContractFactory: (name: string, signer: Signer) => Promise<ContractFactory>,
   _priceFeedIsTestnet = true,
-  _isDev = true,
+  networkName: string,
   wethAddress?: string,
   overrides?: Overrides
 ): Promise<_LiquityDeploymentJSON> => {
@@ -337,27 +506,36 @@ export const deployAndSetupContracts = async (
     liquidityMiningLQTYRewardRate: "0",
     _priceFeedIsTestnet,
     _uniTokenIsMock: !wethAddress,
-    _isDev,
+    _isDev: networkName === "dev",
 
-    ...(await deployContracts(deployer, getContractFactory, _priceFeedIsTestnet, overrides).then(
-      async ([addresses, startBlock]) => ({
-        startBlock,
+    ...(await deployContracts(
+      deployer,
+      getContractFactory,
+      networkName,
+      _priceFeedIsTestnet,
+      overrides
+    ).then(async ([addresses, startBlock]) => ({
+      startBlock,
 
-        addresses: {
-          ...addresses,
+      addresses: {
+        ...addresses,
 
-          uniToken: await (wethAddress
-            ? createUniswapV2Pair(deployer, wethAddress, addresses.lusdToken, overrides)
-            : deployMockUniToken(deployer, getContractFactory, overrides))
-        }
-      })
-    ))
+        uniToken: await (wethAddress
+          ? createUniswapV2Pair(deployer, wethAddress, addresses.lusdToken, overrides)
+          : deployMockUniToken(deployer, getContractFactory, networkName, overrides))
+      }
+    })))
   };
 
   const contracts = _connectToContracts(deployer, deployment);
 
-  log("Connecting contracts...");
-  await connectContracts(contracts, deployer, overrides);
+  if (!useDeployedContracts) {
+    log("Connecting contracts...");
+    await connectContracts(contracts, deployer, overrides);
+  } else {
+    log("Connecting only Unipool contract...");
+    await connectUniswapPoolContract(contracts, deployer, overrides);
+  }
 
   const lqtyTokenDeploymentTime = await contracts.lqtyToken.getDeploymentStartTime();
   const bootstrapPeriod = await contracts.troveManager.BOOTSTRAP_PERIOD();

@@ -1,5 +1,5 @@
-import { Flex, Text, Slider as ThemeUiSlider, Button } from "theme-ui";
-import { Decimal } from "@liquity/lib-base";
+import { Decimal } from "@secured-finance/lib-base";
+import { Button, Flex, Text, Slider as ThemeUiSlider } from "theme-ui";
 import { toFloat } from "./Bonds/utils";
 import { InfoIcon } from "./InfoIcon";
 

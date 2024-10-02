@@ -1,6 +1,6 @@
+import { Decimal, LiquityStoreState, StabilityDepositChange } from "@secured-finance/lib-base";
+import { useLiquitySelector } from "@secured-finance/lib-react";
 import { Button } from "theme-ui";
-import { Decimal, LiquityStoreState, StabilityDepositChange } from "@liquity/lib-base";
-import { useLiquitySelector } from "@liquity/lib-react";
 
 import { useLiquity } from "../../hooks/LiquityContext";
 import { useTransactionFunction } from "../Transaction";

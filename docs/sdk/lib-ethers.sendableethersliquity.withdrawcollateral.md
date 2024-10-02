@@ -4,7 +4,6 @@
 
 ## SendableEthersLiquity.withdrawCollateral() method
 
-Adjust existing Trove by withdrawing some of its collateral.
 
 <b>Signature:</b>
 
@@ -16,19 +15,10 @@ withdrawCollateral(amount: Decimalish, overrides?: EthersTransactionOverrides): 
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  amount | [Decimalish](./lib-base.decimalish.md) | The amount of collateral to withdraw from the Trove. |
+|  amount | Decimalish |  |
 |  overrides | [EthersTransactionOverrides](./lib-ethers.etherstransactionoverrides.md) |  |
 
 <b>Returns:</b>
 
-Promise&lt;[SentEthersLiquityTransaction](./lib-ethers.sentethersliquitytransaction.md)<!-- -->&lt;[TroveAdjustmentDetails](./lib-base.troveadjustmentdetails.md)<!-- -->&gt;&gt;
-
-## Remarks
-
-Equivalent to:
-
-```typescript
-adjustTrove({ withdrawCollateral: amount })
-
-```
+Promise&lt;[SentEthersLiquityTransaction](./lib-ethers.sentethersliquitytransaction.md)<!-- -->&lt;TroveAdjustmentDetails&gt;&gt;
 

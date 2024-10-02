@@ -4,7 +4,6 @@
 
 ## EthersLiquity.getRemainingLiquidityMiningLQTYReward() method
 
-Get the remaining LQTY that will be collectively rewarded to liquidity miners.
 
 <b>Signature:</b>
 
@@ -20,5 +19,5 @@ getRemainingLiquidityMiningLQTYReward(overrides?: EthersCallOverrides): Promise<
 
 <b>Returns:</b>
 
-Promise&lt;[Decimal](./lib-base.decimal.md)<!-- -->&gt;
+Promise&lt;Decimal&gt;
 

@@ -4,8 +4,6 @@
 
 ## EthersLiquity.withdrawGainsFromStabilityPool() method
 
-Withdraw [collateral gain](./lib-base.stabilitydeposit.collateralgain.md) and [LQTY reward](./lib-base.stabilitydeposit.lqtyreward.md) from Stability Deposit.
-
 <b>Signature:</b>
 
 ```typescript
@@ -20,7 +18,7 @@ withdrawGainsFromStabilityPool(overrides?: EthersTransactionOverrides): Promise<
 
 <b>Returns:</b>
 
-Promise&lt;[StabilityPoolGainsWithdrawalDetails](./lib-base.stabilitypoolgainswithdrawaldetails.md)<!-- -->&gt;
+Promise&lt;StabilityPoolGainsWithdrawalDetails&gt;
 
 ## Exceptions
 

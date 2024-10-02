@@ -1,5 +1,5 @@
 {
-  "name": "@liquity/providers",
+  "name": "@secured-finance/providers",
   "version": "0.0.0-semantic-release",
   "description": "Custom Ethers Providers used by Liquity Dev UI",
   "keywords": [

@@ -4,7 +4,6 @@
 
 ## ReadableEthersLiquity.getLiquidityMiningLQTYReward() method
 
-Get the amount of LQTY earned by an address through mining liquidity.
 
 <b>Signature:</b>
 
@@ -16,10 +15,10 @@ getLiquidityMiningLQTYReward(address?: string, overrides?: EthersCallOverrides):
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  address | string | Address whose LQTY reward should be retrieved. |
+|  address | string |  |
 |  overrides | [EthersCallOverrides](./lib-ethers.etherscalloverrides.md) |  |
 
 <b>Returns:</b>
 
-Promise&lt;[Decimal](./lib-base.decimal.md)<!-- -->&gt;
+Promise&lt;Decimal&gt;
 

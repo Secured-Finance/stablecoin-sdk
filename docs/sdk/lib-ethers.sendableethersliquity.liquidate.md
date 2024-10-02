@@ -4,7 +4,6 @@
 
 ## SendableEthersLiquity.liquidate() method
 
-Liquidate one or more undercollateralized Troves.
 
 <b>Signature:</b>
 
@@ -16,10 +15,10 @@ liquidate(address: string | string[], overrides?: EthersTransactionOverrides): P
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  address | string \| string\[\] | Address or array of addresses whose Troves to liquidate. |
+|  address | string \| string\[\] |  |
 |  overrides | [EthersTransactionOverrides](./lib-ethers.etherstransactionoverrides.md) |  |
 
 <b>Returns:</b>
 
-Promise&lt;[SentEthersLiquityTransaction](./lib-ethers.sentethersliquitytransaction.md)<!-- -->&lt;[LiquidationDetails](./lib-base.liquidationdetails.md)<!-- -->&gt;&gt;
+Promise&lt;[SentEthersLiquityTransaction](./lib-ethers.sentethersliquitytransaction.md)<!-- -->&lt;LiquidationDetails&gt;&gt;
 

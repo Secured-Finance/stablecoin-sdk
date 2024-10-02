@@ -4,7 +4,6 @@
 
 ## SendableEthersLiquity.redeemLUSD() method
 
-Redeem LUSD to native currency (e.g. Ether) at face value.
 
 <b>Signature:</b>
 
@@ -16,15 +15,11 @@ redeemLUSD(amount: Decimalish, maxRedemptionRate?: Decimalish, overrides?: Ether
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  amount | [Decimalish](./lib-base.decimalish.md) | Amount of LUSD to be redeemed. |
-|  maxRedemptionRate | [Decimalish](./lib-base.decimalish.md) | Maximum acceptable [redemption rate](./lib-base.fees.redemptionrate.md)<!-- -->. |
+|  amount | Decimalish |  |
+|  maxRedemptionRate | Decimalish |  |
 |  overrides | [EthersTransactionOverrides](./lib-ethers.etherstransactionoverrides.md) |  |
 
 <b>Returns:</b>
 
-Promise&lt;[SentEthersLiquityTransaction](./lib-ethers.sentethersliquitytransaction.md)<!-- -->&lt;[RedemptionDetails](./lib-base.redemptiondetails.md)<!-- -->&gt;&gt;
-
-## Remarks
-
-If `maxRedemptionRate` is omitted, the current redemption rate (based on `amount`<!-- -->) plus 0.1% is used as maximum acceptable rate.
+Promise&lt;[SentEthersLiquityTransaction](./lib-ethers.sentethersliquitytransaction.md)<!-- -->&lt;RedemptionDetails&gt;&gt;
 

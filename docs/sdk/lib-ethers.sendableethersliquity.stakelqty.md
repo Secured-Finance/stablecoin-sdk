@@ -4,7 +4,6 @@
 
 ## SendableEthersLiquity.stakeLQTY() method
 
-Stake LQTY to start earning fee revenue or increase existing stake.
 
 <b>Signature:</b>
 
@@ -16,14 +15,10 @@ stakeLQTY(amount: Decimalish, overrides?: EthersTransactionOverrides): Promise<S
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  amount | [Decimalish](./lib-base.decimalish.md) | Amount of LQTY to add to new or existing stake. |
+|  amount | Decimalish |  |
 |  overrides | [EthersTransactionOverrides](./lib-ethers.etherstransactionoverrides.md) |  |
 
 <b>Returns:</b>
 
 Promise&lt;[SentEthersLiquityTransaction](./lib-ethers.sentethersliquitytransaction.md)<!-- -->&lt;void&gt;&gt;
-
-## Remarks
-
-As a side-effect, the transaction will also pay out an existing LQTY stake's [collateral gain](./lib-base.lqtystake.collateralgain.md) and [LUSD gain](./lib-base.lqtystake.lusdgain.md)<!-- -->.
 

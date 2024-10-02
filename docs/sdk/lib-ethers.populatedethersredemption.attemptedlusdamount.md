@@ -4,7 +4,6 @@
 
 ## PopulatedEthersRedemption.attemptedLUSDAmount property
 
-Amount of LUSD the redeemer is trying to redeem.
 
 <b>Signature:</b>
 

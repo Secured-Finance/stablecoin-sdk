@@ -1,7 +1,9 @@
 import fs from "fs-extra";
 import path from "path";
 
-const artifactsDir = path.join("..", "contracts", "artifacts");
+const artifactsDir = require
+  .resolve("@secured-finance/stablecoin-contracts/package.json")
+  .replace("/package.json", "/artifacts");
 const contractsDir = path.join(artifactsDir, "contracts");
 const liveDir = "live";
 

@@ -4,7 +4,6 @@
 
 ## ReadableEthersLiquity.getTotalStakedLQTY() method
 
-Get the total amount of LQTY currently staked.
 
 <b>Signature:</b>
 
@@ -20,5 +19,5 @@ getTotalStakedLQTY(overrides?: EthersCallOverrides): Promise<Decimal>;
 
 <b>Returns:</b>
 
-Promise&lt;[Decimal](./lib-base.decimal.md)<!-- -->&gt;
+Promise&lt;Decimal&gt;
 

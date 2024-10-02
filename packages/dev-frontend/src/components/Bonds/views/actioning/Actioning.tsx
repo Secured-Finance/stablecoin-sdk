@@ -1,18 +1,18 @@
 /** @jsxImportSource theme-ui */
+import { Decimal } from "@secured-finance/lib-base";
 import React from "react";
-import { Flex, Heading, Grid, Close, Box } from "theme-ui";
+import { Box, Close, Flex, Grid, Heading } from "theme-ui";
+import type { EventType } from "../../../HorizontalTimeline";
+import { HorizontalTimeline, Label, SubLabel } from "../../../HorizontalTimeline";
+import { ReactModal } from "../../../ReactModal";
+import { WarningBubble } from "../../../WarningBubble";
 import { Record } from "../../Record";
 import { useBondView } from "../../context/BondViewContext";
-import { HorizontalTimeline, Label, SubLabel } from "../../../HorizontalTimeline";
-import type { EventType } from "../../../HorizontalTimeline";
 import * as l from "../../lexicon";
+import { percentify } from "../../utils";
+import { InfiniteEstimate } from "../InfiniteEstimation";
 import { Cancel } from "./actions/cancel/Cancel";
 import { Claim } from "./actions/claim/Claim";
-import { WarningBubble } from "../../../WarningBubble";
-import { ReactModal } from "../../../ReactModal";
-import { percentify } from "../../utils";
-import { Decimal } from "@liquity/lib-base";
-import { InfiniteEstimate } from "../InfiniteEstimation";
 
 export const Actioning: React.FC = () => {
   const { dispatchEvent, view, selectedBond: bond } = useBondView();

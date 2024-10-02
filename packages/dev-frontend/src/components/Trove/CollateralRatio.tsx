@@ -1,14 +1,14 @@
 import React from "react";
-import { Flex, Box, Card } from "theme-ui";
+import { Box, Card, Flex } from "theme-ui";
 
-import { CRITICAL_COLLATERAL_RATIO, Decimal, Difference, Percent } from "@liquity/lib-base";
+import { CRITICAL_COLLATERAL_RATIO, Decimal, Difference, Percent } from "@secured-finance/lib-base";
 
 import { Icon } from "../Icon";
 
-import { StaticRow } from "./Editor";
-import { InfoIcon } from "../InfoIcon";
 import { InfoBubble } from "../InfoBubble";
+import { InfoIcon } from "../InfoIcon";
 import { LearnMoreLink } from "../Tooltip";
+import { StaticRow } from "./Editor";
 
 type CollateralRatioProps = {
   value?: Decimal;

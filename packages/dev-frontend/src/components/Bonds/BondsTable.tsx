@@ -1,12 +1,12 @@
 /** @jsxImportSource theme-ui */
+import { Decimal } from "@secured-finance/lib-base";
 import React from "react";
-import { Card, Text, Box, Heading, Flex, Grid, Button } from "theme-ui";
+import { Box, Button, Card, Flex, Grid, Heading, Text } from "theme-ui";
 import { InfoIcon } from "../InfoIcon";
-import * as lexicon from "./lexicon";
-import { Empty } from "./views/idle/Empty";
 import { Link } from "../Link";
 import { useBondView } from "./context/BondViewContext";
-import { Decimal } from "@liquity/lib-base";
+import * as lexicon from "./lexicon";
+import { Empty } from "./views/idle/Empty";
 import { InfiniteEstimate } from "./views/InfiniteEstimation";
 
 const {

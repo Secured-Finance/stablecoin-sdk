@@ -4,7 +4,6 @@
 
 ## SentEthersLiquityTransaction.getReceipt() method
 
-Check whether the transaction has been mined, and whether it was successful.
 
 <b>Signature:</b>
 
@@ -13,9 +12,5 @@ getReceipt(): Promise<LiquityReceipt<EthersTransactionReceipt, T>>;
 ```
 <b>Returns:</b>
 
-Promise&lt;[LiquityReceipt](./lib-base.liquityreceipt.md)<!-- -->&lt;[EthersTransactionReceipt](./lib-ethers.etherstransactionreceipt.md)<!-- -->, T&gt;&gt;
-
-## Remarks
-
-Unlike [waitForReceipt()](./lib-base.sentliquitytransaction.waitforreceipt.md)<!-- -->, this function doesn't wait for the transaction to be mined.
+Promise&lt;LiquityReceipt&lt;[EthersTransactionReceipt](./lib-ethers.etherstransactionreceipt.md)<!-- -->, T&gt;&gt;
 

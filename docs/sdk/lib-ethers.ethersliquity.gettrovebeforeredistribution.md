@@ -4,7 +4,6 @@
 
 ## EthersLiquity.getTroveBeforeRedistribution() method
 
-Get a Trove in its state after the last direct modification.
 
 <b>Signature:</b>
 
@@ -16,14 +15,10 @@ getTroveBeforeRedistribution(address?: string, overrides?: EthersCallOverrides):
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  address | string | Address that owns the Trove. |
+|  address | string |  |
 |  overrides | [EthersCallOverrides](./lib-ethers.etherscalloverrides.md) |  |
 
 <b>Returns:</b>
 
-Promise&lt;[TroveWithPendingRedistribution](./lib-base.trovewithpendingredistribution.md)<!-- -->&gt;
-
-## Remarks
-
-The current state of a Trove can be fetched using [getTrove()](./lib-base.readableliquity.gettrove.md)<!-- -->.
+Promise&lt;TroveWithPendingRedistribution&gt;
 

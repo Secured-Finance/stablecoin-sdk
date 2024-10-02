@@ -4,7 +4,6 @@
 
 ## ReadableEthersLiquity.getFees() method
 
-Get a calculator for current fees.
 
 <b>Signature:</b>
 
@@ -20,5 +19,5 @@ getFees(overrides?: EthersCallOverrides): Promise<Fees>;
 
 <b>Returns:</b>
 
-Promise&lt;[Fees](./lib-base.fees.md)<!-- -->&gt;
+Promise&lt;Fees&gt;
 

@@ -4,7 +4,6 @@
 
 ## SendableEthersLiquity.withdrawLQTYRewardFromLiquidityMining() method
 
-Withdraw LQTY that has been earned by mining liquidity.
 
 <b>Signature:</b>
 

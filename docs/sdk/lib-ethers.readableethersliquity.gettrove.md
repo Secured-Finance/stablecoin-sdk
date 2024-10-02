@@ -4,7 +4,6 @@
 
 ## ReadableEthersLiquity.getTrove() method
 
-Get the current state of a Trove.
 
 <b>Signature:</b>
 
@@ -16,10 +15,10 @@ getTrove(address?: string, overrides?: EthersCallOverrides): Promise<UserTrove>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  address | string | Address that owns the Trove. |
+|  address | string |  |
 |  overrides | [EthersCallOverrides](./lib-ethers.etherscalloverrides.md) |  |
 
 <b>Returns:</b>
 
-Promise&lt;[UserTrove](./lib-base.usertrove.md)<!-- -->&gt;
+Promise&lt;UserTrove&gt;
 

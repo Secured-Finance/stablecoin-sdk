@@ -1,6 +1,6 @@
+import "colors";
 import fs from "fs";
 import path from "path";
-import "colors";
 
 import { _LiquityDeploymentJSON } from "../src/contracts";
 

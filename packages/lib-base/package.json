@@ -1,5 +1,5 @@
 {
-  "name": "@liquity/lib-base",
+  "name": "@secured-finance/lib-base",
   "version": "0.0.0-semantic-release",
   "description": "Liquity SDK shared interfaces",
   "keywords": [

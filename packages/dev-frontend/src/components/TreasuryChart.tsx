@@ -1,5 +1,5 @@
-import { Decimal } from "@liquity/lib-base";
-import { PieChart, Pie, ResponsiveContainer, Tooltip, Cell } from "recharts";
+import { Decimal } from "@secured-finance/lib-base";
+import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 import { useBondView } from "./Bonds/context/BondViewContext";
 
 const labels = ["Pending", "Reserve", "Permanent"];

@@ -4,7 +4,6 @@
 
 ## EthersLiquity.getUniTokenBalance() method
 
-Get the amount of Uniswap ETH/LUSD LP tokens held by an address.
 
 <b>Signature:</b>
 
@@ -16,10 +15,10 @@ getUniTokenBalance(address?: string, overrides?: EthersCallOverrides): Promise<D
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  address | string | Address whose balance should be retrieved. |
+|  address | string |  |
 |  overrides | [EthersCallOverrides](./lib-ethers.etherscalloverrides.md) |  |
 
 <b>Returns:</b>
 
-Promise&lt;[Decimal](./lib-base.decimal.md)<!-- -->&gt;
+Promise&lt;Decimal&gt;
 

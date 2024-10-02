@@ -11,7 +11,7 @@ Thrown by [EthersLiquity](./lib-ethers.ethersliquity.md) in case of transaction 
 ```typescript
 export declare class EthersTransactionFailedError extends TransactionFailedError<FailedReceipt<EthersTransactionReceipt>> 
 ```
-<b>Extends:</b> [TransactionFailedError](./lib-base.transactionfailederror.md)<!-- -->&lt;[FailedReceipt](./lib-base.failedreceipt.md)<!-- -->&lt;[EthersTransactionReceipt](./lib-ethers.etherstransactionreceipt.md)<!-- -->&gt;&gt;
+<b>Extends:</b> TransactionFailedError&lt;FailedReceipt&lt;[EthersTransactionReceipt](./lib-ethers.etherstransactionreceipt.md)<!-- -->&gt;&gt;
 
 ## Constructors
 

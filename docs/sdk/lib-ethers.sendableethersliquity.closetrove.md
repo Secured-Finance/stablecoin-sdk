@@ -4,7 +4,6 @@
 
 ## SendableEthersLiquity.closeTrove() method
 
-Close existing Trove by repaying all debt and withdrawing all collateral.
 
 <b>Signature:</b>
 
@@ -20,5 +19,5 @@ closeTrove(overrides?: EthersTransactionOverrides): Promise<SentEthersLiquityTra
 
 <b>Returns:</b>
 
-Promise&lt;[SentEthersLiquityTransaction](./lib-ethers.sentethersliquitytransaction.md)<!-- -->&lt;[TroveClosureDetails](./lib-base.troveclosuredetails.md)<!-- -->&gt;&gt;
+Promise&lt;[SentEthersLiquityTransaction](./lib-ethers.sentethersliquitytransaction.md)<!-- -->&lt;TroveClosureDetails&gt;&gt;
 

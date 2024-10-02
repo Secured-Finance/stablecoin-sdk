@@ -4,7 +4,6 @@
 
 ## PopulatableEthersLiquity.borrowLUSD() method
 
-Adjust existing Trove by borrowing more LUSD.
 
 <b>Signature:</b>
 
@@ -16,20 +15,11 @@ borrowLUSD(amount: Decimalish, maxBorrowingRate?: Decimalish, overrides?: Ethers
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  amount | [Decimalish](./lib-base.decimalish.md) | The amount of LUSD to borrow. |
-|  maxBorrowingRate | [Decimalish](./lib-base.decimalish.md) | Maximum acceptable [borrowing rate](./lib-base.fees.borrowingrate.md)<!-- -->. |
+|  amount | Decimalish |  |
+|  maxBorrowingRate | Decimalish |  |
 |  overrides | [EthersTransactionOverrides](./lib-ethers.etherstransactionoverrides.md) |  |
 
 <b>Returns:</b>
 
-Promise&lt;[PopulatedEthersLiquityTransaction](./lib-ethers.populatedethersliquitytransaction.md)<!-- -->&lt;[TroveAdjustmentDetails](./lib-base.troveadjustmentdetails.md)<!-- -->&gt;&gt;
-
-## Remarks
-
-Equivalent to:
-
-```typescript
-adjustTrove({ borrowLUSD: amount }, maxBorrowingRate)
-
-```
+Promise&lt;[PopulatedEthersLiquityTransaction](./lib-ethers.populatedethersliquitytransaction.md)<!-- -->&lt;TroveAdjustmentDetails&gt;&gt;
 

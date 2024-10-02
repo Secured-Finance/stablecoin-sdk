@@ -1,27 +1,27 @@
-import chai, { expect, assert } from "chai";
+import { Signer } from "@ethersproject/abstract-signer";
+import { BigNumber } from "@ethersproject/bignumber";
+import { AddressZero } from "@ethersproject/constants";
+import chai, { assert, expect } from "chai";
 import chaiAsPromised from "chai-as-promised";
 import chaiSpies from "chai-spies";
-import { AddressZero } from "@ethersproject/constants";
-import { BigNumber } from "@ethersproject/bignumber";
-import { Signer } from "@ethersproject/abstract-signer";
-import { ethers, network, deployLiquity } from "hardhat";
+import { deployLiquity, ethers, network } from "hardhat";
 
 import {
   Decimal,
   Decimalish,
-  Trove,
-  StabilityDeposit,
-  LiquityReceipt,
-  SuccessfulReceipt,
-  SentLiquityTransaction,
-  TroveCreationParams,
   Fees,
   LUSD_LIQUIDATION_RESERVE,
+  LUSD_MINIMUM_DEBT,
+  LUSD_MINIMUM_NET_DEBT,
+  LiquityReceipt,
   MAXIMUM_BORROWING_RATE,
   MINIMUM_BORROWING_RATE,
-  LUSD_MINIMUM_DEBT,
-  LUSD_MINIMUM_NET_DEBT
-} from "@liquity/lib-base";
+  SentLiquityTransaction,
+  StabilityDeposit,
+  SuccessfulReceipt,
+  Trove,
+  TroveCreationParams
+} from "@secured-finance/lib-base";
 
 import { HintHelpers } from "../types";
 
@@ -31,11 +31,11 @@ import {
   _redeemMaxIterations
 } from "../src/PopulatableEthersLiquity";
 
-import { EthersTransactionReceipt } from "../src/types";
 import { _LiquityDeploymentJSON } from "../src/contracts";
-import { _connectToDeployment } from "../src/EthersLiquityConnection";
 import { EthersLiquity } from "../src/EthersLiquity";
+import { _connectToDeployment } from "../src/EthersLiquityConnection";
 import { ReadableEthersLiquity } from "../src/ReadableEthersLiquity";
+import { EthersTransactionReceipt } from "../src/types";
 
 const provider = ethers.provider;
 

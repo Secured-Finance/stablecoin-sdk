@@ -1,8 +1,9 @@
-import fetch from "cross-fetch";
 import { ApolloClient, gql, HttpLink, InMemoryCache, NormalizedCacheObject } from "@apollo/client";
 import { getAddress } from "@ethersproject/address";
+import fetch from "cross-fetch";
 
 import {
+  _emptyTrove,
   Decimal,
   Fees,
   FrontendStatus,
@@ -13,13 +14,12 @@ import {
   Trove,
   TroveListingParams,
   TroveWithPendingRedistribution,
-  UserTrove,
-  _emptyTrove
-} from "@liquity/lib-base";
+  UserTrove
+} from "@secured-finance/lib-base";
 
-import { OrderDirection } from "../types/globalTypes";
-import { Global } from "../types/Global";
 import { BlockNumberDummy, BlockNumberDummyVariables } from "../types/BlockNumberDummy";
+import { Global } from "../types/Global";
+import { OrderDirection } from "../types/globalTypes";
 import { TroveRawFields } from "../types/TroveRawFields";
 import { Troves, TrovesVariables } from "../types/Troves";
 import { TroveWithoutRewards, TroveWithoutRewardsVariables } from "../types/TroveWithoutRewards";

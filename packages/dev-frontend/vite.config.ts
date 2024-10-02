@@ -1,7 +1,7 @@
 /// <reference types="vitest" />
 
-import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
+import { defineConfig } from "vite";
 import { nodePolyfills } from "vite-plugin-node-polyfills";
 
 // https://vitejs.dev/config/
@@ -14,7 +14,12 @@ export default defineConfig({
     })
   ],
   optimizeDeps: {
-    include: ["@liquity/providers", "@liquity/lib-ethers", "@liquity/lib-base", "@liquity/lib-react"]
+    include: [
+      "@secured-finance/providers",
+      "@secured-finance/lib-ethers",
+      "@secured-finance/lib-base",
+      "@secured-finance/lib-react"
+    ]
   },
   build: {
     commonjsOptions: {

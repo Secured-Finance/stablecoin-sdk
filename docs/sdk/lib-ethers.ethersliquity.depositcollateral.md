@@ -4,8 +4,6 @@
 
 ## EthersLiquity.depositCollateral() method
 
-Adjust existing Trove by depositing more collateral.
-
 <b>Signature:</b>
 
 ```typescript
@@ -16,23 +14,14 @@ depositCollateral(amount: Decimalish, overrides?: EthersTransactionOverrides): P
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  amount | [Decimalish](./lib-base.decimalish.md) | The amount of collateral to add to the Trove's existing collateral. |
+|  amount | Decimalish |  |
 |  overrides | [EthersTransactionOverrides](./lib-ethers.etherstransactionoverrides.md) |  |
 
 <b>Returns:</b>
 
-Promise&lt;[TroveAdjustmentDetails](./lib-base.troveadjustmentdetails.md)<!-- -->&gt;
+Promise&lt;TroveAdjustmentDetails&gt;
 
 ## Exceptions
 
 Throws [EthersTransactionFailedError](./lib-ethers.etherstransactionfailederror.md) in case of transaction failure. Throws [EthersTransactionCancelledError](./lib-ethers.etherstransactioncancellederror.md) if the transaction is cancelled or replaced.
-
-## Remarks
-
-Equivalent to:
-
-```typescript
-adjustTrove({ depositCollateral: amount })
-
-```
 

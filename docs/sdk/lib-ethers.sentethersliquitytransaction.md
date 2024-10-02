@@ -11,7 +11,7 @@ A transaction that has already been sent.
 ```typescript
 export declare class SentEthersLiquityTransaction<T = unknown> implements SentLiquityTransaction<EthersTransactionResponse, LiquityReceipt<EthersTransactionReceipt, T>> 
 ```
-<b>Implements:</b> [SentLiquityTransaction](./lib-base.sentliquitytransaction.md)<!-- -->&lt;[EthersTransactionResponse](./lib-ethers.etherstransactionresponse.md)<!-- -->, [LiquityReceipt](./lib-base.liquityreceipt.md)<!-- -->&lt;[EthersTransactionReceipt](./lib-ethers.etherstransactionreceipt.md)<!-- -->, T&gt;&gt;
+<b>Implements:</b> SentLiquityTransaction&lt;[EthersTransactionResponse](./lib-ethers.etherstransactionresponse.md)<!-- -->, LiquityReceipt&lt;[EthersTransactionReceipt](./lib-ethers.etherstransactionreceipt.md)<!-- -->, T&gt;&gt;
 
 ## Remarks
 
@@ -29,6 +29,6 @@ The constructor for this class is marked as internal. Third-party code should no
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [getReceipt()](./lib-ethers.sentethersliquitytransaction.getreceipt.md) |  | Check whether the transaction has been mined, and whether it was successful. |
-|  [waitForReceipt()](./lib-ethers.sentethersliquitytransaction.waitforreceipt.md) |  | Wait for the transaction to be mined, and check whether it was successful. |
+|  [getReceipt()](./lib-ethers.sentethersliquitytransaction.getreceipt.md) |  |  |
+|  [waitForReceipt()](./lib-ethers.sentethersliquitytransaction.waitforreceipt.md) |  |  |
 

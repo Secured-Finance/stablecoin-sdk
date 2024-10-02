@@ -4,7 +4,6 @@
 
 ## PopulatableEthersLiquity.sendLUSD() method
 
-Send LUSD tokens to an address.
 
 <b>Signature:</b>
 
@@ -16,8 +15,8 @@ sendLUSD(toAddress: string, amount: Decimalish, overrides?: EthersTransactionOve
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  toAddress | string | Address of receipient. |
-|  amount | [Decimalish](./lib-base.decimalish.md) | Amount of LUSD to send. |
+|  toAddress | string |  |
+|  amount | Decimalish |  |
 |  overrides | [EthersTransactionOverrides](./lib-ethers.etherstransactionoverrides.md) |  |
 
 <b>Returns:</b>

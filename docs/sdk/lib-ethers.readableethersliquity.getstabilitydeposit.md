@@ -4,7 +4,6 @@
 
 ## ReadableEthersLiquity.getStabilityDeposit() method
 
-Get the current state of a Stability Deposit.
 
 <b>Signature:</b>
 
@@ -16,10 +15,10 @@ getStabilityDeposit(address?: string, overrides?: EthersCallOverrides): Promise<
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  address | string | Address that owns the Stability Deposit. |
+|  address | string |  |
 |  overrides | [EthersCallOverrides](./lib-ethers.etherscalloverrides.md) |  |
 
 <b>Returns:</b>
 
-Promise&lt;[StabilityDeposit](./lib-base.stabilitydeposit.md)<!-- -->&gt;
+Promise&lt;StabilityDeposit&gt;
 

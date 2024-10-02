@@ -1,9 +1,9 @@
+import { Interface, LogDescription } from "@ethersproject/abi";
+import { Log, TransactionReceipt } from "@ethersproject/abstract-provider";
 import { BigNumber } from "@ethersproject/bignumber";
 import { AddressZero } from "@ethersproject/constants";
-import { Log, TransactionReceipt } from "@ethersproject/abstract-provider";
-import { LogDescription, Interface } from "@ethersproject/abi";
 
-import { Decimal } from "@liquity/lib-base";
+import { Decimal } from "@secured-finance/lib-base";
 
 import { _LiquityContracts, _TypedLiquityContract } from "./contracts";
 

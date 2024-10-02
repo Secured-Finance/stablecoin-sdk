@@ -1,19 +1,19 @@
+import { Decimal } from "@secured-finance/lib-base";
 import { createContext, useContext } from "react";
+import { CANCELLED_STATUS, CLAIMED_STATUS, PENDING_STATUS } from "../lexicon";
 import type {
-  BondView,
-  BondEvent,
-  Payload,
-  Bond,
-  Stats,
-  BondTransactionStatuses,
-  ProtocolInfo,
-  OptimisticBond,
-  BLusdAmmTokenIndex,
   Addresses,
-  BLusdLpRewards
+  BLusdAmmTokenIndex,
+  BLusdLpRewards,
+  Bond,
+  BondEvent,
+  BondTransactionStatuses,
+  BondView,
+  OptimisticBond,
+  Payload,
+  ProtocolInfo,
+  Stats
 } from "./transitions";
-import { PENDING_STATUS, CANCELLED_STATUS, CLAIMED_STATUS } from "../lexicon";
-import { Decimal } from "@liquity/lib-base";
 
 export type BondViewContextType = {
   view: BondView;

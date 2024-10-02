@@ -12,9 +12,9 @@ const factoryAbi = [
   "event PairCreated(address indexed token0, address indexed token1, address pair, uint)"
 ];
 
-const factoryAddress = "0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f";
+const factoryAddress = "0xB4C47eD546Fc31E26470a186eC2C5F19eF09BA41";
 
-const hasFactory = (chainId: number) => [1, 3, 4, 5, 42].includes(chainId);
+const hasFactory = (chainId: number) => [314].includes(chainId);
 
 interface UniswapV2Factory
   extends _TypedLiquityContract<

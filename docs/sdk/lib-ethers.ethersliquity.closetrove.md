@@ -4,8 +4,6 @@
 
 ## EthersLiquity.closeTrove() method
 
-Close existing Trove by repaying all debt and withdrawing all collateral.
-
 <b>Signature:</b>
 
 ```typescript
@@ -20,7 +18,7 @@ closeTrove(overrides?: EthersTransactionOverrides): Promise<TroveClosureDetails>
 
 <b>Returns:</b>
 
-Promise&lt;[TroveClosureDetails](./lib-base.troveclosuredetails.md)<!-- -->&gt;
+Promise&lt;TroveClosureDetails&gt;
 
 ## Exceptions
 

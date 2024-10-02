@@ -4,7 +4,6 @@
 
 ## ReadableEthersLiquity.getFrontendStatus() method
 
-Check whether an address is registered as a Liquity frontend, and what its kickback rate is.
 
 <b>Signature:</b>
 
@@ -16,10 +15,10 @@ getFrontendStatus(address?: string, overrides?: EthersCallOverrides): Promise<Fr
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  address | string | Address to check. |
+|  address | string |  |
 |  overrides | [EthersCallOverrides](./lib-ethers.etherscalloverrides.md) |  |
 
 <b>Returns:</b>
 
-Promise&lt;[FrontendStatus](./lib-base.frontendstatus.md)<!-- -->&gt;
+Promise&lt;FrontendStatus&gt;
 

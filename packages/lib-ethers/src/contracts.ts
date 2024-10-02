@@ -1,59 +1,59 @@
 import { JsonFragment, LogDescription } from "@ethersproject/abi";
-import { BigNumber } from "@ethersproject/bignumber";
 import { Log } from "@ethersproject/abstract-provider";
+import { BigNumber } from "@ethersproject/bignumber";
 
 import {
-  Contract,
-  ContractInterface,
-  ContractFunction,
-  Overrides,
   CallOverrides,
-  PopulatedTransaction,
-  ContractTransaction
+  Contract,
+  ContractFunction,
+  ContractInterface,
+  ContractTransaction,
+  Overrides,
+  PopulatedTransaction
 } from "@ethersproject/contracts";
 
 import activePoolAbi from "../abi/ActivePool.json";
 import borrowerOperationsAbi from "../abi/BorrowerOperations.json";
-import troveManagerAbi from "../abi/TroveManager.json";
-import lusdTokenAbi from "../abi/LUSDToken.json";
 import collSurplusPoolAbi from "../abi/CollSurplusPool.json";
 import communityIssuanceAbi from "../abi/CommunityIssuance.json";
 import defaultPoolAbi from "../abi/DefaultPool.json";
-import lqtyTokenAbi from "../abi/LQTYToken.json";
+import erc20MockAbi from "../abi/ERC20Mock.json";
+import gasPoolAbi from "../abi/GasPool.json";
 import hintHelpersAbi from "../abi/HintHelpers.json";
+import iERC20Abi from "../abi/IERC20.json";
 import lockupContractFactoryAbi from "../abi/LockupContractFactory.json";
 import lqtyStakingAbi from "../abi/LQTYStaking.json";
+import lqtyTokenAbi from "../abi/LQTYToken.json";
+import lusdTokenAbi from "../abi/LUSDToken.json";
 import multiTroveGetterAbi from "../abi/MultiTroveGetter.json";
 import priceFeedAbi from "../abi/PriceFeed.json";
 import priceFeedTestnetAbi from "../abi/PriceFeedTestnet.json";
 import sortedTrovesAbi from "../abi/SortedTroves.json";
 import stabilityPoolAbi from "../abi/StabilityPool.json";
-import gasPoolAbi from "../abi/GasPool.json";
+import troveManagerAbi from "../abi/TroveManager.json";
 import unipoolAbi from "../abi/Unipool.json";
-import iERC20Abi from "../abi/IERC20.json";
-import erc20MockAbi from "../abi/ERC20Mock.json";
 
 import {
   ActivePool,
   BorrowerOperations,
-  TroveManager,
-  LUSDToken,
   CollSurplusPool,
   CommunityIssuance,
   DefaultPool,
-  LQTYToken,
+  ERC20Mock,
+  GasPool,
   HintHelpers,
+  IERC20,
   LockupContractFactory,
   LQTYStaking,
+  LQTYToken,
+  LUSDToken,
   MultiTroveGetter,
   PriceFeed,
   PriceFeedTestnet,
   SortedTroves,
   StabilityPool,
-  GasPool,
-  Unipool,
-  ERC20Mock,
-  IERC20
+  TroveManager,
+  Unipool
 } from "../types";
 
 import { EthersProvider, EthersSigner } from "./types";

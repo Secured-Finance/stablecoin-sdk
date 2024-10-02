@@ -4,8 +4,6 @@
 
 ## EthersLiquity.sendLQTY() method
 
-Send LQTY tokens to an address.
-
 <b>Signature:</b>
 
 ```typescript
@@ -16,8 +14,8 @@ sendLQTY(toAddress: string, amount: Decimalish, overrides?: EthersTransactionOve
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  toAddress | string | Address of receipient. |
-|  amount | [Decimalish](./lib-base.decimalish.md) | Amount of LQTY to send. |
+|  toAddress | string |  |
+|  amount | Decimalish |  |
 |  overrides | [EthersTransactionOverrides](./lib-ethers.etherstransactionoverrides.md) |  |
 
 <b>Returns:</b>

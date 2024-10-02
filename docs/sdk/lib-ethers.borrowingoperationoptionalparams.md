@@ -17,5 +17,5 @@ export interface BorrowingOperationOptionalParams
 |  Property | Type | Description |
 |  --- | --- | --- |
 |  [borrowingFeeDecayToleranceMinutes?](./lib-ethers.borrowingoperationoptionalparams.borrowingfeedecaytoleranceminutes.md) | number | <i>(Optional)</i> Control the amount of extra gas included attached to the transaction. |
-|  [maxBorrowingRate?](./lib-ethers.borrowingoperationoptionalparams.maxborrowingrate.md) | [Decimalish](./lib-base.decimalish.md) | <i>(Optional)</i> Maximum acceptable [borrowing rate](./lib-base.fees.borrowingrate.md) (default: current borrowing rate plus 0.5%). |
+|  [maxBorrowingRate?](./lib-ethers.borrowingoperationoptionalparams.maxborrowingrate.md) | Decimalish | <i>(Optional)</i> Maximum acceptable  (default: current borrowing rate plus 0.5%). |
 

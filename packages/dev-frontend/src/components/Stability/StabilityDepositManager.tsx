@@ -1,16 +1,20 @@
 import React, { useCallback, useEffect } from "react";
 import { Button, Flex } from "theme-ui";
 
-import { Decimal, Decimalish, LiquityStoreState } from "@liquity/lib-base";
-import { LiquityStoreUpdate, useLiquityReducer, useLiquitySelector } from "@liquity/lib-react";
+import { Decimal, Decimalish, LiquityStoreState } from "@secured-finance/lib-base";
+import {
+  LiquityStoreUpdate,
+  useLiquityReducer,
+  useLiquitySelector
+} from "@secured-finance/lib-react";
 
 import { COIN } from "../../strings";
 
 import { InfoBubble } from "../InfoBubble";
 import { useMyTransactionState } from "../Transaction";
 
-import { StabilityDepositEditor } from "./StabilityDepositEditor";
 import { StabilityDepositAction } from "./StabilityDepositAction";
+import { StabilityDepositEditor } from "./StabilityDepositEditor";
 import { useStabilityView } from "./context/StabilityViewContext";
 import {
   selectForStabilityDepositChangeValidation,

@@ -1,6 +1,6 @@
-import { Decimal } from "@liquity/lib-base";
+import { Decimal } from "@secured-finance/lib-base";
 import React, { useEffect, useState } from "react";
-import { Flex, Button, Spinner, Label, Radio, Text } from "theme-ui";
+import { Button, Flex, Label, Radio, Spinner, Text } from "theme-ui";
 import { Amount } from "../../../ActionDescription";
 import { ErrorDescription } from "../../../ErrorDescription";
 import { Icon } from "../../../Icon";

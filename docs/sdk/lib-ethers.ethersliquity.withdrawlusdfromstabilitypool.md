@@ -4,8 +4,6 @@
 
 ## EthersLiquity.withdrawLUSDFromStabilityPool() method
 
-Withdraw LUSD from Stability Deposit.
-
 <b>Signature:</b>
 
 ```typescript
@@ -16,18 +14,14 @@ withdrawLUSDFromStabilityPool(amount: Decimalish, overrides?: EthersTransactionO
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  amount | [Decimalish](./lib-base.decimalish.md) | Amount of LUSD to withdraw. |
+|  amount | Decimalish |  |
 |  overrides | [EthersTransactionOverrides](./lib-ethers.etherstransactionoverrides.md) |  |
 
 <b>Returns:</b>
 
-Promise&lt;[StabilityDepositChangeDetails](./lib-base.stabilitydepositchangedetails.md)<!-- -->&gt;
+Promise&lt;StabilityDepositChangeDetails&gt;
 
 ## Exceptions
 
 Throws [EthersTransactionFailedError](./lib-ethers.etherstransactionfailederror.md) in case of transaction failure. Throws [EthersTransactionCancelledError](./lib-ethers.etherstransactioncancellederror.md) if the transaction is cancelled or replaced.
-
-## Remarks
-
-As a side-effect, the transaction will also pay out the Stability Deposit's [collateral gain](./lib-base.stabilitydeposit.collateralgain.md) and [LQTY reward](./lib-base.stabilitydeposit.lqtyreward.md)<!-- -->.
 

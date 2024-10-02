@@ -1,8 +1,8 @@
 /** @jsxImportSource theme-ui */
 
-import { Decimal, Percent } from "@liquity/lib-base";
+import { Decimal, Percent } from "@secured-finance/lib-base";
 import React, { useEffect, useRef, useState } from "react";
-import { Flex, Button, Spinner, Heading, Close, Box, Label, Radio, Input, Link } from "theme-ui";
+import { Box, Button, Close, Flex, Heading, Input, Label, Link, Radio, Spinner } from "theme-ui";
 import { Amount } from "../../../ActionDescription";
 import { ErrorDescription } from "../../../ErrorDescription";
 import { Icon } from "../../../Icon";

@@ -4,7 +4,6 @@
 
 ## ReadableEthersLiquity.getLUSDInStabilityPool() method
 
-Get the total amount of LUSD currently deposited in the Stability Pool.
 
 <b>Signature:</b>
 
@@ -20,5 +19,5 @@ getLUSDInStabilityPool(overrides?: EthersCallOverrides): Promise<Decimal>;
 
 <b>Returns:</b>
 
-Promise&lt;[Decimal](./lib-base.decimal.md)<!-- -->&gt;
+Promise&lt;Decimal&gt;
 

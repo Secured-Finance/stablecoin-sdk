@@ -1,8 +1,8 @@
-import React, { useState, useCallback, useEffect, useRef } from "react";
-import { useLiquitySelector } from "@liquity/lib-react";
-import { LiquityStoreState, UserTroveStatus } from "@liquity/lib-base";
+import { LiquityStoreState, UserTroveStatus } from "@secured-finance/lib-base";
+import { useLiquitySelector } from "@secured-finance/lib-react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { TroveViewContext } from "./TroveViewContext";
-import type { TroveView, TroveEvent } from "./types";
+import type { TroveEvent, TroveView } from "./types";
 
 type TroveEventTransitions = Record<TroveView, Partial<Record<TroveEvent, TroveView>>>;
 

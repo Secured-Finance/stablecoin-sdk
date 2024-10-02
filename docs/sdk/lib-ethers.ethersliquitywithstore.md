@@ -4,7 +4,7 @@
 
 ## EthersLiquityWithStore interface
 
-Variant of [EthersLiquity](./lib-ethers.ethersliquity.md) that exposes a [LiquityStore](./lib-base.liquitystore.md)<!-- -->.
+Variant of [EthersLiquity](./lib-ethers.ethersliquity.md) that exposes a .
 
 <b>Signature:</b>
 

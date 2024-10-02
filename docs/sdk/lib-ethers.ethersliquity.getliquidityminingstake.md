@@ -4,7 +4,6 @@
 
 ## EthersLiquity.getLiquidityMiningStake() method
 
-Get the amount of Uniswap ETH/LUSD LP tokens currently staked by an address in liquidity mining.
 
 <b>Signature:</b>
 
@@ -16,10 +15,10 @@ getLiquidityMiningStake(address?: string, overrides?: EthersCallOverrides): Prom
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  address | string | Address whose LP stake should be retrieved. |
+|  address | string |  |
 |  overrides | [EthersCallOverrides](./lib-ethers.etherscalloverrides.md) |  |
 
 <b>Returns:</b>
 
-Promise&lt;[Decimal](./lib-base.decimal.md)<!-- -->&gt;
+Promise&lt;Decimal&gt;
 

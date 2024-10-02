@@ -1,7 +1,7 @@
-import { Decimal } from "@liquity/lib-base";
+import { Decimal } from "@secured-finance/lib-base";
 import React from "react";
-import { Flex, Button, Spinner } from "theme-ui";
-import { StaticRow, StaticAmounts } from "../../../Trove/Editor";
+import { Button, Flex, Spinner } from "theme-ui";
+import { StaticAmounts, StaticRow } from "../../../Trove/Editor";
 import { useBondView } from "../../context/BondViewContext";
 import { PendingRewards } from "./PendingRewards";
 import { PoolBalance } from "./PoolBalance";

@@ -4,7 +4,6 @@
 
 ## SendableEthersLiquity.stakeUniTokens() method
 
-Stake Uniswap ETH/LUSD LP tokens to participate in liquidity mining and earn LQTY.
 
 <b>Signature:</b>
 
@@ -16,7 +15,7 @@ stakeUniTokens(amount: Decimalish, overrides?: EthersTransactionOverrides): Prom
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  amount | [Decimalish](./lib-base.decimalish.md) | Amount of LP tokens to add to new or existing stake. |
+|  amount | Decimalish |  |
 |  overrides | [EthersTransactionOverrides](./lib-ethers.etherstransactionoverrides.md) |  |
 
 <b>Returns:</b>

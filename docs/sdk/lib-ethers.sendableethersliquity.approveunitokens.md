@@ -4,7 +4,6 @@
 
 ## SendableEthersLiquity.approveUniTokens() method
 
-Allow the liquidity mining contract to use Uniswap ETH/LUSD LP tokens for [staking](./lib-base.transactableliquity.stakeunitokens.md)<!-- -->.
 
 <b>Signature:</b>
 
@@ -16,14 +15,10 @@ approveUniTokens(allowance?: Decimalish, overrides?: EthersTransactionOverrides)
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  allowance | [Decimalish](./lib-base.decimalish.md) | Maximum amount of LP tokens that will be transferrable to liquidity mining (<code>2^256 - 1</code> by default). |
+|  allowance | Decimalish |  |
 |  overrides | [EthersTransactionOverrides](./lib-ethers.etherstransactionoverrides.md) |  |
 
 <b>Returns:</b>
 
 Promise&lt;[SentEthersLiquityTransaction](./lib-ethers.sentethersliquitytransaction.md)<!-- -->&lt;void&gt;&gt;
-
-## Remarks
-
-Must be performed before calling [stakeUniTokens()](./lib-base.transactableliquity.stakeunitokens.md)<!-- -->.
 

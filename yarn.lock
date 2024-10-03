@@ -3959,7 +3959,7 @@ __metadata:
     "@types/chai-spies": 1.0.3
     "@types/fs-extra": 9.0.8
     "@types/mocha": 8.2.1
-    "@types/node": 14.14.34
+    "@types/node": 22.7.4
     "@types/sinon-chai": 3.2.5
     "@types/ws": 7.4.4
     "@typescript-eslint/eslint-plugin": 4.17.0
@@ -5219,7 +5219,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:>=13.7.0":
+"@types/node@npm:*, @types/node@npm:22.7.4, @types/node@npm:>=13.7.0":
   version: 22.7.4
   resolution: "@types/node@npm:22.7.4"
   dependencies:
@@ -5232,13 +5232,6 @@ __metadata:
   version: 10.17.13
   resolution: "@types/node@npm:10.17.13"
   checksum: fe9f1574869344b0e58f5877c13903e4445356b921c976ca63ea2c8d286c3d4aded317011030dd4be7b94d5e3766a601cb7cfe3eda496bd6aef1846ab8c6c09b
-  languageName: node
-  linkType: hard
-
-"@types/node@npm:14.14.34":
-  version: 14.14.34
-  resolution: "@types/node@npm:14.14.34"
-  checksum: 06e49670700f9f8c9115232898c20bcb45abff9bac2a344cb046534c85cd19d91a4e86aa23fd022ac2b5d1ab3a68c5e220b96185cf7ae7d8e948736b217a5945
   languageName: node
   linkType: hard
 

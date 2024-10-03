@@ -4012,7 +4012,7 @@ __metadata:
     "@ethersproject/address": ^5.4.0
     apollo: ^2.30.3
     cross-fetch: ~3.0.6
-    graphql: ^15.3.0
+    graphql: ^16.9.0
     npm-run-all: ^4.1.5
     rimraf: ^3.0.2
     typescript: ~4.1.0
@@ -11989,7 +11989,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"graphql@npm:14.0.2 - 14.2.0 || ^14.3.1 || ^15.0.0, graphql@npm:^15.3.0":
+"graphql@npm:14.0.2 - 14.2.0 || ^14.3.1 || ^15.0.0":
   version: 15.9.0
   resolution: "graphql@npm:15.9.0"
   checksum: fecf48b878baf8bd1d943b79860554f9e0bdf8d23a8f014356209fedcc1f1353729388538842d8a4a79078ea75b3f24d504d074223c815acf9b6059837c5c934
@@ -12003,7 +12003,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"graphql@npm:^16.6.0":
+"graphql@npm:^16.6.0, graphql@npm:^16.9.0":
   version: 16.9.0
   resolution: "graphql@npm:16.9.0"
   checksum: 8cb3d54100e9227310383ce7f791ca48d12f15ed9f2021f23f8735f1121aafe4e5e611a853081dd935ce221724ea1ae4638faef5d2921fb1ad7c26b5f46611e9

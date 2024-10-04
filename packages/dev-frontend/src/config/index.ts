@@ -1,10 +1,9 @@
+import { getAddress, isAddress } from "@ethersproject/address";
 import { AddressZero } from "@ethersproject/constants";
-import { isAddress, getAddress } from "@ethersproject/address";
 
 export type LiquityFrontendConfig = {
   frontendTag: string;
-  infuraApiKey?: string;
-  alchemyApiKey?: string;
+  ankrApiKey?: string;
   testnetOnly?: boolean;
   walletConnectProjectId: string;
 };
@@ -33,25 +32,14 @@ const parseConfig = (json: unknown): LiquityFrontendConfig => {
       }
     }
 
-    if (hasKey(json, "infuraApiKey") && json.infuraApiKey !== "") {
-      const { infuraApiKey } = json;
+    if (hasKey(json, "ankrApiKey") && json.ankrApiKey !== "") {
+      const { ankrApiKey } = json;
 
-      if (typeof infuraApiKey === "string") {
-        config.infuraApiKey = infuraApiKey;
+      if (typeof ankrApiKey === "string") {
+        config.ankrApiKey = ankrApiKey;
       } else {
-        console.error("Malformed infuraApiKey:");
-        console.log(infuraApiKey);
-      }
-    }
-
-    if (hasKey(json, "alchemyApiKey") && json.alchemyApiKey !== "") {
-      const { alchemyApiKey } = json;
-
-      if (typeof alchemyApiKey === "string") {
-        config.alchemyApiKey = alchemyApiKey;
-      } else {
-        console.error("Malformed alchemyApiKey:");
-        console.log(alchemyApiKey);
+        console.error("Malformed ankrApiKey:");
+        console.log(ankrApiKey);
       }
     }
 

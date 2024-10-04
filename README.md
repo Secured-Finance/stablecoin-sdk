@@ -1533,8 +1533,8 @@ Your custom built frontend can be configured by putting a file named `config.jso
 
 ```
 {
-  "frontendTag": "0x2781fD154358b009abf6280db4Ec066FCC6cb435",
-  "infuraApiKey": "158b6511a5c74d1ac028a8a2afe8f626"
+  "frontendTag": "0xDBA767F3DFF3835BEf5dE1eDEe91A9901402AB21",
+  "ankrApiKey": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 }
 ```
 

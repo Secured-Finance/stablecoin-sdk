@@ -1,22 +1,22 @@
-import React from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { WagmiProvider, createConfig, fallback, http } from "wagmi";
-import { injected } from "wagmi/connectors";
-import { mainnet, goerli, sepolia, localhost } from "wagmi/chains";
 import { ConnectKitProvider, getDefaultConfig, getDefaultConnectors } from "connectkit";
-import { Flex, Heading, ThemeUIProvider, Paragraph, Link } from "theme-ui";
+import React from "react";
+import { Flex, Heading, Paragraph, ThemeUIProvider } from "theme-ui";
+import { WagmiProvider, createConfig, fallback, http } from "wagmi";
+import { filecoin, filecoinCalibration, localhost } from "wagmi/chains";
+import { injected } from "wagmi/connectors";
 
-import { LiquityProvider } from "./hooks/LiquityContext";
-import { WalletConnector } from "./components/WalletConnector";
-import { TransactionProvider } from "./components/Transaction";
 import { Icon } from "./components/Icon";
+import { TransactionProvider } from "./components/Transaction";
+import { WalletConnector } from "./components/WalletConnector";
 import { getConfig } from "./config";
+import { LiquityProvider } from "./hooks/LiquityContext";
 import theme from "./theme";
 
-import { DisposableWalletProvider } from "./testUtils/DisposableWalletProvider";
 import { LiquityFrontend } from "./LiquityFrontend";
 import { AppLoader } from "./components/AppLoader";
 import { useAsyncValue } from "./hooks/AsyncValue";
+import { DisposableWalletProvider } from "./testUtils/DisposableWalletProvider";
 
 const isDemoMode = import.meta.env.VITE_APP_DEMO_MODE === "true";
 
@@ -50,15 +50,7 @@ const UnsupportedMainnetFallback: React.FC = () => (
       <Icon name="exclamation-triangle" /> This app is for testing purposes only.
     </Heading>
 
-    <Paragraph sx={{ mb: 3 }}>Please change your network to Görli or Sepolia.</Paragraph>
-
-    <Paragraph>
-      If you'd like to use the Liquity Protocol on mainnet, please pick a frontend{" "}
-      <Link href="https://www.liquity.org/frontend">
-        here <Icon name="external-link-alt" size="xs" />
-      </Link>
-      .
-    </Paragraph>
+    <Paragraph sx={{ mb: 3 }}>Please change your network to Filecoin calibration.</Paragraph>
   </Flex>
 );
 
@@ -73,9 +65,9 @@ const UnsupportedNetworkFallback: React.FC = () => (
     }}
   >
     <Heading sx={{ mb: 3 }}>
-      <Icon name="exclamation-triangle" /> Liquity is not supported on this network.
+      <Icon name="exclamation-triangle" /> This app is not supported on this network.
     </Heading>
-    Please switch to mainnet, Görli or Sepolia.
+    Please switch to Filecoin mainnet, or calibration.
   </Flex>
 );
 
@@ -102,8 +94,8 @@ const App = () => {
                 isDemoMode || import.meta.env.MODE === "test"
                   ? [localhost]
                   : config.value.testnetOnly
-                  ? [goerli, sepolia]
-                  : [mainnet, goerli, sepolia],
+                  ? [filecoinCalibration]
+                  : [filecoin, filecoinCalibration],
 
               connectors:
                 isDemoMode || import.meta.env.MODE === "test"
@@ -117,32 +109,16 @@ const App = () => {
                     }),
 
               transports: {
-                [mainnet.id]: fallback([
-                  ...(config.value.infuraApiKey
-                    ? [http(`https://mainnet.infura.io/v3/${config.value.infuraApiKey}`)]
-                    : []),
-                  ...(config.value.alchemyApiKey
-                    ? [http(`https://eth-mainnet.g.alchemy.com/v2/${config.value.alchemyApiKey}`)]
+                [filecoin.id]: fallback([
+                  ...(config.value.ankrApiKey
+                    ? [http(`https://rpc.ankr.com/filecoin/${config.value.ankrApiKey}`)]
                     : []),
                   http()
                 ]),
 
-                [goerli.id]: fallback([
-                  ...(config.value.infuraApiKey
-                    ? [http(`https://goerli.infura.io/v3/${config.value.infuraApiKey}`)]
-                    : []),
-                  ...(config.value.alchemyApiKey
-                    ? [http(`https://eth-goerli.g.alchemy.com/v2/${config.value.alchemyApiKey}`)]
-                    : []),
-                  http()
-                ]),
-
-                [sepolia.id]: fallback([
-                  ...(config.value.infuraApiKey
-                    ? [http(`https://sepolia.infura.io/v3/${config.value.infuraApiKey}`)]
-                    : []),
-                  ...(config.value.alchemyApiKey
-                    ? [http(`https://eth-sepolia.g.alchemy.com/v2/${config.value.alchemyApiKey}`)]
+                [filecoinCalibration.id]: fallback([
+                  ...(config.value.ankrApiKey
+                    ? [http(`https://rpc.ankr.com/filecoin_testnet/${config.value.ankrApiKey}`)]
                     : []),
                   http()
                 ]),

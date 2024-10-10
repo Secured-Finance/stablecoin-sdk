@@ -2,7 +2,7 @@ import { LiquityStoreState } from "@secured-finance/lib-base";
 import { useLiquitySelector } from "@secured-finance/lib-react";
 import React, { useCallback } from "react";
 import { Box, Button, Card, Flex, Heading } from "theme-ui";
-import { COIN } from "../../strings";
+import { COIN, CURRENCY } from "../../strings";
 import { Icon } from "../Icon";
 import { CollateralRatio, CollateralRatioInfoBubble } from "./CollateralRatio";
 import { DisabledEditableRow } from "./Editor";
@@ -31,7 +31,7 @@ export const ReadOnlyTrove: React.FC = () => {
             label="Collateral"
             inputId="trove-collateral"
             amount={trove.collateral.prettify(4)}
-            unit="ETH"
+            unit={CURRENCY}
           />
 
           <DisabledEditableRow

@@ -42,7 +42,7 @@ export function handleUserDepositChanged(event: UserDepositChanged): void {
 
 export function handleFILGainWithdrawn(event: FILGainWithdrawn): void {
   // Leave a non-null dummy value to signal to handleUserDepositChanged()
-  // that ETH gains have been withdrawn
+  // that FIL gains have been withdrawn
   let depositUpdate = swapTmpDepositUpdate(BIGINT_ZERO);
 
   withdrawCollateralGainFromStabilityDeposit(

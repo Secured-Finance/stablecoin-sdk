@@ -109,9 +109,9 @@ export function withdrawStakeGains(
   event: ethereum.Event,
   address: Address,
   debtTokenGain: BigInt,
-  ETHGain: BigInt
+  FILGain: BigInt
 ): void {
-  if (debtTokenGain == BIGINT_ZERO && ETHGain == BIGINT_ZERO) {
+  if (debtTokenGain == BIGINT_ZERO && FILGain == BIGINT_ZERO) {
     return;
   }
 
@@ -120,7 +120,7 @@ export function withdrawStakeGains(
   stakeChange.stake = stake.id;
   stakeChange.stakeOperation = "gainsWithdrawn";
   stakeChange.issuanceGain = decimalize(debtTokenGain);
-  stakeChange.redemptionGain = decimalize(ETHGain);
+  stakeChange.redemptionGain = decimalize(FILGain);
   stakeChange.stakedAmountBefore = stake.amount;
   stakeChange.stakedAmountChange = DECIMAL_ZERO;
   stakeChange.stakedAmountAfter = stake.amount;

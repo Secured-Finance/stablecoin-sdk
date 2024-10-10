@@ -11,7 +11,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Box, Button, Card, Flex, Heading } from "theme-ui";
 
 import { useStableTroveChange } from "../../hooks/useStableTroveChange";
-import { COIN } from "../../strings";
+import { COIN, CURRENCY } from "../../strings";
 import { Icon } from "../Icon";
 import { InfoBubble } from "../InfoBubble";
 import { InfoIcon } from "../InfoIcon";
@@ -39,7 +39,7 @@ const selector = (state: LiquityStoreState) => {
 };
 
 const TRANSACTION_ID = "trove-adjustment";
-const GAS_ROOM_ETH = Decimal.from(0.1);
+const GAS_ROOM_FIL = Decimal.from(0.1);
 
 const feeFrom = (original: Trove, edited: Trove, borrowingRate: Decimal): Decimal => {
   const change = original.whatChanged(edited, borrowingRate);
@@ -132,8 +132,8 @@ export const Adjusting: React.FC = () => {
   const maxBorrowingRate = borrowingRate.add(0.005);
   const updatedTrove = isDirty ? new Trove(collateral, totalDebt) : trove;
   const feePct = new Percent(borrowingRate);
-  const availableEth = accountBalance.gt(GAS_ROOM_ETH)
-    ? accountBalance.sub(GAS_ROOM_ETH)
+  const availableEth = accountBalance.gt(GAS_ROOM_FIL)
+    ? accountBalance.sub(GAS_ROOM_FIL)
     : Decimal.ZERO;
   const maxCollateral = trove.collateral.add(availableEth);
   const collateralMaxedOut = collateral.eq(maxCollateral);
@@ -178,7 +178,7 @@ export const Adjusting: React.FC = () => {
           maxAmount={maxCollateral.toString()}
           maxedOut={collateralMaxedOut}
           editingState={editingState}
-          unit="ETH"
+          unit={CURRENCY}
           editedAmount={collateral.toString(4)}
           setEditedAmount={(amount: string) => setCollateral(Decimal.from(amount))}
         />

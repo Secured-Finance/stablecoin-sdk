@@ -13,7 +13,7 @@ import { BlockPolledLiquityStoreState } from "@secured-finance/lib-ethers";
 import { useLiquitySelector } from "@secured-finance/lib-react";
 
 import { useLiquity } from "../hooks/LiquityContext";
-import { COIN } from "../strings";
+import { COIN, CURRENCY } from "../strings";
 import { shortenAddress } from "../utils/shortenAddress";
 
 import { Abbreviation } from "./Abbreviation";
@@ -225,7 +225,7 @@ export const RiskyTroves: React.FC<RiskyTrovesProps> = ({ pageSize }) => {
                 <th>Owner</th>
                 <th>
                   <Abbreviation short="Coll.">Collateral</Abbreviation>
-                  <Box sx={{ fontSize: [0, 1], fontWeight: "body", opacity: 0.5 }}>ETH</Box>
+                  <Box sx={{ fontSize: [0, 1], fontWeight: "body", opacity: 0.5 }}>{CURRENCY}</Box>
                 </th>
                 <th>
                   Debt

@@ -5,7 +5,7 @@ import { Decimal, LiquityStoreState } from "@secured-finance/lib-base";
 import { useLiquitySelector } from "@secured-finance/lib-react";
 
 import { useLiquity } from "../hooks/LiquityContext";
-import { COIN, GT } from "../strings";
+import { COIN, CURRENCY, GT } from "../strings";
 import { shortenAddress } from "../utils/shortenAddress";
 
 import { ConnectKitButton } from "connectkit";
@@ -48,7 +48,7 @@ export const UserAccount: React.FC = () => {
 
         {(
           [
-            ["ETH", accountBalance],
+            [CURRENCY, accountBalance],
             [COIN, Decimal.from(debtTokenBalance || 0)],
             [GT, Decimal.from(lqtyBalance)]
           ] as const

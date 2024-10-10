@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 import { Box, Button, Card, Flex, Heading, Spinner } from "theme-ui";
 
 import { useStableTroveChange } from "../../hooks/useStableTroveChange";
-import { COIN } from "../../strings";
+import { COIN, CURRENCY } from "../../strings";
 import { Icon } from "../Icon";
 import { InfoBubble } from "../InfoBubble";
 import { InfoIcon } from "../InfoIcon";
@@ -42,7 +42,7 @@ const selector = (state: LiquityStoreState) => {
 
 const EMPTY_TROVE = new Trove(Decimal.ZERO, Decimal.ZERO);
 const TRANSACTION_ID = "trove-creation";
-const GAS_ROOM_ETH = Decimal.from(0.1);
+const GAS_ROOM_FIL = Decimal.from(0.1);
 
 export const Opening: React.FC = () => {
   const { dispatchEvent } = useTroveView();
@@ -60,8 +60,8 @@ export const Opening: React.FC = () => {
   const totalDebt = borrowAmount.add(LIQUIDATION_RESERVE).add(fee);
   const isDirty = !collateral.isZero || !borrowAmount.isZero;
   const trove = isDirty ? new Trove(collateral, totalDebt) : EMPTY_TROVE;
-  const maxCollateral = accountBalance.gt(GAS_ROOM_ETH)
-    ? accountBalance.sub(GAS_ROOM_ETH)
+  const maxCollateral = accountBalance.gt(GAS_ROOM_FIL)
+    ? accountBalance.sub(GAS_ROOM_FIL)
     : Decimal.ZERO;
   const collateralMaxedOut = collateral.eq(maxCollateral);
   const collateralRatio =
@@ -116,7 +116,7 @@ export const Opening: React.FC = () => {
           maxAmount={maxCollateral.toString()}
           maxedOut={collateralMaxedOut}
           editingState={editingState}
-          unit="ETH"
+          unit={CURRENCY}
           editedAmount={collateral.toString(4)}
           setEditedAmount={(amount: string) => setCollateral(Decimal.from(amount))}
         />
@@ -207,7 +207,7 @@ export const Opening: React.FC = () => {
 
         {description ?? (
           <InfoBubble>
-            Start by entering the amount of ETH you'd like to deposit as collateral.
+            Start by entering the amount of {CURRENCY} you'd like to deposit as collateral.
           </InfoBubble>
         )}
 

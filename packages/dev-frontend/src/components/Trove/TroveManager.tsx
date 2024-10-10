@@ -18,6 +18,7 @@ import {
 import { InfoBubble } from "../InfoBubble";
 import { useMyTransactionState } from "../Transaction";
 
+import { CURRENCY } from "../../strings";
 import { TroveAction } from "./TroveAction";
 import { TroveEditor } from "./TroveEditor";
 import { useTroveView } from "./context/TroveViewContext";
@@ -230,7 +231,7 @@ export const TroveManager: React.FC<TroveManagerProps> = ({ collateral, debt }) 
       {description ??
         (openingNewTrove ? (
           <InfoBubble>
-            Start by entering the amount of ETH you'd like to deposit as collateral.
+            Start by entering the amount of {CURRENCY} you'd like to deposit as collateral.
           </InfoBubble>
         ) : (
           <InfoBubble>Adjust your Trove by modifying its collateral, debt, or both.</InfoBubble>

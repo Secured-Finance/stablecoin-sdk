@@ -102,10 +102,10 @@ export function updateStabilityDeposit(
 export function withdrawCollateralGainFromStabilityDeposit(
   event: ethereum.Event,
   _user: Address,
-  _ETH: BigInt,
+  _FIL: BigInt,
   _debtTokenLoss: BigInt
 ): void {
-  if (_ETH == BIGINT_ZERO && _debtTokenLoss == BIGINT_ZERO) {
+  if (_FIL == BIGINT_ZERO && _debtTokenLoss == BIGINT_ZERO) {
     // Ignore "NOP" event
     return;
   }
@@ -119,7 +119,7 @@ export function withdrawCollateralGainFromStabilityDeposit(
     stabilityDeposit,
     "withdrawCollateralGain",
     newDepositedAmount,
-    decimalize(_ETH)
+    decimalize(_FIL)
   );
 
   stabilityDeposit.save();

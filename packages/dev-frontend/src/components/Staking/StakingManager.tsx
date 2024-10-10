@@ -17,6 +17,7 @@ import {
 
 import { COIN, GT } from "../../strings";
 
+import { CURRENCY } from "../../strings";
 import { ActionDescription, Amount } from "../ActionDescription";
 import { ErrorDescription } from "../ErrorDescription";
 import { InfoBubble } from "../InfoBubble";
@@ -78,7 +79,7 @@ const StakingManagerActionDescription: React.FC<StakingManagerActionDescriptionP
 }) => {
   const stakeLQTY = change.stakeLQTY?.prettify().concat(" ", GT);
   const unstakeLQTY = change.unstakeLQTY?.prettify().concat(" ", GT);
-  const collateralGain = originalStake.collateralGain.nonZero?.prettify(4).concat(" ETH");
+  const collateralGain = originalStake.collateralGain.nonZero?.prettify(4).concat(` ${CURRENCY}`);
   const debtTokenGain = originalStake.debtTokenGain.nonZero?.prettify().concat(" ", COIN);
 
   if (originalStake.isEmpty && stakeLQTY) {

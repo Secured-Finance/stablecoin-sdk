@@ -11,7 +11,7 @@ import {
 
 import { useLiquitySelector } from "@secured-finance/lib-react";
 
-import { COIN, GT } from "../../strings";
+import { COIN, CURRENCY, GT } from "../../strings";
 
 import { Icon } from "../Icon";
 import { InfoIcon } from "../InfoIcon";
@@ -103,7 +103,7 @@ export const StabilityDepositEditor: React.FC<StabilityDepositEditorProps> = ({
               inputId="deposit-gain"
               amount={originalDeposit.collateralGain.prettify(4)}
               color={originalDeposit.collateralGain.nonZero && "success"}
-              unit="ETH"
+              unit={CURRENCY}
             />
 
             <StaticRow

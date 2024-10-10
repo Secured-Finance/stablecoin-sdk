@@ -1,5 +1,6 @@
 import React, { useCallback } from "react";
-import { Card, Heading, Box, Flex, Button } from "theme-ui";
+import { Box, Button, Card, Flex, Heading } from "theme-ui";
+import { CURRENCY } from "../../strings";
 import { InfoMessage } from "../InfoMessage";
 import { useStabilityView } from "./context/StabilityViewContext";
 import { RemainingLQTY } from "./RemainingLQTY";
@@ -22,7 +23,7 @@ export const NoDeposit: React.FC = () => {
       </Heading>
       <Box sx={{ p: [2, 3] }}>
         <InfoMessage title="You have no LUSD in the Stability Pool.">
-          You can earn ETH and LQTY rewards by depositing LUSD.
+          You can earn {CURRENCY} and LQTY rewards by depositing LUSD.
         </InfoMessage>
 
         <Flex variant="layout.actions">

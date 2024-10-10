@@ -5,6 +5,7 @@ import { useLiquitySelector } from "@secured-finance/lib-react";
 
 import { COIN, GT } from "../../strings";
 
+import { CURRENCY } from "../../strings";
 import { Icon } from "../Icon";
 import { LoadingOverlay } from "../LoadingOverlay";
 import { DisabledEditableRow, StaticRow } from "../Trove/Editor";
@@ -47,7 +48,7 @@ export const ReadOnlyStake: React.FC = () => {
           inputId="stake-gain-eth"
           amount={lqtyStake.collateralGain.prettify(4)}
           color={lqtyStake.collateralGain.nonZero && "success"}
-          unit="ETH"
+          unit={CURRENCY}
         />
 
         <StaticRow

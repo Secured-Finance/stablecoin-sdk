@@ -31,19 +31,19 @@ export interface LiquityStoreBaseState {
   /** User's LQTY token balance. */
   lqtyBalance: Decimal;
 
-  /** User's Uniswap ETH/DebtToken LP token balance. */
+  /** User's Uniswap FIL/DebtToken LP token balance. */
   uniTokenBalance: Decimal;
 
-  /** The liquidity mining contract's allowance of user's Uniswap ETH/DebtToken LP tokens. */
+  /** The liquidity mining contract's allowance of user's Uniswap FIL/DebtToken LP tokens. */
   uniTokenAllowance: Decimal;
 
   /** Remaining LQTY that will be collectively rewarded to liquidity miners. */
   remainingLiquidityMiningLQTYReward: Decimal;
 
-  /** Amount of Uniswap ETH/DebtToken LP tokens the user has staked in liquidity mining. */
+  /** Amount of Uniswap FIL/DebtToken LP tokens the user has staked in liquidity mining. */
   liquidityMiningStake: Decimal;
 
-  /** Total amount of Uniswap ETH/DebtToken LP tokens currently staked in liquidity mining. */
+  /** Total amount of Uniswap FIL/DebtToken LP tokens currently staked in liquidity mining. */
   totalStakedUniTokens: Decimal;
 
   /** Amount of LQTY the user has earned through mining liquidity. */

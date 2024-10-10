@@ -2,6 +2,7 @@ import { Decimal, LiquityStoreState } from "@secured-finance/lib-base";
 import { useLiquitySelector } from "@secured-finance/lib-react";
 import React, { useEffect, useState } from "react";
 import { Card, Paragraph, Text } from "theme-ui";
+import { CURRENCY } from "../../strings";
 import { Badge } from "../Badge";
 import { InfoIcon } from "../InfoIcon";
 import { fetchLqtyPrice } from "./context/fetchLqtyPrice";
@@ -53,8 +54,8 @@ export const Yield: React.FC = () => {
           <Card variant="tooltip" sx={{ width: ["220px", "518px"] }}>
             <Paragraph>
               An <Text sx={{ fontWeight: "bold" }}>estimate</Text> of the LQTY return on the LUSD
-              deposited to the Stability Pool over the next year, not including your ETH gains from
-              liquidations.
+              deposited to the Stability Pool over the next year, not including your {CURRENCY} gains
+              from liquidations.
             </Paragraph>
             <Paragraph sx={{ fontSize: "12px", fontFamily: "monospace", mt: 2 }}>
               ($LQTY_REWARDS * DAILY_ISSUANCE% / DEPOSITED_LUSD) * 365 * 100 ={" "}

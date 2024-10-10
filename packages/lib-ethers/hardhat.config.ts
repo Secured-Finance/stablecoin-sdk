@@ -83,12 +83,14 @@ const pythPriceIds = {
 const hasOracles = (network: string): network is keyof typeof oracleAddresses =>
   network in oracleAddresses;
 
-const wethAddresses = {
+const wrappedNativeTokenAddresses = {
   mainnet: "0x60E1773636CF5E4A227d9AC24F20fEca034ee25A",
   testnet: "0xaC26a4Ab9cF2A8c5DBaB6fb4351ec0F4b07356c4"
 };
 
-const hasWETH = (network: string): network is keyof typeof wethAddresses => network in wethAddresses;
+const hasWrappedNativeToken = (
+  network: string
+): network is keyof typeof wrappedNativeTokenAddresses => network in wrappedNativeTokenAddresses;
 
 const config: HardhatUserConfig = {
   networks: {
@@ -136,7 +138,7 @@ declare module "hardhat/types/runtime" {
     deployLiquity: (
       deployer: Signer,
       useRealPriceFeed?: boolean,
-      wethAddress?: string,
+      wrappedNativeTokenAddress?: string,
       overrides?: Overrides
     ) => Promise<_LiquityDeploymentJSON>;
   }
@@ -158,7 +160,7 @@ extendEnvironment(env => {
   env.deployLiquity = async (
     deployer,
     useRealPriceFeed = false,
-    wethAddress = undefined,
+    wrappedNativeTokenAddress = undefined,
     overrides?: Overrides
   ) => {
     const deployment = await deployAndSetupContracts(
@@ -166,7 +168,7 @@ extendEnvironment(env => {
       getContractFactory(env),
       !useRealPriceFeed,
       env.network.name,
-      wethAddress,
+      wrappedNativeTokenAddress,
       overrides
     );
 
@@ -209,17 +211,22 @@ task("deploy", "Deploys the contracts to the network")
         throw new Error(`PriceFeed not supported on ${env.network.name}`);
       }
 
-      let wethAddress: string | undefined = undefined;
+      let wrappedNativeTokenAddress: string | undefined = undefined;
       if (createUniswapPair) {
-        if (!hasWETH(env.network.name)) {
-          throw new Error(`WETH not deployed on ${env.network.name}`);
+        if (!hasWrappedNativeToken(env.network.name)) {
+          throw new Error(`Wrapped native token not deployed on ${env.network.name}`);
         }
-        wethAddress = wethAddresses[env.network.name];
+        wrappedNativeTokenAddress = wrappedNativeTokenAddresses[env.network.name];
       }
 
       setSilent(false);
 
-      const deployment = await env.deployLiquity(deployer, useRealPriceFeed, wethAddress, overrides);
+      const deployment = await env.deployLiquity(
+        deployer,
+        useRealPriceFeed,
+        wrappedNativeTokenAddress,
+        overrides
+      );
 
       if (useRealPriceFeed) {
         const contracts = _connectToContracts(deployer, deployment);

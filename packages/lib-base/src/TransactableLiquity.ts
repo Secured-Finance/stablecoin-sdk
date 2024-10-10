@@ -462,7 +462,7 @@ export interface TransactableLiquity {
   withdrawGainsFromStaking(): Promise<void>;
 
   /**
-   * Allow the liquidity mining contract to use Uniswap ETH/DebtToken LP tokens for
+   * Allow the liquidity mining contract to use Uniswap FIL/DebtToken LP tokens for
    * {@link @secured-finance/lib-base#TransactableLiquity.stakeUniTokens | staking}.
    *
    * @param allowance - Maximum amount of LP tokens that will be transferrable to liquidity mining
@@ -478,7 +478,7 @@ export interface TransactableLiquity {
   approveUniTokens(allowance?: Decimalish): Promise<void>;
 
   /**
-   * Stake Uniswap ETH/DebtToken LP tokens to participate in liquidity mining and earn LQTY.
+   * Stake Uniswap FIL/DebtToken LP tokens to participate in liquidity mining and earn LQTY.
    *
    * @param amount - Amount of LP tokens to add to new or existing stake.
    *
@@ -488,7 +488,7 @@ export interface TransactableLiquity {
   stakeUniTokens(amount: Decimalish): Promise<void>;
 
   /**
-   * Withdraw Uniswap ETH/DebtToken LP tokens from liquidity mining.
+   * Withdraw Uniswap FIL/DebtToken LP tokens from liquidity mining.
    *
    * @param amount - Amount of LP tokens to withdraw.
    *

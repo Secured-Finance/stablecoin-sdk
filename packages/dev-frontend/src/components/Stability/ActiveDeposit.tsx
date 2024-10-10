@@ -4,7 +4,7 @@ import { Box, Button, Card, Flex, Heading } from "theme-ui";
 import { LiquityStoreState } from "@secured-finance/lib-base";
 import { useLiquitySelector } from "@secured-finance/lib-react";
 
-import { COIN, GT } from "../../strings";
+import { COIN, CURRENCY, GT } from "../../strings";
 import { Icon } from "../Icon";
 import { InfoIcon } from "../InfoIcon";
 import { LoadingOverlay } from "../LoadingOverlay";
@@ -79,7 +79,7 @@ export const ActiveDeposit: React.FC = () => {
             inputId="deposit-gain"
             amount={stabilityDeposit.collateralGain.prettify(4)}
             color={stabilityDeposit.collateralGain.nonZero && "success"}
-            unit="ETH"
+            unit={CURRENCY}
           />
 
           <Flex sx={{ alignItems: "center" }}>
@@ -113,11 +113,11 @@ export const ActiveDeposit: React.FC = () => {
             &nbsp;Adjust
           </Button>
 
-          <ClaimRewards disabled={!hasGain && !hasReward}>Claim ETH and LQTY</ClaimRewards>
+          <ClaimRewards disabled={!hasGain && !hasReward}>Claim {CURRENCY} and LQTY</ClaimRewards>
         </Flex>
 
         {hasTrove && (
-          <ClaimAndMove disabled={!hasGain}>Claim LQTY and move ETH to Trove</ClaimAndMove>
+          <ClaimAndMove disabled={!hasGain}>Claim LQTY and move {CURRENCY} to Trove</ClaimAndMove>
         )}
       </Box>
 

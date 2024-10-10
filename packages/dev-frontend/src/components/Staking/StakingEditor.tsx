@@ -10,7 +10,7 @@ import {
 } from "@secured-finance/lib-base";
 import { useLiquitySelector } from "@secured-finance/lib-react";
 
-import { COIN, GT } from "../../strings";
+import { COIN, CURRENCY, GT } from "../../strings";
 
 import { Icon } from "../Icon";
 import { LoadingOverlay } from "../LoadingOverlay";
@@ -101,7 +101,7 @@ export const StakingEditor: React.FC<StakingEditorProps> = ({
               inputId="stake-gain-eth"
               amount={originalStake.collateralGain.prettify(4)}
               color={originalStake.collateralGain.nonZero && "success"}
-              unit="ETH"
+              unit={CURRENCY}
             />
 
             <StaticRow

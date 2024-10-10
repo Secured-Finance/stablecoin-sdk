@@ -5,6 +5,7 @@ import { Decimal, LiquityStoreState } from "@secured-finance/lib-base";
 import { useLiquitySelector } from "@secured-finance/lib-react";
 
 import { useLiquity } from "../hooks/LiquityContext";
+import { CURRENCY } from "../strings";
 
 import { Icon } from "./Icon";
 import { Transaction } from "./Transaction";
@@ -32,7 +33,7 @@ export const PriceManager: React.FC = () => {
 
       <Box sx={{ p: [2, 3] }}>
         <Flex sx={{ alignItems: "stretch" }}>
-          <Label>ETH</Label>
+          <Label>{CURRENCY}</Label>
 
           <Label variant="unit">$</Label>
 

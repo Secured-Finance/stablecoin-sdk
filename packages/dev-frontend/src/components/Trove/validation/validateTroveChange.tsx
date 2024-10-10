@@ -13,7 +13,7 @@ import {
   TroveCreationParams
 } from "@secured-finance/lib-base";
 
-import { COIN } from "../../../strings";
+import { COIN, CURRENCY } from "../../../strings";
 
 import { ActionDescription, Amount } from "../../ActionDescription";
 import { ErrorDescription } from "../../ErrorDescription";
@@ -29,7 +29,11 @@ const TroveChangeDescription: React.FC<TroveAdjustmentDescriptionParams> = ({ pa
   <ActionDescription>
     {params.depositCollateral && params.borrowDebtToken ? (
       <>
-        You will deposit <Amount>{params.depositCollateral.prettify()} ETH</Amount> and receive{" "}
+        You will deposit{" "}
+        <Amount>
+          {params.depositCollateral.prettify()} {CURRENCY}
+        </Amount>{" "}
+        and receive{" "}
         <Amount>
           {params.borrowDebtToken.prettify()} {COIN}
         </Amount>
@@ -40,29 +44,46 @@ const TroveChangeDescription: React.FC<TroveAdjustmentDescriptionParams> = ({ pa
         <Amount>
           {params.repayDebtToken.prettify()} {COIN}
         </Amount>{" "}
-        and receive <Amount>{params.withdrawCollateral.prettify()} ETH</Amount>
+        and receive{" "}
+        <Amount>
+          {params.withdrawCollateral.prettify()} {CURRENCY}
+        </Amount>
       </>
     ) : params.depositCollateral && params.repayDebtToken ? (
       <>
-        You will deposit <Amount>{params.depositCollateral.prettify()} ETH</Amount> and pay{" "}
+        You will deposit{" "}
+        <Amount>
+          {params.depositCollateral.prettify()} {CURRENCY}
+        </Amount>{" "}
+        and pay{" "}
         <Amount>
           {params.repayDebtToken.prettify()} {COIN}
         </Amount>
       </>
     ) : params.borrowDebtToken && params.withdrawCollateral ? (
       <>
-        You will receive <Amount>{params.withdrawCollateral.prettify()} ETH</Amount> and{" "}
+        You will receive{" "}
+        <Amount>
+          {params.withdrawCollateral.prettify()} {CURRENCY}
+        </Amount>{" "}
+        and{" "}
         <Amount>
           {params.borrowDebtToken.prettify()} {COIN}
         </Amount>
       </>
     ) : params.depositCollateral ? (
       <>
-        You will deposit <Amount>{params.depositCollateral.prettify()} ETH</Amount>
+        You will deposit{" "}
+        <Amount>
+          {params.depositCollateral.prettify()} {CURRENCY}
+        </Amount>
       </>
     ) : params.withdrawCollateral ? (
       <>
-        You will receive <Amount>{params.withdrawCollateral.prettify()} ETH</Amount>
+        You will receive{" "}
+        <Amount>
+          {params.withdrawCollateral.prettify()} {CURRENCY}
+        </Amount>
       </>
     ) : params.borrowDebtToken ? (
       <>
@@ -215,7 +236,10 @@ const validateTroveCreation = (
     return (
       <ErrorDescription>
         The amount you're trying to deposit exceeds your balance by{" "}
-        <Amount>{depositCollateral.sub(accountBalance).prettify()} ETH</Amount>.
+        <Amount>
+          {depositCollateral.sub(accountBalance).prettify()} {CURRENCY}
+        </Amount>
+        .
       </ErrorDescription>
     );
   }
@@ -316,7 +340,10 @@ const validateTroveAdjustment = (
     return (
       <ErrorDescription>
         The amount you're trying to deposit exceeds your balance by{" "}
-        <Amount>{depositCollateral.sub(accountBalance).prettify()} ETH</Amount>.
+        <Amount>
+          {depositCollateral.sub(accountBalance).prettify()} {CURRENCY}
+        </Amount>
+        .
       </ErrorDescription>
     );
   }

@@ -126,16 +126,16 @@ export interface ReadableLiquity {
   getLQTYBalance(address?: string): Promise<Decimal>;
 
   /**
-   * Get the amount of Uniswap ETH/DebtToken LP tokens held by an address.
+   * Get the amount of Uniswap FIL/DebtToken LP tokens held by an address.
    *
    * @param address - Address whose balance should be retrieved.
    */
   getUniTokenBalance(address?: string): Promise<Decimal>;
 
   /**
-   * Get the liquidity mining contract's allowance of a holder's Uniswap ETH/DebtToken LP tokens.
+   * Get the liquidity mining contract's allowance of a holder's Uniswap FIL/DebtToken LP tokens.
    *
-   * @param address - Address holding the Uniswap ETH/DebtToken LP tokens.
+   * @param address - Address holding the Uniswap FIL/DebtToken LP tokens.
    */
   getUniTokenAllowance(address?: string): Promise<Decimal>;
 
@@ -145,14 +145,14 @@ export interface ReadableLiquity {
   getRemainingLiquidityMiningLQTYReward(): Promise<Decimal>;
 
   /**
-   * Get the amount of Uniswap ETH/DebtToken LP tokens currently staked by an address in liquidity mining.
+   * Get the amount of Uniswap FIL/DebtToken LP tokens currently staked by an address in liquidity mining.
    *
    * @param address - Address whose LP stake should be retrieved.
    */
   getLiquidityMiningStake(address?: string): Promise<Decimal>;
 
   /**
-   * Get the total amount of Uniswap ETH/DebtToken LP tokens currently staked in liquidity mining.
+   * Get the total amount of Uniswap FIL/DebtToken LP tokens currently staked in liquidity mining.
    */
   getTotalStakedUniTokens(): Promise<Decimal>;
 

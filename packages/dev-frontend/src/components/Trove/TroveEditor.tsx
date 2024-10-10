@@ -12,7 +12,7 @@ import {
 } from "@secured-finance/lib-base";
 import { useLiquitySelector } from "@secured-finance/lib-react";
 
-import { COIN } from "../../strings";
+import { COIN, CURRENCY } from "../../strings";
 
 import { InfoIcon } from "../InfoIcon";
 import { LoadingOverlay } from "../LoadingOverlay";
@@ -58,7 +58,7 @@ export const TroveEditor: React.FC<TroveEditorProps> = ({
           label="Collateral"
           inputId="trove-collateral"
           amount={edited.collateral.prettify(4)}
-          unit="ETH"
+          unit={CURRENCY}
         />
 
         <StaticRow label="Debt" inputId="trove-debt" amount={edited.debt.prettify()} unit={COIN} />

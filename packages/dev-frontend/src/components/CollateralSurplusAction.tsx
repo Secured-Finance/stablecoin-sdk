@@ -5,6 +5,7 @@ import { LiquityStoreState } from "@secured-finance/lib-base";
 import { useLiquitySelector } from "@secured-finance/lib-react";
 
 import { useLiquity } from "../hooks/LiquityContext";
+import { CURRENCY } from "../strings";
 
 import { Transaction, useMyTransactionState } from "./Transaction";
 import { useTroveView } from "./Trove/context/TroveViewContext";
@@ -44,7 +45,9 @@ export const CollateralSurplusAction: React.FC = () => {
         id={myTransactionId}
         send={liquity.claimCollateralSurplus.bind(liquity, undefined)}
       >
-        <Button sx={{ mx: 2 }}>Claim {collateralSurplusBalance.prettify()} ETH</Button>
+        <Button sx={{ mx: 2 }}>
+          Claim {collateralSurplusBalance.prettify()} {CURRENCY}
+        </Button>
       </Transaction>
     </Flex>
   ) : null;

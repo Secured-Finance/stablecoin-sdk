@@ -1,5 +1,5 @@
 {
-  "name": "liquity",
+  "name": "stablecoin-sdk",
   "private": true,
   "workspaces": {
     "packages": ["packages/*"],

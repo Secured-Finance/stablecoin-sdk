@@ -4,7 +4,7 @@
 
 ## ReadableLiquity.getLiquidityMiningStake() method
 
-Get the amount of Uniswap ETH/DebtToken LP tokens currently staked by an address in liquidity mining.
+Get the amount of Uniswap FIL/DebtToken LP tokens currently staked by an address in liquidity mining.
 
 **Signature:**
 

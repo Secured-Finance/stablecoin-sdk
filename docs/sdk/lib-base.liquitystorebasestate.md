@@ -164,7 +164,7 @@ Amount of LQTY the user has earned through mining liquidity.
 
 </td><td>
 
-Amount of Uniswap ETH/DebtToken LP tokens the user has staked in liquidity mining.
+Amount of Uniswap FIL/DebtToken LP tokens the user has staked in liquidity mining.
 
 
 </td></tr>
@@ -392,7 +392,7 @@ Total amount of LQTY currently staked.
 
 </td><td>
 
-Total amount of Uniswap ETH/DebtToken LP tokens currently staked in liquidity mining.
+Total amount of Uniswap FIL/DebtToken LP tokens currently staked in liquidity mining.
 
 
 </td></tr>
@@ -430,7 +430,7 @@ User's Trove in its state after the last direct modification.
 
 </td><td>
 
-The liquidity mining contract's allowance of user's Uniswap ETH/DebtToken LP tokens.
+The liquidity mining contract's allowance of user's Uniswap FIL/DebtToken LP tokens.
 
 
 </td></tr>
@@ -449,7 +449,7 @@ The liquidity mining contract's allowance of user's Uniswap ETH/DebtToken LP tok
 
 </td><td>
 
-User's Uniswap ETH/DebtToken LP token balance.
+User's Uniswap FIL/DebtToken LP token balance.
 
 
 </td></tr>

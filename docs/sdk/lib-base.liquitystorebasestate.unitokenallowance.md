@@ -4,7 +4,7 @@
 
 ## LiquityStoreBaseState.uniTokenAllowance property
 
-The liquidity mining contract's allowance of user's Uniswap ETH/DebtToken LP tokens.
+The liquidity mining contract's allowance of user's Uniswap FIL/DebtToken LP tokens.
 
 **Signature:**
 

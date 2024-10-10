@@ -4,7 +4,7 @@
 
 ## PopulatableEthersLiquity.stakeUniTokens() method
 
-Stake Uniswap ETH/DebtToken LP tokens to participate in liquidity mining and earn LQTY.
+Stake Uniswap FIL/DebtToken LP tokens to participate in liquidity mining and earn LQTY.
 
 **Signature:**
 

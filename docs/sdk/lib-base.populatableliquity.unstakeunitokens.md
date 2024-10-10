@@ -4,7 +4,7 @@
 
 ## PopulatableLiquity.unstakeUniTokens() method
 
-Withdraw Uniswap ETH/DebtToken LP tokens from liquidity mining.
+Withdraw Uniswap FIL/DebtToken LP tokens from liquidity mining.
 
 **Signature:**
 

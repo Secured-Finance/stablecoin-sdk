@@ -4,7 +4,7 @@
 
 ## ReadableEthersLiquity.getUniTokenBalance() method
 
-Get the amount of Uniswap ETH/DebtToken LP tokens held by an address.
+Get the amount of Uniswap FIL/DebtToken LP tokens held by an address.
 
 **Signature:**
 

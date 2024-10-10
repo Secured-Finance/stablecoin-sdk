@@ -141,7 +141,7 @@ Adjust existing Trove by changing its collateral, debt, or both.
 
 </td><td>
 
-Allow the liquidity mining contract to use Uniswap ETH/DebtToken LP tokens for [staking](./lib-base.transactableliquity.stakeunitokens.md)<!-- -->.
+Allow the liquidity mining contract to use Uniswap FIL/DebtToken LP tokens for [staking](./lib-base.transactableliquity.stakeunitokens.md)<!-- -->.
 
 
 </td></tr>
@@ -339,7 +339,7 @@ Get the amount of LQTY earned by an address through mining liquidity.
 
 </td><td>
 
-Get the amount of Uniswap ETH/DebtToken LP tokens currently staked by an address in liquidity mining.
+Get the amount of Uniswap FIL/DebtToken LP tokens currently staked by an address in liquidity mining.
 
 
 </td></tr>
@@ -493,7 +493,7 @@ Get the total amount of LQTY currently staked.
 
 </td><td>
 
-Get the total amount of Uniswap ETH/DebtToken LP tokens currently staked in liquidity mining.
+Get the total amount of Uniswap FIL/DebtToken LP tokens currently staked in liquidity mining.
 
 
 </td></tr>
@@ -549,7 +549,7 @@ Get a slice from the list of Troves.
 
 </td><td>
 
-Get the liquidity mining contract's allowance of a holder's Uniswap ETH/DebtToken LP tokens.
+Get the liquidity mining contract's allowance of a holder's Uniswap FIL/DebtToken LP tokens.
 
 
 </td></tr>
@@ -563,7 +563,7 @@ Get the liquidity mining contract's allowance of a holder's Uniswap ETH/DebtToke
 
 </td><td>
 
-Get the amount of Uniswap ETH/DebtToken LP tokens held by an address.
+Get the amount of Uniswap FIL/DebtToken LP tokens held by an address.
 
 
 </td></tr>
@@ -731,7 +731,7 @@ Stake LQTY to start earning fee revenue or increase existing stake.
 
 </td><td>
 
-Stake Uniswap ETH/DebtToken LP tokens to participate in liquidity mining and earn LQTY.
+Stake Uniswap FIL/DebtToken LP tokens to participate in liquidity mining and earn LQTY.
 
 
 </td></tr>
@@ -773,7 +773,7 @@ Withdraw LQTY from staking.
 
 </td><td>
 
-Withdraw Uniswap ETH/DebtToken LP tokens from liquidity mining.
+Withdraw Uniswap FIL/DebtToken LP tokens from liquidity mining.
 
 
 </td></tr>

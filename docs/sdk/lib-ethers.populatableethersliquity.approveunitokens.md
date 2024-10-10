@@ -4,7 +4,7 @@
 
 ## PopulatableEthersLiquity.approveUniTokens() method
 
-Allow the liquidity mining contract to use Uniswap ETH/DebtToken LP tokens for [staking](./lib-base.transactableliquity.stakeunitokens.md)<!-- -->.
+Allow the liquidity mining contract to use Uniswap FIL/DebtToken LP tokens for [staking](./lib-base.transactableliquity.stakeunitokens.md)<!-- -->.
 
 **Signature:**
 

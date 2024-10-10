@@ -10,11 +10,6 @@ module.exports = {
   plugins: ["react-refresh"],
   rules: {
     // "react-refresh/only-export-components": "warn",
-    "react-hooks/exhaustive-deps": [
-      "warn",
-      {
-        additionalHooks: "useTransaction"
-      }
-    ]
+    "react-hooks/exhaustive-deps": ["warn"]
   }
 };

@@ -11,7 +11,6 @@
     "@fortawesome/free-regular-svg-icons": "5.15.2",
     "@fortawesome/free-solid-svg-icons": "5.15.2",
     "@fortawesome/react-fontawesome": "0.1.14",
-    "@liquity/chicken-bonds": "file:.yalc/@liquity/chicken-bonds",
     "@metamask/eth-sig-util": "5.0.1",
     "@tanstack/react-query": "^5.24.1",
     "@tippyjs/react": "^4.2.6",
@@ -64,8 +63,6 @@
     "build:tsc": "tsc",
     "build:vite": "vite build",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "link:chicken-bonds": "yalc link @liquity/chicken-bonds",
-    "unlink:chicken-bonds": "yalc remove @liquity/chicken-bonds",
     "preview": "vite preview",
     "test": "vitest"
   },

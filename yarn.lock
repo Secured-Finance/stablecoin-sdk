@@ -1658,13 +1658,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@liquity/chicken-bonds@file:.yalc/@liquity/chicken-bonds::locator=%40secured-finance%2Fdev-frontend%40workspace%3Apackages%2Fdev-frontend":
-  version: 0.0.1
-  resolution: "@liquity/chicken-bonds@file:.yalc/@liquity/chicken-bonds#.yalc/@liquity/chicken-bonds::hash=f4a3c3&locator=%40secured-finance%2Fdev-frontend%40workspace%3Apackages%2Fdev-frontend"
-  checksum: c16397fed7724fd7ab81ca45b8531dc73437d494543e36b4c290fb1f10acc0b9ef541cad8b7a60789c02f4639a25bb951451b1eb6ca2ed5403fca6f79dd7f13b
-  languageName: node
-  linkType: hard
-
 "@lit-labs/ssr-dom-shim@npm:^1.0.0, @lit-labs/ssr-dom-shim@npm:^1.1.0":
   version: 1.2.1
   resolution: "@lit-labs/ssr-dom-shim@npm:1.2.1"
@@ -3861,7 +3854,6 @@ __metadata:
     "@fortawesome/free-regular-svg-icons": 5.15.2
     "@fortawesome/free-solid-svg-icons": 5.15.2
     "@fortawesome/react-fontawesome": 0.1.14
-    "@liquity/chicken-bonds": "file:.yalc/@liquity/chicken-bonds"
     "@metamask/eth-sig-util": 5.0.1
     "@tanstack/react-query": ^5.24.1
     "@testing-library/dom": ^9.3.4

@@ -12,12 +12,10 @@ import { TransactionMonitor } from "./components/Transaction";
 import { UserAccount } from "./components/UserAccount";
 import { useLiquity } from "./hooks/LiquityContext";
 
-import { Bonds } from "./pages/Bonds";
 import { PageSwitcher } from "./pages/PageSwitcher";
 import { RiskyTrovesPage } from "./pages/RiskyTrovesPage";
 
 import "tippy.js/dist/tippy.css"; // Tooltip default style
-import { BondsProvider } from "./components/Bonds/context/BondsProvider";
 import { StabilityViewProvider } from "./components/Stability/context/StabilityViewProvider";
 import { StakingViewProvider } from "./components/Staking/context/StakingViewProvider";
 import { TroveViewProvider } from "./components/Trove/context/TroveViewProvider";
@@ -46,36 +44,31 @@ export const LiquityFrontend: React.FC<LiquityFrontendProps> = ({ loader }) => {
         <TroveViewProvider>
           <StabilityViewProvider>
             <StakingViewProvider>
-              <BondsProvider>
-                <Flex sx={{ flexDirection: "column", minHeight: "100%" }}>
-                  <Header>
-                    <UserAccount />
-                    <SystemStatsPopup />
-                  </Header>
+              <Flex sx={{ flexDirection: "column", minHeight: "100%" }}>
+                <Header>
+                  <UserAccount />
+                  <SystemStatsPopup />
+                </Header>
 
-                  <Container
-                    variant="main"
-                    sx={{
-                      display: "flex",
-                      flexGrow: 1,
-                      flexDirection: "column",
-                      alignItems: "center"
-                    }}
-                  >
-                    <Switch>
-                      <Route path="/" exact>
-                        <PageSwitcher />
-                      </Route>
-                      <Route path="/bonds">
-                        <Bonds />
-                      </Route>
-                      <Route path="/risky-troves">
-                        <RiskyTrovesPage />
-                      </Route>
-                    </Switch>
-                  </Container>
-                </Flex>
-              </BondsProvider>
+                <Container
+                  variant="main"
+                  sx={{
+                    display: "flex",
+                    flexGrow: 1,
+                    flexDirection: "column",
+                    alignItems: "center"
+                  }}
+                >
+                  <Switch>
+                    <Route path="/" exact>
+                      <PageSwitcher />
+                    </Route>
+                    <Route path="/risky-troves">
+                      <RiskyTrovesPage />
+                    </Route>
+                  </Switch>
+                </Container>
+              </Flex>
             </StakingViewProvider>
           </StabilityViewProvider>
         </TroveViewProvider>

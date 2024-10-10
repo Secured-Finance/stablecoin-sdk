@@ -6,8 +6,8 @@ import { Decimal, Decimalish } from "./Decimal";
  * @public
  */
 export type StabilityDepositChange<T> =
-  | { depositLUSD: T; withdrawLUSD?: undefined }
-  | { depositLUSD?: undefined; withdrawLUSD: T; withdrawAllLUSD: boolean };
+  | { depositDebtToken: T; withdrawDebtToken?: undefined }
+  | { depositDebtToken?: undefined; withdrawDebtToken: T; withdrawAllDebtToken: boolean };
 
 /**
  * A Stability Deposit and its accrued gains.
@@ -15,13 +15,13 @@ export type StabilityDepositChange<T> =
  * @public
  */
 export class StabilityDeposit {
-  /** Amount of LUSD in the Stability Deposit at the time of the last direct modification. */
-  readonly initialLUSD: Decimal;
+  /** Amount of DebtToken in the Stability Deposit at the time of the last direct modification. */
+  readonly initialDebtToken: Decimal;
 
-  /** Amount of LUSD left in the Stability Deposit. */
-  readonly currentLUSD: Decimal;
+  /** Amount of DebtToken left in the Stability Deposit. */
+  readonly currentDebtToken: Decimal;
 
-  /** Amount of native currency (e.g. Ether) received in exchange for the used-up LUSD. */
+  /** Amount of native currency (e.g. Ether) received in exchange for the used-up DebtToken. */
   readonly collateralGain: Decimal;
 
   /** Amount of LQTY rewarded since the last modification of the Stability Deposit. */
@@ -38,27 +38,27 @@ export class StabilityDeposit {
 
   /** @internal */
   constructor(
-    initialLUSD: Decimal,
-    currentLUSD: Decimal,
+    initialDebtToken: Decimal,
+    currentDebtToken: Decimal,
     collateralGain: Decimal,
     lqtyReward: Decimal,
     frontendTag: string
   ) {
-    this.initialLUSD = initialLUSD;
-    this.currentLUSD = currentLUSD;
+    this.initialDebtToken = initialDebtToken;
+    this.currentDebtToken = currentDebtToken;
     this.collateralGain = collateralGain;
     this.lqtyReward = lqtyReward;
     this.frontendTag = frontendTag;
 
-    if (this.currentLUSD.gt(this.initialLUSD)) {
-      throw new Error("currentLUSD can't be greater than initialLUSD");
+    if (this.currentDebtToken.gt(this.initialDebtToken)) {
+      throw new Error("currentDebtToken can't be greater than initialDebtToken");
     }
   }
 
   get isEmpty(): boolean {
     return (
-      this.initialLUSD.isZero &&
-      this.currentLUSD.isZero &&
+      this.initialDebtToken.isZero &&
+      this.currentDebtToken.isZero &&
       this.collateralGain.isZero &&
       this.lqtyReward.isZero
     );
@@ -67,8 +67,8 @@ export class StabilityDeposit {
   /** @internal */
   toString(): string {
     return (
-      `{ initialLUSD: ${this.initialLUSD}` +
-      `, currentLUSD: ${this.currentLUSD}` +
+      `{ initialDebtToken: ${this.initialDebtToken}` +
+      `, currentDebtToken: ${this.currentDebtToken}` +
       `, collateralGain: ${this.collateralGain}` +
       `, lqtyReward: ${this.lqtyReward}` +
       `, frontendTag: "${this.frontendTag}" }`
@@ -80,8 +80,8 @@ export class StabilityDeposit {
    */
   equals(that: StabilityDeposit): boolean {
     return (
-      this.initialLUSD.eq(that.initialLUSD) &&
-      this.currentLUSD.eq(that.currentLUSD) &&
+      this.initialDebtToken.eq(that.initialDebtToken) &&
+      this.currentDebtToken.eq(that.currentDebtToken) &&
       this.collateralGain.eq(that.collateralGain) &&
       this.lqtyReward.eq(that.lqtyReward) &&
       this.frontendTag === that.frontendTag
@@ -89,38 +89,41 @@ export class StabilityDeposit {
   }
 
   /**
-   * Calculate the difference between the `currentLUSD` in this Stability Deposit and `thatLUSD`.
+   * Calculate the difference between the `currentDebtToken` in this Stability Deposit and `thatDebtToken`.
    *
    * @returns An object representing the change, or `undefined` if the deposited amounts are equal.
    */
-  whatChanged(thatLUSD: Decimalish): StabilityDepositChange<Decimal> | undefined {
-    thatLUSD = Decimal.from(thatLUSD);
+  whatChanged(thatDebtToken: Decimalish): StabilityDepositChange<Decimal> | undefined {
+    thatDebtToken = Decimal.from(thatDebtToken);
 
-    if (thatLUSD.lt(this.currentLUSD)) {
-      return { withdrawLUSD: this.currentLUSD.sub(thatLUSD), withdrawAllLUSD: thatLUSD.isZero };
+    if (thatDebtToken.lt(this.currentDebtToken)) {
+      return {
+        withdrawDebtToken: this.currentDebtToken.sub(thatDebtToken),
+        withdrawAllDebtToken: thatDebtToken.isZero
+      };
     }
 
-    if (thatLUSD.gt(this.currentLUSD)) {
-      return { depositLUSD: thatLUSD.sub(this.currentLUSD) };
+    if (thatDebtToken.gt(this.currentDebtToken)) {
+      return { depositDebtToken: thatDebtToken.sub(this.currentDebtToken) };
     }
   }
 
   /**
    * Apply a {@link StabilityDepositChange} to this Stability Deposit.
    *
-   * @returns The new deposited LUSD amount.
+   * @returns The new deposited DebtToken amount.
    */
   apply(change: StabilityDepositChange<Decimalish> | undefined): Decimal {
     if (!change) {
-      return this.currentLUSD;
+      return this.currentDebtToken;
     }
 
-    if (change.withdrawLUSD !== undefined) {
-      return change.withdrawAllLUSD || this.currentLUSD.lte(change.withdrawLUSD)
+    if (change.withdrawDebtToken !== undefined) {
+      return change.withdrawAllDebtToken || this.currentDebtToken.lte(change.withdrawDebtToken)
         ? Decimal.ZERO
-        : this.currentLUSD.sub(change.withdrawLUSD);
+        : this.currentDebtToken.sub(change.withdrawDebtToken);
     } else {
-      return this.currentLUSD.add(change.depositLUSD);
+      return this.currentDebtToken.add(change.depositDebtToken);
     }
   }
 }

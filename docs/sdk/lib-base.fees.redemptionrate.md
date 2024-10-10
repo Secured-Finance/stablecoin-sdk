@@ -42,7 +42,7 @@ redeemedFractionOfSupply
 
 </td><td>
 
-The amount of LUSD being redeemed divided by the total supply.
+The amount of DebtToken being redeemed divided by the total supply.
 
 
 </td></tr>
@@ -71,9 +71,9 @@ Optional timestamp that can be used to calculate what the redemption rate would 
 
 By default, the fee is calculated at the time of the latest block. This can be overridden using the `when` parameter.
 
-Unlike the borrowing rate, the redemption rate depends on the amount being redeemed. To be more precise, it depends on the fraction of the redeemed amount compared to the total LUSD supply, which must be passed as a parameter.
+Unlike the borrowing rate, the redemption rate depends on the amount being redeemed. To be more precise, it depends on the fraction of the redeemed amount compared to the total DebtToken supply, which must be passed as a parameter.
 
-To calculate the redemption fee in LUSD, multiply the redeemed LUSD amount with the redemption rate.
+To calculate the redemption fee in DebtToken, multiply the redeemed DebtToken amount with the redemption rate.
 
 ## Example
 
@@ -82,9 +82,9 @@ To calculate the redemption fee in LUSD, multiply the redeemed LUSD amount with 
 const fees = await liquity.getFees();
 const total = await liquity.getTotal();
 
-const redeemedLUSDAmount = Decimal.from(100);
-const redeemedFractionOfSupply = redeemedLUSDAmount.div(total.debt);
+const redeemedDebtTokenAmount = Decimal.from(100);
+const redeemedFractionOfSupply = redeemedDebtTokenAmount.div(total.debt);
 const redemptionRate = fees.redemptionRate(redeemedFractionOfSupply);
-const redemptionFeeLUSD = redemptionRate.mul(redeemedLUSDAmount);
+const redemptionFeeDebtToken = redemptionRate.mul(redeemedDebtTokenAmount);
 ```
 

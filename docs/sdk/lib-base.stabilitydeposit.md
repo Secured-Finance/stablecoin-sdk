@@ -54,13 +54,13 @@ Description
 
 </td><td>
 
-Amount of native currency (e.g. Ether) received in exchange for the used-up LUSD.
+Amount of native currency (e.g. Ether) received in exchange for the used-up DebtToken.
 
 
 </td></tr>
 <tr><td>
 
-[currentLUSD](./lib-base.stabilitydeposit.currentlusd.md)
+[currentDebtToken](./lib-base.stabilitydeposit.currentdebttoken.md)
 
 
 </td><td>
@@ -73,7 +73,7 @@ Amount of native currency (e.g. Ether) received in exchange for the used-up LUSD
 
 </td><td>
 
-Amount of LUSD left in the Stability Deposit.
+Amount of DebtToken left in the Stability Deposit.
 
 
 </td></tr>
@@ -98,7 +98,7 @@ Address of frontend through which this Stability Deposit was made.
 </td></tr>
 <tr><td>
 
-[initialLUSD](./lib-base.stabilitydeposit.initiallusd.md)
+[initialDebtToken](./lib-base.stabilitydeposit.initialdebttoken.md)
 
 
 </td><td>
@@ -111,7 +111,7 @@ Address of frontend through which this Stability Deposit was made.
 
 </td><td>
 
-Amount of LUSD in the Stability Deposit at the time of the last direct modification.
+Amount of DebtToken in the Stability Deposit at the time of the last direct modification.
 
 
 </td></tr>
@@ -201,7 +201,7 @@ Compare to another instance of `StabilityDeposit`<!-- -->.
 </td></tr>
 <tr><td>
 
-[whatChanged(thatLUSD)](./lib-base.stabilitydeposit.whatchanged.md)
+[whatChanged(thatDebtToken)](./lib-base.stabilitydeposit.whatchanged.md)
 
 
 </td><td>
@@ -209,7 +209,7 @@ Compare to another instance of `StabilityDeposit`<!-- -->.
 
 </td><td>
 
-Calculate the difference between the `currentLUSD` in this Stability Deposit and `thatLUSD`<!-- -->.
+Calculate the difference between the `currentDebtToken` in this Stability Deposit and `thatDebtToken`<!-- -->.
 
 
 </td></tr>

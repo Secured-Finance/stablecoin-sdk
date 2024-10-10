@@ -132,7 +132,7 @@
     },
     {
       "inputs": [],
-      "name": "getETH",
+      "name": "getFIL",
       "outputs": [
         {
           "internalType": "uint256",

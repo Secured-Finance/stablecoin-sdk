@@ -1,7 +1,7 @@
-import { Transfer, Approval } from "../../generated/LUSDToken/ERC20";
+import { Approval, Transfer } from "../../generated/DebtToken/ERC20";
 
-import { updateBalance } from "../entities/TokenBalance";
 import { updateAllowance } from "../entities/TokenAllowance";
+import { updateBalance } from "../entities/TokenBalance";
 
 export function handleTokenTransfer(event: Transfer): void {
   updateBalance(event, event.params.from, event.params.to, event.params.value);

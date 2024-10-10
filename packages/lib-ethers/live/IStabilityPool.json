@@ -48,6 +48,19 @@
         {
           "indexed": false,
           "internalType": "address",
+          "name": "_newDebtTokenAddress",
+          "type": "address"
+        }
+      ],
+      "name": "DebtTokenAddressChanged",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
           "name": "_newDefaultPoolAddress",
           "type": "address"
         }
@@ -90,31 +103,6 @@
       "anonymous": false,
       "inputs": [
         {
-          "indexed": true,
-          "internalType": "address",
-          "name": "_depositor",
-          "type": "address"
-        },
-        {
-          "indexed": false,
-          "internalType": "uint256",
-          "name": "_ETH",
-          "type": "uint256"
-        },
-        {
-          "indexed": false,
-          "internalType": "uint256",
-          "name": "_LUSDLoss",
-          "type": "uint256"
-        }
-      ],
-      "name": "ETHGainWithdrawn",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
           "indexed": false,
           "internalType": "uint128",
           "name": "_currentEpoch",
@@ -141,6 +129,31 @@
         }
       ],
       "name": "EtherSent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "_depositor",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "_FIL",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "_debtTokenLoss",
+          "type": "uint256"
+        }
+      ],
+      "name": "FILGainWithdrawn",
       "type": "event"
     },
     {
@@ -299,19 +312,6 @@
       "inputs": [
         {
           "indexed": false,
-          "internalType": "address",
-          "name": "_newLUSDTokenAddress",
-          "type": "address"
-        }
-      ],
-      "name": "LUSDTokenAddressChanged",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": false,
           "internalType": "uint256",
           "name": "_P",
           "type": "uint256"
@@ -394,7 +394,7 @@
           "type": "uint256"
         }
       ],
-      "name": "StabilityPoolETHBalanceUpdated",
+      "name": "StabilityPoolDebtTokenBalanceUpdated",
       "type": "event"
     },
     {
@@ -407,7 +407,7 @@
           "type": "uint256"
         }
       ],
-      "name": "StabilityPoolLUSDBalanceUpdated",
+      "name": "StabilityPoolFILBalanceUpdated",
       "type": "event"
     },
     {
@@ -446,6 +446,25 @@
       "inputs": [
         {
           "internalType": "address",
+          "name": "_depositor",
+          "type": "address"
+        }
+      ],
+      "name": "getCompoundedDebtTokenDeposit",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
           "name": "_frontEnd",
           "type": "address"
         }
@@ -469,26 +488,7 @@
           "type": "address"
         }
       ],
-      "name": "getCompoundedLUSDDeposit",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "_depositor",
-          "type": "address"
-        }
-      ],
-      "name": "getDepositorETHGain",
+      "name": "getDepositorFILGain",
       "outputs": [
         {
           "internalType": "uint256",
@@ -520,7 +520,7 @@
     },
     {
       "inputs": [],
-      "name": "getETH",
+      "name": "getFIL",
       "outputs": [
         {
           "internalType": "uint256",
@@ -552,7 +552,7 @@
     },
     {
       "inputs": [],
-      "name": "getTotalLUSDDeposits",
+      "name": "getTotalDebtTokenDeposits",
       "outputs": [
         {
           "internalType": "uint256",
@@ -631,7 +631,7 @@
         },
         {
           "internalType": "address",
-          "name": "_lusdTokenAddress",
+          "name": "_debtTokenAddress",
           "type": "address"
         },
         {
@@ -668,7 +668,7 @@
           "type": "address"
         }
       ],
-      "name": "withdrawETHGainToTrove",
+      "name": "withdrawFILGainToTrove",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"

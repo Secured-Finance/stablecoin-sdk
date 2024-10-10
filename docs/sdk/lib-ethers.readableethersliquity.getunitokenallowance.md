@@ -4,7 +4,7 @@
 
 ## ReadableEthersLiquity.getUniTokenAllowance() method
 
-Get the liquidity mining contract's allowance of a holder's Uniswap ETH/LUSD LP tokens.
+Get the liquidity mining contract's allowance of a holder's Uniswap ETH/DebtToken LP tokens.
 
 **Signature:**
 
@@ -42,7 +42,7 @@ string
 
 </td><td>
 
-Address holding the Uniswap ETH/LUSD LP tokens.
+Address holding the Uniswap ETH/DebtToken LP tokens.
 
 
 </td></tr>

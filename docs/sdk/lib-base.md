@@ -237,7 +237,7 @@ Read the state of the Liquity protocol.
 
 </td><td>
 
-Details of a [redeemLUSD()](./lib-base.transactableliquity.redeemlusd.md) transaction.
+Details of a [redeemDebtToken()](./lib-base.transactableliquity.redeemdebttoken.md) transaction.
 
 
 </td></tr>
@@ -270,7 +270,7 @@ A transaction that has already been sent.
 
 </td><td>
 
-Details of a [depositLUSDInStabilityPool()](./lib-base.transactableliquity.depositlusdinstabilitypool.md) or [withdrawLUSDFromStabilityPool()](./lib-base.transactableliquity.withdrawlusdfromstabilitypool.md) transaction.
+Details of a [depositDebtTokenInStabilityPool()](./lib-base.transactableliquity.depositdebttokeninstabilitypool.md) or [withdrawDebtTokenFromStabilityPool()](./lib-base.transactableliquity.withdrawdebttokenfromstabilitypool.md) transaction.
 
 
 </td></tr>
@@ -368,34 +368,12 @@ Total collateral ratio below which recovery mode is triggered.
 </td></tr>
 <tr><td>
 
-[LUSD\_LIQUIDATION\_RESERVE](./lib-base.lusd_liquidation_reserve.md)
+[LIQUIDATION\_RESERVE](./lib-base.liquidation_reserve.md)
 
 
 </td><td>
 
-Amount of LUSD that's reserved for compensating the liquidator of a Trove.
-
-
-</td></tr>
-<tr><td>
-
-[LUSD\_MINIMUM\_DEBT](./lib-base.lusd_minimum_debt.md)
-
-
-</td><td>
-
-A Trove must always have at least this much debt.
-
-
-</td></tr>
-<tr><td>
-
-[LUSD\_MINIMUM\_NET\_DEBT](./lib-base.lusd_minimum_net_debt.md)
-
-
-</td><td>
-
-A Trove must always have at least this much debt on top of the [liquidation reserve](./lib-base.lusd_liquidation_reserve.md)<!-- -->.
+Amount of DebtToken that's reserved for compensating the liquidator of a Trove.
 
 
 </td></tr>
@@ -429,6 +407,28 @@ Value that the [borrowing rate](./lib-base.fees.borrowingrate.md) will never dec
 </td><td>
 
 Collateral ratio below which a Trove can be liquidated in normal mode.
+
+
+</td></tr>
+<tr><td>
+
+[MINIMUM\_DEBT](./lib-base.minimum_debt.md)
+
+
+</td><td>
+
+A Trove must always have at least this much debt.
+
+
+</td></tr>
+<tr><td>
+
+[MINIMUM\_NET\_DEBT](./lib-base.minimum_net_debt.md)
+
+
+</td><td>
+
+A Trove must always have at least this much debt on top of the [liquidation reserve](./lib-base.liquidation_reserve.md)<!-- -->.
 
 
 </td></tr>

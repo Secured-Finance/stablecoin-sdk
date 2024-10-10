@@ -62,24 +62,7 @@ Collateral gain available to withdraw.
 </td></tr>
 <tr><td>
 
-[isEmpty](./lib-base.lqtystake.isempty.md)
-
-
-</td><td>
-
-
-</td><td>
-
-boolean
-
-
-</td><td>
-
-
-</td></tr>
-<tr><td>
-
-[lusdGain](./lib-base.lqtystake.lusdgain.md)
+[debtTokenGain](./lib-base.lqtystake.debttokengain.md)
 
 
 </td><td>
@@ -92,7 +75,24 @@ boolean
 
 </td><td>
 
-LUSD gain available to withdraw.
+Debt token gain available to withdraw.
+
+
+</td></tr>
+<tr><td>
+
+[isEmpty](./lib-base.lqtystake.isempty.md)
+
+
+</td><td>
+
+
+</td><td>
+
+boolean
+
+
+</td><td>
 
 
 </td></tr>

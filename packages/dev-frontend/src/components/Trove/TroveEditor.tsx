@@ -5,8 +5,8 @@ import {
   Decimal,
   Decimalish,
   Difference,
+  LIQUIDATION_RESERVE,
   LiquityStoreState,
-  LUSD_LIQUIDATION_RESERVE,
   Percent,
   Trove
 } from "@secured-finance/lib-base";
@@ -67,7 +67,7 @@ export const TroveEditor: React.FC<TroveEditorProps> = ({
           <StaticRow
             label="Liquidation Reserve"
             inputId="trove-liquidation-reserve"
-            amount={`${LUSD_LIQUIDATION_RESERVE}`}
+            amount={`${LIQUIDATION_RESERVE}`}
             unit={COIN}
             infoIcon={
               <InfoIcon

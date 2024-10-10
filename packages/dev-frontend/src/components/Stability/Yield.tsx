@@ -6,8 +6,11 @@ import { Badge } from "../Badge";
 import { InfoIcon } from "../InfoIcon";
 import { fetchLqtyPrice } from "./context/fetchLqtyPrice";
 
-const selector = ({ lusdInStabilityPool, remainingStabilityPoolLQTYReward }: LiquityStoreState) => ({
-  lusdInStabilityPool,
+const selector = ({
+  debtTokenInStabilityPool,
+  remainingStabilityPoolLQTYReward
+}: LiquityStoreState) => ({
+  debtTokenInStabilityPool,
   remainingStabilityPoolLQTYReward
 });
 
@@ -16,10 +19,11 @@ const dailyIssuanceFraction = Decimal.from(1 - yearlyIssuanceFraction ** (1 / 36
 const dailyIssuancePercentage = dailyIssuanceFraction.mul(100);
 
 export const Yield: React.FC = () => {
-  const { lusdInStabilityPool, remainingStabilityPoolLQTYReward } = useLiquitySelector(selector);
+  const { debtTokenInStabilityPool, remainingStabilityPoolLQTYReward } =
+    useLiquitySelector(selector);
 
   const [lqtyPrice, setLqtyPrice] = useState<Decimal | undefined>(undefined);
-  const hasZeroValue = remainingStabilityPoolLQTYReward.isZero || lusdInStabilityPool.isZero;
+  const hasZeroValue = remainingStabilityPoolLQTYReward.isZero || debtTokenInStabilityPool.isZero;
 
   useEffect(() => {
     (async () => {
@@ -36,7 +40,7 @@ export const Yield: React.FC = () => {
 
   const lqtyIssuanceOneDay = remainingStabilityPoolLQTYReward.mul(dailyIssuanceFraction);
   const lqtyIssuanceOneDayInUSD = lqtyIssuanceOneDay.mul(lqtyPrice);
-  const aprPercentage = lqtyIssuanceOneDayInUSD.mulDiv(365 * 100, lusdInStabilityPool);
+  const aprPercentage = lqtyIssuanceOneDayInUSD.mulDiv(365 * 100, debtTokenInStabilityPool);
   const remainingLqtyInUSD = remainingStabilityPoolLQTYReward.mul(lqtyPrice);
 
   if (aprPercentage.isZero) return null;
@@ -59,7 +63,7 @@ export const Yield: React.FC = () => {
             <Paragraph sx={{ fontSize: "12px", fontFamily: "monospace" }}>
               ($
               {remainingLqtyInUSD.shorten()} * {dailyIssuancePercentage.toString(4)}% / $
-              {lusdInStabilityPool.shorten()}) * 365 * 100 =
+              {debtTokenInStabilityPool.shorten()}) * 365 * 100 =
               <Text sx={{ fontWeight: "bold" }}> {aprPercentage.toString(2)}%</Text>
             </Paragraph>
           </Card>

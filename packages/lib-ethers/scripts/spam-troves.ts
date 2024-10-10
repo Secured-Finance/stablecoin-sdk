@@ -3,7 +3,7 @@ import { JsonRpcProvider } from "@ethersproject/providers";
 import { Wallet } from "@ethersproject/wallet";
 import WebSocket from "ws";
 
-import { Decimal, LUSD_MINIMUM_DEBT, Trove } from "@secured-finance/lib-base";
+import { Decimal, MINIMUM_DEBT, Trove } from "@secured-finance/lib-base";
 import {
   BlockPolledLiquityStore,
   EthersLiquity,
@@ -41,7 +41,7 @@ const waitForSuccess = (tx: TransactionResponse) =>
 const createTrove = async (nominalCollateralRatio: Decimal) => {
   const randomWallet = Wallet.createRandom().connect(provider);
 
-  const debt = LUSD_MINIMUM_DEBT.mul(2);
+  const debt = MINIMUM_DEBT.mul(2);
   const collateral = debt.mul(nominalCollateralRatio);
 
   await funder

@@ -15,9 +15,9 @@ export interface PopulatedRedemption<P = unknown, S = unknown, R = unknown> exte
 
 ## Remarks
 
-The Liquity protocol fulfills redemptions by repaying the debt of Troves in ascending order of their collateralization ratio, and taking a portion of their collateral in exchange. Due to the [minimum debt](./lib-base.lusd_minimum_debt.md) requirement that Troves must fulfill, some LUSD amounts are not possible to redeem exactly.
+The Liquity protocol fulfills redemptions by repaying the debt of Troves in ascending order of their collateralization ratio, and taking a portion of their collateral in exchange. Due to the [minimum debt](./lib-base.minimum_debt.md) requirement that Troves must fulfill, some DebtToken amounts are not possible to redeem exactly.
 
-When [redeemLUSD()](./lib-base.populatableliquity.redeemlusd.md) is called with an amount that can't be fully redeemed, the amount will be truncated (see the `redeemableLUSDAmount` property). When this happens, the redeemer can either redeem the truncated amount by sending the transaction unchanged, or prepare a new transaction by [increasing the amount](./lib-base.populatedredemption.increaseamountbyminimumnetdebt.md) to the next lowest possible value, which is the sum of the truncated amount and [LUSD\_MINIMUM\_NET\_DEBT](./lib-base.lusd_minimum_net_debt.md)<!-- -->.
+When [redeemDebtToken()](./lib-base.populatableliquity.redeemdebttoken.md) is called with an amount that can't be fully redeemed, the amount will be truncated (see the `redeemableDebtTokenAmount` property). When this happens, the redeemer can either redeem the truncated amount by sending the transaction unchanged, or prepare a new transaction by [increasing the amount](./lib-base.populatedredemption.increaseamountbyminimumnetdebt.md) to the next lowest possible value, which is the sum of the truncated amount and [MINIMUM\_NET\_DEBT](./lib-base.minimum_net_debt.md)<!-- -->.
 
 ## Properties
 
@@ -44,7 +44,7 @@ Description
 </th></tr></thead>
 <tbody><tr><td>
 
-[attemptedLUSDAmount](./lib-base.populatedredemption.attemptedlusdamount.md)
+[attemptedDebtTokenAmount](./lib-base.populatedredemption.attempteddebttokenamount.md)
 
 
 </td><td>
@@ -57,7 +57,7 @@ Description
 
 </td><td>
 
-Amount of LUSD the redeemer is trying to redeem.
+Amount of DebtToken the redeemer is trying to redeem.
 
 
 </td></tr>
@@ -76,13 +76,13 @@ boolean
 
 </td><td>
 
-Whether `redeemableLUSDAmount` is less than `attemptedLUSDAmount`<!-- -->.
+Whether `redeemableDebtTokenAmount` is less than `attemptedDebtTokenAmount`<!-- -->.
 
 
 </td></tr>
 <tr><td>
 
-[redeemableLUSDAmount](./lib-base.populatedredemption.redeemablelusdamount.md)
+[redeemableDebtTokenAmount](./lib-base.populatedredemption.redeemabledebttokenamount.md)
 
 
 </td><td>
@@ -95,7 +95,7 @@ Whether `redeemableLUSDAmount` is less than `attemptedLUSDAmount`<!-- -->.
 
 </td><td>
 
-Maximum amount of LUSD that is currently redeemable from `attemptedLUSDAmount`<!-- -->.
+Maximum amount of DebtToken that is currently redeemable from `attemptedDebtTokenAmount`<!-- -->.
 
 
 </td></tr>

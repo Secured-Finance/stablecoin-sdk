@@ -12,12 +12,12 @@ import { StabilityActionDescription } from "../StabilityActionDescription";
 
 export const selectForStabilityDepositChangeValidation = ({
   trove,
-  lusdBalance,
+  debtTokenBalance,
   ownFrontend,
   haveUndercollateralizedTroves
 }: LiquityStoreState) => ({
   trove,
-  lusdBalance,
+  debtTokenBalance,
   haveOwnFrontend: ownFrontend.status === "registered",
   haveUndercollateralizedTroves
 });
@@ -28,9 +28,9 @@ type StabilityDepositChangeValidationContext = ReturnType<
 
 export const validateStabilityDepositChange = (
   originalDeposit: StabilityDeposit,
-  editedLUSD: Decimal,
+  editedDebtToken: Decimal,
   {
-    lusdBalance,
+    debtTokenBalance,
     haveOwnFrontend,
     haveUndercollateralizedTroves
   }: StabilityDepositChangeValidationContext
@@ -38,7 +38,7 @@ export const validateStabilityDepositChange = (
   validChange: StabilityDepositChange<Decimal> | undefined,
   description: JSX.Element | undefined
 ] => {
-  const change = originalDeposit.whatChanged(editedLUSD);
+  const change = originalDeposit.whatChanged(editedDebtToken);
 
   if (haveOwnFrontend) {
     return [
@@ -53,20 +53,20 @@ export const validateStabilityDepositChange = (
     return [undefined, undefined];
   }
 
-  if (change.depositLUSD?.gt(lusdBalance)) {
+  if (change.depositDebtToken?.gt(debtTokenBalance)) {
     return [
       undefined,
       <ErrorDescription>
         The amount you're trying to deposit exceeds your balance by{" "}
         <Amount>
-          {change.depositLUSD.sub(lusdBalance).prettify()} {COIN}
+          {change.depositDebtToken.sub(debtTokenBalance).prettify()} {COIN}
         </Amount>
         .
       </ErrorDescription>
     ];
   }
 
-  if (change.withdrawLUSD && haveUndercollateralizedTroves) {
+  if (change.withdrawDebtToken && haveUndercollateralizedTroves) {
     return [
       undefined,
       <ErrorDescription>

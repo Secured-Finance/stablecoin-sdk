@@ -34,7 +34,8 @@ const sendTransaction = <T>(tx: PopulatedEthersLiquityTransaction<T>) => tx.send
  * @public
  */
 export class SendableEthersLiquity
-  implements SendableLiquity<EthersTransactionReceipt, EthersTransactionResponse> {
+  implements SendableLiquity<EthersTransactionReceipt, EthersTransactionResponse>
+{
   private _populate: PopulatableEthersLiquity;
 
   constructor(populatable: PopulatableEthersLiquity) {
@@ -86,21 +87,21 @@ export class SendableEthersLiquity
     return this._populate.withdrawCollateral(amount, overrides).then(sendTransaction);
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#SendableLiquity.borrowLUSD} */
-  borrowLUSD(
+  /** {@inheritDoc @secured-finance/lib-base#SendableLiquity.borrowDebtToken} */
+  borrowDebtToken(
     amount: Decimalish,
     maxBorrowingRate?: Decimalish,
     overrides?: EthersTransactionOverrides
   ): Promise<SentEthersLiquityTransaction<TroveAdjustmentDetails>> {
-    return this._populate.borrowLUSD(amount, maxBorrowingRate, overrides).then(sendTransaction);
+    return this._populate.borrowDebtToken(amount, maxBorrowingRate, overrides).then(sendTransaction);
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#SendableLiquity.repayLUSD} */
-  repayLUSD(
+  /** {@inheritDoc @secured-finance/lib-base#SendableLiquity.repayDebtToken} */
+  repayDebtToken(
     amount: Decimalish,
     overrides?: EthersTransactionOverrides
   ): Promise<SentEthersLiquityTransaction<TroveAdjustmentDetails>> {
-    return this._populate.repayLUSD(amount, overrides).then(sendTransaction);
+    return this._populate.repayDebtToken(amount, overrides).then(sendTransaction);
   }
 
   /** @internal */
@@ -129,23 +130,25 @@ export class SendableEthersLiquity
       .then(sendTransaction);
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#SendableLiquity.depositLUSDInStabilityPool} */
-  depositLUSDInStabilityPool(
+  /** {@inheritDoc @secured-finance/lib-base#SendableLiquity.depositDebtTokenInStabilityPool} */
+  depositDebtTokenInStabilityPool(
     amount: Decimalish,
     frontendTag?: string,
     overrides?: EthersTransactionOverrides
   ): Promise<SentEthersLiquityTransaction<StabilityDepositChangeDetails>> {
     return this._populate
-      .depositLUSDInStabilityPool(amount, frontendTag, overrides)
+      .depositDebtTokenInStabilityPool(amount, frontendTag, overrides)
       .then(sendTransaction);
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#SendableLiquity.withdrawLUSDFromStabilityPool} */
-  withdrawLUSDFromStabilityPool(
+  /** {@inheritDoc @secured-finance/lib-base#SendableLiquity.withdrawDebtTokenFromStabilityPool} */
+  withdrawDebtTokenFromStabilityPool(
     amount: Decimalish,
     overrides?: EthersTransactionOverrides
   ): Promise<SentEthersLiquityTransaction<StabilityDepositChangeDetails>> {
-    return this._populate.withdrawLUSDFromStabilityPool(amount, overrides).then(sendTransaction);
+    return this._populate
+      .withdrawDebtTokenFromStabilityPool(amount, overrides)
+      .then(sendTransaction);
   }
 
   /** {@inheritDoc @secured-finance/lib-base#SendableLiquity.withdrawGainsFromStabilityPool} */
@@ -162,13 +165,13 @@ export class SendableEthersLiquity
     return this._populate.transferCollateralGainToTrove(overrides).then(sendTransaction);
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#SendableLiquity.sendLUSD} */
-  sendLUSD(
+  /** {@inheritDoc @secured-finance/lib-base#SendableLiquity.sendDebtToken} */
+  sendDebtToken(
     toAddress: string,
     amount: Decimalish,
     overrides?: EthersTransactionOverrides
   ): Promise<SentEthersLiquityTransaction<void>> {
-    return this._populate.sendLUSD(toAddress, amount, overrides).then(sendTransaction);
+    return this._populate.sendDebtToken(toAddress, amount, overrides).then(sendTransaction);
   }
 
   /** {@inheritDoc @secured-finance/lib-base#SendableLiquity.sendLQTY} */
@@ -180,13 +183,15 @@ export class SendableEthersLiquity
     return this._populate.sendLQTY(toAddress, amount, overrides).then(sendTransaction);
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#SendableLiquity.redeemLUSD} */
-  redeemLUSD(
+  /** {@inheritDoc @secured-finance/lib-base#SendableLiquity.redeemDebtToken} */
+  redeemDebtToken(
     amount: Decimalish,
     maxRedemptionRate?: Decimalish,
     overrides?: EthersTransactionOverrides
   ): Promise<SentEthersLiquityTransaction<RedemptionDetails>> {
-    return this._populate.redeemLUSD(amount, maxRedemptionRate, overrides).then(sendTransaction);
+    return this._populate
+      .redeemDebtToken(amount, maxRedemptionRate, overrides)
+      .then(sendTransaction);
   }
 
   /** {@inheritDoc @secured-finance/lib-base#SendableLiquity.claimCollateralSurplus} */

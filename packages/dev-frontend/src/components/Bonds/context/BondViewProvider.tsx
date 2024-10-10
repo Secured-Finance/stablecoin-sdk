@@ -8,19 +8,19 @@ import { _getProtocolInfo, api } from "./api";
 import { useBondAddresses } from "./BondAddressesContext";
 import { BondViewContext, BondViewContextType } from "./BondViewContext";
 import type {
-    ApprovePressedPayload,
-    BLusdLpRewards,
-    Bond,
-    BondEvent,
-    BondTransactionStatuses,
-    BondView,
-    CreateBondPayload,
-    ManageLiquidityPayload,
-    OptimisticBond,
-    Payload,
-    ProtocolInfo,
-    Stats,
-    SwapPayload
+  ApprovePressedPayload,
+  BLusdLpRewards,
+  Bond,
+  BondEvent,
+  BondTransactionStatuses,
+  BondView,
+  CreateBondPayload,
+  ManageLiquidityPayload,
+  OptimisticBond,
+  Payload,
+  ProtocolInfo,
+  Stats,
+  SwapPayload
 } from "./transitions";
 import { BLusdAmmTokenIndex, transitions } from "./transitions";
 import { useBondContracts } from "./useBondContracts";
@@ -73,7 +73,7 @@ export const BondViewProvider: React.FC<React.PropsWithChildren> = props => {
     MANAGE_LIQUIDITY: "IDLE"
   });
   const [bLusdBalance, setBLusdBalance] = useState<Decimal>();
-  const [lusdBalance, setLusdBalance] = useState<Decimal>();
+  const [debtTokenBalance, setDebtTokenBalance] = useState<Decimal>();
   const [lpTokenBalance, setLpTokenBalance] = useState<Decimal>();
   const [stakedLpTokenBalance, setStakedLpTokenBalance] = useState<Decimal>();
 
@@ -142,26 +142,26 @@ export const BondViewProvider: React.FC<React.PropsWithChildren> = props => {
   );
 
   const getLusdFromFaucet = useCallback(async () => {
-    if (contracts.lusdToken === undefined || liquity.connection.signer === undefined) return;
+    if (contracts.debtToken === undefined || liquity.connection.signer === undefined) return;
 
     if (
       LUSD_OVERRIDE_ADDRESS !== null &&
-      (await contracts.lusdToken.balanceOf(account)).eq(0) &&
-      "tap" in contracts.lusdToken
+      (await contracts.debtToken.balanceOf(account)).eq(0) &&
+      "tap" in contracts.debtToken
     ) {
       await (
-        await ((contracts.lusdToken as unknown) as ERC20Faucet)
+        await (contracts.debtToken as unknown as ERC20Faucet)
           .connect(liquity.connection.signer)
           .tap()
       ).wait();
       setShouldSynchronize(true);
     }
-  }, [contracts.lusdToken, account, LUSD_OVERRIDE_ADDRESS, liquity.connection.signer]);
+  }, [contracts.debtToken, account, LUSD_OVERRIDE_ADDRESS, liquity.connection.signer]);
 
   useEffect(() => {
     (async () => {
       if (
-        contracts.lusdToken === undefined ||
+        contracts.debtToken === undefined ||
         contracts.chickenBondManager === undefined ||
         account === undefined ||
         isInfiniteBondApproved
@@ -169,29 +169,29 @@ export const BondViewProvider: React.FC<React.PropsWithChildren> = props => {
         return;
       const isApproved = await api.isInfiniteBondApproved(
         account,
-        contracts.lusdToken,
+        contracts.debtToken,
         contracts.chickenBondManager
       );
       setIsInfiniteBondApproved(isApproved);
     })();
-  }, [contracts.lusdToken, contracts.chickenBondManager, account, isInfiniteBondApproved]);
+  }, [contracts.debtToken, contracts.chickenBondManager, account, isInfiniteBondApproved]);
 
   useEffect(() => {
     (async () => {
       if (
         BLUSD_AMM_ADDRESS === null ||
-        contracts.lusdToken === undefined ||
+        contracts.debtToken === undefined ||
         isLusdApprovedWithBlusdAmm
       ) {
         return;
       }
       const isApproved = await (isMainnet
-        ? api.isTokenApprovedWithBLusdAmmMainnet(account, contracts.lusdToken)
-        : api.isTokenApprovedWithBLusdAmm(account, contracts.lusdToken, BLUSD_AMM_ADDRESS));
+        ? api.isTokenApprovedWithBLusdAmmMainnet(account, contracts.debtToken)
+        : api.isTokenApprovedWithBLusdAmm(account, contracts.debtToken, BLUSD_AMM_ADDRESS));
 
       setIsLusdApprovedWithBlusdAmm(isApproved);
     })();
-  }, [contracts.lusdToken, account, isLusdApprovedWithBlusdAmm, isMainnet, BLUSD_AMM_ADDRESS]);
+  }, [contracts.debtToken, account, isLusdApprovedWithBlusdAmm, isMainnet, BLUSD_AMM_ADDRESS]);
 
   useEffect(() => {
     (async () => {
@@ -215,7 +215,7 @@ export const BondViewProvider: React.FC<React.PropsWithChildren> = props => {
     (async () => {
       if (
         BLUSD_LP_ZAP_ADDRESS === null ||
-        contracts.lusdToken === undefined ||
+        contracts.debtToken === undefined ||
         isLusdApprovedWithAmmZapper
       ) {
         return;
@@ -223,13 +223,13 @@ export const BondViewProvider: React.FC<React.PropsWithChildren> = props => {
 
       const isLusdApproved = await api.isTokenApprovedWithAmmZapper(
         account,
-        contracts.lusdToken,
+        contracts.debtToken,
         BLUSD_LP_ZAP_ADDRESS
       );
 
       setIsLusdApprovedWithAmmZapper(isLusdApproved);
     })();
-  }, [contracts.lusdToken, account, isLusdApprovedWithAmmZapper, BLUSD_LP_ZAP_ADDRESS]);
+  }, [contracts.debtToken, account, isLusdApprovedWithAmmZapper, BLUSD_LP_ZAP_ADDRESS]);
 
   useEffect(() => {
     (async () => {
@@ -278,7 +278,7 @@ export const BondViewProvider: React.FC<React.PropsWithChildren> = props => {
     (async () => {
       try {
         if (
-          contracts.lusdToken === undefined ||
+          contracts.debtToken === undefined ||
           contracts.bondNft === undefined ||
           contracts.chickenBondManager === undefined ||
           contracts.bLusdToken === undefined ||
@@ -302,7 +302,7 @@ export const BondViewProvider: React.FC<React.PropsWithChildren> = props => {
           bonds,
           stats,
           bLusdBalance,
-          lusdBalance,
+          debtTokenBalance,
           lpTokenBalance,
           stakedLpTokenBalance,
           lpTokenSupply,
@@ -331,7 +331,7 @@ export const BondViewProvider: React.FC<React.PropsWithChildren> = props => {
         setShouldSynchronize(false);
         setLpRewards(lpRewards);
         setBLusdBalance(bLusdBalance);
-        setLusdBalance(lusdBalance);
+        setDebtTokenBalance(debtTokenBalance);
         setLpTokenBalance(lpTokenBalance);
         setStakedLpTokenBalance(stakedLpTokenBalance);
         setLpTokenSupply(lpTokenSupply);
@@ -350,12 +350,12 @@ export const BondViewProvider: React.FC<React.PropsWithChildren> = props => {
 
   const [approveInfiniteBond, approveStatus] = useTransaction(async () => {
     await api.approveInfiniteBond(
-      contracts.lusdToken,
+      contracts.debtToken,
       contracts.chickenBondManager,
       liquity.connection.signer
     );
     setIsInfiniteBondApproved(true);
-  }, [contracts.lusdToken, contracts.chickenBondManager, liquity.connection.signer]);
+  }, [contracts.debtToken, contracts.chickenBondManager, liquity.connection.signer]);
 
   const [approveAmm, approveAmmStatus] = useTransaction(
     async (tokensNeedingApproval: BLusdAmmTokenIndex[]) => {
@@ -372,9 +372,9 @@ export const BondViewProvider: React.FC<React.PropsWithChildren> = props => {
           setIsBLusdApprovedWithBlusdAmm(true);
         } else {
           await (isMainnet
-            ? api.approveTokenWithBLusdAmmMainnet(contracts.lusdToken, liquity.connection.signer)
+            ? api.approveTokenWithBLusdAmmMainnet(contracts.debtToken, liquity.connection.signer)
             : api.approveTokenWithBLusdAmm(
-                contracts.lusdToken,
+                contracts.debtToken,
                 BLUSD_AMM_ADDRESS,
                 liquity.connection.signer
               ));
@@ -385,7 +385,7 @@ export const BondViewProvider: React.FC<React.PropsWithChildren> = props => {
     },
     [
       contracts.bLusdToken,
-      contracts.lusdToken,
+      contracts.debtToken,
       isMainnet,
       BLUSD_AMM_ADDRESS,
       liquity.connection.signer
@@ -405,7 +405,7 @@ export const BondViewProvider: React.FC<React.PropsWithChildren> = props => {
           }
         } else if (token === BLusdAmmTokenIndex.LUSD) {
           await api.approveToken(
-            contracts.lusdToken,
+            contracts.debtToken,
             BLUSD_LP_ZAP_ADDRESS,
             liquity.connection.signer
           );
@@ -428,7 +428,7 @@ export const BondViewProvider: React.FC<React.PropsWithChildren> = props => {
     [
       contracts.bLusdAmm,
       contracts.bLusdToken,
-      contracts.lusdToken,
+      contracts.debtToken,
       BLUSD_LP_ZAP_ADDRESS,
       BLUSD_AMM_STAKING_ADDRESS,
       BLUSD_AMM_ADDRESS,
@@ -590,10 +590,10 @@ export const BondViewProvider: React.FC<React.PropsWithChildren> = props => {
     [contracts.bLusdAmmZapper, contracts.bLusdAmm]
   );
 
-  const selectedBond = useMemo(() => bonds?.find(bond => bond.id === selectedBondId), [
-    bonds,
-    selectedBondId
-  ]);
+  const selectedBond = useMemo(
+    () => bonds?.find(bond => bond.id === selectedBondId),
+    [bonds, selectedBondId]
+  );
 
   const dispatchEvent = useCallback(
     async (event: BondEvent, payload?: Payload) => {
@@ -733,7 +733,7 @@ export const BondViewProvider: React.FC<React.PropsWithChildren> = props => {
     statuses,
     selectedBond,
     bLusdBalance,
-    lusdBalance,
+    debtTokenBalance,
     lpTokenBalance,
     stakedLpTokenBalance,
     lpTokenSupply,

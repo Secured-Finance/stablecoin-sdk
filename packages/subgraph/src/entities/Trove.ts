@@ -1,27 +1,27 @@
-import { ethereum, Address, BigInt } from "@graphprotocol/graph-ts";
+import { Address, BigInt, ethereum } from "@graphprotocol/graph-ts";
 
 import { Trove, TroveChange } from "../../generated/schema";
 
-import { decimalize, BIGINT_SCALING_FACTOR, BIGINT_ZERO, DECIMAL_ZERO } from "../utils/bignumbers";
+import { BIGINT_SCALING_FACTOR, BIGINT_ZERO, DECIMAL_ZERO, decimalize } from "../utils/bignumbers";
 import { calculateCollateralRatio } from "../utils/collateralRatio";
 
 import { isLiquidation, isRedemption } from "../types/TroveOperation";
 
+import { beginChange, finishChange, initChange } from "./Change";
 import {
   decreaseNumberOfLiquidatedTroves,
   decreaseNumberOfRedeemedTroves,
   decreaseNumberOfTrovesClosedByOwner,
-  increaseNumberOfLiquidatedTroves,
-  increaseNumberOfRedeemedTroves,
-  increaseNumberOfOpenTroves,
-  increaseNumberOfTrovesClosedByOwner,
+  getGlobal,
   getLastChangeSequenceNumber,
-  getGlobal
+  increaseNumberOfLiquidatedTroves,
+  increaseNumberOfOpenTroves,
+  increaseNumberOfRedeemedTroves,
+  increaseNumberOfTrovesClosedByOwner
 } from "./Global";
-import { beginChange, initChange, finishChange } from "./Change";
-import { getCurrentPrice, updateSystemStateByTroveChange } from "./SystemState";
 import { getCurrentLiquidation } from "./Liquidation";
 import { getCurrentRedemption } from "./Redemption";
+import { getCurrentPrice, updateSystemStateByTroveChange } from "./SystemState";
 import { getUser } from "./User";
 
 function getTrove(_user: Address): Trove {
@@ -169,11 +169,11 @@ export function updateTrove(
   trove.save();
 }
 
-export function setBorrowingFeeOfLastTroveChange(_LUSDFee: BigInt): void {
+export function setBorrowingFeeOfLastTroveChange(_debtTokenFee: BigInt): void {
   let lastChangeSequenceNumber = getLastChangeSequenceNumber();
 
   let lastTroveChange = TroveChange.load(lastChangeSequenceNumber.toString());
-  lastTroveChange.borrowingFee = decimalize(_LUSDFee);
+  lastTroveChange.borrowingFee = decimalize(_debtTokenFee);
   lastTroveChange.save();
 }
 

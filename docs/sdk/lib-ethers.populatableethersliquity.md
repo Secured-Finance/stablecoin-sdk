@@ -89,13 +89,13 @@ Adjust existing Trove by changing its collateral, debt, or both.
 
 </td><td>
 
-Allow the liquidity mining contract to use Uniswap ETH/LUSD LP tokens for [staking](./lib-base.transactableliquity.stakeunitokens.md)<!-- -->.
+Allow the liquidity mining contract to use Uniswap ETH/DebtToken LP tokens for [staking](./lib-base.transactableliquity.stakeunitokens.md)<!-- -->.
 
 
 </td></tr>
 <tr><td>
 
-[borrowLUSD(amount, maxBorrowingRate, overrides)](./lib-ethers.populatableethersliquity.borrowlusd.md)
+[borrowDebtToken(amount, maxBorrowingRate, overrides)](./lib-ethers.populatableethersliquity.borrowdebttoken.md)
 
 
 </td><td>
@@ -103,7 +103,7 @@ Allow the liquidity mining contract to use Uniswap ETH/LUSD LP tokens for [staki
 
 </td><td>
 
-Adjust existing Trove by borrowing more LUSD.
+Adjust existing Trove by borrowing more DebtToken.
 
 
 </td></tr>
@@ -151,7 +151,7 @@ Adjust existing Trove by depositing more collateral.
 </td></tr>
 <tr><td>
 
-[depositLUSDInStabilityPool(amount, frontendTag, overrides)](./lib-ethers.populatableethersliquity.depositlusdinstabilitypool.md)
+[depositDebtTokenInStabilityPool(amount, frontendTag, overrides)](./lib-ethers.populatableethersliquity.depositdebttokeninstabilitypool.md)
 
 
 </td><td>
@@ -215,13 +215,13 @@ Liquidate the least collateralized Troves up to a maximum number.
 
 </td><td>
 
-Open a new Trove by depositing collateral and borrowing LUSD.
+Open a new Trove by depositing collateral and borrowing DebtToken.
 
 
 </td></tr>
 <tr><td>
 
-[redeemLUSD(amount, maxRedemptionRate, overrides)](./lib-ethers.populatableethersliquity.redeemlusd.md)
+[redeemDebtToken(amount, maxRedemptionRate, overrides)](./lib-ethers.populatableethersliquity.redeemdebttoken.md)
 
 
 </td><td>
@@ -229,7 +229,7 @@ Open a new Trove by depositing collateral and borrowing LUSD.
 
 </td><td>
 
-Redeem LUSD to native currency (e.g. Ether) at face value.
+Redeem DebtToken to native currency (e.g. Ether) at face value.
 
 
 </td></tr>
@@ -249,7 +249,7 @@ Register current wallet address as a Liquity frontend.
 </td></tr>
 <tr><td>
 
-[repayLUSD(amount, overrides)](./lib-ethers.populatableethersliquity.repaylusd.md)
+[repayDebtToken(amount, overrides)](./lib-ethers.populatableethersliquity.repaydebttoken.md)
 
 
 </td><td>
@@ -258,6 +258,20 @@ Register current wallet address as a Liquity frontend.
 </td><td>
 
 Adjust existing Trove by repaying some of its debt.
+
+
+</td></tr>
+<tr><td>
+
+[sendDebtToken(toAddress, amount, overrides)](./lib-ethers.populatableethersliquity.senddebttoken.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Send DebtToken tokens to an address.
 
 
 </td></tr>
@@ -272,20 +286,6 @@ Adjust existing Trove by repaying some of its debt.
 </td><td>
 
 Send LQTY tokens to an address.
-
-
-</td></tr>
-<tr><td>
-
-[sendLUSD(toAddress, amount, overrides)](./lib-ethers.populatableethersliquity.sendlusd.md)
-
-
-</td><td>
-
-
-</td><td>
-
-Send LUSD tokens to an address.
 
 
 </td></tr>
@@ -313,7 +313,7 @@ Stake LQTY to start earning fee revenue or increase existing stake.
 
 </td><td>
 
-Stake Uniswap ETH/LUSD LP tokens to participate in liquidity mining and earn LQTY.
+Stake Uniswap ETH/DebtToken LP tokens to participate in liquidity mining and earn LQTY.
 
 
 </td></tr>
@@ -355,7 +355,7 @@ Withdraw LQTY from staking.
 
 </td><td>
 
-Withdraw Uniswap ETH/LUSD LP tokens from liquidity mining.
+Withdraw Uniswap ETH/DebtToken LP tokens from liquidity mining.
 
 
 </td></tr>
@@ -370,6 +370,20 @@ Withdraw Uniswap ETH/LUSD LP tokens from liquidity mining.
 </td><td>
 
 Adjust existing Trove by withdrawing some of its collateral.
+
+
+</td></tr>
+<tr><td>
+
+[withdrawDebtTokenFromStabilityPool(amount, overrides)](./lib-ethers.populatableethersliquity.withdrawdebttokenfromstabilitypool.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Withdraw DebtToken from Stability Deposit.
 
 
 </td></tr>
@@ -397,7 +411,7 @@ Withdraw [collateral gain](./lib-base.stabilitydeposit.collateralgain.md) and [L
 
 </td><td>
 
-Withdraw [collateral gain](./lib-base.lqtystake.collateralgain.md) and [LUSD gain](./lib-base.lqtystake.lusdgain.md) from LQTY stake.
+Withdraw [collateral gain](./lib-base.lqtystake.collateralgain.md) and [DebtToken gain](./lib-base.lqtystake.debttokengain.md) from LQTY stake.
 
 
 </td></tr>
@@ -412,20 +426,6 @@ Withdraw [collateral gain](./lib-base.lqtystake.collateralgain.md) and [LUSD gai
 </td><td>
 
 Withdraw LQTY that has been earned by mining liquidity.
-
-
-</td></tr>
-<tr><td>
-
-[withdrawLUSDFromStabilityPool(amount, overrides)](./lib-ethers.populatableethersliquity.withdrawlusdfromstabilitypool.md)
-
-
-</td><td>
-
-
-</td><td>
-
-Withdraw LUSD from Stability Deposit.
 
 
 </td></tr>

@@ -53,8 +53,8 @@ export const ReadOnlyStake: React.FC = () => {
         <StaticRow
           label="Issuance gain"
           inputId="stake-gain-lusd"
-          amount={lqtyStake.lusdGain.prettify()}
-          color={lqtyStake.lusdGain.nonZero && "success"}
+          amount={lqtyStake.debtTokenGain.prettify()}
+          color={lqtyStake.debtTokenGain.nonZero && "success"}
           unit={COIN}
         />
 

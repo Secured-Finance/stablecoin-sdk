@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { Card, Box, Heading, Flex, Button } from "theme-ui";
-import { Empty } from "./Empty";
-import { BondList } from "./BondList";
-import { useBondView } from "../../context/BondViewContext";
-import { BONDS } from "../../lexicon";
-import { InfoIcon } from "../../../InfoIcon";
-import { BLusdAmmTokenIndex, SwapPressedPayload } from "../../context/transitions";
+import { Box, Button, Card, Flex, Heading } from "theme-ui";
 import { useLiquity } from "../../../../hooks/LiquityContext";
+import { InfoIcon } from "../../../InfoIcon";
 import { useBondAddresses } from "../../context/BondAddressesContext";
+import { useBondView } from "../../context/BondViewContext";
+import { BLusdAmmTokenIndex, SwapPressedPayload } from "../../context/transitions";
+import { BONDS } from "../../lexicon";
+import { BondList } from "./BondList";
+import { Empty } from "./Empty";
 
 export const Idle: React.FC = () => {
   const { liquity } = useLiquity();
   const { LUSD_OVERRIDE_ADDRESS } = useBondAddresses();
 
-  const { dispatchEvent, bonds, getLusdFromFaucet, lusdBalance, hasLoaded } = useBondView();
+  const { dispatchEvent, bonds, getLusdFromFaucet, debtTokenBalance, hasLoaded } = useBondView();
   const [chain, setChain] = useState<number>();
 
   useEffect(() => {
@@ -28,7 +28,7 @@ export const Idle: React.FC = () => {
 
   const hasBonds = bonds !== undefined && bonds.length > 0;
 
-  const showLusdFaucet = LUSD_OVERRIDE_ADDRESS !== null && lusdBalance?.eq(0);
+  const showLusdFaucet = LUSD_OVERRIDE_ADDRESS !== null && debtTokenBalance?.eq(0);
 
   const handleManageLiquidityPressed = () => dispatchEvent("MANAGE_LIQUIDITY_PRESSED");
 

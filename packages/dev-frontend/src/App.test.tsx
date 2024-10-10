@@ -2,11 +2,11 @@ import { render, screen } from "@testing-library/react";
 import { PointerEventsCheckLevel, userEvent } from "@testing-library/user-event";
 import { expect } from "vitest";
 
-import { Decimal, LUSD_MINIMUM_NET_DEBT, Trove } from "@secured-finance/lib-base";
+import { Decimal, MINIMUM_NET_DEBT, Trove } from "@secured-finance/lib-base";
 
 import App from "./App";
 
-const params = { depositCollateral: Decimal.from(20), borrowLUSD: LUSD_MINIMUM_NET_DEBT };
+const params = { depositCollateral: Decimal.from(20), borrowDebtToken: MINIMUM_NET_DEBT };
 const trove = Trove.create(params);
 
 /*

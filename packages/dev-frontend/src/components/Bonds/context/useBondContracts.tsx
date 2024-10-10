@@ -17,8 +17,8 @@ import {
 } from "@liquity/chicken-bonds/lusd/types/external";
 import type { CurveLiquidityGaugeV5 } from "@liquity/chicken-bonds/lusd/types/external/CurveLiquidityGaugeV5";
 import { Decimal } from "@secured-finance/lib-base";
-import LUSDTokenAbi from "@secured-finance/lib-ethers/abi/LUSDToken.json";
-import type { LUSDToken } from "@secured-finance/lib-ethers/dist/types";
+import DebtTokenAbi from "@secured-finance/lib-ethers/abi/DebtToken.json";
+import type { DebtToken } from "@secured-finance/lib-ethers/dist/types";
 import { useCallback } from "react";
 import { useChainId } from "wagmi";
 import { useLiquity } from "../../../hooks/LiquityContext";
@@ -33,7 +33,7 @@ type BondsInformation = {
   bonds: Bond[];
   stats: Stats;
   bLusdBalance: Decimal;
-  lusdBalance: Decimal;
+  debtTokenBalance: Decimal;
   lpTokenBalance: Decimal;
   stakedLpTokenBalance: Decimal;
   lpTokenSupply: Decimal;
@@ -44,7 +44,7 @@ type BondsInformation = {
 
 type BondContracts = {
   addresses: Addresses;
-  lusdToken: LUSDToken | undefined;
+  debtToken: DebtToken | undefined;
   bLusdToken: BLUSDToken | undefined;
   bondNft: BondNFT | undefined;
   chickenBondManager: ChickenBondManager | undefined;
@@ -72,20 +72,20 @@ export const useBondContracts = (): BondContracts => {
     BLUSD_AMM_STAKING_ADDRESS
   } = addresses;
 
-  const [lusdTokenDefault, lusdTokenDefaultStatus] = useContract<LUSDToken>(
-    liquity.connection.addresses.lusdToken,
-    LUSDTokenAbi
+  const [debtTokenDefault, debtTokenDefaultStatus] = useContract<DebtToken>(
+    liquity.connection.addresses.debtToken,
+    DebtTokenAbi
   );
 
-  const [lusdTokenOverride, lusdTokenOverrideStatus] = useContract<ERC20Faucet>(
+  const [debtTokenOverride, debtTokenOverrideStatus] = useContract<ERC20Faucet>(
     LUSD_OVERRIDE_ADDRESS,
     ERC20Faucet__factory.abi
   );
 
-  const [lusdToken, lusdTokenStatus] =
+  const [debtToken, debtTokenStatus] =
     LUSD_OVERRIDE_ADDRESS === null
-      ? [lusdTokenDefault, lusdTokenDefaultStatus]
-      : [(lusdTokenOverride as unknown) as LUSDToken, lusdTokenOverrideStatus];
+      ? [debtTokenDefault, debtTokenDefaultStatus]
+      : [debtTokenOverride as unknown as DebtToken, debtTokenOverrideStatus];
 
   const [bLusdToken, bLusdTokenStatus] = useContract<BLUSDToken>(
     BLUSD_TOKEN_ADDRESS,
@@ -115,7 +115,7 @@ export const useBondContracts = (): BondContracts => {
 
   const hasFoundContracts =
     [
-      lusdTokenStatus,
+      debtTokenStatus,
       bondNftStatus,
       chickenBondManagerStatus,
       bLusdTokenStatus,
@@ -127,7 +127,7 @@ export const useBondContracts = (): BondContracts => {
   const getLatestData = useCallback(
     async (account: string, api: BondsApi): Promise<BondsInformation | undefined> => {
       if (
-        lusdToken === undefined ||
+        debtToken === undefined ||
         bondNft === undefined ||
         chickenBondManager === undefined ||
         bLusdToken === undefined ||
@@ -159,7 +159,7 @@ export const useBondContracts = (): BondContracts => {
 
       const [
         bLusdBalance,
-        lusdBalance,
+        debtTokenBalance,
         lpTokenBalance,
         stakedLpTokenBalance,
         lpTokenSupply,
@@ -167,7 +167,7 @@ export const useBondContracts = (): BondContracts => {
         lpRewards
       ] = await Promise.all([
         api.getTokenBalance(account, bLusdToken),
-        api.getTokenBalance(account, lusdToken),
+        api.getTokenBalance(account, debtToken),
         api.getTokenBalance(account, lpToken),
         isMainnet ? api.getTokenBalance(account, bLusdGauge) : Decimal.ZERO,
         api.getTokenTotalSupply(lpToken),
@@ -182,7 +182,7 @@ export const useBondContracts = (): BondContracts => {
         bonds,
         stats,
         bLusdBalance,
-        lusdBalance,
+        debtTokenBalance,
         lpTokenBalance,
         stakedLpTokenBalance,
         lpTokenSupply,
@@ -191,12 +191,12 @@ export const useBondContracts = (): BondContracts => {
         lpRewards
       };
     },
-    [chickenBondManager, bondNft, bLusdToken, lusdToken, bLusdAmm, isMainnet, bLusdGauge]
+    [chickenBondManager, bondNft, bLusdToken, debtToken, bLusdAmm, isMainnet, bLusdGauge]
   );
 
   return {
     addresses,
-    lusdToken,
+    debtToken,
     bLusdToken,
     bondNft,
     chickenBondManager,

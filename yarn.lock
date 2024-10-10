@@ -3953,7 +3953,7 @@ __metadata:
   dependencies:
     "@microsoft/api-extractor": 7.13.2
     "@nomiclabs/hardhat-ethers": ^2.0.2
-    "@secured-finance/stablecoin-contracts": 0.0.2-beta.4
+    "@secured-finance/stablecoin-contracts": 0.0.2-beta.5
     "@types/chai": 4.2.15
     "@types/chai-as-promised": 7.1.3
     "@types/chai-spies": 1.0.3
@@ -4033,9 +4033,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@secured-finance/stablecoin-contracts@npm:0.0.2-beta.4":
-  version: 0.0.2-beta.4
-  resolution: "@secured-finance/stablecoin-contracts@npm:0.0.2-beta.4::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40secured-finance%2Fstablecoin-contracts%2F0.0.2-beta.4%2Fa306e5ba3625f87266c4f0aae946cbf00f7059e6"
+"@secured-finance/stablecoin-contracts@npm:0.0.2-beta.5":
+  version: 0.0.2-beta.5
+  resolution: "@secured-finance/stablecoin-contracts@npm:0.0.2-beta.5::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40secured-finance%2Fstablecoin-contracts%2F0.0.2-beta.5%2Fed9a971a6b2869de2408bccbd752884227d82764"
   dependencies:
     decimal.js: ^10.2.0
     eth-mutants: ^0.1.1
@@ -4043,7 +4043,7 @@ __metadata:
     ethers: ^5.6.1
     solc: ^0.6.11
     xmlhttprequest: ^1.8.0
-  checksum: e2239d72d0231ac62ab27cccd5a251889f157c0ba76d918a0d8e38cb42160a0e9f12fe3f227ea1ff0d76fb386d27d461ef02f266c35b08446f7d2c5c0a84f590
+  checksum: 7afedb769ed3af2dbf2671d0f30b30bef422fcf569a5e570b93e3e8af088b7ae24f97e1724c60922ea31fe195ca1771f57714389a01c77401af52f9768546675
   languageName: node
   linkType: hard
 

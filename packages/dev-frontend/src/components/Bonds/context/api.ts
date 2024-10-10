@@ -1,62 +1,62 @@
 import {
-    BigNumber,
-    BigNumberish,
-    CallOverrides,
-    constants,
-    Contract,
-    ContractTransaction,
-    providers,
-    Signer
+  BigNumber,
+  BigNumberish,
+  CallOverrides,
+  constants,
+  Contract,
+  ContractTransaction,
+  providers,
+  Signer
 } from "ethers";
 // import { splitSignature } from "ethers/lib/utils";
 import mainnet from "@liquity/chicken-bonds/lusd/addresses/mainnet.json";
 import type {
-    BLUSDLPZap,
-    BLUSDToken,
-    BondNFT,
-    ChickenBondManager
+  BLUSDLPZap,
+  BLUSDToken,
+  BondNFT,
+  ChickenBondManager
 } from "@liquity/chicken-bonds/lusd/types";
 import type {
-    BondCancelledEvent,
-    BondCancelledEventObject,
-    BondClaimedEvent,
-    BondClaimedEventObject,
-    BondCreatedEvent,
-    BondCreatedEventObject
+  BondCancelledEvent,
+  BondCancelledEventObject,
+  BondClaimedEvent,
+  BondClaimedEventObject,
+  BondCreatedEvent,
+  BondCreatedEventObject
 } from "@liquity/chicken-bonds/lusd/types/ChickenBondManager";
 import {
-    CurveCryptoSwap2ETH,
-    CurveRegistrySwaps__factory
+  CurveCryptoSwap2ETH,
+  CurveRegistrySwaps__factory
 } from "@liquity/chicken-bonds/lusd/types/external";
 import {
-    TokenExchangeEvent,
-    TokenExchangeEventObject
+  TokenExchangeEvent,
+  TokenExchangeEventObject
 } from "@liquity/chicken-bonds/lusd/types/external/CurveCryptoSwap2ETH";
 import type {
-    CurveLiquidityGaugeV5,
-    DepositEvent,
-    DepositEventObject,
-    WithdrawEvent,
-    WithdrawEventObject
+  CurveLiquidityGaugeV5,
+  DepositEvent,
+  DepositEventObject,
+  WithdrawEvent,
+  WithdrawEventObject
 } from "@liquity/chicken-bonds/lusd/types/external/CurveLiquidityGaugeV5";
 import { Decimal } from "@secured-finance/lib-base";
-import type { LUSDToken } from "@secured-finance/lib-ethers/dist/types";
+import type { DebtToken } from "@secured-finance/lib-ethers/dist/types";
 import { UNKNOWN_DATE } from "../../HorizontalTimeline";
 import {
-    decimalify,
-    getAverageBondAgeInSeconds,
-    getBondAgeInDays,
-    getBreakEvenPeriodInDays,
-    getFloorPrice,
-    getFutureBLusdAccrualFactor,
-    getRebondOrBreakEvenTimeWithControllerAdjustment,
-    getRebondPeriodInDays,
-    getRemainingRebondOrBreakEvenDays,
-    getReturn,
-    getTokenUri,
-    milliseconds,
-    numberify,
-    toFloat
+  decimalify,
+  getAverageBondAgeInSeconds,
+  getBondAgeInDays,
+  getBreakEvenPeriodInDays,
+  getFloorPrice,
+  getFutureBLusdAccrualFactor,
+  getRebondOrBreakEvenTimeWithControllerAdjustment,
+  getRebondPeriodInDays,
+  getRemainingRebondOrBreakEvenDays,
+  getReturn,
+  getTokenUri,
+  milliseconds,
+  numberify,
+  toFloat
 } from "../utils";
 import type { BLusdLpRewards, Bond, BondStatus, Maybe, ProtocolInfo, Stats } from "./transitions";
 import { BLusdAmmTokenIndex } from "./transitions";
@@ -632,7 +632,7 @@ export interface ERC20 {
 }
 
 const erc20From = (tokenAddress: string, signerOrProvider: Signer | providers.Provider) =>
-  (new Contract(
+  new Contract(
     tokenAddress,
     [
       "function approve(address spender, uint256 amount) returns (bool)",
@@ -641,7 +641,7 @@ const erc20From = (tokenAddress: string, signerOrProvider: Signer | providers.Pr
       "function totalSupply() view returns (uint256)"
     ],
     signerOrProvider
-  ) as unknown) as ERC20;
+  ) as unknown as ERC20;
 
 const getLpToken = async (pool: CurveCryptoSwap2ETH) =>
   erc20From(await pool.token(), pool.signer ?? pool.provider);
@@ -656,10 +656,10 @@ const getTokenTotalSupply = async (token: ERC20): Promise<Decimal> => {
 
 const isInfiniteBondApproved = async (
   account: string,
-  lusdToken: LUSDToken,
+  debtToken: DebtToken,
   chickenBondManager: ChickenBondManager
 ): Promise<boolean> => {
-  const allowance = await lusdToken.allowance(account, chickenBondManager.address);
+  const allowance = await debtToken.allowance(account, chickenBondManager.address);
 
   // Unlike bLUSD, LUSD doesn't explicitly handle infinite approvals, therefore the allowance will
   // start to decrease from 2**64.
@@ -668,11 +668,11 @@ const isInfiniteBondApproved = async (
 };
 
 const approveInfiniteBond = async (
-  lusdToken: LUSDToken | undefined,
+  debtToken: DebtToken | undefined,
   chickenBondManager: ChickenBondManager | undefined,
   signer: Signer | undefined
 ): Promise<void> => {
-  if (lusdToken === undefined || chickenBondManager === undefined || signer === undefined) {
+  if (debtToken === undefined || chickenBondManager === undefined || signer === undefined) {
     throw new Error("approveInfiniteBond() failed: a dependency is null");
   }
 
@@ -680,7 +680,7 @@ const approveInfiniteBond = async (
 
   try {
     await (
-      await ((lusdToken as unknown) as Contract)
+      await (debtToken as unknown as Contract)
         .connect(signer)
         .approve(chickenBondManager.address, constants.MaxUint256._hex)
     ).wait();
@@ -735,20 +735,20 @@ const createBondWithPermit = async (
   lusdAmount: Decimal,
   owner: string,
   lusdAddress: string,
-  lusdToken: LUSDToken | undefined,
+  debtToken: DebtToken | undefined,
   chickenBondManager: ChickenBondManager | undefined,
   signer: EthersSigner
 ): Promise<BondCreatedEventObject> => {
-  if (chickenBondManager === undefined || lusdToken === undefined) {
+  if (chickenBondManager === undefined || debtToken === undefined) {
     throw new Error("createBondWithPermit() failed: a dependency is null");
   }
 
   const TEN_MINUTES_IN_SECONDS = 60 * 10;
   const spender = chickenBondManager.address;
   const deadline = Math.round(Date.now() / 1000) + TEN_MINUTES_IN_SECONDS;
-  const nonce = (await lusdToken.nonces(owner)).toNumber();
+  const nonce = (await debtToken.nonces(owner)).toNumber();
   const domain = {
-    name: await lusdToken.name(),
+    name: await debtToken.name(),
     version: "1",
     chainId: await signer.getChainId(),
     verifyingContract: lusdAddress
@@ -883,7 +883,7 @@ const claimBond = async (
 
 const isTokenApprovedWithBLusdAmm = async (
   account: string,
-  token: LUSDToken | BLUSDToken,
+  token: DebtToken | BLUSDToken,
   bLusdAmmAddress: string | null
 ): Promise<boolean> => {
   if (bLusdAmmAddress === null) {
@@ -900,7 +900,7 @@ const isTokenApprovedWithBLusdAmm = async (
 
 const isTokenApprovedWithBLusdAmmMainnet = async (
   account: string,
-  token: LUSDToken | BLUSDToken
+  token: DebtToken | BLUSDToken
 ): Promise<boolean> => {
   const allowance = await token.allowance(account, CURVE_REGISTRY_SWAPS_ADDRESS);
 
@@ -912,7 +912,7 @@ const isTokenApprovedWithBLusdAmmMainnet = async (
 
 const isTokenApprovedWithAmmZapper = async (
   account: string,
-  token: LUSDToken | BLUSDToken | ERC20,
+  token: DebtToken | BLUSDToken | ERC20,
   ammZapperAddress: string | null
 ): Promise<boolean> => {
   if (ammZapperAddress === null) {
@@ -923,7 +923,7 @@ const isTokenApprovedWithAmmZapper = async (
 };
 
 const approveTokenWithBLusdAmm = async (
-  token: LUSDToken | BLUSDToken | undefined,
+  token: DebtToken | BLUSDToken | undefined,
   bLusdAmmAddress: string | null,
   signer: Signer | undefined
 ) => {
@@ -938,7 +938,7 @@ const approveTokenWithBLusdAmm = async (
 };
 
 const approveToken = async (
-  token: LUSDToken | BLUSDToken | ERC20 | undefined,
+  token: DebtToken | BLUSDToken | ERC20 | undefined,
   spenderAddress: string | null,
   signer: Signer | undefined
 ) => {
@@ -953,7 +953,7 @@ const approveToken = async (
 };
 
 const approveTokenWithBLusdAmmMainnet = async (
-  token: LUSDToken | BLUSDToken | undefined,
+  token: DebtToken | BLUSDToken | undefined,
   signer: Signer | undefined
 ) => {
   if (token === undefined || signer === undefined) {
@@ -1010,9 +1010,13 @@ const swapTokens = async (
     throw new Error("swapTokens() failed: a dependency is null");
   }
 
-  const gasEstimate = await bLusdAmm.estimateGas[
-    "exchange(uint256,uint256,uint256,uint256)"
-  ](inputToken, getOtherToken(inputToken), inputAmount.hex, minOutputAmount.hex, { from: account });
+  const gasEstimate = await bLusdAmm.estimateGas["exchange(uint256,uint256,uint256,uint256)"](
+    inputToken,
+    getOtherToken(inputToken),
+    inputAmount.hex,
+    minOutputAmount.hex,
+    { from: account }
+  );
 
   const receipt = await (
     await bLusdAmm.connect(signer)["exchange(uint256,uint256,uint256,uint256)"](

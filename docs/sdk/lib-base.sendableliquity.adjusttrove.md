@@ -58,7 +58,7 @@ maxBorrowingRate
 
 </td><td>
 
-Maximum acceptable [borrowing rate](./lib-base.fees.borrowingrate.md) if `params` includes `borrowLUSD`<!-- -->.
+Maximum acceptable [borrowing rate](./lib-base.fees.borrowingrate.md) if `params` includes `borrowDebtToken`<!-- -->.
 
 
 </td></tr>
@@ -69,7 +69,7 @@ Promise&lt;[SentLiquityTransaction](./lib-base.sentliquitytransaction.md)<!-- --
 
 ## Remarks
 
-The transaction will fail if the Trove's debt would fall below [LUSD\_MINIMUM\_DEBT](./lib-base.lusd_minimum_debt.md)<!-- -->.
+The transaction will fail if the Trove's debt would fall below [MINIMUM\_DEBT](./lib-base.minimum_debt.md)<!-- -->.
 
 If `maxBorrowingRate` is omitted, the current borrowing rate plus 0.5% is used as maximum acceptable rate.
 

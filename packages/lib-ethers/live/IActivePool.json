@@ -22,11 +22,11 @@
         {
           "indexed": false,
           "internalType": "uint256",
-          "name": "_ETH",
+          "name": "_debt",
           "type": "uint256"
         }
       ],
-      "name": "ActivePoolETHBalanceUpdated",
+      "name": "ActivePoolDebtUpdated",
       "type": "event"
     },
     {
@@ -35,11 +35,11 @@
         {
           "indexed": false,
           "internalType": "uint256",
-          "name": "_LUSDDebt",
+          "name": "_FIL",
           "type": "uint256"
         }
       ],
-      "name": "ActivePoolLUSDDebtUpdated",
+      "name": "ActivePoolFILBalanceUpdated",
       "type": "event"
     },
     {
@@ -60,12 +60,12 @@
       "inputs": [
         {
           "indexed": false,
-          "internalType": "address",
-          "name": "_newDefaultPoolAddress",
-          "type": "address"
+          "internalType": "uint256",
+          "name": "_newBalance",
+          "type": "uint256"
         }
       ],
-      "name": "DefaultPoolAddressChanged",
+      "name": "DebtTokenBalanceUpdated",
       "type": "event"
     },
     {
@@ -73,12 +73,12 @@
       "inputs": [
         {
           "indexed": false,
-          "internalType": "uint256",
-          "name": "_newBalance",
-          "type": "uint256"
+          "internalType": "address",
+          "name": "_newDefaultPoolAddress",
+          "type": "address"
         }
       ],
-      "name": "ETHBalanceUpdated",
+      "name": "DefaultPoolAddressChanged",
       "type": "event"
     },
     {
@@ -110,7 +110,7 @@
           "type": "uint256"
         }
       ],
-      "name": "LUSDBalanceUpdated",
+      "name": "FILBalanceUpdated",
       "type": "event"
     },
     {
@@ -147,14 +147,14 @@
           "type": "uint256"
         }
       ],
-      "name": "decreaseLUSDDebt",
+      "name": "decreaseDebt",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "inputs": [],
-      "name": "getETH",
+      "name": "getDebt",
       "outputs": [
         {
           "internalType": "uint256",
@@ -167,7 +167,7 @@
     },
     {
       "inputs": [],
-      "name": "getLUSDDebt",
+      "name": "getFIL",
       "outputs": [
         {
           "internalType": "uint256",
@@ -186,7 +186,7 @@
           "type": "uint256"
         }
       ],
-      "name": "increaseLUSDDebt",
+      "name": "increaseDebt",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
@@ -204,7 +204,7 @@
           "type": "uint256"
         }
       ],
-      "name": "sendETH",
+      "name": "sendFIL",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"

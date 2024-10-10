@@ -75,6 +75,44 @@ Amount of leftover collateral available for withdrawal to the user.
 </td></tr>
 <tr><td>
 
+[debtTokenBalance](./lib-base.liquitystorebasestate.debttokenbalance.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Decimal](./lib-base.decimal.md)
+
+
+</td><td>
+
+User's Debt token balance.
+
+
+</td></tr>
+<tr><td>
+
+[debtTokenInStabilityPool](./lib-base.liquitystorebasestate.debttokeninstabilitypool.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Decimal](./lib-base.decimal.md)
+
+
+</td><td>
+
+Total amount of DebtToken currently deposited in the Stability Pool.
+
+
+</td></tr>
+<tr><td>
+
 [frontend](./lib-base.liquitystorebasestate.frontend.md)
 
 
@@ -126,7 +164,7 @@ Amount of LQTY the user has earned through mining liquidity.
 
 </td><td>
 
-Amount of Uniswap ETH/LUSD LP tokens the user has staked in liquidity mining.
+Amount of Uniswap ETH/DebtToken LP tokens the user has staked in liquidity mining.
 
 
 </td></tr>
@@ -165,44 +203,6 @@ User's LQTY token balance.
 </td><td>
 
 User's LQTY stake.
-
-
-</td></tr>
-<tr><td>
-
-[lusdBalance](./lib-base.liquitystorebasestate.lusdbalance.md)
-
-
-</td><td>
-
-
-</td><td>
-
-[Decimal](./lib-base.decimal.md)
-
-
-</td><td>
-
-User's LUSD token balance.
-
-
-</td></tr>
-<tr><td>
-
-[lusdInStabilityPool](./lib-base.liquitystorebasestate.lusdinstabilitypool.md)
-
-
-</td><td>
-
-
-</td><td>
-
-[Decimal](./lib-base.decimal.md)
-
-
-</td><td>
-
-Total amount of LUSD currently deposited in the Stability Pool.
 
 
 </td></tr>
@@ -392,7 +392,7 @@ Total amount of LQTY currently staked.
 
 </td><td>
 
-Total amount of Uniswap ETH/LUSD LP tokens currently staked in liquidity mining.
+Total amount of Uniswap ETH/DebtToken LP tokens currently staked in liquidity mining.
 
 
 </td></tr>
@@ -430,7 +430,7 @@ User's Trove in its state after the last direct modification.
 
 </td><td>
 
-The liquidity mining contract's allowance of user's Uniswap ETH/LUSD LP tokens.
+The liquidity mining contract's allowance of user's Uniswap ETH/DebtToken LP tokens.
 
 
 </td></tr>
@@ -449,7 +449,7 @@ The liquidity mining contract's allowance of user's Uniswap ETH/LUSD LP tokens.
 
 </td><td>
 
-User's Uniswap ETH/LUSD LP token balance.
+User's Uniswap ETH/DebtToken LP token balance.
 
 
 </td></tr>

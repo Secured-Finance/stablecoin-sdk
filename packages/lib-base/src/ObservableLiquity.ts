@@ -1,6 +1,6 @@
 import { Decimal } from "./Decimal";
-import { Trove, TroveWithPendingRedistribution } from "./Trove";
 import { StabilityDeposit } from "./StabilityDeposit";
+import { Trove, TroveWithPendingRedistribution } from "./Trove";
 
 /** @alpha */
 export interface ObservableLiquity {
@@ -24,9 +24,12 @@ export interface ObservableLiquity {
     address?: string
   ): () => void;
 
-  watchLUSDInStabilityPool(
-    onLUSDInStabilityPoolChanged: (lusdInStabilityPool: Decimal) => void
+  watchDebtTokenInStabilityPool(
+    onDebtTokenInStabilityPoolChanged: (debtTokenInStabilityPool: Decimal) => void
   ): () => void;
 
-  watchLUSDBalance(onLUSDBalanceChanged: (balance: Decimal) => void, address?: string): () => void;
+  watchDebtTokenBalance(
+    onDebtTokenBalanceChanged: (balance: Decimal) => void,
+    address?: string
+  ): () => void;
 }

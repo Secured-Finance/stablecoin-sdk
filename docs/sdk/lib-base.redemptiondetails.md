@@ -4,7 +4,7 @@
 
 ## RedemptionDetails interface
 
-Details of a [redeemLUSD()](./lib-base.transactableliquity.redeemlusd.md) transaction.
+Details of a [redeemDebtToken()](./lib-base.transactableliquity.redeemdebttoken.md) transaction.
 
 **Signature:**
 
@@ -37,7 +37,7 @@ Description
 </th></tr></thead>
 <tbody><tr><td>
 
-[actualLUSDAmount](./lib-base.redemptiondetails.actuallusdamount.md)
+[actualDebtTokenAmount](./lib-base.redemptiondetails.actualdebttokenamount.md)
 
 
 </td><td>
@@ -50,13 +50,13 @@ Description
 
 </td><td>
 
-Amount of LUSD that was actually redeemed by the transaction.
+Amount of DebtToken that was actually redeemed by the transaction.
 
 
 </td></tr>
 <tr><td>
 
-[attemptedLUSDAmount](./lib-base.redemptiondetails.attemptedlusdamount.md)
+[attemptedDebtTokenAmount](./lib-base.redemptiondetails.attempteddebttokenamount.md)
 
 
 </td><td>
@@ -69,7 +69,7 @@ Amount of LUSD that was actually redeemed by the transaction.
 
 </td><td>
 
-Amount of LUSD the redeemer tried to redeem.
+Amount of DebtToken the redeemer tried to redeem.
 
 
 </td></tr>

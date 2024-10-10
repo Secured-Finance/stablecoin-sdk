@@ -1,8 +1,8 @@
-import { ethereum, BigInt } from "@graphprotocol/graph-ts";
+import { BigInt, ethereum } from "@graphprotocol/graph-ts";
 
 import { Redemption } from "../../generated/schema";
 
-import { decimalize, DECIMAL_ZERO } from "../utils/bignumbers";
+import { DECIMAL_ZERO, decimalize } from "../utils/bignumbers";
 
 import { getGlobal, getRedemptionSequenceNumber } from "./Global";
 import { getTransaction } from "./Transaction";
@@ -38,18 +38,18 @@ export function getCurrentRedemption(event: ethereum.Event): Redemption {
 
 export function finishCurrentRedemption(
   event: ethereum.Event,
-  _attemptedLUSDAmount: BigInt,
-  _actualLUSDAmount: BigInt,
+  _attemptedDebtTokenAmount: BigInt,
+  _actualDebtTokenAmount: BigInt,
   _ETHSent: BigInt,
   _ETHFee: BigInt
 ): void {
   let fee = decimalize(_ETHFee);
 
   let currentRedemption = getCurrentRedemption(event);
-  currentRedemption.tokensAttemptedToRedeem = decimalize(_attemptedLUSDAmount);
-  currentRedemption.tokensActuallyRedeemed = decimalize(_actualLUSDAmount);
+  currentRedemption.tokensAttemptedToRedeem = decimalize(_attemptedDebtTokenAmount);
+  currentRedemption.tokensActuallyRedeemed = decimalize(_actualDebtTokenAmount);
   currentRedemption.collateralRedeemed = decimalize(_ETHSent);
-  currentRedemption.partial = _actualLUSDAmount < _attemptedLUSDAmount;
+  currentRedemption.partial = _actualDebtTokenAmount < _attemptedDebtTokenAmount;
   currentRedemption.fee = fee;
   currentRedemption.save();
 

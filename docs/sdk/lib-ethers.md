@@ -171,7 +171,7 @@ Extra state added to [LiquityStoreState](./lib-base.liquitystorestate.md) by [Bl
 
 </td><td>
 
-Optional parameters of a transaction that borrows LUSD.
+Optional parameters of a transaction that borrows DebtToken.
 
 
 </td></tr>

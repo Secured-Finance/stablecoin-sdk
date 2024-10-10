@@ -89,79 +89,77 @@ export class BlockPolledLiquityStore extends LiquityStore<BlockPolledLiquityStor
   ): Promise<[baseState: LiquityStoreBaseState, extraState: BlockPolledLiquityStoreExtraState]> {
     const { userAddress, frontendTag } = this.connection;
 
-    const {
-      blockTimestamp,
-      _feesFactory,
-      calculateRemainingLQTY,
-      ...baseState
-    } = await promiseAllValues({
-      blockTimestamp: this._readable._getBlockTimestamp(blockTag),
-      _feesFactory: this._readable._getFeesFactory({ blockTag }),
-      calculateRemainingLQTY: this._readable._getRemainingLiquidityMiningLQTYRewardCalculator({
-        blockTag
-      }),
+    const { blockTimestamp, _feesFactory, calculateRemainingLQTY, ...baseState } =
+      await promiseAllValues({
+        blockTimestamp: this._readable._getBlockTimestamp(blockTag),
+        _feesFactory: this._readable._getFeesFactory({ blockTag }),
+        calculateRemainingLQTY: this._readable._getRemainingLiquidityMiningLQTYRewardCalculator({
+          blockTag
+        }),
 
-      price: this._readable.getPrice({ blockTag }),
-      numberOfTroves: this._readable.getNumberOfTroves({ blockTag }),
-      totalRedistributed: this._readable.getTotalRedistributed({ blockTag }),
-      total: this._readable.getTotal({ blockTag }),
-      lusdInStabilityPool: this._readable.getLUSDInStabilityPool({ blockTag }),
-      totalStakedLQTY: this._readable.getTotalStakedLQTY({ blockTag }),
-      _riskiestTroveBeforeRedistribution: this._getRiskiestTroveBeforeRedistribution({ blockTag }),
-      totalStakedUniTokens: this._readable.getTotalStakedUniTokens({ blockTag }),
-      remainingStabilityPoolLQTYReward: this._readable.getRemainingStabilityPoolLQTYReward({
-        blockTag
-      }),
+        price: this._readable.getPrice({ blockTag }),
+        numberOfTroves: this._readable.getNumberOfTroves({ blockTag }),
+        totalRedistributed: this._readable.getTotalRedistributed({ blockTag }),
+        total: this._readable.getTotal({ blockTag }),
+        debtTokenInStabilityPool: this._readable.getDebtTokenInStabilityPool({ blockTag }),
+        totalStakedLQTY: this._readable.getTotalStakedLQTY({ blockTag }),
+        _riskiestTroveBeforeRedistribution: this._getRiskiestTroveBeforeRedistribution({ blockTag }),
+        totalStakedUniTokens: this._readable.getTotalStakedUniTokens({ blockTag }),
+        remainingStabilityPoolLQTYReward: this._readable.getRemainingStabilityPoolLQTYReward({
+          blockTag
+        }),
 
-      frontend: frontendTag
-        ? this._readable.getFrontendStatus(frontendTag, { blockTag })
-        : { status: "unregistered" as const },
+        frontend: frontendTag
+          ? this._readable.getFrontendStatus(frontendTag, { blockTag })
+          : { status: "unregistered" as const },
 
-      ...(userAddress
-        ? {
-            accountBalance: this._provider.getBalance(userAddress, blockTag).then(decimalify),
-            lusdBalance: this._readable.getLUSDBalance(userAddress, { blockTag }),
-            lqtyBalance: this._readable.getLQTYBalance(userAddress, { blockTag }),
-            uniTokenBalance: this._readable.getUniTokenBalance(userAddress, { blockTag }),
-            uniTokenAllowance: this._readable.getUniTokenAllowance(userAddress, { blockTag }),
-            liquidityMiningStake: this._readable.getLiquidityMiningStake(userAddress, { blockTag }),
-            liquidityMiningLQTYReward: this._readable.getLiquidityMiningLQTYReward(userAddress, {
-              blockTag
-            }),
-            collateralSurplusBalance: this._readable.getCollateralSurplusBalance(userAddress, {
-              blockTag
-            }),
-            troveBeforeRedistribution: this._readable.getTroveBeforeRedistribution(userAddress, {
-              blockTag
-            }),
-            stabilityDeposit: this._readable.getStabilityDeposit(userAddress, { blockTag }),
-            lqtyStake: this._readable.getLQTYStake(userAddress, { blockTag }),
-            ownFrontend: this._readable.getFrontendStatus(userAddress, { blockTag })
-          }
-        : {
-            accountBalance: Decimal.ZERO,
-            lusdBalance: Decimal.ZERO,
-            lqtyBalance: Decimal.ZERO,
-            uniTokenBalance: Decimal.ZERO,
-            uniTokenAllowance: Decimal.ZERO,
-            liquidityMiningStake: Decimal.ZERO,
-            liquidityMiningLQTYReward: Decimal.ZERO,
-            collateralSurplusBalance: Decimal.ZERO,
-            troveBeforeRedistribution: new TroveWithPendingRedistribution(
-              AddressZero,
-              "nonExistent"
-            ),
-            stabilityDeposit: new StabilityDeposit(
-              Decimal.ZERO,
-              Decimal.ZERO,
-              Decimal.ZERO,
-              Decimal.ZERO,
-              AddressZero
-            ),
-            lqtyStake: new LQTYStake(),
-            ownFrontend: { status: "unregistered" as const }
-          })
-    });
+        ...(userAddress
+          ? {
+              accountBalance: this._provider.getBalance(userAddress, blockTag).then(decimalify),
+              debtTokenBalance: this._readable.getDebtTokenBalance(userAddress, { blockTag }),
+              lqtyBalance: this._readable.getLQTYBalance(userAddress, { blockTag }),
+              uniTokenBalance: this._readable.getUniTokenBalance(userAddress, { blockTag }),
+              uniTokenAllowance: this._readable.getUniTokenAllowance(userAddress, { blockTag }),
+              liquidityMiningStake: this._readable.getLiquidityMiningStake(userAddress, {
+                blockTag
+              }),
+              liquidityMiningLQTYReward: this._readable.getLiquidityMiningLQTYReward(userAddress, {
+                blockTag
+              }),
+              collateralSurplusBalance: this._readable.getCollateralSurplusBalance(userAddress, {
+                blockTag
+              }),
+              troveBeforeRedistribution: this._readable.getTroveBeforeRedistribution(userAddress, {
+                blockTag
+              }),
+              stabilityDeposit: this._readable.getStabilityDeposit(userAddress, { blockTag }),
+              lqtyStake: this._readable.getLQTYStake(userAddress, { blockTag }),
+              ownFrontend: this._readable.getFrontendStatus(userAddress, { blockTag })
+            }
+          : {
+              accountBalance: Decimal.ZERO,
+              debtTokenBalance: Decimal.ZERO,
+              lqtyBalance: Decimal.ZERO,
+              uniTokenBalance: Decimal.ZERO,
+              uniTokenAllowance: Decimal.ZERO,
+              liquidityMiningStake: Decimal.ZERO,
+              liquidityMiningLQTYReward: Decimal.ZERO,
+              collateralSurplusBalance: Decimal.ZERO,
+              troveBeforeRedistribution: new TroveWithPendingRedistribution(
+                AddressZero,
+                "nonExistent"
+              ),
+              stabilityDeposit: new StabilityDeposit(
+                Decimal.ZERO,
+                Decimal.ZERO,
+                Decimal.ZERO,
+                Decimal.ZERO,
+                AddressZero
+              ),
+              lqtyStake: new LQTYStake(),
+              ownFrontend: { status: "unregistered" as const }
+            })
+      });
 
     return [
       {

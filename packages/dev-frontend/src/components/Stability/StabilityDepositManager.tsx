@@ -23,7 +23,7 @@ import {
 
 const init = ({ stabilityDeposit }: LiquityStoreState) => ({
   originalDeposit: stabilityDeposit,
-  editedLUSD: stabilityDeposit.currentLUSD,
+  editedDebtToken: stabilityDeposit.currentDebtToken,
   changePending: false
 });
 
@@ -33,9 +33,10 @@ type StabilityDepositManagerAction =
   | { type: "startChange" | "finishChange" | "revert" }
   | { type: "setDeposit"; newValue: Decimalish };
 
-const reduceWith = (action: StabilityDepositManagerAction) => (
-  state: StabilityDepositManagerState
-): StabilityDepositManagerState => reduce(state, action);
+const reduceWith =
+  (action: StabilityDepositManagerAction) =>
+  (state: StabilityDepositManagerState): StabilityDepositManagerState =>
+    reduce(state, action);
 
 const finishChange = reduceWith({ type: "finishChange" });
 const revert = reduceWith({ type: "revert" });
@@ -47,7 +48,7 @@ const reduce = (
   // console.log(state);
   // console.log(action);
 
-  const { originalDeposit, editedLUSD, changePending } = state;
+  const { originalDeposit, editedDebtToken, changePending } = state;
 
   switch (action.type) {
     case "startChange": {
@@ -59,10 +60,10 @@ const reduce = (
       return { ...state, changePending: false };
 
     case "setDeposit":
-      return { ...state, editedLUSD: Decimal.from(action.newValue) };
+      return { ...state, editedDebtToken: Decimal.from(action.newValue) };
 
     case "revert":
-      return { ...state, editedLUSD: originalDeposit.currentLUSD };
+      return { ...state, editedDebtToken: originalDeposit.currentDebtToken };
 
     case "updateStore": {
       const {
@@ -76,8 +77,8 @@ const reduce = (
       const newState = { ...state, originalDeposit: updatedDeposit };
 
       const changeCommitted =
-        !updatedDeposit.initialLUSD.eq(originalDeposit.initialLUSD) ||
-        updatedDeposit.currentLUSD.gt(originalDeposit.currentLUSD) ||
+        !updatedDeposit.initialDebtToken.eq(originalDeposit.initialDebtToken) ||
+        updatedDeposit.currentDebtToken.gt(originalDeposit.currentDebtToken) ||
         updatedDeposit.collateralGain.lt(originalDeposit.collateralGain) ||
         updatedDeposit.lqtyReward.lt(originalDeposit.lqtyReward);
 
@@ -87,7 +88,7 @@ const reduce = (
 
       return {
         ...newState,
-        editedLUSD: updatedDeposit.apply(originalDeposit.whatChanged(editedLUSD))
+        editedDebtToken: updatedDeposit.apply(originalDeposit.whatChanged(editedDebtToken))
       };
     }
   }
@@ -96,7 +97,10 @@ const reduce = (
 const transactionId = "stability-deposit";
 
 export const StabilityDepositManager: React.FC = () => {
-  const [{ originalDeposit, editedLUSD, changePending }, dispatch] = useLiquityReducer(reduce, init);
+  const [{ originalDeposit, editedDebtToken, changePending }, dispatch] = useLiquityReducer(
+    reduce,
+    init
+  );
   const validationContext = useLiquitySelector(selectForStabilityDepositChangeValidation);
   const { dispatchEvent } = useStabilityView();
 
@@ -106,7 +110,7 @@ export const StabilityDepositManager: React.FC = () => {
 
   const [validChange, description] = validateStabilityDepositChange(
     originalDeposit,
-    editedLUSD,
+    editedDebtToken,
     validationContext
   );
 
@@ -130,7 +134,7 @@ export const StabilityDepositManager: React.FC = () => {
   return (
     <StabilityDepositEditor
       originalDeposit={originalDeposit}
-      editedLUSD={editedLUSD}
+      editedDebtToken={editedDebtToken}
       changePending={changePending}
       dispatch={dispatch}
     >

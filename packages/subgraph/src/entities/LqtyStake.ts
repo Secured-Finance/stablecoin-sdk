@@ -1,8 +1,8 @@
-import { ethereum, Address, BigInt, BigDecimal } from "@graphprotocol/graph-ts";
+import { Address, BigDecimal, BigInt, ethereum } from "@graphprotocol/graph-ts";
 
-import { LqtyStakeChange, LqtyStake } from "../../generated/schema";
+import { LqtyStake, LqtyStakeChange } from "../../generated/schema";
 
-import { decimalize, DECIMAL_ZERO, BIGINT_ZERO } from "../utils/bignumbers";
+import { BIGINT_ZERO, DECIMAL_ZERO, decimalize } from "../utils/bignumbers";
 
 import {
   decreaseNumberOfActiveLQTYStakes,
@@ -10,9 +10,9 @@ import {
   increaseTotalNumberOfLQTYStakes
 } from "./Global";
 
-import { getUser } from "./User";
-import { beginChange, initChange, finishChange } from "./Change";
+import { beginChange, finishChange, initChange } from "./Change";
 import { updateSystemStateByLqtyStakeChange } from "./SystemState";
+import { getUser } from "./User";
 
 function startLQTYStakeChange(event: ethereum.Event): LqtyStakeChange {
   let sequenceNumber = beginChange();
@@ -108,10 +108,10 @@ export function updateStake(event: ethereum.Event, address: Address, newStake: B
 export function withdrawStakeGains(
   event: ethereum.Event,
   address: Address,
-  LUSDGain: BigInt,
+  debtTokenGain: BigInt,
   ETHGain: BigInt
 ): void {
-  if (LUSDGain == BIGINT_ZERO && ETHGain == BIGINT_ZERO) {
+  if (debtTokenGain == BIGINT_ZERO && ETHGain == BIGINT_ZERO) {
     return;
   }
 
@@ -119,7 +119,7 @@ export function withdrawStakeGains(
   let stakeChange: LqtyStakeChange = startLQTYStakeChange(event);
   stakeChange.stake = stake.id;
   stakeChange.stakeOperation = "gainsWithdrawn";
-  stakeChange.issuanceGain = decimalize(LUSDGain);
+  stakeChange.issuanceGain = decimalize(debtTokenGain);
   stakeChange.redemptionGain = decimalize(ETHGain);
   stakeChange.stakedAmountBefore = stake.amount;
   stakeChange.stakedAmountChange = DECIMAL_ZERO;

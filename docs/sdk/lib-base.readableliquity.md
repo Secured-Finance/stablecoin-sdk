@@ -42,6 +42,28 @@ Get the amount of leftover collateral available for withdrawal by an address.
 </td></tr>
 <tr><td>
 
+[getDebtTokenBalance(address)](./lib-base.readableliquity.getdebttokenbalance.md)
+
+
+</td><td>
+
+Get the amount of DebtToken held by an address.
+
+
+</td></tr>
+<tr><td>
+
+[getDebtTokenInStabilityPool()](./lib-base.readableliquity.getdebttokeninstabilitypool.md)
+
+
+</td><td>
+
+Get the total amount of DebtToken currently deposited in the Stability Pool.
+
+
+</td></tr>
+<tr><td>
+
 [getFees()](./lib-base.readableliquity.getfees.md)
 
 
@@ -80,7 +102,7 @@ Get the amount of LQTY earned by an address through mining liquidity.
 
 </td><td>
 
-Get the amount of Uniswap ETH/LUSD LP tokens currently staked by an address in liquidity mining.
+Get the amount of Uniswap ETH/DebtToken LP tokens currently staked by an address in liquidity mining.
 
 
 </td></tr>
@@ -103,28 +125,6 @@ Get the amount of LQTY held by an address.
 </td><td>
 
 Get the current state of an LQTY Stake.
-
-
-</td></tr>
-<tr><td>
-
-[getLUSDBalance(address)](./lib-base.readableliquity.getlusdbalance.md)
-
-
-</td><td>
-
-Get the amount of LUSD held by an address.
-
-
-</td></tr>
-<tr><td>
-
-[getLUSDInStabilityPool()](./lib-base.readableliquity.getlusdinstabilitypool.md)
-
-
-</td><td>
-
-Get the total amount of LUSD currently deposited in the Stability Pool.
 
 
 </td></tr>
@@ -223,7 +223,7 @@ Get the total amount of LQTY currently staked.
 
 </td><td>
 
-Get the total amount of Uniswap ETH/LUSD LP tokens currently staked in liquidity mining.
+Get the total amount of Uniswap ETH/DebtToken LP tokens currently staked in liquidity mining.
 
 
 </td></tr>
@@ -267,7 +267,7 @@ Get a slice from the list of Troves.
 
 </td><td>
 
-Get the liquidity mining contract's allowance of a holder's Uniswap ETH/LUSD LP tokens.
+Get the liquidity mining contract's allowance of a holder's Uniswap ETH/DebtToken LP tokens.
 
 
 </td></tr>
@@ -278,7 +278,7 @@ Get the liquidity mining contract's allowance of a holder's Uniswap ETH/LUSD LP 
 
 </td><td>
 
-Get the amount of Uniswap ETH/LUSD LP tokens held by an address.
+Get the amount of Uniswap ETH/DebtToken LP tokens held by an address.
 
 
 </td></tr>

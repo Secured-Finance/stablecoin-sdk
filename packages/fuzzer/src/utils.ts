@@ -6,7 +6,7 @@ import {
   Decimal,
   Decimalish,
   Difference,
-  LUSD_LIQUIDATION_RESERVE,
+  LIQUIDATION_RESERVE,
   Percent,
   ReadableLiquity,
   Trove,
@@ -38,11 +38,11 @@ export const createRandomTrove = (price: Decimal) => {
   if (Math.random() < 0.5) {
     const collateral = Decimal.from(randomValue);
     const maxDebt = parseInt(price.mul(collateral).toString(0));
-    const debt = LUSD_LIQUIDATION_RESERVE.add(truncateLastDigits(maxDebt - benford(maxDebt)));
+    const debt = LIQUIDATION_RESERVE.add(truncateLastDigits(maxDebt - benford(maxDebt)));
 
     return new Trove(collateral, debt);
   } else {
-    const debt = LUSD_LIQUIDATION_RESERVE.add(100 * randomValue);
+    const debt = LIQUIDATION_RESERVE.add(100 * randomValue);
 
     const collateral = Decimal.from(
       debt
@@ -63,8 +63,8 @@ export const randomCollateralChange = ({ collateral }: Trove) =>
 
 export const randomDebtChange = ({ debt }: Trove) =>
   Math.random() < 0.5
-    ? { repayLUSD: debt.mul(1.1 * Math.random()) }
-    : { borrowLUSD: debt.mul(0.5 * Math.random()) };
+    ? { repayDebtToken: debt.mul(1.1 * Math.random()) }
+    : { borrowDebtToken: debt.mul(0.5 * Math.random()) };
 
 export const getListOfTroves = async (liquity: ReadableLiquity) =>
   liquity.getTroves({
@@ -239,7 +239,7 @@ const checks = [
   new EqualityCheck("price", l => l.getPrice(), decimalsEqual),
   new EqualityCheck("total", l => l.getTotal(), trovesRoughlyEqual),
   new EqualityCheck("totalRedistributed", l => l.getTotalRedistributed(), trovesEqual),
-  new EqualityCheck("tokensInStabilityPool", l => l.getLUSDInStabilityPool(), decimalsEqual)
+  new EqualityCheck("tokensInStabilityPool", l => l.getDebtTokenInStabilityPool(), decimalsEqual)
 ];
 
 export const checkSubgraph = async (subgraph: SubgraphLiquity, l1Liquity: ReadableLiquity) => {

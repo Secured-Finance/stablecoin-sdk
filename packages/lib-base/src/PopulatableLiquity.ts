@@ -42,16 +42,16 @@ export interface PopulatedLiquityTransaction<
  * @remarks
  * The Liquity protocol fulfills redemptions by repaying the debt of Troves in ascending order of
  * their collateralization ratio, and taking a portion of their collateral in exchange. Due to the
- * {@link @secured-finance/lib-base#LUSD_MINIMUM_DEBT | minimum debt} requirement that Troves must fulfill,
- * some LUSD amounts are not possible to redeem exactly.
+ * {@link @secured-finance/lib-base#MINIMUM_DEBT | minimum debt} requirement that Troves must fulfill,
+ * some DebtToken amounts are not possible to redeem exactly.
  *
- * When {@link @secured-finance/lib-base#PopulatableLiquity.redeemLUSD | redeemLUSD()} is called with an
- * amount that can't be fully redeemed, the amount will be truncated (see the `redeemableLUSDAmount`
+ * When {@link @secured-finance/lib-base#PopulatableLiquity.redeemDebtToken | redeemDebtToken()} is called with an
+ * amount that can't be fully redeemed, the amount will be truncated (see the `redeemableDebtTokenAmount`
  * property). When this happens, the redeemer can either redeem the truncated amount by sending the
  * transaction unchanged, or prepare a new transaction by
  * {@link @secured-finance/lib-base#PopulatedRedemption.increaseAmountByMinimumNetDebt | increasing the amount}
  * to the next lowest possible value, which is the sum of the truncated amount and
- * {@link @secured-finance/lib-base#LUSD_MINIMUM_NET_DEBT}.
+ * {@link @secured-finance/lib-base#MINIMUM_NET_DEBT}.
  *
  * @public
  */
@@ -60,13 +60,13 @@ export interface PopulatedRedemption<P = unknown, S = unknown, R = unknown>
     P,
     SentLiquityTransaction<S, LiquityReceipt<R, RedemptionDetails>>
   > {
-  /** Amount of LUSD the redeemer is trying to redeem. */
-  readonly attemptedLUSDAmount: Decimal;
+  /** Amount of DebtToken the redeemer is trying to redeem. */
+  readonly attemptedDebtTokenAmount: Decimal;
 
-  /** Maximum amount of LUSD that is currently redeemable from `attemptedLUSDAmount`. */
-  readonly redeemableLUSDAmount: Decimal;
+  /** Maximum amount of DebtToken that is currently redeemable from `attemptedDebtTokenAmount`. */
+  readonly redeemableDebtTokenAmount: Decimal;
 
-  /** Whether `redeemableLUSDAmount` is less than `attemptedLUSDAmount`. */
+  /** Whether `redeemableDebtTokenAmount` is less than `attemptedDebtTokenAmount`. */
   readonly isTruncated: boolean;
 
   /**
@@ -158,8 +158,8 @@ export interface PopulatableLiquity<R = unknown, S = unknown, P = unknown>
     >
   >;
 
-  /** {@inheritDoc TransactableLiquity.borrowLUSD} */
-  borrowLUSD(
+  /** {@inheritDoc TransactableLiquity.borrowDebtToken} */
+  borrowDebtToken(
     amount: Decimalish,
     maxBorrowingRate?: Decimalish
   ): Promise<
@@ -169,8 +169,8 @@ export interface PopulatableLiquity<R = unknown, S = unknown, P = unknown>
     >
   >;
 
-  /** {@inheritDoc TransactableLiquity.repayLUSD} */
-  repayLUSD(
+  /** {@inheritDoc TransactableLiquity.repayDebtToken} */
+  repayDebtToken(
     amount: Decimalish
   ): Promise<
     PopulatedLiquityTransaction<
@@ -198,8 +198,8 @@ export interface PopulatableLiquity<R = unknown, S = unknown, P = unknown>
     PopulatedLiquityTransaction<P, SentLiquityTransaction<S, LiquityReceipt<R, LiquidationDetails>>>
   >;
 
-  /** {@inheritDoc TransactableLiquity.depositLUSDInStabilityPool} */
-  depositLUSDInStabilityPool(
+  /** {@inheritDoc TransactableLiquity.depositDebtTokenInStabilityPool} */
+  depositDebtTokenInStabilityPool(
     amount: Decimalish,
     frontendTag?: string
   ): Promise<
@@ -209,8 +209,8 @@ export interface PopulatableLiquity<R = unknown, S = unknown, P = unknown>
     >
   >;
 
-  /** {@inheritDoc TransactableLiquity.withdrawLUSDFromStabilityPool} */
-  withdrawLUSDFromStabilityPool(
+  /** {@inheritDoc TransactableLiquity.withdrawDebtTokenFromStabilityPool} */
+  withdrawDebtTokenFromStabilityPool(
     amount: Decimalish
   ): Promise<
     PopulatedLiquityTransaction<
@@ -235,8 +235,8 @@ export interface PopulatableLiquity<R = unknown, S = unknown, P = unknown>
     >
   >;
 
-  /** {@inheritDoc TransactableLiquity.sendLUSD} */
-  sendLUSD(
+  /** {@inheritDoc TransactableLiquity.sendDebtToken} */
+  sendDebtToken(
     toAddress: string,
     amount: Decimalish
   ): Promise<PopulatedLiquityTransaction<P, SentLiquityTransaction<S, LiquityReceipt<R, void>>>>;
@@ -247,8 +247,8 @@ export interface PopulatableLiquity<R = unknown, S = unknown, P = unknown>
     amount: Decimalish
   ): Promise<PopulatedLiquityTransaction<P, SentLiquityTransaction<S, LiquityReceipt<R, void>>>>;
 
-  /** {@inheritDoc TransactableLiquity.redeemLUSD} */
-  redeemLUSD(
+  /** {@inheritDoc TransactableLiquity.redeemDebtToken} */
+  redeemDebtToken(
     amount: Decimalish,
     maxRedemptionRate?: Decimalish
   ): Promise<PopulatedRedemption<P, S, R>>;

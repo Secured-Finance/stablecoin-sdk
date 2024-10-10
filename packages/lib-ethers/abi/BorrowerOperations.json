@@ -31,6 +31,38 @@
       {
         "indexed": false,
         "internalType": "address",
+        "name": "_debtTokenAddress",
+        "type": "address"
+      }
+    ],
+    "name": "DebtTokenAddressChanged",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "_borrower",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_debtTokenFee",
+        "type": "uint256"
+      }
+    ],
+    "name": "DebtTokenBorrowingFeePaid",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
         "name": "_defaultPoolAddress",
         "type": "address"
       }
@@ -62,38 +94,6 @@
       }
     ],
     "name": "LQTYStakingAddressChanged",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "_borrower",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "_LUSDFee",
-        "type": "uint256"
-      }
-    ],
-    "name": "LUSDBorrowingFeePaid",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "_lusdTokenAddress",
-        "type": "address"
-      }
-    ],
-    "name": "LUSDTokenAddressChanged",
     "type": "event"
   },
   {
@@ -264,7 +264,7 @@
   },
   {
     "inputs": [],
-    "name": "LUSD_GAS_COMPENSATION",
+    "name": "GAS_COMPENSATION",
     "outputs": [
       {
         "internalType": "uint256",
@@ -385,7 +385,7 @@
       },
       {
         "internalType": "uint256",
-        "name": "_LUSDChange",
+        "name": "_debtTokenChange",
         "type": "uint256"
       },
       {
@@ -421,6 +421,19 @@
     "name": "closeTrove",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "debtToken",
+    "outputs": [
+      {
+        "internalType": "contract IDebtToken",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -521,19 +534,6 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "lusdToken",
-    "outputs": [
-      {
-        "internalType": "contract ILUSDToken",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
         "internalType": "address",
@@ -551,7 +551,7 @@
         "type": "address"
       }
     ],
-    "name": "moveETHGainToTrove",
+    "name": "moveFILGainToTrove",
     "outputs": [],
     "stateMutability": "payable",
     "type": "function"
@@ -565,7 +565,7 @@
       },
       {
         "internalType": "uint256",
-        "name": "_LUSDAmount",
+        "name": "_debtTokenAmount",
         "type": "uint256"
       },
       {
@@ -614,7 +614,7 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "_LUSDAmount",
+        "name": "_debtTokenAmount",
         "type": "uint256"
       },
       {
@@ -628,7 +628,7 @@
         "type": "address"
       }
     ],
-    "name": "repayLUSD",
+    "name": "repayDebtToken",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -677,7 +677,7 @@
       },
       {
         "internalType": "address",
-        "name": "_lusdTokenAddress",
+        "name": "_debtTokenAddress",
         "type": "address"
       },
       {
@@ -749,7 +749,7 @@
       },
       {
         "internalType": "uint256",
-        "name": "_LUSDAmount",
+        "name": "_debtTokenAmount",
         "type": "uint256"
       },
       {
@@ -763,7 +763,7 @@
         "type": "address"
       }
     ],
-    "name": "withdrawLUSD",
+    "name": "withdrawDebtToken",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

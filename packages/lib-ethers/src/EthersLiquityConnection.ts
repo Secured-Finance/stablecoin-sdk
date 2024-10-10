@@ -255,7 +255,7 @@ export interface EthersLiquityConnectionOptionalParams {
    *
    * @remarks
    * For example
-   * {@link EthersLiquity.depositLUSDInStabilityPool | depositLUSDInStabilityPool(amount, frontendTag?)}
+   * {@link EthersLiquity.depositDebtTokenInStabilityPool | depositDebtTokenInStabilityPool(amount, frontendTag?)}
    * will tag newly made Stability Deposits with this address when its `frontendTag` parameter is
    * omitted.
    */

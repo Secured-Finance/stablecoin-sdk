@@ -126,6 +126,7 @@ const config: HardhatUserConfig = {
 
   paths: {
     artifacts,
+    // sources: `${contractsDir}/contracts`
     cache
   }
 };
@@ -193,7 +194,7 @@ task("deploy", "Deploys the contracts to the network")
   )
   .addOptionalParam(
     "createUniswapPair",
-    "Create a real Uniswap v2 WETH-LUSD pair instead of a mock ERC20 token",
+    "Create a real Uniswap v2 WFIL-DebtToken pair instead of a mock ERC20 token",
     undefined,
     types.boolean
   )

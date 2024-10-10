@@ -50,7 +50,7 @@ Description
 
 </td><td>
 
-Amount of LUSD added to the Trove's debt as borrowing fee.
+Amount of DebtToken added to the Trove's debt as borrowing fee.
 
 
 </td></tr>

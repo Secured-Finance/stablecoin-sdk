@@ -1,21 +1,21 @@
 import { BigInt } from "@graphprotocol/graph-ts";
 
 import {
-  UserDepositChanged,
-  ETHGainWithdrawn,
+  FILGainWithdrawn,
   FrontEndRegistered,
-  FrontEndTagSet
+  FrontEndTagSet,
+  UserDepositChanged
 } from "../../generated/StabilityPool/StabilityPool";
 
 import { BIGINT_ZERO } from "../utils/bignumbers";
 
 import { getGlobal } from "../entities/Global";
 
+import { assignFrontendToDepositor, registerFrontend } from "../entities/Frontend";
 import {
   updateStabilityDeposit,
   withdrawCollateralGainFromStabilityDeposit
 } from "../entities/StabilityDeposit";
-import { registerFrontend, assignFrontendToDepositor } from "../entities/Frontend";
 
 // Read the value of tmpDepositUpdate from the Global entity, and replace it with:
 //  - null, if it wasn't null
@@ -40,7 +40,7 @@ export function handleUserDepositChanged(event: UserDepositChanged): void {
   }
 }
 
-export function handleETHGainWithdrawn(event: ETHGainWithdrawn): void {
+export function handleFILGainWithdrawn(event: FILGainWithdrawn): void {
   // Leave a non-null dummy value to signal to handleUserDepositChanged()
   // that ETH gains have been withdrawn
   let depositUpdate = swapTmpDepositUpdate(BIGINT_ZERO);
@@ -48,8 +48,8 @@ export function handleETHGainWithdrawn(event: ETHGainWithdrawn): void {
   withdrawCollateralGainFromStabilityDeposit(
     event,
     event.params._depositor,
-    event.params._ETH,
-    event.params._LUSDLoss
+    event.params._FIL,
+    event.params._debtTokenLoss
   );
 
   if (depositUpdate != null) {

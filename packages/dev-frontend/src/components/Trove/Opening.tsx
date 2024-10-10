@@ -1,9 +1,9 @@
 /** @jsxImportSource theme-ui */
 import {
   Decimal,
+  LIQUIDATION_RESERVE,
   LiquityStoreState,
-  LUSD_LIQUIDATION_RESERVE,
-  LUSD_MINIMUM_NET_DEBT,
+  MINIMUM_NET_DEBT,
   Percent,
   Trove
 } from "@secured-finance/lib-base";
@@ -57,7 +57,7 @@ export const Opening: React.FC = () => {
 
   const fee = borrowAmount.mul(borrowingRate);
   const feePct = new Percent(borrowingRate);
-  const totalDebt = borrowAmount.add(LUSD_LIQUIDATION_RESERVE).add(fee);
+  const totalDebt = borrowAmount.add(LIQUIDATION_RESERVE).add(fee);
   const isDirty = !collateral.isZero || !borrowAmount.isZero;
   const trove = isDirty ? new Trove(collateral, totalDebt) : EMPTY_TROVE;
   const maxCollateral = accountBalance.gt(GAS_ROOM_ETH)
@@ -93,7 +93,7 @@ export const Opening: React.FC = () => {
 
   useEffect(() => {
     if (!collateral.isZero && borrowAmount.isZero) {
-      setBorrowAmount(LUSD_MINIMUM_NET_DEBT);
+      setBorrowAmount(MINIMUM_NET_DEBT);
     }
   }, [collateral, borrowAmount]);
 
@@ -134,7 +134,7 @@ export const Opening: React.FC = () => {
         <StaticRow
           label="Liquidation Reserve"
           inputId="trove-liquidation-reserve"
-          amount={`${LUSD_LIQUIDATION_RESERVE}`}
+          amount={`${LIQUIDATION_RESERVE}`}
           unit={COIN}
           infoIcon={
             <InfoIcon
@@ -179,9 +179,9 @@ export const Opening: React.FC = () => {
                   The total amount of LUSD your Trove will hold.{" "}
                   {isDirty && (
                     <>
-                      You will need to repay {totalDebt.sub(LUSD_LIQUIDATION_RESERVE).prettify(2)}{" "}
-                      LUSD to reclaim your collateral ({LUSD_LIQUIDATION_RESERVE.toString()} LUSD
-                      Liquidation Reserve excluded).
+                      You will need to repay {totalDebt.sub(LIQUIDATION_RESERVE).prettify(2)} LUSD to
+                      reclaim your collateral ({LIQUIDATION_RESERVE.toString()} LUSD Liquidation
+                      Reserve excluded).
                     </>
                   )}
                 </Card>

@@ -210,14 +210,14 @@ export class EthersLiquity implements ReadableEthersLiquity, TransactableLiquity
     return this._readable.getRemainingStabilityPoolLQTYReward(overrides);
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#ReadableLiquity.getLUSDInStabilityPool} */
-  getLUSDInStabilityPool(overrides?: EthersCallOverrides): Promise<Decimal> {
-    return this._readable.getLUSDInStabilityPool(overrides);
+  /** {@inheritDoc @secured-finance/lib-base#ReadableLiquity.getDebtTokenInStabilityPool} */
+  getDebtTokenInStabilityPool(overrides?: EthersCallOverrides): Promise<Decimal> {
+    return this._readable.getDebtTokenInStabilityPool(overrides);
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#ReadableLiquity.getLUSDBalance} */
-  getLUSDBalance(address?: string, overrides?: EthersCallOverrides): Promise<Decimal> {
-    return this._readable.getLUSDBalance(address, overrides);
+  /** {@inheritDoc @secured-finance/lib-base#ReadableLiquity.getDebtTokenBalance} */
+  getDebtTokenBalance(address?: string, overrides?: EthersCallOverrides): Promise<Decimal> {
+    return this._readable.getDebtTokenBalance(address, overrides);
   }
 
   /** {@inheritDoc @secured-finance/lib-base#ReadableLiquity.getLQTYBalance} */
@@ -386,32 +386,32 @@ export class EthersLiquity implements ReadableEthersLiquity, TransactableLiquity
   }
 
   /**
-   * {@inheritDoc @secured-finance/lib-base#TransactableLiquity.borrowLUSD}
+   * {@inheritDoc @secured-finance/lib-base#TransactableLiquity.borrowDebtToken}
    *
    * @throws
    * Throws {@link EthersTransactionFailedError} in case of transaction failure.
    * Throws {@link EthersTransactionCancelledError} if the transaction is cancelled or replaced.
    */
-  borrowLUSD(
+  borrowDebtToken(
     amount: Decimalish,
     maxBorrowingRate?: Decimalish,
     overrides?: EthersTransactionOverrides
   ): Promise<TroveAdjustmentDetails> {
-    return this.send.borrowLUSD(amount, maxBorrowingRate, overrides).then(waitForSuccess);
+    return this.send.borrowDebtToken(amount, maxBorrowingRate, overrides).then(waitForSuccess);
   }
 
   /**
-   * {@inheritDoc @secured-finance/lib-base#TransactableLiquity.repayLUSD}
+   * {@inheritDoc @secured-finance/lib-base#TransactableLiquity.repayDebtToken}
    *
    * @throws
    * Throws {@link EthersTransactionFailedError} in case of transaction failure.
    * Throws {@link EthersTransactionCancelledError} if the transaction is cancelled or replaced.
    */
-  repayLUSD(
+  repayDebtToken(
     amount: Decimalish,
     overrides?: EthersTransactionOverrides
   ): Promise<TroveAdjustmentDetails> {
-    return this.send.repayLUSD(amount, overrides).then(waitForSuccess);
+    return this.send.repayDebtToken(amount, overrides).then(waitForSuccess);
   }
 
   /** @internal */
@@ -448,32 +448,34 @@ export class EthersLiquity implements ReadableEthersLiquity, TransactableLiquity
   }
 
   /**
-   * {@inheritDoc @secured-finance/lib-base#TransactableLiquity.depositLUSDInStabilityPool}
+   * {@inheritDoc @secured-finance/lib-base#TransactableLiquity.depositDebtTokenInStabilityPool}
    *
    * @throws
    * Throws {@link EthersTransactionFailedError} in case of transaction failure.
    * Throws {@link EthersTransactionCancelledError} if the transaction is cancelled or replaced.
    */
-  depositLUSDInStabilityPool(
+  depositDebtTokenInStabilityPool(
     amount: Decimalish,
     frontendTag?: string,
     overrides?: EthersTransactionOverrides
   ): Promise<StabilityDepositChangeDetails> {
-    return this.send.depositLUSDInStabilityPool(amount, frontendTag, overrides).then(waitForSuccess);
+    return this.send
+      .depositDebtTokenInStabilityPool(amount, frontendTag, overrides)
+      .then(waitForSuccess);
   }
 
   /**
-   * {@inheritDoc @secured-finance/lib-base#TransactableLiquity.withdrawLUSDFromStabilityPool}
+   * {@inheritDoc @secured-finance/lib-base#TransactableLiquity.withdrawDebtTokenFromStabilityPool}
    *
    * @throws
    * Throws {@link EthersTransactionFailedError} in case of transaction failure.
    * Throws {@link EthersTransactionCancelledError} if the transaction is cancelled or replaced.
    */
-  withdrawLUSDFromStabilityPool(
+  withdrawDebtTokenFromStabilityPool(
     amount: Decimalish,
     overrides?: EthersTransactionOverrides
   ): Promise<StabilityDepositChangeDetails> {
-    return this.send.withdrawLUSDFromStabilityPool(amount, overrides).then(waitForSuccess);
+    return this.send.withdrawDebtTokenFromStabilityPool(amount, overrides).then(waitForSuccess);
   }
 
   /**
@@ -503,18 +505,18 @@ export class EthersLiquity implements ReadableEthersLiquity, TransactableLiquity
   }
 
   /**
-   * {@inheritDoc @secured-finance/lib-base#TransactableLiquity.sendLUSD}
+   * {@inheritDoc @secured-finance/lib-base#TransactableLiquity.sendDebtToken}
    *
    * @throws
    * Throws {@link EthersTransactionFailedError} in case of transaction failure.
    * Throws {@link EthersTransactionCancelledError} if the transaction is cancelled or replaced.
    */
-  sendLUSD(
+  sendDebtToken(
     toAddress: string,
     amount: Decimalish,
     overrides?: EthersTransactionOverrides
   ): Promise<void> {
-    return this.send.sendLUSD(toAddress, amount, overrides).then(waitForSuccess);
+    return this.send.sendDebtToken(toAddress, amount, overrides).then(waitForSuccess);
   }
 
   /**
@@ -533,18 +535,18 @@ export class EthersLiquity implements ReadableEthersLiquity, TransactableLiquity
   }
 
   /**
-   * {@inheritDoc @secured-finance/lib-base#TransactableLiquity.redeemLUSD}
+   * {@inheritDoc @secured-finance/lib-base#TransactableLiquity.redeemDebtToken}
    *
    * @throws
    * Throws {@link EthersTransactionFailedError} in case of transaction failure.
    * Throws {@link EthersTransactionCancelledError} if the transaction is cancelled or replaced.
    */
-  redeemLUSD(
+  redeemDebtToken(
     amount: Decimalish,
     maxRedemptionRate?: Decimalish,
     overrides?: EthersTransactionOverrides
   ): Promise<RedemptionDetails> {
-    return this.send.redeemLUSD(amount, maxRedemptionRate, overrides).then(waitForSuccess);
+    return this.send.redeemDebtToken(amount, maxRedemptionRate, overrides).then(waitForSuccess);
   }
 
   /**
@@ -680,7 +682,8 @@ export interface EthersLiquityWithStore<T extends LiquityStore = LiquityStore>
 
 class _EthersLiquityWithStore<T extends LiquityStore = LiquityStore>
   extends EthersLiquity
-  implements EthersLiquityWithStore<T> {
+  implements EthersLiquityWithStore<T>
+{
   readonly store: T;
 
   constructor(readable: ReadableEthersLiquityWithStore<T>) {

@@ -56,6 +56,25 @@ Amount of native currency (e.g. Ether) paid to the liquidator as gas compensatio
 </td></tr>
 <tr><td>
 
+[debtGasCompensation](./lib-base.liquidationdetails.debtgascompensation.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Decimal](./lib-base.decimal.md)
+
+
+</td><td>
+
+Amount of DebtToken paid to the liquidator as gas compensation.
+
+
+</td></tr>
+<tr><td>
+
 [liquidatedAddresses](./lib-base.liquidationdetails.liquidatedaddresses.md)
 
 
@@ -70,25 +89,6 @@ string\[\]
 </td><td>
 
 Addresses whose Troves were liquidated by the transaction.
-
-
-</td></tr>
-<tr><td>
-
-[lusdGasCompensation](./lib-base.liquidationdetails.lusdgascompensation.md)
-
-
-</td><td>
-
-
-</td><td>
-
-[Decimal](./lib-base.decimal.md)
-
-
-</td><td>
-
-Amount of LUSD paid to the liquidator as gas compensation.
 
 
 </td></tr>

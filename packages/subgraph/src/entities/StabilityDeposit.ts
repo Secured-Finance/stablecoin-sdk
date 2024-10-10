@@ -1,12 +1,12 @@
-import { ethereum, Address, BigInt, BigDecimal } from "@graphprotocol/graph-ts";
+import { Address, BigDecimal, BigInt, ethereum } from "@graphprotocol/graph-ts";
 
-import { StabilityDepositChange, StabilityDeposit } from "../../generated/schema";
+import { StabilityDeposit, StabilityDepositChange } from "../../generated/schema";
 
-import { decimalize, DECIMAL_ZERO, BIGINT_ZERO } from "../utils/bignumbers";
+import { BIGINT_ZERO, DECIMAL_ZERO, decimalize } from "../utils/bignumbers";
 
-import { beginChange, initChange, finishChange } from "./Change";
-import { getUser } from "./User";
+import { beginChange, finishChange, initChange } from "./Change";
 import { updateSystemStateByStabilityDepositChange } from "./SystemState";
+import { getUser } from "./User";
 
 function getStabilityDeposit(_user: Address): StabilityDeposit {
   let id = _user.toHexString();
@@ -103,15 +103,15 @@ export function withdrawCollateralGainFromStabilityDeposit(
   event: ethereum.Event,
   _user: Address,
   _ETH: BigInt,
-  _LUSDLoss: BigInt
+  _debtTokenLoss: BigInt
 ): void {
-  if (_ETH == BIGINT_ZERO && _LUSDLoss == BIGINT_ZERO) {
+  if (_ETH == BIGINT_ZERO && _debtTokenLoss == BIGINT_ZERO) {
     // Ignore "NOP" event
     return;
   }
 
   let stabilityDeposit = getStabilityDeposit(_user) as StabilityDeposit;
-  let depositLoss = decimalize(_LUSDLoss);
+  let depositLoss = decimalize(_debtTokenLoss);
   let newDepositedAmount = stabilityDeposit.depositedAmount.minus(depositLoss);
 
   updateStabilityDepositByOperation(

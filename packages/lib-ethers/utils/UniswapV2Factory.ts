@@ -39,13 +39,13 @@ export const createUniswapV2Pair = async (
     throw new Error(`UniswapV2Factory is not deployed on this network (chainId = ${chainId})`);
   }
 
-  const factory = (new _LiquityContract(
+  const factory = new _LiquityContract(
     factoryAddress,
     factoryAbi,
     signer
-  ) as unknown) as UniswapV2Factory;
+  ) as unknown as UniswapV2Factory;
 
-  log(`Creating Uniswap v2 WETH <=> LUSD pair...`);
+  log(`Creating Uniswap v2 WFIL <=> DebtToken pair...`);
 
   const tx = await factory.createPair(tokenA, tokenB, { ...overrides });
   const receipt = await tx.wait();

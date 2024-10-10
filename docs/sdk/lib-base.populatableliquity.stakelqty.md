@@ -53,5 +53,5 @@ Promise&lt;[PopulatedLiquityTransaction](./lib-base.populatedliquitytransaction.
 
 ## Remarks
 
-As a side-effect, the transaction will also pay out an existing LQTY stake's [collateral gain](./lib-base.lqtystake.collateralgain.md) and [LUSD gain](./lib-base.lqtystake.lusdgain.md)<!-- -->.
+As a side-effect, the transaction will also pay out an existing LQTY stake's [collateral gain](./lib-base.lqtystake.collateralgain.md) and [DebtToken gain](./lib-base.lqtystake.debttokengain.md)<!-- -->.
 

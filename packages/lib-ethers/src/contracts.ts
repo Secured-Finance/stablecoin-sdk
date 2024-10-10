@@ -16,6 +16,7 @@ import activePoolAbi from "../abi/ActivePool.json";
 import borrowerOperationsAbi from "../abi/BorrowerOperations.json";
 import collSurplusPoolAbi from "../abi/CollSurplusPool.json";
 import communityIssuanceAbi from "../abi/CommunityIssuance.json";
+import debtTokenAbi from "../abi/DebtToken.json";
 import defaultPoolAbi from "../abi/DefaultPool.json";
 import erc20MockAbi from "../abi/ERC20Mock.json";
 import gasPoolAbi from "../abi/GasPool.json";
@@ -24,7 +25,6 @@ import iERC20Abi from "../abi/IERC20.json";
 import lockupContractFactoryAbi from "../abi/LockupContractFactory.json";
 import lqtyStakingAbi from "../abi/LQTYStaking.json";
 import lqtyTokenAbi from "../abi/LQTYToken.json";
-import lusdTokenAbi from "../abi/LUSDToken.json";
 import multiTroveGetterAbi from "../abi/MultiTroveGetter.json";
 import priceFeedAbi from "../abi/PriceFeed.json";
 import priceFeedTestnetAbi from "../abi/PriceFeedTestnet.json";
@@ -38,6 +38,7 @@ import {
   BorrowerOperations,
   CollSurplusPool,
   CommunityIssuance,
+  DebtToken,
   DefaultPool,
   ERC20Mock,
   GasPool,
@@ -46,7 +47,6 @@ import {
   LockupContractFactory,
   LQTYStaking,
   LQTYToken,
-  LUSDToken,
   MultiTroveGetter,
   PriceFeed,
   PriceFeedTestnet,
@@ -85,8 +85,7 @@ type EstimatedContractFunction<R = unknown, A extends unknown[] = unknown[], O =
 type CallOverridesArg = [overrides?: CallOverrides];
 
 type TypedContract<T extends Contract, U, V> = _TypeSafeContract<T> &
-  U &
-  {
+  U & {
     [P in keyof V]: V[P] extends (...args: infer A) => unknown
       ? (...args: A) => Promise<ContractTransaction>
       : never;
@@ -168,7 +167,7 @@ export interface _LiquityContracts {
   activePool: ActivePool;
   borrowerOperations: BorrowerOperations;
   troveManager: TroveManager;
-  lusdToken: LUSDToken;
+  debtToken: DebtToken;
   collSurplusPool: CollSurplusPool;
   communityIssuance: CommunityIssuance;
   defaultPool: DefaultPool;
@@ -205,7 +204,7 @@ const getAbi = (priceFeedIsTestnet: boolean, uniTokenIsMock: boolean): LiquityCo
   activePool: activePoolAbi,
   borrowerOperations: borrowerOperationsAbi,
   troveManager: troveManagerAbi,
-  lusdToken: lusdTokenAbi,
+  debtToken: debtTokenAbi,
   communityIssuance: communityIssuanceAbi,
   defaultPool: defaultPoolAbi,
   lqtyToken: lqtyTokenAbi,

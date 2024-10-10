@@ -1,17 +1,17 @@
 import {
-  TroveUpdated,
-  TroveLiquidated,
   Liquidation,
+  LTermsUpdated,
   Redemption,
-  LTermsUpdated
+  TroveLiquidated,
+  TroveUpdated
 } from "../../generated/TroveManager/TroveManager";
 
 import { getTroveOperationFromTroveManagerOperation } from "../types/TroveOperation";
 
+import { updateTotalRedistributed } from "../entities/Global";
 import { finishCurrentLiquidation } from "../entities/Liquidation";
 import { finishCurrentRedemption } from "../entities/Redemption";
 import { applyRedistributionToTroveBeforeLiquidation, updateTrove } from "../entities/Trove";
-import { updateTotalRedistributed } from "../entities/Global";
 
 export function handleTroveUpdated(event: TroveUpdated): void {
   updateTrove(
@@ -36,20 +36,20 @@ export function handleLiquidation(event: Liquidation): void {
     event.params._liquidatedColl,
     event.params._liquidatedDebt,
     event.params._collGasCompensation,
-    event.params._LUSDGasCompensation
+    event.params._debtGasCompensation
   );
 }
 
 export function handleRedemption(event: Redemption): void {
   finishCurrentRedemption(
     event,
-    event.params._attemptedLUSDAmount,
-    event.params._actualLUSDAmount,
-    event.params._ETHSent,
-    event.params._ETHFee
+    event.params._attemptedDebtTokenAmount,
+    event.params._actualDebtTokenAmount,
+    event.params._FILSent,
+    event.params._FILFee
   );
 }
 
 export function handleLTermsUpdated(event: LTermsUpdated): void {
-  updateTotalRedistributed(event.params._L_ETH, event.params._L_LUSDDebt);
+  updateTotalRedistributed(event.params._L_FIL, event.params._L_Debt);
 }

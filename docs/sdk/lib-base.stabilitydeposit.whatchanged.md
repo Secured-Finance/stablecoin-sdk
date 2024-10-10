@@ -4,12 +4,12 @@
 
 ## StabilityDeposit.whatChanged() method
 
-Calculate the difference between the `currentLUSD` in this Stability Deposit and `thatLUSD`<!-- -->.
+Calculate the difference between the `currentDebtToken` in this Stability Deposit and `thatDebtToken`<!-- -->.
 
 **Signature:**
 
 ```typescript
-whatChanged(thatLUSD: Decimalish): StabilityDepositChange<Decimal> | undefined;
+whatChanged(thatDebtToken: Decimalish): StabilityDepositChange<Decimal> | undefined;
 ```
 
 ## Parameters
@@ -32,7 +32,7 @@ Description
 </th></tr></thead>
 <tbody><tr><td>
 
-thatLUSD
+thatDebtToken
 
 
 </td><td>

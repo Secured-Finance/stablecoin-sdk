@@ -107,6 +107,34 @@ Get the amount of leftover collateral available for withdrawal by an address.
 </td></tr>
 <tr><td>
 
+[getDebtTokenBalance(address, overrides)](./lib-ethers.readableethersliquity.getdebttokenbalance.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Get the amount of DebtToken held by an address.
+
+
+</td></tr>
+<tr><td>
+
+[getDebtTokenInStabilityPool(overrides)](./lib-ethers.readableethersliquity.getdebttokeninstabilitypool.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Get the total amount of DebtToken currently deposited in the Stability Pool.
+
+
+</td></tr>
+<tr><td>
+
 [getFees(overrides)](./lib-ethers.readableethersliquity.getfees.md)
 
 
@@ -157,7 +185,7 @@ Get the amount of LQTY earned by an address through mining liquidity.
 
 </td><td>
 
-Get the amount of Uniswap ETH/LUSD LP tokens currently staked by an address in liquidity mining.
+Get the amount of Uniswap ETH/DebtToken LP tokens currently staked by an address in liquidity mining.
 
 
 </td></tr>
@@ -186,34 +214,6 @@ Get the amount of LQTY held by an address.
 </td><td>
 
 Get the current state of an LQTY Stake.
-
-
-</td></tr>
-<tr><td>
-
-[getLUSDBalance(address, overrides)](./lib-ethers.readableethersliquity.getlusdbalance.md)
-
-
-</td><td>
-
-
-</td><td>
-
-Get the amount of LUSD held by an address.
-
-
-</td></tr>
-<tr><td>
-
-[getLUSDInStabilityPool(overrides)](./lib-ethers.readableethersliquity.getlusdinstabilitypool.md)
-
-
-</td><td>
-
-
-</td><td>
-
-Get the total amount of LUSD currently deposited in the Stability Pool.
 
 
 </td></tr>
@@ -339,7 +339,7 @@ Get the total amount of LQTY currently staked.
 
 </td><td>
 
-Get the total amount of Uniswap ETH/LUSD LP tokens currently staked in liquidity mining.
+Get the total amount of Uniswap ETH/DebtToken LP tokens currently staked in liquidity mining.
 
 
 </td></tr>
@@ -395,7 +395,7 @@ Get a slice from the list of Troves.
 
 </td><td>
 
-Get the liquidity mining contract's allowance of a holder's Uniswap ETH/LUSD LP tokens.
+Get the liquidity mining contract's allowance of a holder's Uniswap ETH/DebtToken LP tokens.
 
 
 </td></tr>
@@ -409,7 +409,7 @@ Get the liquidity mining contract's allowance of a holder's Uniswap ETH/LUSD LP 
 
 </td><td>
 
-Get the amount of Uniswap ETH/LUSD LP tokens held by an address.
+Get the amount of Uniswap ETH/DebtToken LP tokens held by an address.
 
 
 </td></tr>

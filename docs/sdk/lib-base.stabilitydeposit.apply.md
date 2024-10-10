@@ -49,5 +49,5 @@ change
 
 [Decimal](./lib-base.decimal.md)
 
-The new deposited LUSD amount.
+The new deposited DebtToken amount.
 

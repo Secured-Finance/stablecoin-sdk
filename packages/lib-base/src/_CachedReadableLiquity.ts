@@ -1,9 +1,9 @@
 import { Decimal } from "./Decimal";
 import { Fees } from "./Fees";
 import { LQTYStake } from "./LQTYStake";
+import { FrontendStatus, ReadableLiquity, TroveListingParams } from "./ReadableLiquity";
 import { StabilityDeposit } from "./StabilityDeposit";
 import { Trove, TroveWithPendingRedistribution, UserTrove } from "./Trove";
-import { FrontendStatus, ReadableLiquity, TroveListingParams } from "./ReadableLiquity";
 
 /** @internal */
 export type _ReadableLiquityWithExtraParamsBase<T extends unknown[]> = {
@@ -44,7 +44,8 @@ export interface _LiquityReadCache<T extends unknown[]> extends _LiquityReadCach
 
 /** @internal */
 export class _CachedReadableLiquity<T extends unknown[]>
-  implements _ReadableLiquityWithExtraParams<T> {
+  implements _ReadableLiquityWithExtraParams<T>
+{
   private _readable: _ReadableLiquityWithExtraParams<T>;
   private _cache: _LiquityReadCache<T>;
 
@@ -108,17 +109,17 @@ export class _CachedReadableLiquity<T extends unknown[]>
     );
   }
 
-  async getLUSDInStabilityPool(...extraParams: T): Promise<Decimal> {
+  async getDebtTokenInStabilityPool(...extraParams: T): Promise<Decimal> {
     return (
-      this._cache.getLUSDInStabilityPool(...extraParams) ??
-      this._readable.getLUSDInStabilityPool(...extraParams)
+      this._cache.getDebtTokenInStabilityPool(...extraParams) ??
+      this._readable.getDebtTokenInStabilityPool(...extraParams)
     );
   }
 
-  async getLUSDBalance(address?: string, ...extraParams: T): Promise<Decimal> {
+  async getDebtTokenBalance(address?: string, ...extraParams: T): Promise<Decimal> {
     return (
-      this._cache.getLUSDBalance(address, ...extraParams) ??
-      this._readable.getLUSDBalance(address, ...extraParams)
+      this._cache.getDebtTokenBalance(address, ...extraParams) ??
+      this._readable.getDebtTokenBalance(address, ...extraParams)
     );
   }
 

@@ -56,6 +56,25 @@ Amount of native currency (e.g. Ether) paid out to the depositor in this transac
 </td></tr>
 <tr><td>
 
+[debtTokenLoss](./lib-base.stabilitypoolgainswithdrawaldetails.debttokenloss.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Decimal](./lib-base.decimal.md)
+
+
+</td><td>
+
+Amount of DebtToken burned from the deposit by liquidations since the last modification.
+
+
+</td></tr>
+<tr><td>
+
 [lqtyReward](./lib-base.stabilitypoolgainswithdrawaldetails.lqtyreward.md)
 
 
@@ -75,7 +94,7 @@ Amount of LQTY rewarded to the depositor in this transaction.
 </td></tr>
 <tr><td>
 
-[lusdLoss](./lib-base.stabilitypoolgainswithdrawaldetails.lusdloss.md)
+[newDebtTokenDeposit](./lib-base.stabilitypoolgainswithdrawaldetails.newdebttokendeposit.md)
 
 
 </td><td>
@@ -88,26 +107,7 @@ Amount of LQTY rewarded to the depositor in this transaction.
 
 </td><td>
 
-Amount of LUSD burned from the deposit by liquidations since the last modification.
-
-
-</td></tr>
-<tr><td>
-
-[newLUSDDeposit](./lib-base.stabilitypoolgainswithdrawaldetails.newlusddeposit.md)
-
-
-</td><td>
-
-
-</td><td>
-
-[Decimal](./lib-base.decimal.md)
-
-
-</td><td>
-
-Amount of LUSD in the deposit directly after this transaction.
+Amount of DebtToken in the deposit directly after this transaction.
 
 
 </td></tr>

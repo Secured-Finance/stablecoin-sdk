@@ -1,8 +1,8 @@
-import { ethereum, BigInt } from "@graphprotocol/graph-ts";
+import { BigInt, ethereum } from "@graphprotocol/graph-ts";
 
 import { Liquidation } from "../../generated/schema";
 
-import { decimalize, DECIMAL_ZERO } from "../utils/bignumbers";
+import { DECIMAL_ZERO, decimalize } from "../utils/bignumbers";
 
 import { getGlobal, getLiquidationSequenceNumber } from "./Global";
 import { getTransaction } from "./Transaction";
@@ -40,13 +40,13 @@ export function finishCurrentLiquidation(
   _liquidatedColl: BigInt,
   _liquidatedDebt: BigInt,
   _collGasCompensation: BigInt,
-  _LUSDGasCompensation: BigInt
+  _debtGasCompensation: BigInt
 ): void {
   let currentLiquidation = getCurrentLiquidation(event);
   currentLiquidation.liquidatedCollateral = decimalize(_liquidatedColl);
   currentLiquidation.liquidatedDebt = decimalize(_liquidatedDebt);
   currentLiquidation.collGasCompensation = decimalize(_collGasCompensation);
-  currentLiquidation.tokenGasCompensation = decimalize(_LUSDGasCompensation);
+  currentLiquidation.tokenGasCompensation = decimalize(_debtGasCompensation);
   currentLiquidation.save();
 
   let global = getGlobal();

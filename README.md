@@ -81,7 +81,7 @@ Visit [liquity.org](https://www.liquity.org) to find out more and join the discu
   - [LQTY Staking Functions `LQTYStaking.sol`](#lqty-staking-functions--lqtystakingsol)
   - [Lockup Contract Factory `LockupContractFactory.sol`](#lockup-contract-factory-lockupcontractfactorysol)
   - [Lockup contract - `LockupContract.sol`](#lockup-contract---lockupcontractsol)
-  - [LUSD token `LUSDToken.sol` and LQTY token `LQTYToken.sol`](#lusd-token-lusdtokensol-and-lqty-token-lqtytokensol)
+  - [LUSD token `DebtToken.sol` and LQTY token `LQTYToken.sol`](#lusd-token-debttokensol-and-lqty-token-lqtytokensol)
 - [Supplying Hints to Trove operations](#supplying-hints-to-trove-operations)
   - [Hints for `redeemCollateral`](#hints-for-redeemcollateral)
     - [First redemption hint](#first-redemption-hint)
@@ -373,7 +373,7 @@ The three main contracts - `BorrowerOperations.sol`, `TroveManager.sol` and `Sta
 
 `StabilityPool.sol` - contains functionality for Stability Pool operations: making deposits, and withdrawing compounded deposits and accumulated ETH and LQTY gains. Holds the LUSD Stability Pool deposits, and the ETH gains for depositors, from liquidations.
 
-`LUSDToken.sol` - the stablecoin token contract, which implements the ERC20 fungible token standard in conjunction with EIP-2612 and a mechanism that blocks (accidental) transfers to addresses like the StabilityPool and address(0) that are not supposed to receive funds through direct transfers. The contract mints, burns and transfers LUSD tokens.
+`DebtToken.sol` - the stablecoin token contract, which implements the ERC20 fungible token standard in conjunction with EIP-2612 and a mechanism that blocks (accidental) transfers to addresses like the StabilityPool and address(0) that are not supposed to receive funds through direct transfers. The contract mints, burns and transfers LUSD tokens.
 
 `SortedTroves.sol` - a doubly linked list that stores addresses of Trove owners, sorted by their individual collateralization ratio (ICR). It inserts and re-inserts Troves at the correct position, based on their ICR.
 
@@ -793,7 +793,7 @@ The number of Troves to consider for redemption can be capped by passing a non-z
 
 `withdrawLQTY()`: When the current time is later than the `unlockTime` and the caller is the beneficiary, it transfers their LQTY to them.
 
-### LUSD token `LUSDToken.sol` and LQTY token `LQTYToken.sol`
+### LUSD token `DebtToken.sol` and LQTY token `LQTYToken.sol`
 
 Standard ERC20 and EIP2612 (`permit()` ) functionality.
 

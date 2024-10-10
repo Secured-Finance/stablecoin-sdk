@@ -25,25 +25,25 @@ export interface LiquityStoreBaseState {
   /** User's native currency balance (e.g. Ether). */
   accountBalance: Decimal;
 
-  /** User's LUSD token balance. */
-  lusdBalance: Decimal;
+  /** User's Debt token balance. */
+  debtTokenBalance: Decimal;
 
   /** User's LQTY token balance. */
   lqtyBalance: Decimal;
 
-  /** User's Uniswap ETH/LUSD LP token balance. */
+  /** User's Uniswap ETH/DebtToken LP token balance. */
   uniTokenBalance: Decimal;
 
-  /** The liquidity mining contract's allowance of user's Uniswap ETH/LUSD LP tokens. */
+  /** The liquidity mining contract's allowance of user's Uniswap ETH/DebtToken LP tokens. */
   uniTokenAllowance: Decimal;
 
   /** Remaining LQTY that will be collectively rewarded to liquidity miners. */
   remainingLiquidityMiningLQTYReward: Decimal;
 
-  /** Amount of Uniswap ETH/LUSD LP tokens the user has staked in liquidity mining. */
+  /** Amount of Uniswap ETH/DebtToken LP tokens the user has staked in liquidity mining. */
   liquidityMiningStake: Decimal;
 
-  /** Total amount of Uniswap ETH/LUSD LP tokens currently staked in liquidity mining. */
+  /** Total amount of Uniswap ETH/DebtToken LP tokens currently staked in liquidity mining. */
   totalStakedUniTokens: Decimal;
 
   /** Amount of LQTY the user has earned through mining liquidity. */
@@ -61,8 +61,8 @@ export interface LiquityStoreBaseState {
   /** Current price of the native currency (e.g. Ether) in USD. */
   price: Decimal;
 
-  /** Total amount of LUSD currently deposited in the Stability Pool. */
-  lusdInStabilityPool: Decimal;
+  /** Total amount of DebtToken currently deposited in the Stability Pool. */
+  debtTokenInStabilityPool: Decimal;
 
   /** Total collateral and debt in the Liquity system. */
   total: Trove;
@@ -130,7 +130,7 @@ export interface LiquityStoreDerivedState {
    * Current redemption rate.
    *
    * @remarks
-   * Note that the actual rate paid by a redemption transaction will depend on the amount of LUSD
+   * Note that the actual rate paid by a redemption transaction will depend on the amount of DebtToken
    * being redeemed.
    *
    * Use {@link Fees.redemptionRate} to calculate a precise redemption rate.
@@ -190,7 +190,10 @@ const showFrontendStatus = (x: FrontendStatus) =>
     ? '{ status: "unregistered" }'
     : `{ status: "registered", kickbackRate: ${x.kickbackRate} }`;
 
-const wrap = <A extends unknown[], R>(f: (...args: A) => R) => (...args: A) => f(...args);
+const wrap =
+  <A extends unknown[], R>(f: (...args: A) => R) =>
+  (...args: A) =>
+    f(...args);
 
 const difference = <T>(a: T, b: T) =>
   Object.fromEntries(
@@ -352,11 +355,11 @@ export abstract class LiquityStore<T = unknown> {
         baseStateUpdate.accountBalance
       ),
 
-      lusdBalance: this._updateIfChanged(
+      debtTokenBalance: this._updateIfChanged(
         eq,
-        "lusdBalance",
-        baseState.lusdBalance,
-        baseStateUpdate.lusdBalance
+        "debtTokenBalance",
+        baseState.debtTokenBalance,
+        baseStateUpdate.debtTokenBalance
       ),
 
       lqtyBalance: this._updateIfChanged(
@@ -415,11 +418,11 @@ export abstract class LiquityStore<T = unknown> {
 
       price: this._updateIfChanged(eq, "price", baseState.price, baseStateUpdate.price),
 
-      lusdInStabilityPool: this._updateIfChanged(
+      debtTokenInStabilityPool: this._updateIfChanged(
         eq,
-        "lusdInStabilityPool",
-        baseState.lusdInStabilityPool,
-        baseStateUpdate.lusdInStabilityPool
+        "debtTokenInStabilityPool",
+        baseState.debtTokenInStabilityPool,
+        baseStateUpdate.debtTokenInStabilityPool
       ),
 
       total: this._updateIfChanged(equals, "total", baseState.total, baseStateUpdate.total),

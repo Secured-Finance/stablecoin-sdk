@@ -31,7 +31,7 @@ export interface TroveCreationDetails {
   /** The Trove that was created by the transaction. */
   newTrove: Trove;
 
-  /** Amount of LUSD added to the Trove's debt as borrowing fee. */
+  /** Amount of DebtToken added to the Trove's debt as borrowing fee. */
   fee: Decimal;
 }
 
@@ -47,7 +47,7 @@ export interface TroveAdjustmentDetails {
   /** New state of the adjusted Trove directly after the transaction. */
   newTrove: Trove;
 
-  /** Amount of LUSD added to the Trove's debt as borrowing fee. */
+  /** Amount of DebtToken added to the Trove's debt as borrowing fee. */
   fee: Decimal;
 }
 
@@ -74,32 +74,32 @@ export interface LiquidationDetails {
   /** Total collateral liquidated and debt cleared by the transaction. */
   totalLiquidated: Trove;
 
-  /** Amount of LUSD paid to the liquidator as gas compensation. */
-  lusdGasCompensation: Decimal;
+  /** Amount of DebtToken paid to the liquidator as gas compensation. */
+  debtGasCompensation: Decimal;
 
   /** Amount of native currency (e.g. Ether) paid to the liquidator as gas compensation. */
   collateralGasCompensation: Decimal;
 }
 
 /**
- * Details of a {@link TransactableLiquity.redeemLUSD | redeemLUSD()} transaction.
+ * Details of a {@link TransactableLiquity.redeemDebtToken | redeemDebtToken()} transaction.
  *
  * @public
  */
 export interface RedemptionDetails {
-  /** Amount of LUSD the redeemer tried to redeem. */
-  attemptedLUSDAmount: Decimal;
+  /** Amount of DebtToken the redeemer tried to redeem. */
+  attemptedDebtTokenAmount: Decimal;
 
   /**
-   * Amount of LUSD that was actually redeemed by the transaction.
+   * Amount of DebtToken that was actually redeemed by the transaction.
    *
    * @remarks
-   * This can end up being lower than `attemptedLUSDAmount` due to interference from another
+   * This can end up being lower than `attemptedDebtTokenAmount` due to interference from another
    * transaction that modifies the list of Troves.
    *
    * @public
    */
-  actualLUSDAmount: Decimal;
+  actualDebtTokenAmount: Decimal;
 
   /** Amount of collateral (e.g. Ether) taken from Troves by the transaction. */
   collateralTaken: Decimal;
@@ -116,11 +116,11 @@ export interface RedemptionDetails {
  * @public
  */
 export interface StabilityPoolGainsWithdrawalDetails {
-  /** Amount of LUSD burned from the deposit by liquidations since the last modification. */
-  lusdLoss: Decimal;
+  /** Amount of DebtToken burned from the deposit by liquidations since the last modification. */
+  debtTokenLoss: Decimal;
 
-  /** Amount of LUSD in the deposit directly after this transaction. */
-  newLUSDDeposit: Decimal;
+  /** Amount of DebtToken in the deposit directly after this transaction. */
+  newDebtTokenDeposit: Decimal;
 
   /** Amount of native currency (e.g. Ether) paid out to the depositor in this transaction. */
   collateralGain: Decimal;
@@ -131,8 +131,8 @@ export interface StabilityPoolGainsWithdrawalDetails {
 
 /**
  * Details of a
- * {@link TransactableLiquity.depositLUSDInStabilityPool | depositLUSDInStabilityPool()} or
- * {@link TransactableLiquity.withdrawLUSDFromStabilityPool | withdrawLUSDFromStabilityPool()}
+ * {@link TransactableLiquity.depositDebtTokenInStabilityPool | depositDebtTokenInStabilityPool()} or
+ * {@link TransactableLiquity.withdrawDebtTokenFromStabilityPool | withdrawDebtTokenFromStabilityPool()}
  * transaction.
  *
  * @public
@@ -167,7 +167,7 @@ export interface CollateralGainTransferDetails extends StabilityPoolGainsWithdra
  */
 export interface TransactableLiquity {
   /**
-   * Open a new Trove by depositing collateral and borrowing LUSD.
+   * Open a new Trove by depositing collateral and borrowing DebtToken.
    *
    * @param params - How much to deposit and borrow.
    * @param maxBorrowingRate - Maximum acceptable
@@ -199,14 +199,14 @@ export interface TransactableLiquity {
    * @param params - Parameters of the adjustment.
    * @param maxBorrowingRate - Maximum acceptable
    *                           {@link @secured-finance/lib-base#Fees.borrowingRate | borrowing rate} if
-   *                           `params` includes `borrowLUSD`.
+   *                           `params` includes `borrowDebtToken`.
    *
    * @throws
    * Throws {@link TransactionFailedError} in case of transaction failure.
    *
    * @remarks
    * The transaction will fail if the Trove's debt would fall below
-   * {@link @secured-finance/lib-base#LUSD_MINIMUM_DEBT}.
+   * {@link @secured-finance/lib-base#MINIMUM_DEBT}.
    *
    * If `maxBorrowingRate` is omitted, the current borrowing rate plus 0.5% is used as maximum
    * acceptable rate.
@@ -251,9 +251,9 @@ export interface TransactableLiquity {
   withdrawCollateral(amount: Decimalish): Promise<TroveAdjustmentDetails>;
 
   /**
-   * Adjust existing Trove by borrowing more LUSD.
+   * Adjust existing Trove by borrowing more DebtToken.
    *
-   * @param amount - The amount of LUSD to borrow.
+   * @param amount - The amount of DebtToken to borrow.
    * @param maxBorrowingRate - Maximum acceptable
    *                           {@link @secured-finance/lib-base#Fees.borrowingRate | borrowing rate}.
    *
@@ -264,15 +264,18 @@ export interface TransactableLiquity {
    * Equivalent to:
    *
    * ```typescript
-   * adjustTrove({ borrowLUSD: amount }, maxBorrowingRate)
+   * adjustTrove({ borrowDebtToken: amount }, maxBorrowingRate)
    * ```
    */
-  borrowLUSD(amount: Decimalish, maxBorrowingRate?: Decimalish): Promise<TroveAdjustmentDetails>;
+  borrowDebtToken(
+    amount: Decimalish,
+    maxBorrowingRate?: Decimalish
+  ): Promise<TroveAdjustmentDetails>;
 
   /**
    * Adjust existing Trove by repaying some of its debt.
    *
-   * @param amount - The amount of LUSD to repay.
+   * @param amount - The amount of DebtToken to repay.
    *
    * @throws
    * Throws {@link TransactionFailedError} in case of transaction failure.
@@ -281,10 +284,10 @@ export interface TransactableLiquity {
    * Equivalent to:
    *
    * ```typescript
-   * adjustTrove({ repayLUSD: amount })
+   * adjustTrove({ repayDebtToken: amount })
    * ```
    */
-  repayLUSD(amount: Decimalish): Promise<TroveAdjustmentDetails>;
+  repayDebtToken(amount: Decimalish): Promise<TroveAdjustmentDetails>;
 
   /** @internal */
   setPrice(price: Decimalish): Promise<void>;
@@ -312,7 +315,7 @@ export interface TransactableLiquity {
   /**
    * Make a new Stability Deposit, or top up existing one.
    *
-   * @param amount - Amount of LUSD to add to new or existing deposit.
+   * @param amount - Amount of DebtToken to add to new or existing deposit.
    * @param frontendTag - Address that should receive a share of this deposit's LQTY rewards.
    *
    * @throws
@@ -325,15 +328,15 @@ export interface TransactableLiquity {
    * {@link @secured-finance/lib-base#StabilityDeposit.collateralGain | collateral gain} and
    * {@link @secured-finance/lib-base#StabilityDeposit.lqtyReward | LQTY reward}.
    */
-  depositLUSDInStabilityPool(
+  depositDebtTokenInStabilityPool(
     amount: Decimalish,
     frontendTag?: string
   ): Promise<StabilityDepositChangeDetails>;
 
   /**
-   * Withdraw LUSD from Stability Deposit.
+   * Withdraw DebtToken from Stability Deposit.
    *
-   * @param amount - Amount of LUSD to withdraw.
+   * @param amount - Amount of DebtToken to withdraw.
    *
    * @throws
    * Throws {@link TransactionFailedError} in case of transaction failure.
@@ -343,7 +346,7 @@ export interface TransactableLiquity {
    * {@link @secured-finance/lib-base#StabilityDeposit.collateralGain | collateral gain} and
    * {@link @secured-finance/lib-base#StabilityDeposit.lqtyReward | LQTY reward}.
    */
-  withdrawLUSDFromStabilityPool(amount: Decimalish): Promise<StabilityDepositChangeDetails>;
+  withdrawDebtTokenFromStabilityPool(amount: Decimalish): Promise<StabilityDepositChangeDetails>;
 
   /**
    * Withdraw {@link @secured-finance/lib-base#StabilityDeposit.collateralGain | collateral gain} and
@@ -370,15 +373,15 @@ export interface TransactableLiquity {
   transferCollateralGainToTrove(): Promise<CollateralGainTransferDetails>;
 
   /**
-   * Send LUSD tokens to an address.
+   * Send DebtToken tokens to an address.
    *
    * @param toAddress - Address of receipient.
-   * @param amount - Amount of LUSD to send.
+   * @param amount - Amount of DebtToken to send.
    *
    * @throws
    * Throws {@link TransactionFailedError} in case of transaction failure.
    */
-  sendLUSD(toAddress: string, amount: Decimalish): Promise<void>;
+  sendDebtToken(toAddress: string, amount: Decimalish): Promise<void>;
 
   /**
    * Send LQTY tokens to an address.
@@ -392,9 +395,9 @@ export interface TransactableLiquity {
   sendLQTY(toAddress: string, amount: Decimalish): Promise<void>;
 
   /**
-   * Redeem LUSD to native currency (e.g. Ether) at face value.
+   * Redeem DebtToken to native currency (e.g. Ether) at face value.
    *
-   * @param amount - Amount of LUSD to be redeemed.
+   * @param amount - Amount of DebtToken to be redeemed.
    * @param maxRedemptionRate - Maximum acceptable
    *                            {@link @secured-finance/lib-base#Fees.redemptionRate | redemption rate}.
    *
@@ -405,7 +408,7 @@ export interface TransactableLiquity {
    * If `maxRedemptionRate` is omitted, the current redemption rate (based on `amount`) plus 0.1%
    * is used as maximum acceptable rate.
    */
-  redeemLUSD(amount: Decimalish, maxRedemptionRate?: Decimalish): Promise<RedemptionDetails>;
+  redeemDebtToken(amount: Decimalish, maxRedemptionRate?: Decimalish): Promise<RedemptionDetails>;
 
   /**
    * Claim leftover collateral after a liquidation or redemption.
@@ -430,7 +433,7 @@ export interface TransactableLiquity {
    * @remarks
    * As a side-effect, the transaction will also pay out an existing LQTY stake's
    * {@link @secured-finance/lib-base#LQTYStake.collateralGain | collateral gain} and
-   * {@link @secured-finance/lib-base#LQTYStake.lusdGain | LUSD gain}.
+   * {@link @secured-finance/lib-base#LQTYStake.debtTokenGain | DebtToken gain}.
    */
   stakeLQTY(amount: Decimalish): Promise<void>;
 
@@ -445,13 +448,13 @@ export interface TransactableLiquity {
    * @remarks
    * As a side-effect, the transaction will also pay out the LQTY stake's
    * {@link @secured-finance/lib-base#LQTYStake.collateralGain | collateral gain} and
-   * {@link @secured-finance/lib-base#LQTYStake.lusdGain | LUSD gain}.
+   * {@link @secured-finance/lib-base#LQTYStake.debtTokenGain | DebtToken gain}.
    */
   unstakeLQTY(amount: Decimalish): Promise<void>;
 
   /**
    * Withdraw {@link @secured-finance/lib-base#LQTYStake.collateralGain | collateral gain} and
-   * {@link @secured-finance/lib-base#LQTYStake.lusdGain | LUSD gain} from LQTY stake.
+   * {@link @secured-finance/lib-base#LQTYStake.debtTokenGain | DebtToken gain} from LQTY stake.
    *
    * @throws
    * Throws {@link TransactionFailedError} in case of transaction failure.
@@ -459,7 +462,7 @@ export interface TransactableLiquity {
   withdrawGainsFromStaking(): Promise<void>;
 
   /**
-   * Allow the liquidity mining contract to use Uniswap ETH/LUSD LP tokens for
+   * Allow the liquidity mining contract to use Uniswap ETH/DebtToken LP tokens for
    * {@link @secured-finance/lib-base#TransactableLiquity.stakeUniTokens | staking}.
    *
    * @param allowance - Maximum amount of LP tokens that will be transferrable to liquidity mining
@@ -475,7 +478,7 @@ export interface TransactableLiquity {
   approveUniTokens(allowance?: Decimalish): Promise<void>;
 
   /**
-   * Stake Uniswap ETH/LUSD LP tokens to participate in liquidity mining and earn LQTY.
+   * Stake Uniswap ETH/DebtToken LP tokens to participate in liquidity mining and earn LQTY.
    *
    * @param amount - Amount of LP tokens to add to new or existing stake.
    *
@@ -485,7 +488,7 @@ export interface TransactableLiquity {
   stakeUniTokens(amount: Decimalish): Promise<void>;
 
   /**
-   * Withdraw Uniswap ETH/LUSD LP tokens from liquidity mining.
+   * Withdraw Uniswap ETH/DebtToken LP tokens from liquidity mining.
    *
    * @param amount - Amount of LP tokens to withdraw.
    *

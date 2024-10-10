@@ -1,8 +1,8 @@
 import {
   Decimal,
   Difference,
+  LIQUIDATION_RESERVE,
   LiquityStoreState,
-  LUSD_LIQUIDATION_RESERVE,
   Percent,
   Trove
 } from "@secured-finance/lib-base";
@@ -44,8 +44,8 @@ const GAS_ROOM_ETH = Decimal.from(0.1);
 const feeFrom = (original: Trove, edited: Trove, borrowingRate: Decimal): Decimal => {
   const change = original.whatChanged(edited, borrowingRate);
 
-  if (change && change.type !== "invalidCreation" && change.params.borrowLUSD) {
-    return change.params.borrowLUSD.mul(borrowingRate);
+  if (change && change.type !== "invalidCreation" && change.params.borrowDebtToken) {
+    return change.params.borrowDebtToken.mul(borrowingRate);
   } else {
     return Decimal.ZERO;
   }
@@ -128,7 +128,7 @@ export const Adjusting: React.FC = () => {
   const fee = isDebtIncrease
     ? feeFrom(trove, new Trove(trove.collateral, trove.debt.add(debtIncreaseAmount)), borrowingRate)
     : Decimal.ZERO;
-  const totalDebt = netDebt.add(LUSD_LIQUIDATION_RESERVE).add(fee);
+  const totalDebt = netDebt.add(LIQUIDATION_RESERVE).add(fee);
   const maxBorrowingRate = borrowingRate.add(0.005);
   const updatedTrove = isDirty ? new Trove(collateral, totalDebt) : trove;
   const feePct = new Percent(borrowingRate);
@@ -196,7 +196,7 @@ export const Adjusting: React.FC = () => {
         <StaticRow
           label="Liquidation Reserve"
           inputId="trove-liquidation-reserve"
-          amount={`${LUSD_LIQUIDATION_RESERVE}`}
+          amount={`${LIQUIDATION_RESERVE}`}
           unit={COIN}
           infoIcon={
             <InfoIcon
@@ -241,9 +241,9 @@ export const Adjusting: React.FC = () => {
                   The total amount of LUSD your Trove will hold.{" "}
                   {isDirty && (
                     <>
-                      You will need to repay {totalDebt.sub(LUSD_LIQUIDATION_RESERVE).prettify(2)}{" "}
-                      LUSD to reclaim your collateral ({LUSD_LIQUIDATION_RESERVE.toString()} LUSD
-                      Liquidation Reserve excluded).
+                      You will need to repay {totalDebt.sub(LIQUIDATION_RESERVE).prettify(2)} LUSD to
+                      reclaim your collateral ({LIQUIDATION_RESERVE.toString()} LUSD Liquidation
+                      Reserve excluded).
                     </>
                   )}
                 </Card>

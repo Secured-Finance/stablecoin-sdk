@@ -151,8 +151,8 @@ export class ReadableEthersLiquity implements ReadableLiquity {
     const { troveManager } = _getContracts(this.connection);
 
     const [collateral, debt] = await Promise.all([
-      troveManager.L_ETH({ ...overrides }).then(decimalify),
-      troveManager.L_LUSDDebt({ ...overrides }).then(decimalify)
+      troveManager.L_FIL({ ...overrides }).then(decimalify),
+      troveManager.L_Debt({ ...overrides }).then(decimalify)
     ]);
 
     return new Trove(collateral, debt);
@@ -178,7 +178,7 @@ export class ReadableEthersLiquity implements ReadableLiquity {
         decimalify(trove.coll),
         decimalify(trove.debt),
         decimalify(trove.stake),
-        new Trove(decimalify(snapshot.ETH), decimalify(snapshot.LUSDDebt))
+        new Trove(decimalify(snapshot.FIL), decimalify(snapshot.debt))
       );
     } else {
       return new TroveWithPendingRedistribution(address, userTroveStatusFrom(trove.status));
@@ -214,10 +214,9 @@ export class ReadableEthersLiquity implements ReadableLiquity {
     const { activePool } = _getContracts(this.connection);
 
     const [activeCollateral, activeDebt] = await Promise.all(
-      [
-        activePool.getETH({ ...overrides }),
-        activePool.getLUSDDebt({ ...overrides })
-      ].map(getBigNumber => getBigNumber.then(decimalify))
+      [activePool.getFIL({ ...overrides }), activePool.getDebt({ ...overrides })].map(getBigNumber =>
+        getBigNumber.then(decimalify)
+      )
     );
 
     return new Trove(activeCollateral, activeDebt);
@@ -228,10 +227,9 @@ export class ReadableEthersLiquity implements ReadableLiquity {
     const { defaultPool } = _getContracts(this.connection);
 
     const [liquidatedCollateral, closedDebt] = await Promise.all(
-      [
-        defaultPool.getETH({ ...overrides }),
-        defaultPool.getLUSDDebt({ ...overrides })
-      ].map(getBigNumber => getBigNumber.then(decimalify))
+      [defaultPool.getFIL({ ...overrides }), defaultPool.getDebt({ ...overrides })].map(
+        getBigNumber => getBigNumber.then(decimalify)
+      )
     );
 
     return new Trove(liquidatedCollateral, closedDebt);
@@ -255,21 +253,17 @@ export class ReadableEthersLiquity implements ReadableLiquity {
     address ??= _requireAddress(this.connection);
     const { stabilityPool } = _getContracts(this.connection);
 
-    const [
-      { frontEndTag, initialValue },
-      currentLUSD,
-      collateralGain,
-      lqtyReward
-    ] = await Promise.all([
-      stabilityPool.deposits(address, { ...overrides }),
-      stabilityPool.getCompoundedLUSDDeposit(address, { ...overrides }),
-      stabilityPool.getDepositorETHGain(address, { ...overrides }),
-      stabilityPool.getDepositorLQTYGain(address, { ...overrides })
-    ]);
+    const [{ frontEndTag, initialValue }, currentDebtToken, collateralGain, lqtyReward] =
+      await Promise.all([
+        stabilityPool.deposits(address, { ...overrides }),
+        stabilityPool.getCompoundedDebtTokenDeposit(address, { ...overrides }),
+        stabilityPool.getDepositorFILGain(address, { ...overrides }),
+        stabilityPool.getDepositorLQTYGain(address, { ...overrides })
+      ]);
 
     return new StabilityDeposit(
       decimalify(initialValue),
-      decimalify(currentLUSD),
+      decimalify(currentDebtToken),
       decimalify(collateralGain),
       decimalify(lqtyReward),
       frontEndTag
@@ -287,19 +281,19 @@ export class ReadableEthersLiquity implements ReadableLiquity {
     return issuanceCap.sub(totalLQTYIssued);
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#ReadableLiquity.getLUSDInStabilityPool} */
-  getLUSDInStabilityPool(overrides?: EthersCallOverrides): Promise<Decimal> {
+  /** {@inheritDoc @secured-finance/lib-base#ReadableLiquity.getDebtTokenInStabilityPool} */
+  getDebtTokenInStabilityPool(overrides?: EthersCallOverrides): Promise<Decimal> {
     const { stabilityPool } = _getContracts(this.connection);
 
-    return stabilityPool.getTotalLUSDDeposits({ ...overrides }).then(decimalify);
+    return stabilityPool.getTotalDebtTokenDeposits({ ...overrides }).then(decimalify);
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#ReadableLiquity.getLUSDBalance} */
-  getLUSDBalance(address?: string, overrides?: EthersCallOverrides): Promise<Decimal> {
+  /** {@inheritDoc @secured-finance/lib-base#ReadableLiquity.getDebtTokenBalance} */
+  getDebtTokenBalance(address?: string, overrides?: EthersCallOverrides): Promise<Decimal> {
     address ??= _requireAddress(this.connection);
-    const { lusdToken } = _getContracts(this.connection);
+    const { debtToken } = _getContracts(this.connection);
 
-    return lusdToken.balanceOf(address, { ...overrides }).then(decimalify);
+    return debtToken.balanceOf(address, { ...overrides }).then(decimalify);
   }
 
   /** {@inheritDoc @secured-finance/lib-base#ReadableLiquity.getLQTYBalance} */
@@ -474,15 +468,15 @@ export class ReadableEthersLiquity implements ReadableLiquity {
     address ??= _requireAddress(this.connection);
     const { lqtyStaking } = _getContracts(this.connection);
 
-    const [stakedLQTY, collateralGain, lusdGain] = await Promise.all(
+    const [stakedLQTY, collateralGain, debtTokenGain] = await Promise.all(
       [
         lqtyStaking.stakes(address, { ...overrides }),
-        lqtyStaking.getPendingETHGain(address, { ...overrides }),
-        lqtyStaking.getPendingLUSDGain(address, { ...overrides })
+        lqtyStaking.getPendingFILGain(address, { ...overrides }),
+        lqtyStaking.getPendingDebtTokenGain(address, { ...overrides })
       ].map(getBigNumber => getBigNumber.then(decimalify))
     );
 
-    return new LQTYStake(stakedLQTY, collateralGain, lusdGain);
+    return new LQTYStake(stakedLQTY, collateralGain, debtTokenGain);
   }
 
   /** {@inheritDoc @secured-finance/lib-base#ReadableLiquity.getTotalStakedLQTY} */
@@ -520,7 +514,7 @@ const mapBackendTroves = (troves: BackendTroves): TroveWithPendingRedistribution
         decimalify(trove.coll),
         decimalify(trove.debt),
         decimalify(trove.stake),
-        new Trove(decimalify(trove.snapshotETH), decimalify(trove.snapshotLUSDDebt))
+        new Trove(decimalify(trove.snapshotFIL), decimalify(trove.snapshotDebt))
       )
   );
 
@@ -536,7 +530,8 @@ export interface ReadableEthersLiquityWithStore<T extends LiquityStore = Liquity
 }
 
 class _BlockPolledReadableEthersLiquity
-  implements ReadableEthersLiquityWithStore<BlockPolledLiquityStore> {
+  implements ReadableEthersLiquityWithStore<BlockPolledLiquityStore>
+{
   readonly connection: EthersLiquityConnection;
   readonly store: BlockPolledLiquityStore;
 
@@ -626,16 +621,16 @@ class _BlockPolledReadableEthersLiquity
       : this._readable.getRemainingStabilityPoolLQTYReward(overrides);
   }
 
-  async getLUSDInStabilityPool(overrides?: EthersCallOverrides): Promise<Decimal> {
+  async getDebtTokenInStabilityPool(overrides?: EthersCallOverrides): Promise<Decimal> {
     return this._blockHit(overrides)
-      ? this.store.state.lusdInStabilityPool
-      : this._readable.getLUSDInStabilityPool(overrides);
+      ? this.store.state.debtTokenInStabilityPool
+      : this._readable.getDebtTokenInStabilityPool(overrides);
   }
 
-  async getLUSDBalance(address?: string, overrides?: EthersCallOverrides): Promise<Decimal> {
+  async getDebtTokenBalance(address?: string, overrides?: EthersCallOverrides): Promise<Decimal> {
     return this._userHit(address, overrides)
-      ? this.store.state.lusdBalance
-      : this._readable.getLUSDBalance(address, overrides);
+      ? this.store.state.debtTokenBalance
+      : this._readable.getDebtTokenBalance(address, overrides);
   }
 
   async getLQTYBalance(address?: string, overrides?: EthersCallOverrides): Promise<Decimal> {

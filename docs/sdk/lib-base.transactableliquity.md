@@ -49,18 +49,18 @@ Adjust existing Trove by changing its collateral, debt, or both.
 
 </td><td>
 
-Allow the liquidity mining contract to use Uniswap ETH/LUSD LP tokens for [staking](./lib-base.transactableliquity.stakeunitokens.md)<!-- -->.
+Allow the liquidity mining contract to use Uniswap ETH/DebtToken LP tokens for [staking](./lib-base.transactableliquity.stakeunitokens.md)<!-- -->.
 
 
 </td></tr>
 <tr><td>
 
-[borrowLUSD(amount, maxBorrowingRate)](./lib-base.transactableliquity.borrowlusd.md)
+[borrowDebtToken(amount, maxBorrowingRate)](./lib-base.transactableliquity.borrowdebttoken.md)
 
 
 </td><td>
 
-Adjust existing Trove by borrowing more LUSD.
+Adjust existing Trove by borrowing more DebtToken.
 
 
 </td></tr>
@@ -99,7 +99,7 @@ Adjust existing Trove by depositing more collateral.
 </td></tr>
 <tr><td>
 
-[depositLUSDInStabilityPool(amount, frontendTag)](./lib-base.transactableliquity.depositlusdinstabilitypool.md)
+[depositDebtTokenInStabilityPool(amount, frontendTag)](./lib-base.transactableliquity.depositdebttokeninstabilitypool.md)
 
 
 </td><td>
@@ -148,18 +148,18 @@ Liquidate the least collateralized Troves up to a maximum number.
 
 </td><td>
 
-Open a new Trove by depositing collateral and borrowing LUSD.
+Open a new Trove by depositing collateral and borrowing DebtToken.
 
 
 </td></tr>
 <tr><td>
 
-[redeemLUSD(amount, maxRedemptionRate)](./lib-base.transactableliquity.redeemlusd.md)
+[redeemDebtToken(amount, maxRedemptionRate)](./lib-base.transactableliquity.redeemdebttoken.md)
 
 
 </td><td>
 
-Redeem LUSD to native currency (e.g. Ether) at face value.
+Redeem DebtToken to native currency (e.g. Ether) at face value.
 
 
 </td></tr>
@@ -176,12 +176,23 @@ Register current wallet address as a Liquity frontend.
 </td></tr>
 <tr><td>
 
-[repayLUSD(amount)](./lib-base.transactableliquity.repaylusd.md)
+[repayDebtToken(amount)](./lib-base.transactableliquity.repaydebttoken.md)
 
 
 </td><td>
 
 Adjust existing Trove by repaying some of its debt.
+
+
+</td></tr>
+<tr><td>
+
+[sendDebtToken(toAddress, amount)](./lib-base.transactableliquity.senddebttoken.md)
+
+
+</td><td>
+
+Send DebtToken tokens to an address.
 
 
 </td></tr>
@@ -193,17 +204,6 @@ Adjust existing Trove by repaying some of its debt.
 </td><td>
 
 Send LQTY tokens to an address.
-
-
-</td></tr>
-<tr><td>
-
-[sendLUSD(toAddress, amount)](./lib-base.transactableliquity.sendlusd.md)
-
-
-</td><td>
-
-Send LUSD tokens to an address.
 
 
 </td></tr>
@@ -225,7 +225,7 @@ Stake LQTY to start earning fee revenue or increase existing stake.
 
 </td><td>
 
-Stake Uniswap ETH/LUSD LP tokens to participate in liquidity mining and earn LQTY.
+Stake Uniswap ETH/DebtToken LP tokens to participate in liquidity mining and earn LQTY.
 
 
 </td></tr>
@@ -258,7 +258,7 @@ Withdraw LQTY from staking.
 
 </td><td>
 
-Withdraw Uniswap ETH/LUSD LP tokens from liquidity mining.
+Withdraw Uniswap ETH/DebtToken LP tokens from liquidity mining.
 
 
 </td></tr>
@@ -270,6 +270,17 @@ Withdraw Uniswap ETH/LUSD LP tokens from liquidity mining.
 </td><td>
 
 Adjust existing Trove by withdrawing some of its collateral.
+
+
+</td></tr>
+<tr><td>
+
+[withdrawDebtTokenFromStabilityPool(amount)](./lib-base.transactableliquity.withdrawdebttokenfromstabilitypool.md)
+
+
+</td><td>
+
+Withdraw DebtToken from Stability Deposit.
 
 
 </td></tr>
@@ -291,7 +302,7 @@ Withdraw [collateral gain](./lib-base.stabilitydeposit.collateralgain.md) and [L
 
 </td><td>
 
-Withdraw [collateral gain](./lib-base.lqtystake.collateralgain.md) and [LUSD gain](./lib-base.lqtystake.lusdgain.md) from LQTY stake.
+Withdraw [collateral gain](./lib-base.lqtystake.collateralgain.md) and [DebtToken gain](./lib-base.lqtystake.debttokengain.md) from LQTY stake.
 
 
 </td></tr>
@@ -303,17 +314,6 @@ Withdraw [collateral gain](./lib-base.lqtystake.collateralgain.md) and [LUSD gai
 </td><td>
 
 Withdraw LQTY that has been earned by mining liquidity.
-
-
-</td></tr>
-<tr><td>
-
-[withdrawLUSDFromStabilityPool(amount)](./lib-base.transactableliquity.withdrawlusdfromstabilitypool.md)
-
-
-</td><td>
-
-Withdraw LUSD from Stability Deposit.
 
 
 </td></tr>

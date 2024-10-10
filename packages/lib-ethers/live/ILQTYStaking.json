@@ -35,6 +35,19 @@
         {
           "indexed": false,
           "internalType": "address",
+          "name": "_debtTokenAddress",
+          "type": "address"
+        }
+      ],
+      "name": "DebtTokenAddressSet",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
           "name": "_account",
           "type": "address"
         },
@@ -54,11 +67,11 @@
         {
           "indexed": false,
           "internalType": "uint256",
-          "name": "_F_ETH",
+          "name": "_F_DebtToken",
           "type": "uint256"
         }
       ],
-      "name": "F_ETHUpdated",
+      "name": "F_DebtTokenUpdated",
       "type": "event"
     },
     {
@@ -67,11 +80,11 @@
         {
           "indexed": false,
           "internalType": "uint256",
-          "name": "_F_LUSD",
+          "name": "_F_FIL",
           "type": "uint256"
         }
       ],
-      "name": "F_LUSDUpdated",
+      "name": "F_FILUpdated",
       "type": "event"
     },
     {
@@ -85,19 +98,6 @@
         }
       ],
       "name": "LQTYTokenAddressSet",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": false,
-          "internalType": "address",
-          "name": "_lusdTokenAddress",
-          "type": "address"
-        }
-      ],
-      "name": "LUSDTokenAddressSet",
       "type": "event"
     },
     {
@@ -131,13 +131,13 @@
         {
           "indexed": false,
           "internalType": "uint256",
-          "name": "_F_ETH",
+          "name": "_F_FIL",
           "type": "uint256"
         },
         {
           "indexed": false,
           "internalType": "uint256",
-          "name": "_F_LUSD",
+          "name": "_F_DebtToken",
           "type": "uint256"
         }
       ],
@@ -156,13 +156,13 @@
         {
           "indexed": false,
           "internalType": "uint256",
-          "name": "LUSDGain",
+          "name": "debtTokenGain",
           "type": "uint256"
         },
         {
           "indexed": false,
           "internalType": "uint256",
-          "name": "ETHGain",
+          "name": "FILGain",
           "type": "uint256"
         }
       ],
@@ -203,7 +203,7 @@
           "type": "address"
         }
       ],
-      "name": "getPendingETHGain",
+      "name": "getPendingDebtTokenGain",
       "outputs": [
         {
           "internalType": "uint256",
@@ -222,7 +222,7 @@
           "type": "address"
         }
       ],
-      "name": "getPendingLUSDGain",
+      "name": "getPendingFILGain",
       "outputs": [
         {
           "internalType": "uint256",
@@ -237,11 +237,11 @@
       "inputs": [
         {
           "internalType": "uint256",
-          "name": "_ETHFee",
+          "name": "_debtTokenFee",
           "type": "uint256"
         }
       ],
-      "name": "increaseF_ETH",
+      "name": "increaseF_DebtToken",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
@@ -250,11 +250,11 @@
       "inputs": [
         {
           "internalType": "uint256",
-          "name": "_LQTYFee",
+          "name": "_FILFee",
           "type": "uint256"
         }
       ],
-      "name": "increaseF_LUSD",
+      "name": "increaseF_FIL",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
@@ -268,7 +268,7 @@
         },
         {
           "internalType": "address",
-          "name": "_lusdTokenAddress",
+          "name": "_debtTokenAddress",
           "type": "address"
         },
         {

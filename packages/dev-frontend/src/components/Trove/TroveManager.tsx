@@ -5,7 +5,7 @@ import {
   Decimal,
   Decimalish,
   LiquityStoreState,
-  LUSD_MINIMUM_DEBT,
+  MINIMUM_DEBT,
   Trove
 } from "@secured-finance/lib-base";
 
@@ -41,8 +41,10 @@ type TroveManagerAction =
   | { type: "startChange" | "finishChange" | "revert" | "addMinimumDebt" | "removeMinimumDebt" }
   | { type: "setCollateral" | "setDebt"; newValue: Decimalish };
 
-const reduceWith = (action: TroveManagerAction) => (state: TroveManagerState): TroveManagerState =>
-  reduce(state, action);
+const reduceWith =
+  (action: TroveManagerAction) =>
+  (state: TroveManagerState): TroveManagerState =>
+    reduce(state, action);
 
 const addMinimumDebt = reduceWith({ type: "addMinimumDebt" });
 const removeMinimumDebt = reduceWith({ type: "removeMinimumDebt" });
@@ -94,7 +96,7 @@ const reduce = (state: TroveManagerState, action: TroveManagerAction): TroveMana
     case "addMinimumDebt":
       return {
         ...state,
-        edited: edited.setDebt(LUSD_MINIMUM_DEBT),
+        edited: edited.setDebt(MINIMUM_DEBT),
         addedMinimumDebt: true
       };
 
@@ -145,8 +147,8 @@ const reduce = (state: TroveManagerState, action: TroveManagerAction): TroveMana
 const feeFrom = (original: Trove, edited: Trove, borrowingRate: Decimal): Decimal => {
   const change = original.whatChanged(edited, borrowingRate);
 
-  if (change && change.type !== "invalidCreation" && change.params.borrowLUSD) {
-    return change.params.borrowLUSD.mul(borrowingRate);
+  if (change && change.type !== "invalidCreation" && change.params.borrowDebtToken) {
+    return change.params.borrowDebtToken.mul(borrowingRate);
   } else {
     return Decimal.ZERO;
   }

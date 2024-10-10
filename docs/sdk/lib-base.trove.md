@@ -73,7 +73,7 @@ Amount of native currency (e.g. Ether) collateralized.
 
 </td><td>
 
-Amount of LUSD owed.
+Amount of DebtToken owed.
 
 
 </td></tr>
@@ -109,7 +109,7 @@ boolean
 
 </td><td>
 
-Amount of LUSD that must be repaid to close this Trove.
+Amount of DebtToken that must be repaid to close this Trove.
 
 
 </td></tr>

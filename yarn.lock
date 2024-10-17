@@ -3951,7 +3951,7 @@ __metadata:
     "@types/chai-spies": 1.0.3
     "@types/fs-extra": 9.0.8
     "@types/mocha": 8.2.1
-    "@types/node": 14.14.34
+    "@types/node": 22.7.6
     "@types/sinon-chai": 3.2.5
     "@types/ws": 7.4.4
     "@typescript-eslint/eslint-plugin": 4.17.0
@@ -5227,10 +5227,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:14.14.34":
-  version: 14.14.34
-  resolution: "@types/node@npm:14.14.34"
-  checksum: 06e49670700f9f8c9115232898c20bcb45abff9bac2a344cb046534c85cd19d91a4e86aa23fd022ac2b5d1ab3a68c5e220b96185cf7ae7d8e948736b217a5945
+"@types/node@npm:22.7.6":
+  version: 22.7.6
+  resolution: "@types/node@npm:22.7.6"
+  dependencies:
+    undici-types: ~6.19.2
+  checksum: 6afe2a1bd70ee0afa76c904ffdb04c634366987103bb2bef2d5b036f3bb49a4e828bb5e9fc64af442a76aaac4896df9277e725c843d85375d135aa71eb2fe3d9
   languageName: node
   linkType: hard
 

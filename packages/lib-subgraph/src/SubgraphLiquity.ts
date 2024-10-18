@@ -7,8 +7,8 @@ import {
   Decimal,
   Fees,
   FrontendStatus,
-  LQTYStake,
   ObservableLiquity,
+  ProtocolTokenStake,
   ReadableLiquity,
   StabilityDeposit,
   Trove,
@@ -283,7 +283,7 @@ export class SubgraphLiquity implements ReadableLiquity, ObservableLiquity {
     throw new Error("Method not implemented.");
   }
 
-  getLQTYBalance(address?: string): Promise<Decimal> {
+  getProtocolTokenBalance(address?: string): Promise<Decimal> {
     throw new Error("Method not implemented.");
   }
 
@@ -333,11 +333,11 @@ export class SubgraphLiquity implements ReadableLiquity, ObservableLiquity {
     throw new Error("Method not implemented.");
   }
 
-  getLQTYStake(address?: string): Promise<LQTYStake> {
+  getProtocolTokenStake(address?: string): Promise<ProtocolTokenStake> {
     throw new Error("Method not implemented.");
   }
 
-  getTotalStakedLQTY(): Promise<Decimal> {
+  getTotalStakedProtocolToken(): Promise<Decimal> {
     throw new Error("Method not implemented.");
   }
 
@@ -353,7 +353,7 @@ export class SubgraphLiquity implements ReadableLiquity, ObservableLiquity {
     throw new Error("Method not implemented.");
   }
 
-  getRemainingLiquidityMiningLQTYReward(): Promise<Decimal> {
+  getRemainingProtocolMiningProtocolTokenReward(): Promise<Decimal> {
     throw new Error("Method not implemented.");
   }
 
@@ -361,7 +361,7 @@ export class SubgraphLiquity implements ReadableLiquity, ObservableLiquity {
     throw new Error("Method not implemented.");
   }
 
-  getLiquidityMiningLQTYReward(address?: string): Promise<Decimal> {
+  getLiquidityMiningProtocolTokenReward(address?: string): Promise<Decimal> {
     throw new Error("Method not implemented.");
   }
 
@@ -369,7 +369,7 @@ export class SubgraphLiquity implements ReadableLiquity, ObservableLiquity {
     throw new Error("Method not implemented.");
   }
 
-  getRemainingStabilityPoolLQTYReward(): Promise<Decimal> {
+  getRemainingStabilityPoolProtocolTokenReward(): Promise<Decimal> {
     throw new Error("Method not implemented.");
   }
 }

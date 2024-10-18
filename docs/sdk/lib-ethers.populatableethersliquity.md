@@ -277,7 +277,7 @@ Send DebtToken tokens to an address.
 </td></tr>
 <tr><td>
 
-[sendLQTY(toAddress, amount, overrides)](./lib-ethers.populatableethersliquity.sendlqty.md)
+[sendProtocolToken(toAddress, amount, overrides)](./lib-ethers.populatableethersliquity.sendprotocoltoken.md)
 
 
 </td><td>
@@ -285,13 +285,13 @@ Send DebtToken tokens to an address.
 
 </td><td>
 
-Send LQTY tokens to an address.
+Send ProtocolTokens to an address.
 
 
 </td></tr>
 <tr><td>
 
-[stakeLQTY(amount, overrides)](./lib-ethers.populatableethersliquity.stakelqty.md)
+[stakeProtocolToken(amount, overrides)](./lib-ethers.populatableethersliquity.stakeprotocoltoken.md)
 
 
 </td><td>
@@ -299,7 +299,7 @@ Send LQTY tokens to an address.
 
 </td><td>
 
-Stake LQTY to start earning fee revenue or increase existing stake.
+Stake ProtocolToken to start earning fee revenue or increase existing stake.
 
 
 </td></tr>
@@ -313,7 +313,7 @@ Stake LQTY to start earning fee revenue or increase existing stake.
 
 </td><td>
 
-Stake Uniswap FIL/DebtToken LP tokens to participate in liquidity mining and earn LQTY.
+Stake Uniswap FIL/DebtToken LP tokens to participate in liquidity mining and earn ProtocolToken.
 
 
 </td></tr>
@@ -333,7 +333,7 @@ Transfer [collateral gain](./lib-base.stabilitydeposit.collateralgain.md) from S
 </td></tr>
 <tr><td>
 
-[unstakeLQTY(amount, overrides)](./lib-ethers.populatableethersliquity.unstakelqty.md)
+[unstakeProtocolToken(amount, overrides)](./lib-ethers.populatableethersliquity.unstakeprotocoltoken.md)
 
 
 </td><td>
@@ -341,7 +341,7 @@ Transfer [collateral gain](./lib-base.stabilitydeposit.collateralgain.md) from S
 
 </td><td>
 
-Withdraw LQTY from staking.
+Withdraw ProtocolToken from staking.
 
 
 </td></tr>
@@ -397,7 +397,7 @@ Withdraw DebtToken from Stability Deposit.
 
 </td><td>
 
-Withdraw [collateral gain](./lib-base.stabilitydeposit.collateralgain.md) and [LQTY reward](./lib-base.stabilitydeposit.lqtyreward.md) from Stability Deposit.
+Withdraw [collateral gain](./lib-base.stabilitydeposit.collateralgain.md) and [ProtocolToken reward](./lib-base.stabilitydeposit.protocoltokenreward.md) from Stability Deposit.
 
 
 </td></tr>
@@ -411,13 +411,13 @@ Withdraw [collateral gain](./lib-base.stabilitydeposit.collateralgain.md) and [L
 
 </td><td>
 
-Withdraw [collateral gain](./lib-base.lqtystake.collateralgain.md) and [DebtToken gain](./lib-base.lqtystake.debttokengain.md) from LQTY stake.
+Withdraw [collateral gain](./lib-base.protocoltokenstake.collateralgain.md) and [DebtToken gain](./lib-base.protocoltokenstake.debttokengain.md) from ProtocolToken stake.
 
 
 </td></tr>
 <tr><td>
 
-[withdrawLQTYRewardFromLiquidityMining(overrides)](./lib-ethers.populatableethersliquity.withdrawlqtyrewardfromliquiditymining.md)
+[withdrawProtocolTokenRewardFromProtocolMining(overrides)](./lib-ethers.populatableethersliquity.withdrawprotocoltokenrewardfromprotocolmining.md)
 
 
 </td><td>
@@ -425,7 +425,7 @@ Withdraw [collateral gain](./lib-base.lqtystake.collateralgain.md) and [DebtToke
 
 </td><td>
 
-Withdraw LQTY that has been earned by mining liquidity.
+Withdraw ProtocolToken that has been earned by mining liquidity.
 
 
 </td></tr>

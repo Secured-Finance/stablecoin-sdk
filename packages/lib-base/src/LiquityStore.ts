@@ -2,7 +2,7 @@ import assert from "assert";
 
 import { Decimal } from "./Decimal";
 import { Fees } from "./Fees";
-import { LQTYStake } from "./LQTYStake";
+import { ProtocolTokenStake } from "./ProtocolTokenStake";
 import { FrontendStatus } from "./ReadableLiquity";
 import { StabilityDeposit } from "./StabilityDeposit";
 import { Trove, TroveWithPendingRedistribution, UserTrove } from "./Trove";
@@ -28,8 +28,8 @@ export interface LiquityStoreBaseState {
   /** User's Debt token balance. */
   debtTokenBalance: Decimal;
 
-  /** User's LQTY token balance. */
-  lqtyBalance: Decimal;
+  /** User's ProtocolToken token balance. */
+  protocolTokenBalance: Decimal;
 
   /** User's Uniswap FIL/DebtToken LP token balance. */
   uniTokenBalance: Decimal;
@@ -37,8 +37,8 @@ export interface LiquityStoreBaseState {
   /** The liquidity mining contract's allowance of user's Uniswap FIL/DebtToken LP tokens. */
   uniTokenAllowance: Decimal;
 
-  /** Remaining LQTY that will be collectively rewarded to liquidity miners. */
-  remainingLiquidityMiningLQTYReward: Decimal;
+  /** Remaining ProtocolToken that will be collectively rewarded to liquidity miners. */
+  remainingProtocolMiningProtocolTokenReward: Decimal;
 
   /** Amount of Uniswap FIL/DebtToken LP tokens the user has staked in liquidity mining. */
   liquidityMiningStake: Decimal;
@@ -46,8 +46,8 @@ export interface LiquityStoreBaseState {
   /** Total amount of Uniswap FIL/DebtToken LP tokens currently staked in liquidity mining. */
   totalStakedUniTokens: Decimal;
 
-  /** Amount of LQTY the user has earned through mining liquidity. */
-  liquidityMiningLQTYReward: Decimal;
+  /** Amount of ProtocolToken the user has earned through mining liquidity. */
+  liquidityMiningProtocolTokenReward: Decimal;
 
   /**
    * Amount of leftover collateral available for withdrawal to the user.
@@ -87,17 +87,17 @@ export interface LiquityStoreBaseState {
   /** User's stability deposit. */
   stabilityDeposit: StabilityDeposit;
 
-  /** Remaining LQTY that will be collectively rewarded to stability depositors. */
-  remainingStabilityPoolLQTYReward: Decimal;
+  /** Remaining ProtocolToken that will be collectively rewarded to stability depositors. */
+  remainingStabilityPoolProtocolTokenReward: Decimal;
 
   /** @internal */
   _feesInNormalMode: Fees;
 
-  /** User's LQTY stake. */
-  lqtyStake: LQTYStake;
+  /** User's ProtocolToken stake. */
+  protocolTokenStake: ProtocolTokenStake;
 
-  /** Total amount of LQTY currently staked. */
-  totalStakedLQTY: Decimal;
+  /** Total amount of ProtocolToken currently staked. */
+  totalStakedProtocolToken: Decimal;
 
   /** @internal */
   _riskiestTroveBeforeRedistribution: TroveWithPendingRedistribution;
@@ -362,11 +362,11 @@ export abstract class LiquityStore<T = unknown> {
         baseStateUpdate.debtTokenBalance
       ),
 
-      lqtyBalance: this._updateIfChanged(
+      protocolTokenBalance: this._updateIfChanged(
         eq,
-        "lqtyBalance",
-        baseState.lqtyBalance,
-        baseStateUpdate.lqtyBalance
+        "protocolTokenBalance",
+        baseState.protocolTokenBalance,
+        baseStateUpdate.protocolTokenBalance
       ),
 
       uniTokenBalance: this._updateIfChanged(
@@ -383,10 +383,10 @@ export abstract class LiquityStore<T = unknown> {
         baseStateUpdate.uniTokenAllowance
       ),
 
-      remainingLiquidityMiningLQTYReward: this._silentlyUpdateIfChanged(
+      remainingProtocolMiningProtocolTokenReward: this._silentlyUpdateIfChanged(
         eq,
-        baseState.remainingLiquidityMiningLQTYReward,
-        baseStateUpdate.remainingLiquidityMiningLQTYReward
+        baseState.remainingProtocolMiningProtocolTokenReward,
+        baseStateUpdate.remainingProtocolMiningProtocolTokenReward
       ),
 
       liquidityMiningStake: this._updateIfChanged(
@@ -403,10 +403,10 @@ export abstract class LiquityStore<T = unknown> {
         baseStateUpdate.totalStakedUniTokens
       ),
 
-      liquidityMiningLQTYReward: this._silentlyUpdateIfChanged(
+      liquidityMiningProtocolTokenReward: this._silentlyUpdateIfChanged(
         eq,
-        baseState.liquidityMiningLQTYReward,
-        baseStateUpdate.liquidityMiningLQTYReward
+        baseState.liquidityMiningProtocolTokenReward,
+        baseStateUpdate.liquidityMiningProtocolTokenReward
       ),
 
       collateralSurplusBalance: this._updateIfChanged(
@@ -448,10 +448,10 @@ export abstract class LiquityStore<T = unknown> {
         baseStateUpdate.stabilityDeposit
       ),
 
-      remainingStabilityPoolLQTYReward: this._silentlyUpdateIfChanged(
+      remainingStabilityPoolProtocolTokenReward: this._silentlyUpdateIfChanged(
         eq,
-        baseState.remainingStabilityPoolLQTYReward,
-        baseStateUpdate.remainingStabilityPoolLQTYReward
+        baseState.remainingStabilityPoolProtocolTokenReward,
+        baseStateUpdate.remainingStabilityPoolProtocolTokenReward
       ),
 
       _feesInNormalMode: this._silentlyUpdateIfChanged(
@@ -460,18 +460,18 @@ export abstract class LiquityStore<T = unknown> {
         baseStateUpdate._feesInNormalMode
       ),
 
-      lqtyStake: this._updateIfChanged(
+      protocolTokenStake: this._updateIfChanged(
         equals,
-        "lqtyStake",
-        baseState.lqtyStake,
-        baseStateUpdate.lqtyStake
+        "protocolTokenStake",
+        baseState.protocolTokenStake,
+        baseStateUpdate.protocolTokenStake
       ),
 
-      totalStakedLQTY: this._updateIfChanged(
+      totalStakedProtocolToken: this._updateIfChanged(
         eq,
-        "totalStakedLQTY",
-        baseState.totalStakedLQTY,
-        baseStateUpdate.totalStakedLQTY
+        "totalStakedProtocolToken",
+        baseState.totalStakedProtocolToken,
+        baseStateUpdate.totalStakedProtocolToken
       ),
 
       _riskiestTroveBeforeRedistribution: this._silentlyUpdateIfChanged(

@@ -4,10 +4,10 @@ import assert from "assert";
 import {
   Decimal,
   Fees,
-  LQTYStake,
   LiquityStore,
   LiquityStoreBaseState,
   LiquityStoreState,
+  ProtocolTokenStake,
   StabilityDeposit,
   TroveWithPendingRedistribution
 } from "@secured-finance/lib-base";
@@ -89,25 +89,27 @@ export class BlockPolledLiquityStore extends LiquityStore<BlockPolledLiquityStor
   ): Promise<[baseState: LiquityStoreBaseState, extraState: BlockPolledLiquityStoreExtraState]> {
     const { userAddress, frontendTag } = this.connection;
 
-    const { blockTimestamp, _feesFactory, calculateRemainingLQTY, ...baseState } =
+    const { blockTimestamp, _feesFactory, calculateRemainingProtocolToken, ...baseState } =
       await promiseAllValues({
         blockTimestamp: this._readable._getBlockTimestamp(blockTag),
         _feesFactory: this._readable._getFeesFactory({ blockTag }),
-        calculateRemainingLQTY: this._readable._getRemainingLiquidityMiningLQTYRewardCalculator({
-          blockTag
-        }),
+        calculateRemainingProtocolToken:
+          this._readable._getRemainingProtocolMiningProtocolTokenRewardCalculator({
+            blockTag
+          }),
 
         price: this._readable.getPrice({ blockTag }),
         numberOfTroves: this._readable.getNumberOfTroves({ blockTag }),
         totalRedistributed: this._readable.getTotalRedistributed({ blockTag }),
         total: this._readable.getTotal({ blockTag }),
         debtTokenInStabilityPool: this._readable.getDebtTokenInStabilityPool({ blockTag }),
-        totalStakedLQTY: this._readable.getTotalStakedLQTY({ blockTag }),
+        totalStakedProtocolToken: this._readable.getTotalStakedProtocolToken({ blockTag }),
         _riskiestTroveBeforeRedistribution: this._getRiskiestTroveBeforeRedistribution({ blockTag }),
         totalStakedUniTokens: this._readable.getTotalStakedUniTokens({ blockTag }),
-        remainingStabilityPoolLQTYReward: this._readable.getRemainingStabilityPoolLQTYReward({
-          blockTag
-        }),
+        remainingStabilityPoolProtocolTokenReward:
+          this._readable.getRemainingStabilityPoolProtocolTokenReward({
+            blockTag
+          }),
 
         frontend: frontendTag
           ? this._readable.getFrontendStatus(frontendTag, { blockTag })
@@ -117,15 +119,18 @@ export class BlockPolledLiquityStore extends LiquityStore<BlockPolledLiquityStor
           ? {
               accountBalance: this._provider.getBalance(userAddress, blockTag).then(decimalify),
               debtTokenBalance: this._readable.getDebtTokenBalance(userAddress, { blockTag }),
-              lqtyBalance: this._readable.getLQTYBalance(userAddress, { blockTag }),
+              protocolTokenBalance: this._readable.getProtocolTokenBalance(userAddress, {
+                blockTag
+              }),
               uniTokenBalance: this._readable.getUniTokenBalance(userAddress, { blockTag }),
               uniTokenAllowance: this._readable.getUniTokenAllowance(userAddress, { blockTag }),
               liquidityMiningStake: this._readable.getLiquidityMiningStake(userAddress, {
                 blockTag
               }),
-              liquidityMiningLQTYReward: this._readable.getLiquidityMiningLQTYReward(userAddress, {
-                blockTag
-              }),
+              liquidityMiningProtocolTokenReward:
+                this._readable.getLiquidityMiningProtocolTokenReward(userAddress, {
+                  blockTag
+                }),
               collateralSurplusBalance: this._readable.getCollateralSurplusBalance(userAddress, {
                 blockTag
               }),
@@ -133,17 +138,17 @@ export class BlockPolledLiquityStore extends LiquityStore<BlockPolledLiquityStor
                 blockTag
               }),
               stabilityDeposit: this._readable.getStabilityDeposit(userAddress, { blockTag }),
-              lqtyStake: this._readable.getLQTYStake(userAddress, { blockTag }),
+              protocolTokenStake: this._readable.getProtocolTokenStake(userAddress, { blockTag }),
               ownFrontend: this._readable.getFrontendStatus(userAddress, { blockTag })
             }
           : {
               accountBalance: Decimal.ZERO,
               debtTokenBalance: Decimal.ZERO,
-              lqtyBalance: Decimal.ZERO,
+              protocolTokenBalance: Decimal.ZERO,
               uniTokenBalance: Decimal.ZERO,
               uniTokenAllowance: Decimal.ZERO,
               liquidityMiningStake: Decimal.ZERO,
-              liquidityMiningLQTYReward: Decimal.ZERO,
+              liquidityMiningProtocolTokenReward: Decimal.ZERO,
               collateralSurplusBalance: Decimal.ZERO,
               troveBeforeRedistribution: new TroveWithPendingRedistribution(
                 AddressZero,
@@ -156,7 +161,7 @@ export class BlockPolledLiquityStore extends LiquityStore<BlockPolledLiquityStor
                 Decimal.ZERO,
                 AddressZero
               ),
-              lqtyStake: new LQTYStake(),
+              protocolTokenStake: new ProtocolTokenStake(),
               ownFrontend: { status: "unregistered" as const }
             })
       });
@@ -165,7 +170,7 @@ export class BlockPolledLiquityStore extends LiquityStore<BlockPolledLiquityStor
       {
         ...baseState,
         _feesInNormalMode: _feesFactory(blockTimestamp, false),
-        remainingLiquidityMiningLQTYReward: calculateRemainingLQTY(blockTimestamp)
+        remainingProtocolMiningProtocolTokenReward: calculateRemainingProtocolToken(blockTimestamp)
       },
       {
         blockTag,

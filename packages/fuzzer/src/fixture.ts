@@ -3,8 +3,8 @@ import { Signer } from "@ethersproject/abstract-signer";
 import {
   Decimal,
   Decimalish,
-  LQTYStake,
   MINIMUM_DEBT,
+  ProtocolTokenStake,
   StabilityDeposit,
   TransactableLiquity,
   Trove,
@@ -39,8 +39,8 @@ type GasHistograms = Pick<
   | "redeemDebtToken"
   | "depositDebtTokenInStabilityPool"
   | "withdrawDebtTokenFromStabilityPool"
-  | "stakeLQTY"
-  | "unstakeLQTY"
+  | "stakeProtocolToken"
+  | "unstakeProtocolToken"
 >;
 
 export class Fixture {
@@ -77,8 +77,8 @@ export class Fixture {
       redeemDebtToken: new GasHistogram(),
       depositDebtTokenInStabilityPool: new GasHistogram(),
       withdrawDebtTokenFromStabilityPool: new GasHistogram(),
-      stakeLQTY: new GasHistogram(),
-      unstakeLQTY: new GasHistogram()
+      stakeProtocolToken: new GasHistogram(),
+      unstakeProtocolToken: new GasHistogram()
     };
   }
 
@@ -392,33 +392,35 @@ export class Fixture {
   }
 
   async stakeRandomAmount(userAddress: string, liquity: Liquity) {
-    const lqtyBalance = await this.funderLiquity.getLQTYBalance();
-    const amount = lqtyBalance.mul(Math.random() / 2);
+    const protocolTokenBalance = await this.funderLiquity.getProtocolTokenBalance();
+    const amount = protocolTokenBalance.mul(Math.random() / 2);
 
-    await this.funderLiquity.sendLQTY(userAddress, amount);
+    await this.funderLiquity.sendProtocolToken(userAddress, amount);
 
     if (amount.eq(0)) {
-      console.log(`// [${shortenAddress(userAddress)}] stakeLQTY(${amount}) expected to fail`);
+      console.log(
+        `// [${shortenAddress(userAddress)}] stakeProtocolToken(${amount}) expected to fail`
+      );
 
-      await this.gasHistograms.stakeLQTY.expectFailure(() =>
-        liquity.stakeLQTY(amount, { gasPrice: 0 })
+      await this.gasHistograms.stakeProtocolToken.expectFailure(() =>
+        liquity.stakeProtocolToken(amount, { gasPrice: 0 })
       );
     } else {
-      console.log(`[${shortenAddress(userAddress)}] stakeLQTY(${amount})`);
+      console.log(`[${shortenAddress(userAddress)}] stakeProtocolToken(${amount})`);
 
-      await this.gasHistograms.stakeLQTY.expectSuccess(() =>
-        liquity.send.stakeLQTY(amount, { gasPrice: 0 })
+      await this.gasHistograms.stakeProtocolToken.expectSuccess(() =>
+        liquity.send.stakeProtocolToken(amount, { gasPrice: 0 })
       );
     }
   }
 
-  async unstakeRandomAmount(userAddress: string, liquity: Liquity, stake: LQTYStake) {
-    const amount = stake.stakedLQTY.mul(1.1 * Math.random()).add(10 * Math.random());
+  async unstakeRandomAmount(userAddress: string, liquity: Liquity, stake: ProtocolTokenStake) {
+    const amount = stake.stakedProtocolToken.mul(1.1 * Math.random()).add(10 * Math.random());
 
-    console.log(`[${shortenAddress(userAddress)}] unstakeLQTY(${amount})`);
+    console.log(`[${shortenAddress(userAddress)}] unstakeProtocolToken(${amount})`);
 
-    await this.gasHistograms.unstakeLQTY.expectSuccess(() =>
-      liquity.send.unstakeLQTY(amount, { gasPrice: 0 })
+    await this.gasHistograms.unstakeProtocolToken.expectSuccess(() =>
+      liquity.send.unstakeProtocolToken(amount, { gasPrice: 0 })
     );
   }
 
@@ -430,11 +432,11 @@ export class Fixture {
     }
   }
 
-  async sweepLQTY(liquity: Liquity) {
-    const lqtyBalance = await liquity.getLQTYBalance();
+  async sweepProtocolToken(liquity: Liquity) {
+    const protocolTokenBalance = await liquity.getProtocolTokenBalance();
 
-    if (lqtyBalance.nonZero) {
-      await liquity.sendLQTY(this.funderAddress, lqtyBalance, { gasPrice: 0 });
+    if (protocolTokenBalance.nonZero) {
+      await liquity.sendProtocolToken(this.funderAddress, protocolTokenBalance, { gasPrice: 0 });
     }
   }
 

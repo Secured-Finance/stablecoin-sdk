@@ -69,19 +69,6 @@
       {
         "indexed": false,
         "internalType": "address",
-        "name": "_sortedDoublyLLAddress",
-        "type": "address"
-      }
-    ],
-    "name": "SortedTrovesAddressChanged",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "address",
         "name": "_troveManagerAddress",
         "type": "address"
       }

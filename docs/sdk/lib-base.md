@@ -52,12 +52,12 @@ Abstract base class of Liquity data store implementations.
 </td></tr>
 <tr><td>
 
-[LQTYStake](./lib-base.lqtystake.md)
+[ProtocolTokenStake](./lib-base.protocoltokenstake.md)
 
 
 </td><td>
 
-Represents a user's LQTY stake and accrued gains.
+Represents a user's ProtocolToken stake and accrued gains.
 
 
 </td></tr>
@@ -515,17 +515,6 @@ Type of [LiquityStore](./lib-base.liquitystore.md)<!-- -->'s [state](./lib-base.
 </td></tr>
 <tr><td>
 
-[LQTYStakeChange](./lib-base.lqtystakechange.md)
-
-
-</td><td>
-
-Represents the change between two states of an LQTY Stake.
-
-
-</td></tr>
-<tr><td>
-
 [MinedReceipt](./lib-base.minedreceipt.md)
 
 
@@ -543,6 +532,17 @@ Either a [FailedReceipt](./lib-base.failedreceipt.md) or a [SuccessfulReceipt](.
 </td><td>
 
 Indicates that the transaction hasn't been mined yet.
+
+
+</td></tr>
+<tr><td>
+
+[ProtocolTokenStakeChange](./lib-base.protocoltokenstakechange.md)
+
+
+</td><td>
+
+Represents the change between two states of an ProtocolToken Stake.
 
 
 </td></tr>

@@ -93,11 +93,11 @@
         {
           "indexed": false,
           "internalType": "address",
-          "name": "_lqtyStakingAddress",
+          "name": "_newPriceFeedAddress",
           "type": "address"
         }
       ],
-      "name": "LQTYStakingAddressChanged",
+      "name": "PriceFeedAddressChanged",
       "type": "event"
     },
     {
@@ -106,11 +106,11 @@
         {
           "indexed": false,
           "internalType": "address",
-          "name": "_newPriceFeedAddress",
+          "name": "_protocolTokenStakingAddress",
           "type": "address"
         }
       ],
-      "name": "PriceFeedAddressChanged",
+      "name": "ProtocolTokenStakingAddressChanged",
       "type": "event"
     },
     {
@@ -200,7 +200,7 @@
         },
         {
           "indexed": false,
-          "internalType": "uint8",
+          "internalType": "enum IBorrowerOperations.BorrowerOperation",
           "name": "operation",
           "type": "uint8"
         }
@@ -294,7 +294,7 @@
           "type": "uint256"
         }
       ],
-      "stateMutability": "pure",
+      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -420,7 +420,7 @@
         },
         {
           "internalType": "address",
-          "name": "_lqtyStakingAddress",
+          "name": "_protocolTokenStakingAddress",
           "type": "address"
         }
       ],

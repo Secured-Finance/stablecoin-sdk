@@ -1,5 +1,21 @@
 [
   {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_gasCompensation",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_minNetDebt",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
     "anonymous": false,
     "inputs": [
       {

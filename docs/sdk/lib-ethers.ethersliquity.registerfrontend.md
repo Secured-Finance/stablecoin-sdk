@@ -42,7 +42,7 @@ kickbackRate
 
 </td><td>
 
-The portion of LQTY rewards to pass onto users of the frontend (between 0 and 1).
+The portion of ProtocolToken rewards to pass onto users of the frontend (between 0 and 1).
 
 
 </td></tr>

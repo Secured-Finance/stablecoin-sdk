@@ -50,7 +50,7 @@ string
 
 </td><td>
 
-_(Optional)_ Address that will receive LQTY rewards from newly created Stability Deposits by default.
+_(Optional)_ Address that will receive ProtocolToken rewards from newly created Stability Deposits by default.
 
 
 </td></tr>
@@ -69,7 +69,7 @@ string
 
 </td><td>
 
-_(Optional)_ Address whose Trove, Stability Deposit, LQTY Stake and balances will be read by default.
+_(Optional)_ Address whose Trove, Stability Deposit, ProtocolToken Stake and balances will be read by default.
 
 
 </td></tr>

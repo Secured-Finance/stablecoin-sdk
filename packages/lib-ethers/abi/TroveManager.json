@@ -1,5 +1,21 @@
 [
   {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_gasCompensation",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_minNetDebt",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
     "anonymous": false,
     "inputs": [
       {
@@ -95,32 +111,6 @@
     "inputs": [
       {
         "indexed": false,
-        "internalType": "address",
-        "name": "_lqtyStakingAddress",
-        "type": "address"
-      }
-    ],
-    "name": "LQTYStakingAddressChanged",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "_lqtyTokenAddress",
-        "type": "address"
-      }
-    ],
-    "name": "LQTYTokenAddressChanged",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
         "internalType": "uint256",
         "name": "_L_FIL",
         "type": "uint256"
@@ -209,6 +199,32 @@
       }
     ],
     "name": "PriceFeedAddressChanged",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "_protocolTokenAddress",
+        "type": "address"
+      }
+    ],
+    "name": "ProtocolTokenAddressChanged",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "_protocolTokenStakingAddress",
+        "type": "address"
+      }
+    ],
+    "name": "ProtocolTokenStakingAddressChanged",
     "type": "event"
   },
   {
@@ -342,7 +358,7 @@
       },
       {
         "indexed": false,
-        "internalType": "enum TroveManager.TroveManagerOperation",
+        "internalType": "enum ITroveManager.TroveManagerOperation",
         "name": "_operation",
         "type": "uint8"
       }
@@ -393,12 +409,12 @@
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "_stake",
+        "name": "stake",
         "type": "uint256"
       },
       {
         "indexed": false,
-        "internalType": "enum TroveManager.TroveManagerOperation",
+        "internalType": "enum ITroveManager.TroveManagerOperation",
         "name": "_operation",
         "type": "uint8"
       }
@@ -659,7 +675,7 @@
         "type": "uint256"
       },
       {
-        "internalType": "enum TroveManager.Status",
+        "internalType": "enum ITroveManager.Status",
         "name": "status",
         "type": "uint8"
       },
@@ -1406,32 +1422,6 @@
   },
   {
     "inputs": [],
-    "name": "lqtyStaking",
-    "outputs": [
-      {
-        "internalType": "contract ILQTYStaking",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "lqtyToken",
-    "outputs": [
-      {
-        "internalType": "contract ILQTYToken",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
     "name": "owner",
     "outputs": [
       {
@@ -1449,6 +1439,32 @@
     "outputs": [
       {
         "internalType": "contract IPriceFeed",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "protocolToken",
+    "outputs": [
+      {
+        "internalType": "contract IProtocolToken",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "protocolTokenStaking",
+    "outputs": [
+      {
+        "internalType": "contract IProtocolTokenStaking",
         "name": "",
         "type": "address"
       }
@@ -1585,12 +1601,12 @@
       },
       {
         "internalType": "address",
-        "name": "_lqtyTokenAddress",
+        "name": "_protocolTokenAddress",
         "type": "address"
       },
       {
         "internalType": "address",
-        "name": "_lqtyStakingAddress",
+        "name": "_protocolTokenStakingAddress",
         "type": "address"
       }
     ],

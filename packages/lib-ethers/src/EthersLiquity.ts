@@ -9,7 +9,7 @@ import {
   FrontendStatus,
   LiquidationDetails,
   LiquityStore,
-  LQTYStake,
+  ProtocolTokenStake,
   RedemptionDetails,
   StabilityDeposit,
   StabilityDepositChangeDetails,
@@ -205,9 +205,9 @@ export class EthersLiquity implements ReadableEthersLiquity, TransactableLiquity
     return this._readable.getStabilityDeposit(address, overrides);
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#ReadableLiquity.getRemainingStabilityPoolLQTYReward} */
-  getRemainingStabilityPoolLQTYReward(overrides?: EthersCallOverrides): Promise<Decimal> {
-    return this._readable.getRemainingStabilityPoolLQTYReward(overrides);
+  /** {@inheritDoc @secured-finance/lib-base#ReadableLiquity.getRemainingStabilityPoolProtocolTokenReward} */
+  getRemainingStabilityPoolProtocolTokenReward(overrides?: EthersCallOverrides): Promise<Decimal> {
+    return this._readable.getRemainingStabilityPoolProtocolTokenReward(overrides);
   }
 
   /** {@inheritDoc @secured-finance/lib-base#ReadableLiquity.getDebtTokenInStabilityPool} */
@@ -220,9 +220,9 @@ export class EthersLiquity implements ReadableEthersLiquity, TransactableLiquity
     return this._readable.getDebtTokenBalance(address, overrides);
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#ReadableLiquity.getLQTYBalance} */
-  getLQTYBalance(address?: string, overrides?: EthersCallOverrides): Promise<Decimal> {
-    return this._readable.getLQTYBalance(address, overrides);
+  /** {@inheritDoc @secured-finance/lib-base#ReadableLiquity.getProtocolTokenBalance} */
+  getProtocolTokenBalance(address?: string, overrides?: EthersCallOverrides): Promise<Decimal> {
+    return this._readable.getProtocolTokenBalance(address, overrides);
   }
 
   /** {@inheritDoc @secured-finance/lib-base#ReadableLiquity.getUniTokenBalance} */
@@ -236,15 +236,15 @@ export class EthersLiquity implements ReadableEthersLiquity, TransactableLiquity
   }
 
   /** @internal */
-  _getRemainingLiquidityMiningLQTYRewardCalculator(
+  _getRemainingProtocolMiningProtocolTokenRewardCalculator(
     overrides?: EthersCallOverrides
   ): Promise<(blockTimestamp: number) => Decimal> {
-    return this._readable._getRemainingLiquidityMiningLQTYRewardCalculator(overrides);
+    return this._readable._getRemainingProtocolMiningProtocolTokenRewardCalculator(overrides);
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#ReadableLiquity.getRemainingLiquidityMiningLQTYReward} */
-  getRemainingLiquidityMiningLQTYReward(overrides?: EthersCallOverrides): Promise<Decimal> {
-    return this._readable.getRemainingLiquidityMiningLQTYReward(overrides);
+  /** {@inheritDoc @secured-finance/lib-base#ReadableLiquity.getRemainingProtocolMiningProtocolTokenReward} */
+  getRemainingProtocolMiningProtocolTokenReward(overrides?: EthersCallOverrides): Promise<Decimal> {
+    return this._readable.getRemainingProtocolMiningProtocolTokenReward(overrides);
   }
 
   /** {@inheritDoc @secured-finance/lib-base#ReadableLiquity.getLiquidityMiningStake} */
@@ -257,9 +257,12 @@ export class EthersLiquity implements ReadableEthersLiquity, TransactableLiquity
     return this._readable.getTotalStakedUniTokens(overrides);
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#ReadableLiquity.getLiquidityMiningLQTYReward} */
-  getLiquidityMiningLQTYReward(address?: string, overrides?: EthersCallOverrides): Promise<Decimal> {
-    return this._readable.getLiquidityMiningLQTYReward(address, overrides);
+  /** {@inheritDoc @secured-finance/lib-base#ReadableLiquity.getLiquidityMiningProtocolTokenReward} */
+  getLiquidityMiningProtocolTokenReward(
+    address?: string,
+    overrides?: EthersCallOverrides
+  ): Promise<Decimal> {
+    return this._readable.getLiquidityMiningProtocolTokenReward(address, overrides);
   }
 
   /** {@inheritDoc @secured-finance/lib-base#ReadableLiquity.getCollateralSurplusBalance} */
@@ -297,14 +300,17 @@ export class EthersLiquity implements ReadableEthersLiquity, TransactableLiquity
     return this._readable.getFees(overrides);
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#ReadableLiquity.getLQTYStake} */
-  getLQTYStake(address?: string, overrides?: EthersCallOverrides): Promise<LQTYStake> {
-    return this._readable.getLQTYStake(address, overrides);
+  /** {@inheritDoc @secured-finance/lib-base#ReadableLiquity.getProtocolTokenStake} */
+  getProtocolTokenStake(
+    address?: string,
+    overrides?: EthersCallOverrides
+  ): Promise<ProtocolTokenStake> {
+    return this._readable.getProtocolTokenStake(address, overrides);
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#ReadableLiquity.getTotalStakedLQTY} */
-  getTotalStakedLQTY(overrides?: EthersCallOverrides): Promise<Decimal> {
-    return this._readable.getTotalStakedLQTY(overrides);
+  /** {@inheritDoc @secured-finance/lib-base#ReadableLiquity.getTotalStakedProtocolToken} */
+  getTotalStakedProtocolToken(overrides?: EthersCallOverrides): Promise<Decimal> {
+    return this._readable.getTotalStakedProtocolToken(overrides);
   }
 
   /** {@inheritDoc @secured-finance/lib-base#ReadableLiquity.getFrontendStatus} */
@@ -520,18 +526,18 @@ export class EthersLiquity implements ReadableEthersLiquity, TransactableLiquity
   }
 
   /**
-   * {@inheritDoc @secured-finance/lib-base#TransactableLiquity.sendLQTY}
+   * {@inheritDoc @secured-finance/lib-base#TransactableLiquity.sendProtocolToken}
    *
    * @throws
    * Throws {@link EthersTransactionFailedError} in case of transaction failure.
    * Throws {@link EthersTransactionCancelledError} if the transaction is cancelled or replaced.
    */
-  sendLQTY(
+  sendProtocolToken(
     toAddress: string,
     amount: Decimalish,
     overrides?: EthersTransactionOverrides
   ): Promise<void> {
-    return this.send.sendLQTY(toAddress, amount, overrides).then(waitForSuccess);
+    return this.send.sendProtocolToken(toAddress, amount, overrides).then(waitForSuccess);
   }
 
   /**
@@ -561,25 +567,25 @@ export class EthersLiquity implements ReadableEthersLiquity, TransactableLiquity
   }
 
   /**
-   * {@inheritDoc @secured-finance/lib-base#TransactableLiquity.stakeLQTY}
+   * {@inheritDoc @secured-finance/lib-base#TransactableLiquity.stakeProtocolToken}
    *
    * @throws
    * Throws {@link EthersTransactionFailedError} in case of transaction failure.
    * Throws {@link EthersTransactionCancelledError} if the transaction is cancelled or replaced.
    */
-  stakeLQTY(amount: Decimalish, overrides?: EthersTransactionOverrides): Promise<void> {
-    return this.send.stakeLQTY(amount, overrides).then(waitForSuccess);
+  stakeProtocolToken(amount: Decimalish, overrides?: EthersTransactionOverrides): Promise<void> {
+    return this.send.stakeProtocolToken(amount, overrides).then(waitForSuccess);
   }
 
   /**
-   * {@inheritDoc @secured-finance/lib-base#TransactableLiquity.unstakeLQTY}
+   * {@inheritDoc @secured-finance/lib-base#TransactableLiquity.unstakeProtocolToken}
    *
    * @throws
    * Throws {@link EthersTransactionFailedError} in case of transaction failure.
    * Throws {@link EthersTransactionCancelledError} if the transaction is cancelled or replaced.
    */
-  unstakeLQTY(amount: Decimalish, overrides?: EthersTransactionOverrides): Promise<void> {
-    return this.send.unstakeLQTY(amount, overrides).then(waitForSuccess);
+  unstakeProtocolToken(amount: Decimalish, overrides?: EthersTransactionOverrides): Promise<void> {
+    return this.send.unstakeProtocolToken(amount, overrides).then(waitForSuccess);
   }
 
   /**
@@ -647,14 +653,16 @@ export class EthersLiquity implements ReadableEthersLiquity, TransactableLiquity
   }
 
   /**
-   * {@inheritDoc @secured-finance/lib-base#TransactableLiquity.withdrawLQTYRewardFromLiquidityMining}
+   * {@inheritDoc @secured-finance/lib-base#TransactableLiquity.withdrawProtocolTokenRewardFromProtocolMining}
    *
    * @throws
    * Throws {@link EthersTransactionFailedError} in case of transaction failure.
    * Throws {@link EthersTransactionCancelledError} if the transaction is cancelled or replaced.
    */
-  withdrawLQTYRewardFromLiquidityMining(overrides?: EthersTransactionOverrides): Promise<void> {
-    return this.send.withdrawLQTYRewardFromLiquidityMining(overrides).then(waitForSuccess);
+  withdrawProtocolTokenRewardFromProtocolMining(
+    overrides?: EthersTransactionOverrides
+  ): Promise<void> {
+    return this.send.withdrawProtocolTokenRewardFromProtocolMining(overrides).then(waitForSuccess);
   }
 
   /**

@@ -24,8 +24,8 @@ export class StabilityDeposit {
   /** Amount of native currency (e.g. Ether) received in exchange for the used-up DebtToken. */
   readonly collateralGain: Decimal;
 
-  /** Amount of LQTY rewarded since the last modification of the Stability Deposit. */
-  readonly lqtyReward: Decimal;
+  /** Amount of ProtocolToken rewarded since the last modification of the Stability Deposit. */
+  readonly protocolTokenReward: Decimal;
 
   /**
    * Address of frontend through which this Stability Deposit was made.
@@ -41,13 +41,13 @@ export class StabilityDeposit {
     initialDebtToken: Decimal,
     currentDebtToken: Decimal,
     collateralGain: Decimal,
-    lqtyReward: Decimal,
+    protocolTokenReward: Decimal,
     frontendTag: string
   ) {
     this.initialDebtToken = initialDebtToken;
     this.currentDebtToken = currentDebtToken;
     this.collateralGain = collateralGain;
-    this.lqtyReward = lqtyReward;
+    this.protocolTokenReward = protocolTokenReward;
     this.frontendTag = frontendTag;
 
     if (this.currentDebtToken.gt(this.initialDebtToken)) {
@@ -60,7 +60,7 @@ export class StabilityDeposit {
       this.initialDebtToken.isZero &&
       this.currentDebtToken.isZero &&
       this.collateralGain.isZero &&
-      this.lqtyReward.isZero
+      this.protocolTokenReward.isZero
     );
   }
 
@@ -70,7 +70,7 @@ export class StabilityDeposit {
       `{ initialDebtToken: ${this.initialDebtToken}` +
       `, currentDebtToken: ${this.currentDebtToken}` +
       `, collateralGain: ${this.collateralGain}` +
-      `, lqtyReward: ${this.lqtyReward}` +
+      `, protocolTokenReward: ${this.protocolTokenReward}` +
       `, frontendTag: "${this.frontendTag}" }`
     );
   }
@@ -83,7 +83,7 @@ export class StabilityDeposit {
       this.initialDebtToken.eq(that.initialDebtToken) &&
       this.currentDebtToken.eq(that.currentDebtToken) &&
       this.collateralGain.eq(that.collateralGain) &&
-      this.lqtyReward.eq(that.lqtyReward) &&
+      this.protocolTokenReward.eq(that.protocolTokenReward) &&
       this.frontendTag === that.frontendTag
     );
   }

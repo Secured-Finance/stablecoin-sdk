@@ -54,11 +54,11 @@
         {
           "indexed": false,
           "internalType": "address",
-          "name": "_sortedDoublyLLAddress",
+          "name": "_troveManagerAddress",
           "type": "address"
         }
       ],
-      "name": "SortedTrovesAddressChanged",
+      "name": "TroveManagerAddressChanged",
       "type": "event"
     },
     {

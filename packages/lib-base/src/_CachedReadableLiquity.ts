@@ -1,6 +1,6 @@
 import { Decimal } from "./Decimal";
 import { Fees } from "./Fees";
-import { LQTYStake } from "./LQTYStake";
+import { ProtocolTokenStake } from "./ProtocolTokenStake";
 import { FrontendStatus, ReadableLiquity, TroveListingParams } from "./ReadableLiquity";
 import { StabilityDeposit } from "./StabilityDeposit";
 import { Trove, TroveWithPendingRedistribution, UserTrove } from "./Trove";
@@ -102,10 +102,10 @@ export class _CachedReadableLiquity<T extends unknown[]>
     );
   }
 
-  async getRemainingStabilityPoolLQTYReward(...extraParams: T): Promise<Decimal> {
+  async getRemainingStabilityPoolProtocolTokenReward(...extraParams: T): Promise<Decimal> {
     return (
-      this._cache.getRemainingStabilityPoolLQTYReward(...extraParams) ??
-      this._readable.getRemainingStabilityPoolLQTYReward(...extraParams)
+      this._cache.getRemainingStabilityPoolProtocolTokenReward(...extraParams) ??
+      this._readable.getRemainingStabilityPoolProtocolTokenReward(...extraParams)
     );
   }
 
@@ -123,10 +123,10 @@ export class _CachedReadableLiquity<T extends unknown[]>
     );
   }
 
-  async getLQTYBalance(address?: string, ...extraParams: T): Promise<Decimal> {
+  async getProtocolTokenBalance(address?: string, ...extraParams: T): Promise<Decimal> {
     return (
-      this._cache.getLQTYBalance(address, ...extraParams) ??
-      this._readable.getLQTYBalance(address, ...extraParams)
+      this._cache.getProtocolTokenBalance(address, ...extraParams) ??
+      this._readable.getProtocolTokenBalance(address, ...extraParams)
     );
   }
 
@@ -144,10 +144,10 @@ export class _CachedReadableLiquity<T extends unknown[]>
     );
   }
 
-  async getRemainingLiquidityMiningLQTYReward(...extraParams: T): Promise<Decimal> {
+  async getRemainingProtocolMiningProtocolTokenReward(...extraParams: T): Promise<Decimal> {
     return (
-      this._cache.getRemainingLiquidityMiningLQTYReward(...extraParams) ??
-      this._readable.getRemainingLiquidityMiningLQTYReward(...extraParams)
+      this._cache.getRemainingProtocolMiningProtocolTokenReward(...extraParams) ??
+      this._readable.getRemainingProtocolMiningProtocolTokenReward(...extraParams)
     );
   }
 
@@ -165,10 +165,13 @@ export class _CachedReadableLiquity<T extends unknown[]>
     );
   }
 
-  async getLiquidityMiningLQTYReward(address?: string, ...extraParams: T): Promise<Decimal> {
+  async getLiquidityMiningProtocolTokenReward(
+    address?: string,
+    ...extraParams: T
+  ): Promise<Decimal> {
     return (
-      this._cache.getLiquidityMiningLQTYReward(address, ...extraParams) ??
-      this._readable.getLiquidityMiningLQTYReward(address, ...extraParams)
+      this._cache.getLiquidityMiningProtocolTokenReward(address, ...extraParams) ??
+      this._readable.getLiquidityMiningProtocolTokenReward(address, ...extraParams)
     );
   }
 
@@ -206,17 +209,17 @@ export class _CachedReadableLiquity<T extends unknown[]>
     return this._cache.getFees(...extraParams) ?? this._readable.getFees(...extraParams);
   }
 
-  async getLQTYStake(address?: string, ...extraParams: T): Promise<LQTYStake> {
+  async getProtocolTokenStake(address?: string, ...extraParams: T): Promise<ProtocolTokenStake> {
     return (
-      this._cache.getLQTYStake(address, ...extraParams) ??
-      this._readable.getLQTYStake(address, ...extraParams)
+      this._cache.getProtocolTokenStake(address, ...extraParams) ??
+      this._readable.getProtocolTokenStake(address, ...extraParams)
     );
   }
 
-  async getTotalStakedLQTY(...extraParams: T): Promise<Decimal> {
+  async getTotalStakedProtocolToken(...extraParams: T): Promise<Decimal> {
     return (
-      this._cache.getTotalStakedLQTY(...extraParams) ??
-      this._readable.getTotalStakedLQTY(...extraParams)
+      this._cache.getTotalStakedProtocolToken(...extraParams) ??
+      this._readable.getTotalStakedProtocolToken(...extraParams)
     );
   }
 

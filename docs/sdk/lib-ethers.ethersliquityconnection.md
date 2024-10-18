@@ -120,7 +120,7 @@ Date when the Liquity contracts were deployed.
 </td></tr>
 <tr><td>
 
-[liquidityMiningLQTYRewardRate](./lib-ethers.ethersliquityconnection.liquiditymininglqtyrewardrate.md)
+[liquidityMiningProtocolTokenRewardRate](./lib-ethers.ethersliquityconnection.liquidityminingprotocoltokenrewardrate.md)
 
 
 </td><td>
@@ -133,7 +133,7 @@ Date when the Liquity contracts were deployed.
 
 </td><td>
 
-Amount of LQTY collectively rewarded to stakers of the liquidity mining pool per second.
+Amount of ProtocolToken collectively rewarded to stakers of the liquidity mining pool per second.
 
 
 </td></tr>
@@ -196,7 +196,7 @@ Number of block in which the first Liquity contract was deployed.
 </td></tr>
 <tr><td>
 
-[totalStabilityPoolLQTYReward](./lib-ethers.ethersliquityconnection.totalstabilitypoollqtyreward.md)
+[totalStabilityPoolProtocolTokenReward](./lib-ethers.ethersliquityconnection.totalstabilitypoolprotocoltokenreward.md)
 
 
 </td><td>
@@ -209,7 +209,7 @@ Number of block in which the first Liquity contract was deployed.
 
 </td><td>
 
-Total amount of LQTY allocated for rewarding stability depositors.
+Total amount of ProtocolToken allocated for rewarding stability depositors.
 
 
 </td></tr>

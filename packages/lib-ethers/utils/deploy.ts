@@ -3,6 +3,7 @@ import { ContractFactory, ContractTransaction, Overrides } from "@ethersproject/
 import { Wallet } from "@ethersproject/wallet";
 import dotenv from "dotenv";
 import fs from "fs-extra";
+import path from "path";
 
 import { Decimal } from "@secured-finance/lib-base";
 
@@ -31,10 +32,16 @@ dotenv.config();
 
 const useDeployedContractsEnv = (process.env.USE_DEPLOYED_CONTRACTS ?? "false").toLowerCase();
 const useDeployedContracts = !["false", "no", "0"].includes(useDeployedContractsEnv);
+const gasCompensation = Decimal.from(10)
+  .pow(18)
+  .mul(process.env.GAS_COMPENSATION ?? 20)
+  .toString();
+const minNetDebt = Decimal.from(10)
+  .pow(18)
+  .mul(process.env.MIN_NET_DEBT ?? 180)
+  .toString();
 
-const deploymentsDir = require
-  .resolve("@secured-finance/stablecoin-contracts/package.json")
-  .replace("/package.json", "/mainnetDeployment");
+const deploymentsDir = path.join("..", "contracts", "deployments", "outputs");
 
 const deployContractAndGetBlockNumber = async (
   deployer: Signer,
@@ -49,10 +56,7 @@ const deployContractAndGetBlockNumber = async (
 
   if (useDeployedContracts && !!deploymentKey) {
     log(`Fetching ${contractName} ...`);
-    const fileContent = fs.readFileSync(
-      `${deploymentsDir}/${networkName}DeploymentOutput.json`,
-      "utf-8"
-    );
+    const fileContent = fs.readFileSync(`${deploymentsDir}/${networkName}.json`, "utf-8");
     const deployments = JSON.parse(fileContent);
     contractAddress = deployments[deploymentKey].address;
     // const tx = await deployer.provider?.getTransaction(deployments[deploymentKey].txHash);
@@ -120,6 +124,8 @@ const deployContracts = async (
       networkName,
       "BorrowerOperations",
       "borrowerOperations",
+      gasCompensation,
+      minNetDebt,
       {
         ...overrides
       }
@@ -130,6 +136,8 @@ const deployContracts = async (
       networkName,
       "TroveManager",
       "troveManager",
+      gasCompensation,
+      minNetDebt,
       {
         ...overrides
       }
@@ -170,6 +178,8 @@ const deployContracts = async (
       networkName,
       "HintHelpers",
       "hintHelpers",
+      gasCompensation,
+      minNetDebt,
       {
         ...overrides
       }
@@ -182,12 +192,12 @@ const deployContracts = async (
       "lockupContractFactory",
       { ...overrides }
     ),
-    lqtyStaking: await deployContract(
+    protocolTokenStaking: await deployContract(
       deployer,
       getContractFactory,
       networkName,
-      "LQTYStaking",
-      "lqtyStaking",
+      "ProtocolTokenStaking",
+      "protocolTokenStaking",
       {
         ...overrides
       }
@@ -216,6 +226,8 @@ const deployContracts = async (
       networkName,
       "StabilityPool",
       "stabilityPool",
+      gasCompensation,
+      minNetDebt,
       {
         ...overrides
       }
@@ -243,14 +255,14 @@ const deployContracts = async (
         { ...overrides }
       ),
 
-      lqtyToken: await deployContract(
+      protocolToken: await deployContract(
         deployer,
         getContractFactory,
         networkName,
-        "LQTYToken",
-        "lqtyToken",
+        "ProtocolToken",
+        "protocolToken",
         addresses.communityIssuance,
-        addresses.lqtyStaking,
+        addresses.protocolTokenStaking,
         addresses.lockupContractFactory,
         Wallet.createRandom().address, // _bountyAddress (TODO: parameterize this)
         addresses.unipool, // _lpRewardsAddress
@@ -312,10 +324,10 @@ const connectContracts = async (
     collSurplusPool,
     communityIssuance,
     defaultPool,
-    lqtyToken,
+    protocolToken,
     hintHelpers,
     lockupContractFactory,
-    lqtyStaking,
+    protocolTokenStaking,
     priceFeed,
     sortedTroves,
     stabilityPool,
@@ -332,7 +344,7 @@ const connectContracts = async (
 
   const txCount = await deployer.provider.getTransactionCount(deployer.getAddress());
 
-  const connections: ((nonce: number) => Promise<ContractTransaction | undefined>)[] = [
+  const connections: ((nonce?: number) => Promise<ContractTransaction | undefined>)[] = [
     nonce =>
       sortedTroves.setParams(1e6, troveManager.address, borrowerOperations.address, {
         ...overrides,
@@ -350,8 +362,8 @@ const connectContracts = async (
         priceFeed.address,
         debtToken.address,
         sortedTroves.address,
-        lqtyToken.address,
-        lqtyStaking.address,
+        protocolToken.address,
+        protocolTokenStaking.address,
         { ...overrides, nonce }
       ),
 
@@ -366,7 +378,7 @@ const connectContracts = async (
         priceFeed.address,
         sortedTroves.address,
         debtToken.address,
-        lqtyStaking.address,
+        protocolTokenStaking.address,
         { ...overrides, nonce }
       ),
 
@@ -412,8 +424,8 @@ const connectContracts = async (
       }),
 
     nonce =>
-      lqtyStaking.setAddresses(
-        lqtyToken.address,
+      protocolTokenStaking.setAddresses(
+        protocolToken.address,
         debtToken.address,
         troveManager.address,
         borrowerOperations.address,
@@ -422,32 +434,37 @@ const connectContracts = async (
       ),
 
     nonce =>
-      lockupContractFactory.setLQTYTokenAddress(lqtyToken.address, {
+      lockupContractFactory.setProtocolTokenAddress(protocolToken.address, {
         ...overrides,
         nonce
       }),
 
     nonce =>
-      communityIssuance.setAddresses(lqtyToken.address, stabilityPool.address, {
+      communityIssuance.setAddresses(protocolToken.address, stabilityPool.address, {
         ...overrides,
         nonce
       }),
 
     nonce =>
-      unipool.setParams(lqtyToken.address, uniToken.address, 2 * 30 * 24 * 60 * 60, {
+      unipool.setParams(protocolToken.address, uniToken.address, 2 * 30 * 24 * 60 * 60, {
         ...overrides,
         nonce
       })
   ];
 
-  const txs = await Promise.all(connections.map((connect, i) => connect(txCount + i)));
+  const { chainId } = await deployer.provider?.getNetwork();
+  const isHardhatTest = chainId === 31337;
+
+  const txs = await Promise.all(
+    connections.map((connect, i) => connect(isHardhatTest ? undefined : txCount + i))
+  );
 
   let i = 0;
   await Promise.all(txs.map(tx => tx?.wait().then(() => log(`Connected ${++i}`))));
 };
 
 const connectUniswapPoolContract = async (
-  { lqtyToken, unipool, uniToken }: _LiquityContracts,
+  { protocolToken, unipool, uniToken }: _LiquityContracts,
   deployer: Signer,
   overrides?: Overrides
 ) => {
@@ -457,7 +474,7 @@ const connectUniswapPoolContract = async (
 
   const txCount = await deployer.provider.getTransactionCount(deployer.getAddress());
 
-  await unipool.setParams(lqtyToken.address, uniToken.address, 2 * 30 * 24 * 60 * 60, {
+  await unipool.setParams(protocolToken.address, uniToken.address, 2 * 30 * 24 * 60 * 60, {
     ...overrides,
     nonce: txCount
   });
@@ -502,8 +519,8 @@ export const deployAndSetupContracts = async (
     version: "unknown",
     deploymentDate: new Date().getTime(),
     bootstrapPeriod: 0,
-    totalStabilityPoolLQTYReward: "0",
-    liquidityMiningLQTYRewardRate: "0",
+    totalStabilityPoolProtocolTokenReward: "0",
+    liquidityMiningProtocolTokenRewardRate: "0",
     _priceFeedIsTestnet,
     _uniTokenIsMock: !wethAddress,
     _isDev: networkName === "dev",
@@ -537,20 +554,21 @@ export const deployAndSetupContracts = async (
     await connectUniswapPoolContract(contracts, deployer, overrides);
   }
 
-  const lqtyTokenDeploymentTime = await contracts.lqtyToken.getDeploymentStartTime();
+  const protocolTokenDeploymentTime = await contracts.protocolToken.getDeploymentStartTime();
   const bootstrapPeriod = await contracts.troveManager.BOOTSTRAP_PERIOD();
-  const totalStabilityPoolLQTYReward = await contracts.communityIssuance.LQTYSupplyCap();
-  const liquidityMiningLQTYRewardRate = await contracts.unipool.rewardRate();
+  const totalStabilityPoolProtocolTokenReward =
+    await contracts.communityIssuance.protocolTokenSupplyCap();
+  const liquidityMiningProtocolTokenRewardRate = await contracts.unipool.rewardRate();
 
   return {
     ...deployment,
-    deploymentDate: lqtyTokenDeploymentTime.toNumber() * 1000,
+    deploymentDate: protocolTokenDeploymentTime.toNumber() * 1000,
     bootstrapPeriod: bootstrapPeriod.toNumber(),
-    totalStabilityPoolLQTYReward: `${Decimal.fromBigNumberString(
-      totalStabilityPoolLQTYReward.toHexString()
+    totalStabilityPoolProtocolTokenReward: `${Decimal.fromBigNumberString(
+      totalStabilityPoolProtocolTokenReward.toHexString()
     )}`,
-    liquidityMiningLQTYRewardRate: `${Decimal.fromBigNumberString(
-      liquidityMiningLQTYRewardRate.toHexString()
+    liquidityMiningProtocolTokenRewardRate: `${Decimal.fromBigNumberString(
+      liquidityMiningProtocolTokenRewardRate.toHexString()
     )}`
   };
 };

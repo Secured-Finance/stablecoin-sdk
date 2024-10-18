@@ -4,7 +4,7 @@
 
 ## PopulatableLiquity.withdrawGainsFromStaking() method
 
-Withdraw [collateral gain](./lib-base.lqtystake.collateralgain.md) and [DebtToken gain](./lib-base.lqtystake.debttokengain.md) from LQTY stake.
+Withdraw [collateral gain](./lib-base.protocoltokenstake.collateralgain.md) and [DebtToken gain](./lib-base.protocoltokenstake.debttokengain.md) from ProtocolToken stake.
 
 **Signature:**
 

@@ -160,15 +160,15 @@ dataSources:
       eventHandlers:
         - event: CollBalanceUpdated(indexed address,uint256)
           handler: handleCollSurplusBalanceUpdated
-  - name: LQTYStaking
+  - name: ProtocolTokenStaking
     kind: ethereum/contract
     network: mainnet
     source:
-      abi: LQTYStaking
-      address: "${addresses.lqtyStaking}"
+      abi: ProtocolTokenStaking
+      address: "${addresses.protocolTokenStaking}"
       startBlock: ${startBlock}
     mapping:
-      file: ./src/mappings/LqtyStake.ts
+      file: ./src/mappings/ProtocolTokenStake.ts
       language: wasm/assemblyscript
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -176,11 +176,11 @@ dataSources:
         - Global
         - User
         - Transaction
-        - LqtyStake
-        - LqtyStakeChange
+        - ProtocolTokenStake
+        - ProtocolTokenStakeChange
       abis:
-        - name: LQTYStaking
-          file: ../lib-ethers/abi/LQTYStaking.json
+        - name: ProtocolTokenStaking
+          file: ../lib-ethers/abi/ProtocolTokenStaking.json
       eventHandlers:
         - event: StakeChanged(indexed address,uint256)
           handler: handleStakeChanged
@@ -188,7 +188,7 @@ dataSources:
           handler: handleStakeGainsWithdrawn
 ${[
   ["DebtToken", addresses.debtToken],
-  ["LQTYToken", addresses.lqtyToken]
+  ["ProtocolToken", addresses.protocolToken]
 ].map(
   ([name, address]) => yaml`
   - name: ${name}

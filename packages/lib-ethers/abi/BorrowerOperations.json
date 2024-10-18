@@ -1,5 +1,21 @@
 [
   {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_gasCompensation",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_minNetDebt",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
     "anonymous": false,
     "inputs": [
       {
@@ -87,19 +103,6 @@
     "anonymous": false,
     "inputs": [
       {
-        "indexed": false,
-        "internalType": "address",
-        "name": "_lqtyStakingAddress",
-        "type": "address"
-      }
-    ],
-    "name": "LQTYStakingAddressChanged",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
         "indexed": true,
         "internalType": "address",
         "name": "previousOwner",
@@ -126,6 +129,19 @@
       }
     ],
     "name": "PriceFeedAddressChanged",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "_protocolTokenStakingAddress",
+        "type": "address"
+      }
+    ],
+    "name": "ProtocolTokenStakingAddressChanged",
     "type": "event"
   },
   {
@@ -215,7 +231,7 @@
       },
       {
         "indexed": false,
-        "internalType": "enum BorrowerOperations.BorrowerOperation",
+        "internalType": "enum IBorrowerOperations.BorrowerOperation",
         "name": "operation",
         "type": "uint8"
       }
@@ -465,7 +481,7 @@
         "type": "uint256"
       }
     ],
-    "stateMutability": "pure",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -502,32 +518,6 @@
         "internalType": "bool",
         "name": "",
         "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "lqtyStaking",
-    "outputs": [
-      {
-        "internalType": "contract ILQTYStaking",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "lqtyStakingAddress",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
       }
     ],
     "stateMutability": "view",
@@ -611,6 +601,32 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "protocolTokenStaking",
+    "outputs": [
+      {
+        "internalType": "contract IProtocolTokenStaking",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "protocolTokenStakingAddress",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "uint256",
@@ -682,7 +698,7 @@
       },
       {
         "internalType": "address",
-        "name": "_lqtyStakingAddress",
+        "name": "_protocolTokenStakingAddress",
         "type": "address"
       }
     ],

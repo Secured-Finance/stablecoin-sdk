@@ -67,5 +67,5 @@ Promise&lt;[SentEthersLiquityTransaction](./lib-ethers.sentethersliquitytransact
 
 ## Remarks
 
-As a side-effect, the transaction will also pay out the Stability Deposit's [collateral gain](./lib-base.stabilitydeposit.collateralgain.md) and [LQTY reward](./lib-base.stabilitydeposit.lqtyreward.md)<!-- -->.
+As a side-effect, the transaction will also pay out the Stability Deposit's [collateral gain](./lib-base.stabilitydeposit.collateralgain.md) and [ProtocolToken reward](./lib-base.stabilitydeposit.protocoltokenreward.md)<!-- -->.
 

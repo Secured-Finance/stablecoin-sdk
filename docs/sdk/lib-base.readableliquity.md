@@ -86,12 +86,12 @@ Check whether an address is registered as a Liquity frontend, and what its kickb
 </td></tr>
 <tr><td>
 
-[getLiquidityMiningLQTYReward(address)](./lib-base.readableliquity.getliquiditymininglqtyreward.md)
+[getLiquidityMiningProtocolTokenReward(address)](./lib-base.readableliquity.getliquidityminingprotocoltokenreward.md)
 
 
 </td><td>
 
-Get the amount of LQTY earned by an address through mining liquidity.
+Get the amount of ProtocolToken earned by an address through mining liquidity.
 
 
 </td></tr>
@@ -103,28 +103,6 @@ Get the amount of LQTY earned by an address through mining liquidity.
 </td><td>
 
 Get the amount of Uniswap FIL/DebtToken LP tokens currently staked by an address in liquidity mining.
-
-
-</td></tr>
-<tr><td>
-
-[getLQTYBalance(address)](./lib-base.readableliquity.getlqtybalance.md)
-
-
-</td><td>
-
-Get the amount of LQTY held by an address.
-
-
-</td></tr>
-<tr><td>
-
-[getLQTYStake(address)](./lib-base.readableliquity.getlqtystake.md)
-
-
-</td><td>
-
-Get the current state of an LQTY Stake.
 
 
 </td></tr>
@@ -152,23 +130,45 @@ Get the current price of the native currency (e.g. Ether) in USD.
 </td></tr>
 <tr><td>
 
-[getRemainingLiquidityMiningLQTYReward()](./lib-base.readableliquity.getremainingliquiditymininglqtyreward.md)
+[getProtocolTokenBalance(address)](./lib-base.readableliquity.getprotocoltokenbalance.md)
 
 
 </td><td>
 
-Get the remaining LQTY that will be collectively rewarded to liquidity miners.
+Get the amount of ProtocolToken held by an address.
 
 
 </td></tr>
 <tr><td>
 
-[getRemainingStabilityPoolLQTYReward()](./lib-base.readableliquity.getremainingstabilitypoollqtyreward.md)
+[getProtocolTokenStake(address)](./lib-base.readableliquity.getprotocoltokenstake.md)
 
 
 </td><td>
 
-Get the remaining LQTY that will be collectively rewarded to stability depositors.
+Get the current state of an ProtocolToken Stake.
+
+
+</td></tr>
+<tr><td>
+
+[getRemainingProtocolMiningProtocolTokenReward()](./lib-base.readableliquity.getremainingprotocolminingprotocoltokenreward.md)
+
+
+</td><td>
+
+Get the remaining ProtocolToken that will be collectively rewarded to liquidity miners.
+
+
+</td></tr>
+<tr><td>
+
+[getRemainingStabilityPoolProtocolTokenReward()](./lib-base.readableliquity.getremainingstabilitypoolprotocoltokenreward.md)
+
+
+</td><td>
+
+Get the remaining ProtocolToken that will be collectively rewarded to stability depositors.
 
 
 </td></tr>
@@ -207,12 +207,12 @@ Get the total collateral and debt per stake that has been liquidated through red
 </td></tr>
 <tr><td>
 
-[getTotalStakedLQTY()](./lib-base.readableliquity.gettotalstakedlqty.md)
+[getTotalStakedProtocolToken()](./lib-base.readableliquity.gettotalstakedprotocoltoken.md)
 
 
 </td><td>
 
-Get the total amount of LQTY currently staked.
+Get the total amount of ProtocolToken currently staked.
 
 
 </td></tr>

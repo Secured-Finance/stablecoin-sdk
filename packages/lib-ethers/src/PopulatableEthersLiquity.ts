@@ -85,7 +85,7 @@ const addGasForBaseRateUpdate =
 // 80K should be enough for 3 steps, plus some extra to be safe.
 const addGasForPotentialListTraversal = (gas: BigNumber) => gas.add(80000);
 
-const addGasForLQTYIssuance = (gas: BigNumber) => gas.add(50000);
+const addGasForProtocolTokenIssuance = (gas: BigNumber) => gas.add(50000);
 
 const addGasForUnipoolRewardUpdate = (gas: BigNumber) => gas.add(20000);
 
@@ -563,7 +563,7 @@ export class PopulatableEthersLiquity
           .map(({ args: { value } }) => decimalify(value));
 
         const [withdrawCollateral] = activePool
-          .extractEvents(logs, "EtherSent")
+          .extractEvents(logs, "FILSent")
           .filter(({ args: { _to } }) => _to === userAddress)
           .map(({ args: { _amount } }) => decimalify(_amount));
 
@@ -623,15 +623,15 @@ export class PopulatableEthersLiquity
       .extractEvents(logs, "FILGainWithdrawn")
       .map(({ args: { _FIL, _debtTokenLoss } }) => [decimalify(_FIL), decimalify(_debtTokenLoss)]);
 
-    const [lqtyReward] = stabilityPool
-      .extractEvents(logs, "LQTYPaidToDepositor")
-      .map(({ args: { _LQTY } }) => decimalify(_LQTY));
+    const [protocolTokenReward] = stabilityPool
+      .extractEvents(logs, "ProtocolTokenPaidToDepositor")
+      .map(({ args: { _protocolToken } }) => decimalify(_protocolToken));
 
     return {
       debtTokenLoss,
       newDebtTokenDeposit,
       collateralGain,
-      lqtyReward
+      protocolTokenReward
     };
   }
 
@@ -1083,13 +1083,17 @@ export class PopulatableEthersLiquity
       return this._wrapLiquidation(
         await troveManager.estimateAndPopulate.batchLiquidateTroves(
           overrides,
-          addGasForLQTYIssuance,
+          addGasForProtocolTokenIssuance,
           address
         )
       );
     } else {
       return this._wrapLiquidation(
-        await troveManager.estimateAndPopulate.liquidate(overrides, addGasForLQTYIssuance, address)
+        await troveManager.estimateAndPopulate.liquidate(
+          overrides,
+          addGasForProtocolTokenIssuance,
+          address
+        )
       );
     }
   }
@@ -1105,7 +1109,7 @@ export class PopulatableEthersLiquity
     return this._wrapLiquidation(
       await troveManager.estimateAndPopulate.liquidateTroves(
         overrides,
-        addGasForLQTYIssuance,
+        addGasForProtocolTokenIssuance,
         maximumNumberOfTrovesToLiquidate
       )
     );
@@ -1125,7 +1129,7 @@ export class PopulatableEthersLiquity
       { depositDebtToken },
       await stabilityPool.estimateAndPopulate.provideToSP(
         overrides,
-        addGasForLQTYIssuance,
+        addGasForProtocolTokenIssuance,
         depositDebtToken.hex,
         frontendTag ?? this._readable.connection.frontendTag ?? AddressZero
       )
@@ -1143,7 +1147,7 @@ export class PopulatableEthersLiquity
     return this._wrapStabilityDepositWithdrawal(
       await stabilityPool.estimateAndPopulate.withdrawFromSP(
         overrides,
-        addGasForLQTYIssuance,
+        addGasForProtocolTokenIssuance,
         Decimal.from(amount).hex
       )
     );
@@ -1159,7 +1163,7 @@ export class PopulatableEthersLiquity
     return this._wrapStabilityPoolGainsWithdrawal(
       await stabilityPool.estimateAndPopulate.withdrawFromSP(
         overrides,
-        addGasForLQTYIssuance,
+        addGasForProtocolTokenIssuance,
         Decimal.ZERO.hex
       )
     );
@@ -1182,7 +1186,7 @@ export class PopulatableEthersLiquity
     return this._wrapCollateralGainTransfer(
       await stabilityPool.estimateAndPopulate.withdrawFILGainToTrove(
         overrides,
-        compose(addGasForPotentialListTraversal, addGasForLQTYIssuance),
+        compose(addGasForPotentialListTraversal, addGasForProtocolTokenIssuance),
         ...(await this._findHints(finalTrove, overrides.from))
       )
     );
@@ -1207,17 +1211,17 @@ export class PopulatableEthersLiquity
     );
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#PopulatableLiquity.sendLQTY} */
-  async sendLQTY(
+  /** {@inheritDoc @secured-finance/lib-base#PopulatableLiquity.sendProtocolToken} */
+  async sendProtocolToken(
     toAddress: string,
     amount: Decimalish,
     overrides?: EthersTransactionOverrides
   ): Promise<PopulatedEthersLiquityTransaction<void>> {
     overrides = this._prepareOverrides(overrides);
-    const { lqtyToken } = _getContracts(this._readable.connection);
+    const { protocolToken } = _getContracts(this._readable.connection);
 
     return this._wrapSimpleTransaction(
-      await lqtyToken.estimateAndPopulate.transfer(
+      await protocolToken.estimateAndPopulate.transfer(
         overrides,
         id,
         toAddress,
@@ -1300,29 +1304,29 @@ export class PopulatableEthersLiquity
     );
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#PopulatableLiquity.stakeLQTY} */
-  async stakeLQTY(
+  /** {@inheritDoc @secured-finance/lib-base#PopulatableLiquity.stakeProtocolToken} */
+  async stakeProtocolToken(
     amount: Decimalish,
     overrides?: EthersTransactionOverrides
   ): Promise<PopulatedEthersLiquityTransaction<void>> {
     overrides = this._prepareOverrides(overrides);
-    const { lqtyStaking } = _getContracts(this._readable.connection);
+    const { protocolTokenStaking } = _getContracts(this._readable.connection);
 
     return this._wrapSimpleTransaction(
-      await lqtyStaking.estimateAndPopulate.stake(overrides, id, Decimal.from(amount).hex)
+      await protocolTokenStaking.estimateAndPopulate.stake(overrides, id, Decimal.from(amount).hex)
     );
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#PopulatableLiquity.unstakeLQTY} */
-  async unstakeLQTY(
+  /** {@inheritDoc @secured-finance/lib-base#PopulatableLiquity.unstakeProtocolToken} */
+  async unstakeProtocolToken(
     amount: Decimalish,
     overrides?: EthersTransactionOverrides
   ): Promise<PopulatedEthersLiquityTransaction<void>> {
     overrides = this._prepareOverrides(overrides);
-    const { lqtyStaking } = _getContracts(this._readable.connection);
+    const { protocolTokenStaking } = _getContracts(this._readable.connection);
 
     return this._wrapSimpleTransaction(
-      await lqtyStaking.estimateAndPopulate.unstake(overrides, id, Decimal.from(amount).hex)
+      await protocolTokenStaking.estimateAndPopulate.unstake(overrides, id, Decimal.from(amount).hex)
     );
   }
 
@@ -1330,7 +1334,7 @@ export class PopulatableEthersLiquity
   withdrawGainsFromStaking(
     overrides?: EthersTransactionOverrides
   ): Promise<PopulatedEthersLiquityTransaction<void>> {
-    return this.unstakeLQTY(Decimal.ZERO, overrides);
+    return this.unstakeProtocolToken(Decimal.ZERO, overrides);
   }
 
   /** {@inheritDoc @secured-finance/lib-base#PopulatableLiquity.registerFrontend} */
@@ -1421,8 +1425,8 @@ export class PopulatableEthersLiquity
     );
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#PopulatableLiquity.withdrawLQTYRewardFromLiquidityMining} */
-  async withdrawLQTYRewardFromLiquidityMining(
+  /** {@inheritDoc @secured-finance/lib-base#PopulatableLiquity.withdrawProtocolTokenRewardFromProtocolMining} */
+  async withdrawProtocolTokenRewardFromProtocolMining(
     overrides?: EthersTransactionOverrides
   ): Promise<PopulatedEthersLiquityTransaction<void>> {
     overrides = this._prepareOverrides(overrides);

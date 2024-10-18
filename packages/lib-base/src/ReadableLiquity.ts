@@ -1,6 +1,6 @@
 import { Decimal } from "./Decimal";
 import { Fees } from "./Fees";
-import { LQTYStake } from "./LQTYStake";
+import { ProtocolTokenStake } from "./ProtocolTokenStake";
 import { StabilityDeposit } from "./StabilityDeposit";
 import { Trove, TroveWithPendingRedistribution, UserTrove } from "./Trove";
 
@@ -102,9 +102,9 @@ export interface ReadableLiquity {
   getStabilityDeposit(address?: string): Promise<StabilityDeposit>;
 
   /**
-   * Get the remaining LQTY that will be collectively rewarded to stability depositors.
+   * Get the remaining ProtocolToken that will be collectively rewarded to stability depositors.
    */
-  getRemainingStabilityPoolLQTYReward(): Promise<Decimal>;
+  getRemainingStabilityPoolProtocolTokenReward(): Promise<Decimal>;
 
   /**
    * Get the total amount of DebtToken currently deposited in the Stability Pool.
@@ -119,11 +119,11 @@ export interface ReadableLiquity {
   getDebtTokenBalance(address?: string): Promise<Decimal>;
 
   /**
-   * Get the amount of LQTY held by an address.
+   * Get the amount of ProtocolToken held by an address.
    *
    * @param address - Address whose balance should be retrieved.
    */
-  getLQTYBalance(address?: string): Promise<Decimal>;
+  getProtocolTokenBalance(address?: string): Promise<Decimal>;
 
   /**
    * Get the amount of Uniswap FIL/DebtToken LP tokens held by an address.
@@ -140,9 +140,9 @@ export interface ReadableLiquity {
   getUniTokenAllowance(address?: string): Promise<Decimal>;
 
   /**
-   * Get the remaining LQTY that will be collectively rewarded to liquidity miners.
+   * Get the remaining ProtocolToken that will be collectively rewarded to liquidity miners.
    */
-  getRemainingLiquidityMiningLQTYReward(): Promise<Decimal>;
+  getRemainingProtocolMiningProtocolTokenReward(): Promise<Decimal>;
 
   /**
    * Get the amount of Uniswap FIL/DebtToken LP tokens currently staked by an address in liquidity mining.
@@ -157,11 +157,11 @@ export interface ReadableLiquity {
   getTotalStakedUniTokens(): Promise<Decimal>;
 
   /**
-   * Get the amount of LQTY earned by an address through mining liquidity.
+   * Get the amount of ProtocolToken earned by an address through mining liquidity.
    *
-   * @param address - Address whose LQTY reward should be retrieved.
+   * @param address - Address whose ProtocolToken reward should be retrieved.
    */
-  getLiquidityMiningLQTYReward(address?: string): Promise<Decimal>;
+  getLiquidityMiningProtocolTokenReward(address?: string): Promise<Decimal>;
 
   /**
    * Get the amount of leftover collateral available for withdrawal by an address.
@@ -193,16 +193,16 @@ export interface ReadableLiquity {
   getFees(): Promise<Fees>;
 
   /**
-   * Get the current state of an LQTY Stake.
+   * Get the current state of an ProtocolToken Stake.
    *
-   * @param address - Address that owns the LQTY Stake.
+   * @param address - Address that owns the ProtocolToken Stake.
    */
-  getLQTYStake(address?: string): Promise<LQTYStake>;
+  getProtocolTokenStake(address?: string): Promise<ProtocolTokenStake>;
 
   /**
-   * Get the total amount of LQTY currently staked.
+   * Get the total amount of ProtocolToken currently staked.
    */
-  getTotalStakedLQTY(): Promise<Decimal>;
+  getTotalStakedProtocolToken(): Promise<Decimal>;
 
   /**
    * Check whether an address is registered as a Liquity frontend, and what its kickback rate is.

@@ -174,13 +174,13 @@ export class SendableEthersLiquity
     return this._populate.sendDebtToken(toAddress, amount, overrides).then(sendTransaction);
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#SendableLiquity.sendLQTY} */
-  sendLQTY(
+  /** {@inheritDoc @secured-finance/lib-base#SendableLiquity.sendProtocolToken} */
+  sendProtocolToken(
     toAddress: string,
     amount: Decimalish,
     overrides?: EthersTransactionOverrides
   ): Promise<SentEthersLiquityTransaction<void>> {
-    return this._populate.sendLQTY(toAddress, amount, overrides).then(sendTransaction);
+    return this._populate.sendProtocolToken(toAddress, amount, overrides).then(sendTransaction);
   }
 
   /** {@inheritDoc @secured-finance/lib-base#SendableLiquity.redeemDebtToken} */
@@ -201,20 +201,20 @@ export class SendableEthersLiquity
     return this._populate.claimCollateralSurplus(overrides).then(sendTransaction);
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#SendableLiquity.stakeLQTY} */
-  stakeLQTY(
+  /** {@inheritDoc @secured-finance/lib-base#SendableLiquity.stakeProtocolToken} */
+  stakeProtocolToken(
     amount: Decimalish,
     overrides?: EthersTransactionOverrides
   ): Promise<SentEthersLiquityTransaction<void>> {
-    return this._populate.stakeLQTY(amount, overrides).then(sendTransaction);
+    return this._populate.stakeProtocolToken(amount, overrides).then(sendTransaction);
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#SendableLiquity.unstakeLQTY} */
-  unstakeLQTY(
+  /** {@inheritDoc @secured-finance/lib-base#SendableLiquity.unstakeProtocolToken} */
+  unstakeProtocolToken(
     amount: Decimalish,
     overrides?: EthersTransactionOverrides
   ): Promise<SentEthersLiquityTransaction<void>> {
-    return this._populate.unstakeLQTY(amount, overrides).then(sendTransaction);
+    return this._populate.unstakeProtocolToken(amount, overrides).then(sendTransaction);
   }
 
   /** {@inheritDoc @secured-finance/lib-base#SendableLiquity.withdrawGainsFromStaking} */
@@ -265,11 +265,13 @@ export class SendableEthersLiquity
     return this._populate.unstakeUniTokens(amount, overrides).then(sendTransaction);
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#SendableLiquity.withdrawLQTYRewardFromLiquidityMining} */
-  withdrawLQTYRewardFromLiquidityMining(
+  /** {@inheritDoc @secured-finance/lib-base#SendableLiquity.withdrawProtocolTokenRewardFromProtocolMining} */
+  withdrawProtocolTokenRewardFromProtocolMining(
     overrides?: EthersTransactionOverrides
   ): Promise<SentEthersLiquityTransaction<void>> {
-    return this._populate.withdrawLQTYRewardFromLiquidityMining(overrides).then(sendTransaction);
+    return this._populate
+      .withdrawProtocolTokenRewardFromProtocolMining(overrides)
+      .then(sendTransaction);
   }
 
   /** {@inheritDoc @secured-finance/lib-base#SendableLiquity.exitLiquidityMining} */

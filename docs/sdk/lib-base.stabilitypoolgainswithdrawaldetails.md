@@ -75,25 +75,6 @@ Amount of DebtToken burned from the deposit by liquidations since the last modif
 </td></tr>
 <tr><td>
 
-[lqtyReward](./lib-base.stabilitypoolgainswithdrawaldetails.lqtyreward.md)
-
-
-</td><td>
-
-
-</td><td>
-
-[Decimal](./lib-base.decimal.md)
-
-
-</td><td>
-
-Amount of LQTY rewarded to the depositor in this transaction.
-
-
-</td></tr>
-<tr><td>
-
 [newDebtTokenDeposit](./lib-base.stabilitypoolgainswithdrawaldetails.newdebttokendeposit.md)
 
 
@@ -108,6 +89,25 @@ Amount of LQTY rewarded to the depositor in this transaction.
 </td><td>
 
 Amount of DebtToken in the deposit directly after this transaction.
+
+
+</td></tr>
+<tr><td>
+
+[protocolTokenReward](./lib-base.stabilitypoolgainswithdrawaldetails.protocoltokenreward.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Decimal](./lib-base.decimal.md)
+
+
+</td><td>
+
+Amount of ProtocolToken rewarded to the depositor in this transaction.
 
 
 </td></tr>

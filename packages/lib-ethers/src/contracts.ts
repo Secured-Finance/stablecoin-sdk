@@ -23,11 +23,11 @@ import gasPoolAbi from "../abi/GasPool.json";
 import hintHelpersAbi from "../abi/HintHelpers.json";
 import iERC20Abi from "../abi/IERC20.json";
 import lockupContractFactoryAbi from "../abi/LockupContractFactory.json";
-import lqtyStakingAbi from "../abi/LQTYStaking.json";
-import lqtyTokenAbi from "../abi/LQTYToken.json";
 import multiTroveGetterAbi from "../abi/MultiTroveGetter.json";
 import priceFeedAbi from "../abi/PriceFeed.json";
 import priceFeedTestnetAbi from "../abi/PriceFeedTestnet.json";
+import protocolTokenAbi from "../abi/ProtocolToken.json";
+import protocolTokenStakingAbi from "../abi/ProtocolTokenStaking.json";
 import sortedTrovesAbi from "../abi/SortedTroves.json";
 import stabilityPoolAbi from "../abi/StabilityPool.json";
 import troveManagerAbi from "../abi/TroveManager.json";
@@ -45,11 +45,11 @@ import {
   HintHelpers,
   IERC20,
   LockupContractFactory,
-  LQTYStaking,
-  LQTYToken,
   MultiTroveGetter,
   PriceFeed,
   PriceFeedTestnet,
+  ProtocolToken,
+  ProtocolTokenStaking,
   SortedTroves,
   StabilityPool,
   TroveManager,
@@ -171,10 +171,10 @@ export interface _LiquityContracts {
   collSurplusPool: CollSurplusPool;
   communityIssuance: CommunityIssuance;
   defaultPool: DefaultPool;
-  lqtyToken: LQTYToken;
+  protocolToken: ProtocolToken;
   hintHelpers: HintHelpers;
   lockupContractFactory: LockupContractFactory;
-  lqtyStaking: LQTYStaking;
+  protocolTokenStaking: ProtocolTokenStaking;
   multiTroveGetter: MultiTroveGetter;
   priceFeed: PriceFeed | PriceFeedTestnet;
   sortedTroves: SortedTroves;
@@ -207,10 +207,10 @@ const getAbi = (priceFeedIsTestnet: boolean, uniTokenIsMock: boolean): LiquityCo
   debtToken: debtTokenAbi,
   communityIssuance: communityIssuanceAbi,
   defaultPool: defaultPoolAbi,
-  lqtyToken: lqtyTokenAbi,
+  protocolToken: protocolTokenAbi,
   hintHelpers: hintHelpersAbi,
   lockupContractFactory: lockupContractFactoryAbi,
-  lqtyStaking: lqtyStakingAbi,
+  protocolTokenStaking: protocolTokenStakingAbi,
   multiTroveGetter: multiTroveGetterAbi,
   priceFeed: priceFeedIsTestnet ? priceFeedTestnetAbi : priceFeedAbi,
   sortedTroves: sortedTrovesAbi,
@@ -237,8 +237,8 @@ export interface _LiquityDeploymentJSON {
   readonly deploymentDate: number;
   readonly startBlock: number;
   readonly bootstrapPeriod: number;
-  readonly totalStabilityPoolLQTYReward: string;
-  readonly liquidityMiningLQTYRewardRate: string;
+  readonly totalStabilityPoolProtocolTokenReward: string;
+  readonly liquidityMiningProtocolTokenRewardRate: string;
   readonly _priceFeedIsTestnet: boolean;
   readonly _uniTokenIsMock: boolean;
   readonly _isDev: boolean;

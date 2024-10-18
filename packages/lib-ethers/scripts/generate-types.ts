@@ -140,13 +140,11 @@ const contractList = [
   "Unipool",
   "CommunityIssuance",
   "LockupContractFactory",
-  "LQTYStaking",
-  "LQTYToken"
+  "ProtocolTokenStaking",
+  "ProtocolToken"
 ];
 
-const artifactsDir = require
-  .resolve("@secured-finance/stablecoin-contracts/package.json")
-  .replace("/package.json", "/artifacts");
+const artifactsDir = path.join("..", "contracts", "artifacts");
 
 fs.removeSync("abi");
 fs.mkdirSync("abi", { recursive: true });
@@ -154,7 +152,7 @@ fs.mkdirSync("abi", { recursive: true });
 const getContracts = (moduleDir: string) => {
   return fs
     .readdirSync(moduleDir)
-    .filter(file => contractList.includes(file.replace(".sol", "")))
+    .filter(file => file.endsWith(".sol") && contractList.includes(file.replace(".sol", "")))
     .map(file => {
       const contractName = (file.split("/").pop() || "").replace(".sol", "");
       const fileContent = fs.readFileSync(`${moduleDir}/${file}/${contractName}.json`, "utf-8");
@@ -171,7 +169,7 @@ const contracts = [
   ...getContracts(`${artifactsDir}/contracts`),
   ...getContracts(`${artifactsDir}/contracts/LPRewards`),
   ...getContracts(`${artifactsDir}/contracts/LPRewards/TestContracts`),
-  ...getContracts(`${artifactsDir}/contracts/LQTY`),
+  ...getContracts(`${artifactsDir}/contracts/ProtocolToken`),
   ...getContracts(`${artifactsDir}/contracts/TestContracts`),
   ...getContracts(`${artifactsDir}/@openzeppelin/contracts/token/ERC20`)
 ];

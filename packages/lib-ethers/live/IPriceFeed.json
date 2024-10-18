@@ -17,6 +17,19 @@
       "type": "event"
     },
     {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "enum IPriceFeed.Status",
+          "name": "newStatus",
+          "type": "uint8"
+        }
+      ],
+      "name": "PriceFeedStatusChanged",
+      "type": "event"
+    },
+    {
       "inputs": [],
       "name": "fetchPrice",
       "outputs": [

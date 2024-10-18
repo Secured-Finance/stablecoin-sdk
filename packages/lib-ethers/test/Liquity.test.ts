@@ -116,16 +116,14 @@ describe("EthersLiquity", () => {
       )
       .reduce((a, b) => a.then(b), Promise.resolve());
 
-  const sendTo = (user: Signer, value: Decimalish, nonce?: number) =>
+  const sendTo = (user: Signer, value: Decimalish) =>
     funder.sendTransaction({
       to: user.getAddress(),
-      value: Decimal.from(value).add(GAS_BUDGET).hex,
-      nonce
+      value: Decimal.from(value).add(GAS_BUDGET).hex
     });
 
   const sendToEach = async (users: Signer[], value: Decimalish) => {
-    const txCount = await provider.getTransactionCount(funder.getAddress());
-    const txs = await Promise.all(users.map((user, i) => sendTo(user, value, txCount + i)));
+    const txs = await Promise.all(users.map(user => sendTo(user, value)));
 
     // Wait for the last tx to be mined.
     await txs[txs.length - 1].wait();
@@ -242,7 +240,7 @@ describe("EthersLiquity", () => {
 
       const nominalCollateralRatio = Decimal.from(0.05);
 
-      const params = Trove.recreate(new Trove(Decimal.from(1), MINIMUM_DEBT));
+      const params = Trove.recreate(new Trove(Decimal.from(0.1), MINIMUM_DEBT));
       const trove = Trove.create(params);
       expect(`${trove._nominalCollateralRatio}`).to.equal(`${nominalCollateralRatio}`);
 
@@ -381,7 +379,7 @@ describe("EthersLiquity", () => {
     it("should close the Trove with some DebtToken from another user", async () => {
       const price = await liquity.getPrice();
       const initialTrove = await liquity.getTrove();
-      const debtTokenBalance = await liquity.getLQTYBalance();
+      const debtTokenBalance = await liquity.getProtocolTokenBalance();
       const debtTokenShortage = initialTrove.netDebt.sub(debtTokenBalance);
 
       let funderTrove = Trove.create({ depositCollateral: 1, borrowDebtToken: debtTokenShortage });
@@ -487,7 +485,7 @@ describe("EthersLiquity", () => {
         debtTokenLoss: Decimal.from(0),
         newDebtTokenDeposit: smallStabilityDeposit,
         collateralGain: Decimal.from(0),
-        lqtyReward: Decimal.from(0),
+        protocolTokenReward: Decimal.from(0),
 
         change: {
           depositDebtToken: smallStabilityDeposit
@@ -590,7 +588,7 @@ describe("EthersLiquity", () => {
       expect(details).to.deep.equal({
         debtTokenLoss: smallStabilityDeposit,
         newDebtTokenDeposit: Decimal.ZERO,
-        lqtyReward: Decimal.ZERO,
+        protocolTokenReward: Decimal.ZERO,
 
         collateralGain: troveWithVeryLowICR.collateral
           .mul(0.995) // -0.5% gas compensation
@@ -813,9 +811,9 @@ describe("EthersLiquity", () => {
   });
 
   describe("Redemption (truncation)", () => {
-    const troveCreationParams = { depositCollateral: 20, borrowDebtToken: 2000 };
+    const troveCreationParams = { depositCollateral: 2, borrowDebtToken: 200 };
     const netDebtPerTrove = Trove.create(troveCreationParams).netDebt;
-    const amountToAttempt = Decimal.from(3000);
+    const amountToAttempt = Decimal.from(300);
     const expectedRedeemable = netDebtPerTrove.mul(2).sub(MINIMUM_NET_DEBT);
 
     before(function () {
@@ -980,7 +978,7 @@ describe("EthersLiquity", () => {
       expect(`${stake}`).to.equal(`${someUniTokens}`);
     });
 
-    it("should have an LQTY reward after some time has passed", async function () {
+    it("should have an ProtocolToken reward after some time has passed", async function () {
       this.timeout("20s");
 
       // Liquidity mining rewards are seconds-based, so we don't need to wait long.
@@ -991,12 +989,12 @@ describe("EthersLiquity", () => {
       // Trigger a new block with a dummy TX.
       await liquity._mintUniToken(0);
 
-      const lqtyReward = Number(await liquity.getLiquidityMiningLQTYReward());
-      expect(lqtyReward).to.be.at.least(1); // ~0.2572 per second [(4e6/3) / (60*24*60*60)]
+      const protocolTokenReward = Number(await liquity.getLiquidityMiningProtocolTokenReward());
+      expect(protocolTokenReward).to.be.at.least(1); // ~0.2572 per second [(4e6/3) / (60*24*60*60)]
 
-      await liquity.withdrawLQTYRewardFromLiquidityMining();
-      const lqtyBalance = Number(await liquity.getLQTYBalance());
-      expect(lqtyBalance).to.be.at.least(lqtyReward); // may have increased since checking
+      await liquity.withdrawProtocolTokenRewardFromProtocolMining();
+      const protocolTokenBalance = Number(await liquity.getProtocolTokenBalance());
+      expect(protocolTokenBalance).to.be.at.least(protocolTokenReward); // may have increased since checking
     });
 
     it("should partially unstake", async () => {
@@ -1009,7 +1007,7 @@ describe("EthersLiquity", () => {
       expect(`${uniTokenBalance}`).to.equal(`${someUniTokens / 2}`);
     });
 
-    it("should unstake remaining tokens and withdraw remaining LQTY reward", async () => {
+    it("should unstake remaining tokens and withdraw remaining ProtocolToken reward", async () => {
       await new Promise(resolve => setTimeout(resolve, 1000));
       await liquity._mintUniToken(0); // dummy block
       await liquity.exitLiquidityMining();
@@ -1017,8 +1015,8 @@ describe("EthersLiquity", () => {
       const uniTokenStake = await liquity.getLiquidityMiningStake();
       expect(`${uniTokenStake}`).to.equal("0");
 
-      const lqtyReward = await liquity.getLiquidityMiningLQTYReward();
-      expect(`${lqtyReward}`).to.equal("0");
+      const protocolTokenReward = await liquity.getLiquidityMiningProtocolTokenReward();
+      expect(`${protocolTokenReward}`).to.equal("0");
 
       const uniTokenBalance = await liquity.getUniTokenBalance();
       expect(`${uniTokenBalance}`).to.equal(`${someUniTokens}`);
@@ -1034,11 +1032,12 @@ describe("EthersLiquity", () => {
       await increaseTime(2 * 30 * 24 * 60 * 60);
       await liquity.exitLiquidityMining();
 
-      const remainingLQTYReward = await liquity.getRemainingLiquidityMiningLQTYReward();
-      expect(`${remainingLQTYReward}`).to.equal("0");
+      const remainingProtocolTokenReward =
+        await liquity.getRemainingProtocolMiningProtocolTokenReward();
+      expect(`${remainingProtocolTokenReward}`).to.equal("0");
 
-      const lqtyBalance = Number(await liquity.getLQTYBalance());
-      expect(lqtyBalance).to.be.within(1333333, 1333334);
+      const protocolTokenBalance = Number(await liquity.getProtocolTokenBalance());
+      expect(protocolTokenBalance).to.be.within(1333333, 1333334);
     });
   });
 
@@ -1244,7 +1243,7 @@ describe("EthersLiquity", () => {
     });
   });
 
-  describe("Gas estimation (LQTY issuance)", () => {
+  describe("Gas estimation (ProtocolToken issuance)", () => {
     const estimate = (tx: PopulatedEthersLiquityTransaction) =>
       provider.estimateGas(tx.rawPopulatedTransaction);
 
@@ -1257,7 +1256,7 @@ describe("EthersLiquity", () => {
       [deployerLiquity, liquity] = await connectUsers([deployer, user]);
     });
 
-    it("should include enough gas for issuing LQTY", async function () {
+    it("should include enough gas for issuing ProtocolToken", async function () {
       this.timeout("1m");
 
       await liquity.openTrove({ depositCollateral: 40, borrowDebtToken: 4000 });
@@ -1265,7 +1264,7 @@ describe("EthersLiquity", () => {
 
       await increaseTime(60);
 
-      // This will issue LQTY for the first time ever. That uses a whole lotta gas, and we don't
+      // This will issue ProtocolToken for the first time ever. That uses a whole lotta gas, and we don't
       // want to pack any extra gas to prepare for this case specifically, because it only happens
       // once.
       await liquity.withdrawGainsFromStabilityPool();
@@ -1378,9 +1377,9 @@ describe("EthersLiquity", () => {
       const borrowingRate = await liquity.getFees().then(fees => fees.borrowingRate());
 
       for (const [borrowingFeeDecayToleranceMinutes, roughGasHeadroom] of [
-        [10, 128000],
-        [20, 242000],
-        [30, 322000]
+        [10, 95000],
+        [20, 96200],
+        [30, 97400]
       ]) {
         const tx = await liquity.populate.openTrove(Trove.recreate(bottomTrove, borrowingRate), {
           borrowingFeeDecayToleranceMinutes

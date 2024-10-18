@@ -317,7 +317,7 @@ Check whether an address is registered as a Liquity frontend, and what its kickb
 </td></tr>
 <tr><td>
 
-[getLiquidityMiningLQTYReward(address, overrides)](./lib-ethers.ethersliquity.getliquiditymininglqtyreward.md)
+[getLiquidityMiningProtocolTokenReward(address, overrides)](./lib-ethers.ethersliquity.getliquidityminingprotocoltokenreward.md)
 
 
 </td><td>
@@ -325,7 +325,7 @@ Check whether an address is registered as a Liquity frontend, and what its kickb
 
 </td><td>
 
-Get the amount of LQTY earned by an address through mining liquidity.
+Get the amount of ProtocolToken earned by an address through mining liquidity.
 
 
 </td></tr>
@@ -340,34 +340,6 @@ Get the amount of LQTY earned by an address through mining liquidity.
 </td><td>
 
 Get the amount of Uniswap FIL/DebtToken LP tokens currently staked by an address in liquidity mining.
-
-
-</td></tr>
-<tr><td>
-
-[getLQTYBalance(address, overrides)](./lib-ethers.ethersliquity.getlqtybalance.md)
-
-
-</td><td>
-
-
-</td><td>
-
-Get the amount of LQTY held by an address.
-
-
-</td></tr>
-<tr><td>
-
-[getLQTYStake(address, overrides)](./lib-ethers.ethersliquity.getlqtystake.md)
-
-
-</td><td>
-
-
-</td><td>
-
-Get the current state of an LQTY Stake.
 
 
 </td></tr>
@@ -401,7 +373,7 @@ Get the current price of the native currency (e.g. Ether) in USD.
 </td></tr>
 <tr><td>
 
-[getRemainingLiquidityMiningLQTYReward(overrides)](./lib-ethers.ethersliquity.getremainingliquiditymininglqtyreward.md)
+[getProtocolTokenBalance(address, overrides)](./lib-ethers.ethersliquity.getprotocoltokenbalance.md)
 
 
 </td><td>
@@ -409,13 +381,13 @@ Get the current price of the native currency (e.g. Ether) in USD.
 
 </td><td>
 
-Get the remaining LQTY that will be collectively rewarded to liquidity miners.
+Get the amount of ProtocolToken held by an address.
 
 
 </td></tr>
 <tr><td>
 
-[getRemainingStabilityPoolLQTYReward(overrides)](./lib-ethers.ethersliquity.getremainingstabilitypoollqtyreward.md)
+[getProtocolTokenStake(address, overrides)](./lib-ethers.ethersliquity.getprotocoltokenstake.md)
 
 
 </td><td>
@@ -423,7 +395,35 @@ Get the remaining LQTY that will be collectively rewarded to liquidity miners.
 
 </td><td>
 
-Get the remaining LQTY that will be collectively rewarded to stability depositors.
+Get the current state of an ProtocolToken Stake.
+
+
+</td></tr>
+<tr><td>
+
+[getRemainingProtocolMiningProtocolTokenReward(overrides)](./lib-ethers.ethersliquity.getremainingprotocolminingprotocoltokenreward.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Get the remaining ProtocolToken that will be collectively rewarded to liquidity miners.
+
+
+</td></tr>
+<tr><td>
+
+[getRemainingStabilityPoolProtocolTokenReward(overrides)](./lib-ethers.ethersliquity.getremainingstabilitypoolprotocoltokenreward.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Get the remaining ProtocolToken that will be collectively rewarded to stability depositors.
 
 
 </td></tr>
@@ -471,7 +471,7 @@ Get the total collateral and debt per stake that has been liquidated through red
 </td></tr>
 <tr><td>
 
-[getTotalStakedLQTY(overrides)](./lib-ethers.ethersliquity.gettotalstakedlqty.md)
+[getTotalStakedProtocolToken(overrides)](./lib-ethers.ethersliquity.gettotalstakedprotocoltoken.md)
 
 
 </td><td>
@@ -479,7 +479,7 @@ Get the total collateral and debt per stake that has been liquidated through red
 
 </td><td>
 
-Get the total amount of LQTY currently staked.
+Get the total amount of ProtocolToken currently staked.
 
 
 </td></tr>
@@ -695,7 +695,7 @@ Send DebtToken tokens to an address.
 </td></tr>
 <tr><td>
 
-[sendLQTY(toAddress, amount, overrides)](./lib-ethers.ethersliquity.sendlqty.md)
+[sendProtocolToken(toAddress, amount, overrides)](./lib-ethers.ethersliquity.sendprotocoltoken.md)
 
 
 </td><td>
@@ -703,13 +703,13 @@ Send DebtToken tokens to an address.
 
 </td><td>
 
-Send LQTY tokens to an address.
+Send ProtocolTokens to an address.
 
 
 </td></tr>
 <tr><td>
 
-[stakeLQTY(amount, overrides)](./lib-ethers.ethersliquity.stakelqty.md)
+[stakeProtocolToken(amount, overrides)](./lib-ethers.ethersliquity.stakeprotocoltoken.md)
 
 
 </td><td>
@@ -717,7 +717,7 @@ Send LQTY tokens to an address.
 
 </td><td>
 
-Stake LQTY to start earning fee revenue or increase existing stake.
+Stake ProtocolToken to start earning fee revenue or increase existing stake.
 
 
 </td></tr>
@@ -731,7 +731,7 @@ Stake LQTY to start earning fee revenue or increase existing stake.
 
 </td><td>
 
-Stake Uniswap FIL/DebtToken LP tokens to participate in liquidity mining and earn LQTY.
+Stake Uniswap FIL/DebtToken LP tokens to participate in liquidity mining and earn ProtocolToken.
 
 
 </td></tr>
@@ -751,7 +751,7 @@ Transfer [collateral gain](./lib-base.stabilitydeposit.collateralgain.md) from S
 </td></tr>
 <tr><td>
 
-[unstakeLQTY(amount, overrides)](./lib-ethers.ethersliquity.unstakelqty.md)
+[unstakeProtocolToken(amount, overrides)](./lib-ethers.ethersliquity.unstakeprotocoltoken.md)
 
 
 </td><td>
@@ -759,7 +759,7 @@ Transfer [collateral gain](./lib-base.stabilitydeposit.collateralgain.md) from S
 
 </td><td>
 
-Withdraw LQTY from staking.
+Withdraw ProtocolToken from staking.
 
 
 </td></tr>
@@ -815,7 +815,7 @@ Withdraw DebtToken from Stability Deposit.
 
 </td><td>
 
-Withdraw [collateral gain](./lib-base.stabilitydeposit.collateralgain.md) and [LQTY reward](./lib-base.stabilitydeposit.lqtyreward.md) from Stability Deposit.
+Withdraw [collateral gain](./lib-base.stabilitydeposit.collateralgain.md) and [ProtocolToken reward](./lib-base.stabilitydeposit.protocoltokenreward.md) from Stability Deposit.
 
 
 </td></tr>
@@ -829,13 +829,13 @@ Withdraw [collateral gain](./lib-base.stabilitydeposit.collateralgain.md) and [L
 
 </td><td>
 
-Withdraw [collateral gain](./lib-base.lqtystake.collateralgain.md) and [DebtToken gain](./lib-base.lqtystake.debttokengain.md) from LQTY stake.
+Withdraw [collateral gain](./lib-base.protocoltokenstake.collateralgain.md) and [DebtToken gain](./lib-base.protocoltokenstake.debttokengain.md) from ProtocolToken stake.
 
 
 </td></tr>
 <tr><td>
 
-[withdrawLQTYRewardFromLiquidityMining(overrides)](./lib-ethers.ethersliquity.withdrawlqtyrewardfromliquiditymining.md)
+[withdrawProtocolTokenRewardFromProtocolMining(overrides)](./lib-ethers.ethersliquity.withdrawprotocoltokenrewardfromprotocolmining.md)
 
 
 </td><td>
@@ -843,7 +843,7 @@ Withdraw [collateral gain](./lib-base.lqtystake.collateralgain.md) and [DebtToke
 
 </td><td>
 
-Withdraw LQTY that has been earned by mining liquidity.
+Withdraw ProtocolToken that has been earned by mining liquidity.
 
 
 </td></tr>

@@ -14,7 +14,7 @@ export declare class Decimal
 
 ## Remarks
 
-Used by Liquity libraries to precisely represent native currency (e.g. Ether), DebtToken and LQTY amounts, as well as derived metrics like collateral ratios.
+Used by Liquity libraries to precisely represent native currency (e.g. Ether), DebtToken and ProtocolToken amounts, as well as derived metrics like collateral ratios.
 
 ## Properties
 

@@ -36,7 +36,7 @@
     "inputs": [
       {
         "indexed": false,
-        "internalType": "enum PriceFeed.Status",
+        "internalType": "enum IPriceFeed.Status",
         "name": "newStatus",
         "type": "uint8"
       }
@@ -141,7 +141,7 @@
     "outputs": [
       {
         "internalType": "uint256",
-        "name": "",
+        "name": "price",
         "type": "uint256"
       }
     ],
@@ -223,7 +223,7 @@
     "name": "status",
     "outputs": [
       {
-        "internalType": "enum PriceFeed.Status",
+        "internalType": "enum IPriceFeed.Status",
         "name": "",
         "type": "uint8"
       }

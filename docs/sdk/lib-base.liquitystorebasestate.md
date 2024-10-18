@@ -132,7 +132,7 @@ Status of currently used frontend.
 </td></tr>
 <tr><td>
 
-[liquidityMiningLQTYReward](./lib-base.liquitystorebasestate.liquiditymininglqtyreward.md)
+[liquidityMiningProtocolTokenReward](./lib-base.liquitystorebasestate.liquidityminingprotocoltokenreward.md)
 
 
 </td><td>
@@ -145,7 +145,7 @@ Status of currently used frontend.
 
 </td><td>
 
-Amount of LQTY the user has earned through mining liquidity.
+Amount of ProtocolToken the user has earned through mining liquidity.
 
 
 </td></tr>
@@ -165,44 +165,6 @@ Amount of LQTY the user has earned through mining liquidity.
 </td><td>
 
 Amount of Uniswap FIL/DebtToken LP tokens the user has staked in liquidity mining.
-
-
-</td></tr>
-<tr><td>
-
-[lqtyBalance](./lib-base.liquitystorebasestate.lqtybalance.md)
-
-
-</td><td>
-
-
-</td><td>
-
-[Decimal](./lib-base.decimal.md)
-
-
-</td><td>
-
-User's LQTY token balance.
-
-
-</td></tr>
-<tr><td>
-
-[lqtyStake](./lib-base.liquitystorebasestate.lqtystake.md)
-
-
-</td><td>
-
-
-</td><td>
-
-[LQTYStake](./lib-base.lqtystake.md)
-
-
-</td><td>
-
-User's LQTY stake.
 
 
 </td></tr>
@@ -265,7 +227,7 @@ Current price of the native currency (e.g. Ether) in USD.
 </td></tr>
 <tr><td>
 
-[remainingLiquidityMiningLQTYReward](./lib-base.liquitystorebasestate.remainingliquiditymininglqtyreward.md)
+[protocolTokenBalance](./lib-base.liquitystorebasestate.protocoltokenbalance.md)
 
 
 </td><td>
@@ -278,13 +240,32 @@ Current price of the native currency (e.g. Ether) in USD.
 
 </td><td>
 
-Remaining LQTY that will be collectively rewarded to liquidity miners.
+User's ProtocolToken token balance.
 
 
 </td></tr>
 <tr><td>
 
-[remainingStabilityPoolLQTYReward](./lib-base.liquitystorebasestate.remainingstabilitypoollqtyreward.md)
+[protocolTokenStake](./lib-base.liquitystorebasestate.protocoltokenstake.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[ProtocolTokenStake](./lib-base.protocoltokenstake.md)
+
+
+</td><td>
+
+User's ProtocolToken stake.
+
+
+</td></tr>
+<tr><td>
+
+[remainingProtocolMiningProtocolTokenReward](./lib-base.liquitystorebasestate.remainingprotocolminingprotocoltokenreward.md)
 
 
 </td><td>
@@ -297,7 +278,26 @@ Remaining LQTY that will be collectively rewarded to liquidity miners.
 
 </td><td>
 
-Remaining LQTY that will be collectively rewarded to stability depositors.
+Remaining ProtocolToken that will be collectively rewarded to liquidity miners.
+
+
+</td></tr>
+<tr><td>
+
+[remainingStabilityPoolProtocolTokenReward](./lib-base.liquitystorebasestate.remainingstabilitypoolprotocoltokenreward.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Decimal](./lib-base.decimal.md)
+
+
+</td><td>
+
+Remaining ProtocolToken that will be collectively rewarded to stability depositors.
 
 
 </td></tr>
@@ -360,7 +360,7 @@ Total collateral and debt per stake that has been liquidated through redistribut
 </td></tr>
 <tr><td>
 
-[totalStakedLQTY](./lib-base.liquitystorebasestate.totalstakedlqty.md)
+[totalStakedProtocolToken](./lib-base.liquitystorebasestate.totalstakedprotocoltoken.md)
 
 
 </td><td>
@@ -373,7 +373,7 @@ Total collateral and debt per stake that has been liquidated through redistribut
 
 </td><td>
 
-Total amount of LQTY currently staked.
+Total amount of ProtocolToken currently staked.
 
 
 </td></tr>

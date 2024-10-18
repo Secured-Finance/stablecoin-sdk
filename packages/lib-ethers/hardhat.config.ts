@@ -32,10 +32,7 @@ const numAccounts = 100;
 const useLiveVersionEnv = (process.env.USE_LIVE_VERSION ?? "false").toLowerCase();
 const useLiveVersion = !["false", "no", "0"].includes(useLiveVersionEnv);
 
-// const contractsDir = path.join("..", "contracts");
-const contractsDir = require
-  .resolve("@secured-finance/stablecoin-contracts/package.json")
-  .replace("/package.json", "");
+const contractsDir = path.join("..", "contracts");
 const artifacts = path.join(contractsDir, "artifacts");
 const cache = path.join(contractsDir, "cache");
 
@@ -128,7 +125,7 @@ const config: HardhatUserConfig = {
 
   paths: {
     artifacts,
-    // sources: `${contractsDir}/contracts`
+    // sources: `${contractsDir}/contracts`,
     cache
   }
 };

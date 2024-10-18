@@ -1,5 +1,21 @@
 [
   {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_gasCompensation",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_minNetDebt",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
     "anonymous": false,
     "inputs": [
       {
@@ -112,25 +128,6 @@
     "anonymous": false,
     "inputs": [
       {
-        "indexed": false,
-        "internalType": "address",
-        "name": "_to",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "_amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "EtherSent",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
         "indexed": true,
         "internalType": "address",
         "name": "_depositor",
@@ -150,6 +147,25 @@
       }
     ],
     "name": "FILGainWithdrawn",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "_to",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "FILSent",
     "type": "event"
   },
   {
@@ -271,44 +287,6 @@
       {
         "indexed": true,
         "internalType": "address",
-        "name": "_depositor",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "_LQTY",
-        "type": "uint256"
-      }
-    ],
-    "name": "LQTYPaidToDepositor",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "_frontEnd",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "_LQTY",
-        "type": "uint256"
-      }
-    ],
-    "name": "LQTYPaidToFrontEnd",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
         "name": "previousOwner",
         "type": "address"
       },
@@ -346,6 +324,44 @@
       }
     ],
     "name": "PriceFeedAddressChanged",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "_depositor",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_protocolToken",
+        "type": "uint256"
+      }
+    ],
+    "name": "ProtocolTokenPaidToDepositor",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "_frontEnd",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_protocolToken",
+        "type": "uint256"
+      }
+    ],
+    "name": "ProtocolTokenPaidToFrontEnd",
     "type": "event"
   },
   {
@@ -949,7 +965,7 @@
         "type": "address"
       }
     ],
-    "name": "getDepositorLQTYGain",
+    "name": "getDepositorProtocolTokenGain",
     "outputs": [
       {
         "internalType": "uint256",
@@ -1007,7 +1023,7 @@
         "type": "address"
       }
     ],
-    "name": "getFrontEndLQTYGain",
+    "name": "getFrontEndProtocolTokenGain",
     "outputs": [
       {
         "internalType": "uint256",
@@ -1072,7 +1088,7 @@
   },
   {
     "inputs": [],
-    "name": "lastLQTYError",
+    "name": "lastProtocolTokenError",
     "outputs": [
       {
         "internalType": "uint256",

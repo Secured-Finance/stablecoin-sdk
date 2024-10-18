@@ -134,7 +134,7 @@ boolean
 </td></tr>
 <tr><td>
 
-[lqtyReward](./lib-base.stabilitydeposit.lqtyreward.md)
+[protocolTokenReward](./lib-base.stabilitydeposit.protocoltokenreward.md)
 
 
 </td><td>
@@ -147,7 +147,7 @@ boolean
 
 </td><td>
 
-Amount of LQTY rewarded since the last modification of the Stability Deposit.
+Amount of ProtocolToken rewarded since the last modification of the Stability Deposit.
 
 
 </td></tr>

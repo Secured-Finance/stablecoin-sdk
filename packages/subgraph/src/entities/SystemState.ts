@@ -1,33 +1,33 @@
-import { ethereum, BigDecimal, BigInt } from "@graphprotocol/graph-ts";
+import { BigDecimal, BigInt, ethereum } from "@graphprotocol/graph-ts";
 
 import {
-  SystemState,
-  PriceChange,
-  TroveChange,
-  StabilityDepositChange,
   CollSurplusChange,
-  LqtyStakeChange
+  PriceChange,
+  ProtocolTokenStakeChange,
+  StabilityDepositChange,
+  SystemState,
+  TroveChange
 } from "../../generated/schema";
 
 import {
-  decimalize,
-  DECIMAL_ZERO,
-  DECIMAL_ONE,
   DECIMAL_COLLATERAL_GAS_COMPENSATION_DIVISOR,
-  DECIMAL_PRECISION
+  DECIMAL_ONE,
+  DECIMAL_PRECISION,
+  DECIMAL_ZERO,
+  decimalize
 } from "../utils/bignumbers";
 
 import { calculateCollateralRatio } from "../utils/collateralRatio";
 
 import {
   isBorrowerOperation,
-  isRedemption,
   isLiquidation,
-  isRecoveryModeLiquidation
+  isRecoveryModeLiquidation,
+  isRedemption
 } from "../types/TroveOperation";
 
+import { beginChange, finishChange, initChange } from "./Change";
 import { getGlobal, getSystemStateSequenceNumber } from "./Global";
-import { beginChange, initChange, finishChange } from "./Change";
 
 export function getCurrentSystemState(): SystemState {
   let currentSystemStateId = getGlobal().currentSystemState;
@@ -42,7 +42,7 @@ export function getCurrentSystemState(): SystemState {
     newSystemState.totalDebt = DECIMAL_ZERO;
     newSystemState.tokensInStabilityPool = DECIMAL_ZERO;
     newSystemState.collSurplusPoolBalance = DECIMAL_ZERO;
-    newSystemState.totalLQTYTokensStaked = DECIMAL_ZERO;
+    newSystemState.totalProtocolTokensStaked = DECIMAL_ZERO;
     newSystemState.save();
 
     let global = getGlobal();
@@ -202,10 +202,12 @@ export function updateSystemStateByCollSurplusChange(collSurplusChange: CollSurp
   bumpSystemState(systemState);
 }
 
-export function updateSystemStateByLqtyStakeChange(stakeChange: LqtyStakeChange): void {
+export function updateSystemStateByProtocolTokenStakeChange(
+  stakeChange: ProtocolTokenStakeChange
+): void {
   let systemState = getCurrentSystemState();
 
-  systemState.totalLQTYTokensStaked = systemState.totalLQTYTokensStaked.plus(
+  systemState.totalProtocolTokensStaked = systemState.totalProtocolTokensStaked.plus(
     stakeChange.stakedAmountChange
   );
 

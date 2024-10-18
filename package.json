@@ -52,6 +52,7 @@
     "fuzzer": "yarn workspace @secured-finance/fuzzer fuzzer",
     "postinstall": "run-s prepare",
     "prepare": "run-s 'prepare:*'",
+    "prepare:contracts": "yarn workspace @secured-finance/stablecoin-contracts prepare",
     "prepare:lib-base": "yarn workspace @secured-finance/lib-base prepare",
     "prepare:lib-ethers": "yarn workspace @secured-finance/lib-ethers prepare",
     "prepare:lib-react": "yarn workspace @secured-finance/lib-react prepare",

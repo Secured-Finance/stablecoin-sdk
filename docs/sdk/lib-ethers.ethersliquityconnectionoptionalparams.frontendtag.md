@@ -4,7 +4,7 @@
 
 ## EthersLiquityConnectionOptionalParams.frontendTag property
 
-Address that will receive LQTY rewards from newly created Stability Deposits by default.
+Address that will receive ProtocolToken rewards from newly created Stability Deposits by default.
 
 **Signature:**
 

@@ -15,7 +15,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Generate token
+        id: generate_token
+        uses: tibdex/github-app-token@v1
+        with:
+          app_id: ${{ secrets.MACHINE_USER_APP_ID }}
+          private_key: ${{ secrets.MACHINE_USER_PRIVATE_KEY }}
+
       - uses: actions/checkout@v3
+        with:
+          submodules: recursive
+          token: ${{ steps.generate_token.outputs.token }}
 
       - uses: actions/setup-node@v3
         with:
@@ -28,8 +38,8 @@ jobs:
       - run: yarn install --immutable
       - run: yarn build
 
-      # - name: Test SDK & UI
-      #   run: yarn test
+      - name: Test SDK & UI
+        run: yarn test
 
       # - name: Test SDK integration against live contracts
       #   if: ${{ github.ref == 'refs/heads/main' }}

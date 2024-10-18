@@ -9,21 +9,26 @@ import * as l from "../lexicon";
 import { CURRENCY } from "../strings";
 import { Statistic } from "./Statistic";
 
-const selectBalances = ({ accountBalance, debtTokenBalance, lqtyBalance }: LiquityStoreState) => ({
+const selectBalances = ({
   accountBalance,
   debtTokenBalance,
-  lqtyBalance
+  protocolTokenBalance
+}: LiquityStoreState) => ({
+  accountBalance,
+  debtTokenBalance,
+  protocolTokenBalance
 });
 
 const Balances: React.FC = () => {
-  const { accountBalance, debtTokenBalance, lqtyBalance } = useLiquitySelector(selectBalances);
+  const { accountBalance, debtTokenBalance, protocolTokenBalance } =
+    useLiquitySelector(selectBalances);
 
   return (
     <Box sx={{ mb: 3 }}>
       <Heading>My Account Balances</Heading>
       <Statistic lexicon={l.FIL}>{accountBalance.prettify(4)}</Statistic>
-      <Statistic lexicon={l.LUSD}>{debtTokenBalance.prettify()}</Statistic>
-      <Statistic lexicon={l.LQTY}>{lqtyBalance.prettify()}</Statistic>
+      <Statistic lexicon={l.DEBT_TOKEN}>{debtTokenBalance.prettify()}</Statistic>
+      <Statistic lexicon={l.PROTOCOL_TOKEN}>{protocolTokenBalance.prettify()}</Statistic>
     </Box>
   );
 };
@@ -47,7 +52,7 @@ const select = ({
   debtTokenInStabilityPool,
   borrowingRate,
   redemptionRate,
-  totalStakedLQTY,
+  totalStakedProtocolToken,
   frontend
 }: LiquityStoreState) => ({
   numberOfTroves,
@@ -56,7 +61,7 @@ const select = ({
   debtTokenInStabilityPool,
   borrowingRate,
   redemptionRate,
-  totalStakedLQTY,
+  totalStakedProtocolToken,
   kickbackRate: frontend.status === "registered" ? frontend.kickbackRate : null
 });
 
@@ -73,7 +78,7 @@ export const SystemStats: React.FC<SystemStatsProps> = ({ variant = "info", show
     debtTokenInStabilityPool,
     total,
     borrowingRate,
-    totalStakedLQTY,
+    totalStakedProtocolToken,
     kickbackRate
   } = useLiquitySelector(select);
 
@@ -102,14 +107,14 @@ export const SystemStats: React.FC<SystemStatsProps> = ({ variant = "info", show
         </Text>
       </Statistic>
       <Statistic lexicon={l.TROVES}>{Decimal.from(numberOfTroves).prettify(0)}</Statistic>
-      <Statistic lexicon={l.LUSD_SUPPLY}>{total.debt.shorten()}</Statistic>
+      <Statistic lexicon={l.DEBT_TOKEN_SUPPLY}>{total.debt.shorten()}</Statistic>
       {debtTokenInStabilityPoolPct && (
-        <Statistic lexicon={l.STABILITY_POOL_LUSD}>
+        <Statistic lexicon={l.STABILITY_POOL_DEBT_TOKEN}>
           {debtTokenInStabilityPool.shorten()}
           <Text sx={{ fontSize: 1 }}>&nbsp;({debtTokenInStabilityPoolPct.toString(1)})</Text>
         </Statistic>
       )}
-      <Statistic lexicon={l.STAKED_SCR}>{totalStakedLQTY.shorten()}</Statistic>
+      <Statistic lexicon={l.STAKED_PROTOCOL_TOKEN}>{totalStakedProtocolToken.shorten()}</Statistic>
       <Statistic lexicon={l.TCR}>{totalCollateralRatioPct.prettify()}</Statistic>
       <Statistic lexicon={l.RECOVERY_MODE}>
         {total.collateralRatioIsBelowCritical(price) ? <Box color="danger">Yes</Box> : "No"}

@@ -13,7 +13,7 @@ import { DisabledEditableRow, StaticRow } from "../Trove/Editor";
 import { ClaimAndMove } from "./actions/ClaimAndMove";
 import { ClaimRewards } from "./actions/ClaimRewards";
 import { useStabilityView } from "./context/StabilityViewContext";
-import { RemainingLQTY } from "./RemainingLQTY";
+import { RemainingProtocolToken } from "./RemainingProtocolToken";
 import { Yield } from "./Yield";
 
 const selector = ({ stabilityDeposit, trove, debtTokenInStabilityPool }: LiquityStoreState) => ({
@@ -32,7 +32,7 @@ export const ActiveDeposit: React.FC = () => {
     dispatchEvent("ADJUST_DEPOSIT_PRESSED");
   }, [dispatchEvent]);
 
-  const hasReward = !stabilityDeposit.lqtyReward.isZero;
+  const hasReward = !stabilityDeposit.protocolTokenReward.isZero;
   const hasGain = !stabilityDeposit.collateralGain.isZero;
   const hasTrove = !trove.isEmpty;
 
@@ -54,7 +54,7 @@ export const ActiveDeposit: React.FC = () => {
         Stability Pool
         {!isWaitingForTransaction && (
           <Flex sx={{ justifyContent: "flex-end" }}>
-            <RemainingLQTY />
+            <RemainingProtocolToken />
           </Flex>
         )}
       </Heading>
@@ -86,14 +86,14 @@ export const ActiveDeposit: React.FC = () => {
             <StaticRow
               label="Reward"
               inputId="deposit-reward"
-              amount={stabilityDeposit.lqtyReward.prettify()}
-              color={stabilityDeposit.lqtyReward.nonZero && "success"}
+              amount={stabilityDeposit.protocolTokenReward.prettify()}
+              color={stabilityDeposit.protocolTokenReward.nonZero && "success"}
               unit={GT}
               infoIcon={
                 <InfoIcon
                   tooltip={
                     <Card variant="tooltip" sx={{ width: "240px" }}>
-                      Although the LQTY rewards accrue every minute, the value on the UI only updates
+                      Although the SCR rewards accrue every minute, the value on the UI only updates
                       when a user transacts with the Stability Pool. Therefore you may receive more
                       rewards than is displayed when you claim or adjust your deposit.
                     </Card>
@@ -113,11 +113,11 @@ export const ActiveDeposit: React.FC = () => {
             &nbsp;Adjust
           </Button>
 
-          <ClaimRewards disabled={!hasGain && !hasReward}>Claim {CURRENCY} and LQTY</ClaimRewards>
+          <ClaimRewards disabled={!hasGain && !hasReward}>Claim {CURRENCY} and SCR</ClaimRewards>
         </Flex>
 
         {hasTrove && (
-          <ClaimAndMove disabled={!hasGain}>Claim LQTY and move {CURRENCY} to Trove</ClaimAndMove>
+          <ClaimAndMove disabled={!hasGain}>Claim SCR and move {CURRENCY} to Trove</ClaimAndMove>
         )}
       </Box>
 

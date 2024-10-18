@@ -5,8 +5,8 @@ import {
   Decimal,
   Decimalish,
   LiquityStoreState,
-  LQTYStake,
-  LQTYStakeChange
+  ProtocolTokenStake,
+  ProtocolTokenStakeChange
 } from "@secured-finance/lib-base";
 
 import {
@@ -25,9 +25,9 @@ import { useStakingView } from "./context/StakingViewContext";
 import { StakingEditor } from "./StakingEditor";
 import { StakingManagerAction } from "./StakingManagerAction";
 
-const init = ({ lqtyStake }: LiquityStoreState) => ({
-  originalStake: lqtyStake,
-  editedLQTY: lqtyStake.stakedLQTY
+const init = ({ protocolTokenStake }: LiquityStoreState) => ({
+  originalStake: protocolTokenStake,
+  editedProtocolToken: protocolTokenStake.stakedProtocolToken
 });
 
 type StakeManagerState = ReturnType<typeof init>;
@@ -40,24 +40,24 @@ const reduce = (state: StakeManagerState, action: StakeManagerAction): StakeMana
   // console.log(state);
   // console.log(action);
 
-  const { originalStake, editedLQTY } = state;
+  const { originalStake, editedProtocolToken } = state;
 
   switch (action.type) {
     case "setStake":
-      return { ...state, editedLQTY: Decimal.from(action.newValue) };
+      return { ...state, editedProtocolToken: Decimal.from(action.newValue) };
 
     case "revert":
-      return { ...state, editedLQTY: originalStake.stakedLQTY };
+      return { ...state, editedProtocolToken: originalStake.stakedProtocolToken };
 
     case "updateStore": {
       const {
-        stateChange: { lqtyStake: updatedStake }
+        stateChange: { protocolTokenStake: updatedStake }
       } = action;
 
       if (updatedStake) {
         return {
           originalStake: updatedStake,
-          editedLQTY: updatedStake.apply(originalStake.whatChanged(editedLQTY))
+          editedProtocolToken: updatedStake.apply(originalStake.whatChanged(editedProtocolToken))
         };
       }
     }
@@ -66,40 +66,41 @@ const reduce = (state: StakeManagerState, action: StakeManagerAction): StakeMana
   return state;
 };
 
-const selectLQTYBalance = ({ lqtyBalance }: LiquityStoreState) => lqtyBalance;
+const selectProtocolTokenBalance = ({ protocolTokenBalance }: LiquityStoreState) =>
+  protocolTokenBalance;
 
 type StakingManagerActionDescriptionProps = {
-  originalStake: LQTYStake;
-  change: LQTYStakeChange<Decimal>;
+  originalStake: ProtocolTokenStake;
+  change: ProtocolTokenStakeChange<Decimal>;
 };
 
 const StakingManagerActionDescription: React.FC<StakingManagerActionDescriptionProps> = ({
   originalStake,
   change
 }) => {
-  const stakeLQTY = change.stakeLQTY?.prettify().concat(" ", GT);
-  const unstakeLQTY = change.unstakeLQTY?.prettify().concat(" ", GT);
+  const stakeProtocolToken = change.stakeProtocolToken?.prettify().concat(" ", GT);
+  const unstakeProtocolToken = change.unstakeProtocolToken?.prettify().concat(" ", GT);
   const collateralGain = originalStake.collateralGain.nonZero?.prettify(4).concat(` ${CURRENCY}`);
   const debtTokenGain = originalStake.debtTokenGain.nonZero?.prettify().concat(" ", COIN);
 
-  if (originalStake.isEmpty && stakeLQTY) {
+  if (originalStake.isEmpty && stakeProtocolToken) {
     return (
       <ActionDescription>
-        You are staking <Amount>{stakeLQTY}</Amount>.
+        You are staking <Amount>{stakeProtocolToken}</Amount>.
       </ActionDescription>
     );
   }
 
   return (
     <ActionDescription>
-      {stakeLQTY && (
+      {stakeProtocolToken && (
         <>
-          You are adding <Amount>{stakeLQTY}</Amount> to your stake
+          You are adding <Amount>{stakeProtocolToken}</Amount> to your stake
         </>
       )}
-      {unstakeLQTY && (
+      {unstakeProtocolToken && (
         <>
-          You are withdrawing <Amount>{unstakeLQTY}</Amount> to your wallet
+          You are withdrawing <Amount>{unstakeProtocolToken}</Amount> to your wallet
         </>
       )}
       {(collateralGain || debtTokenGain) && (
@@ -124,19 +125,19 @@ const StakingManagerActionDescription: React.FC<StakingManagerActionDescriptionP
 
 export const StakingManager: React.FC = () => {
   const { dispatch: dispatchStakingViewAction } = useStakingView();
-  const [{ originalStake, editedLQTY }, dispatch] = useLiquityReducer(reduce, init);
-  const lqtyBalance = useLiquitySelector(selectLQTYBalance);
+  const [{ originalStake, editedProtocolToken }, dispatch] = useLiquityReducer(reduce, init);
+  const protocolTokenBalance = useLiquitySelector(selectProtocolTokenBalance);
 
-  const change = originalStake.whatChanged(editedLQTY);
+  const change = originalStake.whatChanged(editedProtocolToken);
   const [validChange, description] = !change
     ? [undefined, undefined]
-    : change.stakeLQTY?.gt(lqtyBalance)
+    : change.stakeProtocolToken?.gt(protocolTokenBalance)
     ? [
         undefined,
         <ErrorDescription>
           The amount you're trying to stake exceeds your balance by{" "}
           <Amount>
-            {change.stakeLQTY.sub(lqtyBalance).prettify()} {GT}
+            {change.stakeProtocolToken.sub(protocolTokenBalance).prettify()} {GT}
           </Amount>
           .
         </ErrorDescription>
@@ -146,7 +147,7 @@ export const StakingManager: React.FC = () => {
   const makingNewStake = originalStake.isEmpty;
 
   return (
-    <StakingEditor title={"Staking"} {...{ originalStake, editedLQTY, dispatch }}>
+    <StakingEditor title={"Staking"} {...{ originalStake, editedProtocolToken, dispatch }}>
       {description ??
         (makingNewStake ? (
           <InfoBubble>Enter the amount of {GT} you'd like to stake.</InfoBubble>

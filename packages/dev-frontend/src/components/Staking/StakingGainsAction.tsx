@@ -6,11 +6,11 @@ import { useLiquitySelector } from "@secured-finance/lib-react";
 import { useLiquity } from "../../hooks/LiquityContext";
 import { useTransactionFunction } from "../Transaction";
 
-const selectLQTYStake = ({ lqtyStake }: LiquityStoreState) => lqtyStake;
+const selectProtocolTokenStake = ({ protocolTokenStake }: LiquityStoreState) => protocolTokenStake;
 
 export const StakingGainsAction: React.FC = () => {
   const { liquity } = useLiquity();
-  const { collateralGain, debtTokenGain } = useLiquitySelector(selectLQTYStake);
+  const { collateralGain, debtTokenGain } = useLiquitySelector(selectProtocolTokenStake);
 
   const [sendTransaction] = useTransactionFunction(
     "stake",

@@ -6,7 +6,7 @@ import {
   Decimalish,
   Difference,
   LiquityStoreState,
-  LQTYStake
+  ProtocolTokenStake
 } from "@secured-finance/lib-base";
 import { useLiquitySelector } from "@secured-finance/lib-react";
 
@@ -18,15 +18,15 @@ import { EditableRow, StaticRow } from "../Trove/Editor";
 
 import { useStakingView } from "./context/StakingViewContext";
 
-const select = ({ lqtyBalance, totalStakedLQTY }: LiquityStoreState) => ({
-  lqtyBalance,
-  totalStakedLQTY
+const select = ({ protocolTokenBalance, totalStakedProtocolToken }: LiquityStoreState) => ({
+  protocolTokenBalance,
+  totalStakedProtocolToken
 });
 
 type StakingEditorProps = React.PropsWithChildren<{
   title: string;
-  originalStake: LQTYStake;
-  editedLQTY: Decimal;
+  originalStake: ProtocolTokenStake;
+  editedProtocolToken: Decimal;
   dispatch: (action: { type: "setStake"; newValue: Decimalish } | { type: "revert" }) => void;
 }>;
 
@@ -34,24 +34,27 @@ export const StakingEditor: React.FC<StakingEditorProps> = ({
   children,
   title,
   originalStake,
-  editedLQTY,
+  editedProtocolToken,
   dispatch
 }) => {
-  const { lqtyBalance, totalStakedLQTY } = useLiquitySelector(select);
+  const { protocolTokenBalance, totalStakedProtocolToken } = useLiquitySelector(select);
   const { changePending } = useStakingView();
   const editingState = useState<string>();
 
-  const edited = !editedLQTY.eq(originalStake.stakedLQTY);
+  const edited = !editedProtocolToken.eq(originalStake.stakedProtocolToken);
 
-  const maxAmount = originalStake.stakedLQTY.add(lqtyBalance);
-  const maxedOut = editedLQTY.eq(maxAmount);
+  const maxAmount = originalStake.stakedProtocolToken.add(protocolTokenBalance);
+  const maxedOut = editedProtocolToken.eq(maxAmount);
 
-  const totalStakedLQTYAfterChange = totalStakedLQTY.sub(originalStake.stakedLQTY).add(editedLQTY);
+  const totalStakedProtocolTokenAfterChange = totalStakedProtocolToken
+    .sub(originalStake.stakedProtocolToken)
+    .add(editedProtocolToken);
 
-  const originalPoolShare = originalStake.stakedLQTY.mulDiv(100, totalStakedLQTY);
-  const newPoolShare = editedLQTY.mulDiv(100, totalStakedLQTYAfterChange);
+  const originalPoolShare = originalStake.stakedProtocolToken.mulDiv(100, totalStakedProtocolToken);
+  const newPoolShare = editedProtocolToken.mulDiv(100, totalStakedProtocolTokenAfterChange);
   const poolShareChange =
-    originalStake.stakedLQTY.nonZero && Difference.between(newPoolShare, originalPoolShare).nonZero;
+    originalStake.stakedProtocolToken.nonZero &&
+    Difference.between(newPoolShare, originalPoolShare).nonZero;
 
   return (
     <Card>
@@ -72,12 +75,12 @@ export const StakingEditor: React.FC<StakingEditorProps> = ({
         <EditableRow
           label="Stake"
           inputId="stake-lqty"
-          amount={editedLQTY.prettify()}
+          amount={editedProtocolToken.prettify()}
           maxAmount={maxAmount.toString()}
           maxedOut={maxedOut}
           unit={GT}
           {...{ editingState }}
-          editedAmount={editedLQTY.toString(2)}
+          editedAmount={editedProtocolToken.toString(2)}
           setEditedAmount={newValue => dispatch({ type: "setStake", newValue })}
         />
 

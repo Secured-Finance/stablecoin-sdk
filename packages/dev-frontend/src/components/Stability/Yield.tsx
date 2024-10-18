@@ -9,10 +9,10 @@ import { fetchLqtyPrice } from "./context/fetchLqtyPrice";
 
 const selector = ({
   debtTokenInStabilityPool,
-  remainingStabilityPoolLQTYReward
+  remainingStabilityPoolProtocolTokenReward
 }: LiquityStoreState) => ({
   debtTokenInStabilityPool,
-  remainingStabilityPoolLQTYReward
+  remainingStabilityPoolProtocolTokenReward
 });
 
 const yearlyIssuanceFraction = 0.5;
@@ -20,11 +20,12 @@ const dailyIssuanceFraction = Decimal.from(1 - yearlyIssuanceFraction ** (1 / 36
 const dailyIssuancePercentage = dailyIssuanceFraction.mul(100);
 
 export const Yield: React.FC = () => {
-  const { debtTokenInStabilityPool, remainingStabilityPoolLQTYReward } =
+  const { debtTokenInStabilityPool, remainingStabilityPoolProtocolTokenReward } =
     useLiquitySelector(selector);
 
   const [lqtyPrice, setLqtyPrice] = useState<Decimal | undefined>(undefined);
-  const hasZeroValue = remainingStabilityPoolLQTYReward.isZero || debtTokenInStabilityPool.isZero;
+  const hasZeroValue =
+    remainingStabilityPoolProtocolTokenReward.isZero || debtTokenInStabilityPool.isZero;
 
   useEffect(() => {
     (async () => {
@@ -39,26 +40,26 @@ export const Yield: React.FC = () => {
 
   if (hasZeroValue || lqtyPrice === undefined) return null;
 
-  const lqtyIssuanceOneDay = remainingStabilityPoolLQTYReward.mul(dailyIssuanceFraction);
+  const lqtyIssuanceOneDay = remainingStabilityPoolProtocolTokenReward.mul(dailyIssuanceFraction);
   const lqtyIssuanceOneDayInUSD = lqtyIssuanceOneDay.mul(lqtyPrice);
   const aprPercentage = lqtyIssuanceOneDayInUSD.mulDiv(365 * 100, debtTokenInStabilityPool);
-  const remainingLqtyInUSD = remainingStabilityPoolLQTYReward.mul(lqtyPrice);
+  const remainingLqtyInUSD = remainingStabilityPoolProtocolTokenReward.mul(lqtyPrice);
 
   if (aprPercentage.isZero) return null;
 
   return (
     <Badge>
-      <Text>LQTY APR {aprPercentage.toString(2)}%</Text>
+      <Text>SCR APR {aprPercentage.toString(2)}%</Text>
       <InfoIcon
         tooltip={
           <Card variant="tooltip" sx={{ width: ["220px", "518px"] }}>
             <Paragraph>
-              An <Text sx={{ fontWeight: "bold" }}>estimate</Text> of the LQTY return on the LUSD
+              An <Text sx={{ fontWeight: "bold" }}>estimate</Text> of the SCR return on the USDFC
               deposited to the Stability Pool over the next year, not including your {CURRENCY} gains
               from liquidations.
             </Paragraph>
             <Paragraph sx={{ fontSize: "12px", fontFamily: "monospace", mt: 2 }}>
-              ($LQTY_REWARDS * DAILY_ISSUANCE% / DEPOSITED_LUSD) * 365 * 100 ={" "}
+              ($SCR_REWARDS * DAILY_ISSUANCE% / DEPOSITED_USDFC) * 365 * 100 ={" "}
               <Text sx={{ fontWeight: "bold" }}> APR</Text>
             </Paragraph>
             <Paragraph sx={{ fontSize: "12px", fontFamily: "monospace" }}>

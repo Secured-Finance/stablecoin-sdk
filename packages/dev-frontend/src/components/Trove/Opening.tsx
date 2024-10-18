@@ -176,11 +176,11 @@ export const Opening: React.FC = () => {
             <InfoIcon
               tooltip={
                 <Card variant="tooltip" sx={{ width: "240px" }}>
-                  The total amount of LUSD your Trove will hold.{" "}
+                  The total amount of USDFC your Trove will hold.{" "}
                   {isDirty && (
                     <>
-                      You will need to repay {totalDebt.sub(LIQUIDATION_RESERVE).prettify(2)} LUSD to
-                      reclaim your collateral ({LIQUIDATION_RESERVE.toString()} LUSD Liquidation
+                      You will need to repay {totalDebt.sub(LIQUIDATION_RESERVE).prettify(2)} USDFC
+                      to reclaim your collateral ({LIQUIDATION_RESERVE.toString()} USDFC Liquidation
                       Reserve excluded).
                     </>
                   )}

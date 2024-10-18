@@ -13,16 +13,16 @@ import { DisabledEditableRow, StaticRow } from "../Trove/Editor";
 import { useStakingView } from "./context/StakingViewContext";
 import { StakingGainsAction } from "./StakingGainsAction";
 
-const select = ({ lqtyStake, totalStakedLQTY }: LiquityStoreState) => ({
-  lqtyStake,
-  totalStakedLQTY
+const select = ({ protocolTokenStake, totalStakedProtocolToken }: LiquityStoreState) => ({
+  protocolTokenStake,
+  totalStakedProtocolToken
 });
 
 export const ReadOnlyStake: React.FC = () => {
   const { changePending, dispatch } = useStakingView();
-  const { lqtyStake, totalStakedLQTY } = useLiquitySelector(select);
+  const { protocolTokenStake, totalStakedProtocolToken } = useLiquitySelector(select);
 
-  const poolShare = lqtyStake.stakedLQTY.mulDiv(100, totalStakedLQTY);
+  const poolShare = protocolTokenStake.stakedProtocolToken.mulDiv(100, totalStakedProtocolToken);
 
   return (
     <Card>
@@ -32,7 +32,7 @@ export const ReadOnlyStake: React.FC = () => {
         <DisabledEditableRow
           label="Stake"
           inputId="stake-lqty"
-          amount={lqtyStake.stakedLQTY.prettify()}
+          amount={protocolTokenStake.stakedProtocolToken.prettify()}
           unit={GT}
         />
 
@@ -46,16 +46,16 @@ export const ReadOnlyStake: React.FC = () => {
         <StaticRow
           label="Redemption gain"
           inputId="stake-gain-eth"
-          amount={lqtyStake.collateralGain.prettify(4)}
-          color={lqtyStake.collateralGain.nonZero && "success"}
+          amount={protocolTokenStake.collateralGain.prettify(4)}
+          color={protocolTokenStake.collateralGain.nonZero && "success"}
           unit={CURRENCY}
         />
 
         <StaticRow
           label="Issuance gain"
           inputId="stake-gain-lusd"
-          amount={lqtyStake.debtTokenGain.prettify()}
-          color={lqtyStake.debtTokenGain.nonZero && "success"}
+          amount={protocolTokenStake.debtTokenGain.prettify()}
+          color={protocolTokenStake.debtTokenGain.nonZero && "success"}
           unit={COIN}
         />
 

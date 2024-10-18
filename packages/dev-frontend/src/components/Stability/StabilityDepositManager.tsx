@@ -80,7 +80,7 @@ const reduce = (
         !updatedDeposit.initialDebtToken.eq(originalDeposit.initialDebtToken) ||
         updatedDeposit.currentDebtToken.gt(originalDeposit.currentDebtToken) ||
         updatedDeposit.collateralGain.lt(originalDeposit.collateralGain) ||
-        updatedDeposit.lqtyReward.lt(originalDeposit.lqtyReward);
+        updatedDeposit.protocolTokenReward.lt(originalDeposit.protocolTokenReward);
 
       if (changePending && changeCommitted) {
         return finishChange(revert(newState));

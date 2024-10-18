@@ -50,11 +50,11 @@ export const CollateralRatio: React.FC<CollateralRatioProps> = ({ value, change 
             <InfoIcon
               tooltip={
                 <Card variant="tooltip" sx={{ width: "220px" }}>
-                  The ratio between the dollar value of the collateral and the debt (in LUSD) you are
-                  depositing. While the Minimum Collateral Ratio is 110% during normal operation, it
-                  is recommended to keep the Collateral Ratio always above 150% to avoid liquidation
-                  under Recovery Mode. A Collateral Ratio above 200% or 250% is recommended for
-                  additional safety.
+                  The ratio between the dollar value of the collateral and the debt (in USDFC) you
+                  are depositing. While the Minimum Collateral Ratio is 110% during normal operation,
+                  it is recommended to keep the Collateral Ratio always above 150% to avoid
+                  liquidation under Recovery Mode. A Collateral Ratio above 200% or 250% is
+                  recommended for additional safety.
                 </Card>
               }
             />

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-import { LiquityStoreState, LQTYStake } from "@secured-finance/lib-base";
+import { LiquityStoreState, ProtocolTokenStake } from "@secured-finance/lib-base";
 import { LiquityStoreUpdate, useLiquityReducer } from "@secured-finance/lib-react";
 
 import { useMyTransactionState } from "../../Transaction";
@@ -13,13 +13,13 @@ type StakingViewProviderAction =
   | { type: "startChange" | "abortChange" };
 
 type StakingViewProviderState = {
-  lqtyStake: LQTYStake;
+  protocolTokenStake: ProtocolTokenStake;
   changePending: boolean;
   adjusting: boolean;
 };
 
-const init = ({ lqtyStake }: LiquityStoreState): StakingViewProviderState => ({
-  lqtyStake,
+const init = ({ protocolTokenStake }: LiquityStoreState): StakingViewProviderState => ({
+  protocolTokenStake,
   changePending: false,
   adjusting: false
 });
@@ -46,19 +46,19 @@ const reduce = (
 
     case "updateStore": {
       const {
-        oldState: { lqtyStake: oldStake },
-        stateChange: { lqtyStake: updatedStake }
+        oldState: { protocolTokenStake: oldStake },
+        stateChange: { protocolTokenStake: updatedStake }
       } = action;
 
       if (updatedStake) {
         const changeCommitted =
-          !updatedStake.stakedLQTY.eq(oldStake.stakedLQTY) ||
+          !updatedStake.stakedProtocolToken.eq(oldStake.stakedProtocolToken) ||
           updatedStake.collateralGain.lt(oldStake.collateralGain) ||
           updatedStake.debtTokenGain.lt(oldStake.debtTokenGain);
 
         return {
           ...state,
-          lqtyStake: updatedStake,
+          protocolTokenStake: updatedStake,
           adjusting: false,
           changePending: changeCommitted ? false : state.changePending
         };
@@ -71,7 +71,10 @@ const reduce = (
 
 export const StakingViewProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
   const stakingTransactionState = useMyTransactionState("stake");
-  const [{ adjusting, changePending, lqtyStake }, dispatch] = useLiquityReducer(reduce, init);
+  const [{ adjusting, changePending, protocolTokenStake }, dispatch] = useLiquityReducer(
+    reduce,
+    init
+  );
 
   useEffect(() => {
     if (
@@ -90,7 +93,7 @@ export const StakingViewProvider: React.FC<React.PropsWithChildren> = ({ childre
   return (
     <StakingViewContext.Provider
       value={{
-        view: adjusting ? "ADJUSTING" : lqtyStake.isEmpty ? "NONE" : "ACTIVE",
+        view: adjusting ? "ADJUSTING" : protocolTokenStake.isEmpty ? "NONE" : "ACTIVE",
         changePending,
         dispatch
       }}

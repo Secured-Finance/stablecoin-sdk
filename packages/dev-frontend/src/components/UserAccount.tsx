@@ -11,15 +11,15 @@ import { shortenAddress } from "../utils/shortenAddress";
 import { ConnectKitButton } from "connectkit";
 import { Icon } from "./Icon";
 
-const select = ({ accountBalance, debtTokenBalance, lqtyBalance }: LiquityStoreState) => ({
+const select = ({ accountBalance, debtTokenBalance, protocolTokenBalance }: LiquityStoreState) => ({
   accountBalance,
   debtTokenBalance,
-  lqtyBalance
+  protocolTokenBalance
 });
 
 export const UserAccount: React.FC = () => {
   const { account } = useLiquity();
-  const { accountBalance, debtTokenBalance, lqtyBalance } = useLiquitySelector(select);
+  const { accountBalance, debtTokenBalance, protocolTokenBalance } = useLiquitySelector(select);
 
   return (
     <Flex>
@@ -50,7 +50,7 @@ export const UserAccount: React.FC = () => {
           [
             [CURRENCY, accountBalance],
             [COIN, Decimal.from(debtTokenBalance || 0)],
-            [GT, Decimal.from(lqtyBalance)]
+            [GT, Decimal.from(protocolTokenBalance)]
           ] as const
         ).map(([currency, balance], i) => (
           <Flex key={i} sx={{ ml: 3, flexDirection: "column" }}>

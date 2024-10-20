@@ -22,7 +22,7 @@ test("there's no smoke", async () => {
     pointerEventsCheck: PointerEventsCheckLevel.Never
   });
 
-  expect(await screen.findByText(/you can borrow lusd by opening a trove/i)).toBeInTheDocument();
+  expect(await screen.findByText(/you can borrow usdfc by opening a trove/i)).toBeInTheDocument();
 
   await userEvent.click(screen.getByText(/open trove/i));
   await userEvent.click(screen.getByLabelText(/collateral/i));

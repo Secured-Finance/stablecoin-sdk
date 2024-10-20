@@ -165,7 +165,7 @@ export class ObservableEthersLiquity implements ObservableLiquity {
   }
 
   watchDebtTokenInStabilityPool(
-    onDebtTokenInStabilityPoolChanged: (lusdInStabilityPool: Decimal) => void
+    onDebtTokenInStabilityPoolChanged: (debtTokenInStabilityPool: Decimal) => void
   ): () => void {
     const { debtToken, stabilityPool } = _getContracts(this._readable.connection);
     const { Transfer } = debtToken.filters;
@@ -205,15 +205,17 @@ export class ObservableEthersLiquity implements ObservableLiquity {
     const transferDebtTokenFromUser = Transfer(address);
     const transferDebtTokenToUser = Transfer(null, address);
 
-    const lusdTransferFilters = [transferDebtTokenFromUser, transferDebtTokenToUser];
+    const debtTokenTransferFilters = [transferDebtTokenFromUser, transferDebtTokenToUser];
 
-    const lusdTransferListener = debounce((blockTag: number) => {
+    const debtTokenTransferListener = debounce((blockTag: number) => {
       this._readable.getDebtTokenBalance(address, { blockTag }).then(onDebtTokenBalanceChanged);
     });
 
-    lusdTransferFilters.forEach(filter => debtToken.on(filter, lusdTransferListener));
+    debtTokenTransferFilters.forEach(filter => debtToken.on(filter, debtTokenTransferListener));
 
     return () =>
-      lusdTransferFilters.forEach(filter => debtToken.removeListener(filter, lusdTransferListener));
+      debtTokenTransferFilters.forEach(filter =>
+        debtToken.removeListener(filter, debtTokenTransferListener)
+      );
   }
 }

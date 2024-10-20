@@ -163,8 +163,8 @@ export class Fixture {
   }
 
   async liquidateRandomNumberOfTroves(price: Decimal) {
-    const lusdInStabilityPoolBefore = await this.deployerLiquity.getDebtTokenInStabilityPool();
-    console.log(`// Stability Pool balance: ${lusdInStabilityPoolBefore}`);
+    const debtTokenInStabilityPoolBefore = await this.deployerLiquity.getDebtTokenInStabilityPool();
+    console.log(`// Stability Pool balance: ${debtTokenInStabilityPoolBefore}`);
 
     const trovesBefore = await getListOfTroves(this.deployerLiquity);
 

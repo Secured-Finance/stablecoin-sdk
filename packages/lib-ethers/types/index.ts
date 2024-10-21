@@ -9,7 +9,7 @@ import {
   EventFilter
 } from "@ethersproject/contracts";
 
-import { _TypedLiquityContract, _TypedLogDescription } from "../src/contracts";
+import { _TypedProtocolContract, _TypedLogDescription } from "../src/contracts";
 
 interface ActivePoolCalls {
   NAME(_overrides?: CallOverrides): Promise<string>;
@@ -31,7 +31,7 @@ interface ActivePoolTransactions {
 }
 
 export interface ActivePool
-  extends _TypedLiquityContract<ActivePoolCalls, ActivePoolTransactions> {
+  extends _TypedProtocolContract<ActivePoolCalls, ActivePoolTransactions> {
   readonly filters: {
     ActivePoolAddressChanged(_newActivePoolAddress?: null): EventFilter;
     ActivePoolDebtUpdated(_debt?: null): EventFilter;
@@ -97,7 +97,7 @@ interface BorrowerOperationsTransactions {
 }
 
 export interface BorrowerOperations
-  extends _TypedLiquityContract<BorrowerOperationsCalls, BorrowerOperationsTransactions> {
+  extends _TypedProtocolContract<BorrowerOperationsCalls, BorrowerOperationsTransactions> {
   readonly filters: {
     ActivePoolAddressChanged(_activePoolAddress?: null): EventFilter;
     CollSurplusPoolAddressChanged(_collSurplusPoolAddress?: null): EventFilter;
@@ -148,7 +148,7 @@ interface CollSurplusPoolTransactions {
 }
 
 export interface CollSurplusPool
-  extends _TypedLiquityContract<CollSurplusPoolCalls, CollSurplusPoolTransactions> {
+  extends _TypedProtocolContract<CollSurplusPoolCalls, CollSurplusPoolTransactions> {
   readonly filters: {
     ActivePoolAddressChanged(_newActivePoolAddress?: null): EventFilter;
     BorrowerOperationsAddressChanged(_newBorrowerOperationsAddress?: null): EventFilter;
@@ -195,7 +195,7 @@ interface DebtTokenTransactions {
 }
 
 export interface DebtToken
-  extends _TypedLiquityContract<DebtTokenCalls, DebtTokenTransactions> {
+  extends _TypedProtocolContract<DebtTokenCalls, DebtTokenTransactions> {
   readonly filters: {
     Approval(owner?: string | null, spender?: string | null, value?: null): EventFilter;
     BorrowerOperationsAddressChanged(_newBorrowerOperationsAddress?: null): EventFilter;
@@ -228,7 +228,7 @@ interface DefaultPoolTransactions {
 }
 
 export interface DefaultPool
-  extends _TypedLiquityContract<DefaultPoolCalls, DefaultPoolTransactions> {
+  extends _TypedProtocolContract<DefaultPoolCalls, DefaultPoolTransactions> {
   readonly filters: {
     ActivePoolAddressChanged(_newActivePoolAddress?: null): EventFilter;
     DebtTokenBalanceUpdated(_newBalance?: null): EventFilter;
@@ -260,7 +260,7 @@ interface GasPoolTransactions {
 }
 
 export interface GasPool
-  extends _TypedLiquityContract<GasPoolCalls, GasPoolTransactions> {
+  extends _TypedProtocolContract<GasPoolCalls, GasPoolTransactions> {
   readonly filters: {
   };
 }
@@ -295,7 +295,7 @@ interface HintHelpersTransactions {
 }
 
 export interface HintHelpers
-  extends _TypedLiquityContract<HintHelpersCalls, HintHelpersTransactions> {
+  extends _TypedProtocolContract<HintHelpersCalls, HintHelpersTransactions> {
   readonly filters: {
     OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): EventFilter;
     SortedTrovesAddressChanged(_sortedTrovesAddress?: null): EventFilter;
@@ -316,7 +316,7 @@ interface MultiTroveGetterTransactions {
 }
 
 export interface MultiTroveGetter
-  extends _TypedLiquityContract<MultiTroveGetterCalls, MultiTroveGetterTransactions> {
+  extends _TypedProtocolContract<MultiTroveGetterCalls, MultiTroveGetterTransactions> {
   readonly filters: {
   };
 }
@@ -343,7 +343,7 @@ interface PriceFeedTransactions {
 }
 
 export interface PriceFeed
-  extends _TypedLiquityContract<PriceFeedCalls, PriceFeedTransactions> {
+  extends _TypedProtocolContract<PriceFeedCalls, PriceFeedTransactions> {
   readonly filters: {
     LastGoodPriceUpdated(_lastGoodPrice?: null): EventFilter;
     OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): EventFilter;
@@ -382,7 +382,7 @@ interface SortedTrovesTransactions {
 }
 
 export interface SortedTroves
-  extends _TypedLiquityContract<SortedTrovesCalls, SortedTrovesTransactions> {
+  extends _TypedProtocolContract<SortedTrovesCalls, SortedTrovesTransactions> {
   readonly filters: {
     BorrowerOperationsAddressChanged(_borrowerOperationsAddress?: null): EventFilter;
     NodeAdded(_id?: null, _NICR?: null): EventFilter;
@@ -452,7 +452,7 @@ interface StabilityPoolTransactions {
 }
 
 export interface StabilityPool
-  extends _TypedLiquityContract<StabilityPoolCalls, StabilityPoolTransactions> {
+  extends _TypedProtocolContract<StabilityPoolCalls, StabilityPoolTransactions> {
   readonly filters: {
     ActivePoolAddressChanged(_newActivePoolAddress?: null): EventFilter;
     BorrowerOperationsAddressChanged(_newBorrowerOperationsAddress?: null): EventFilter;
@@ -594,7 +594,7 @@ interface TroveManagerTransactions {
 }
 
 export interface TroveManager
-  extends _TypedLiquityContract<TroveManagerCalls, TroveManagerTransactions> {
+  extends _TypedProtocolContract<TroveManagerCalls, TroveManagerTransactions> {
   readonly filters: {
     ActivePoolAddressChanged(_activePoolAddress?: null): EventFilter;
     BaseRateUpdated(_baseRate?: null): EventFilter;
@@ -674,7 +674,7 @@ interface UnipoolTransactions {
 }
 
 export interface Unipool
-  extends _TypedLiquityContract<UnipoolCalls, UnipoolTransactions> {
+  extends _TypedProtocolContract<UnipoolCalls, UnipoolTransactions> {
   readonly filters: {
     OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): EventFilter;
     ProtocolTokenAddressChanged(_protocolTokenAddress?: null): EventFilter;
@@ -715,7 +715,7 @@ interface ERC20MockTransactions {
 }
 
 export interface ERC20Mock
-  extends _TypedLiquityContract<ERC20MockCalls, ERC20MockTransactions> {
+  extends _TypedProtocolContract<ERC20MockCalls, ERC20MockTransactions> {
   readonly filters: {
     Approval(owner?: string | null, spender?: string | null, value?: null): EventFilter;
     Transfer(from?: string | null, to?: string | null, value?: null): EventFilter;
@@ -745,7 +745,7 @@ interface CommunityIssuanceTransactions {
 }
 
 export interface CommunityIssuance
-  extends _TypedLiquityContract<CommunityIssuanceCalls, CommunityIssuanceTransactions> {
+  extends _TypedProtocolContract<CommunityIssuanceCalls, CommunityIssuanceTransactions> {
   readonly filters: {
     OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): EventFilter;
     ProtocolTokenAddressSet(_protocolTokenAddress?: null): EventFilter;
@@ -775,7 +775,7 @@ interface LockupContractFactoryTransactions {
 }
 
 export interface LockupContractFactory
-  extends _TypedLiquityContract<LockupContractFactoryCalls, LockupContractFactoryTransactions> {
+  extends _TypedProtocolContract<LockupContractFactoryCalls, LockupContractFactoryTransactions> {
   readonly filters: {
     LockupContractDeployedThroughFactory(_lockupContractAddress?: null, _beneficiary?: null, _unlockTime?: null, _deployer?: null): EventFilter;
     OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): EventFilter;
@@ -817,7 +817,7 @@ interface ProtocolTokenTransactions {
 }
 
 export interface ProtocolToken
-  extends _TypedLiquityContract<ProtocolTokenCalls, ProtocolTokenTransactions> {
+  extends _TypedProtocolContract<ProtocolTokenCalls, ProtocolTokenTransactions> {
   readonly filters: {
     Approval(owner?: string | null, spender?: string | null, value?: null): EventFilter;
     Transfer(from?: string | null, to?: string | null, value?: null): EventFilter;
@@ -854,7 +854,7 @@ interface ProtocolTokenStakingTransactions {
 }
 
 export interface ProtocolTokenStaking
-  extends _TypedLiquityContract<ProtocolTokenStakingCalls, ProtocolTokenStakingTransactions> {
+  extends _TypedProtocolContract<ProtocolTokenStakingCalls, ProtocolTokenStakingTransactions> {
   readonly filters: {
     ActivePoolAddressSet(_activePoolAddress?: null): EventFilter;
     BorrowerOperationsAddressSet(_borrowerOperationsAddress?: null): EventFilter;
@@ -895,7 +895,7 @@ interface PriceFeedTestnetTransactions {
 }
 
 export interface PriceFeedTestnet
-  extends _TypedLiquityContract<PriceFeedTestnetCalls, PriceFeedTestnetTransactions> {
+  extends _TypedProtocolContract<PriceFeedTestnetCalls, PriceFeedTestnetTransactions> {
   readonly filters: {
     LastGoodPriceUpdated(_lastGoodPrice?: null): EventFilter;
     PriceFeedStatusChanged(newStatus?: null): EventFilter;
@@ -917,7 +917,7 @@ interface IERC20Transactions {
 }
 
 export interface IERC20
-  extends _TypedLiquityContract<IERC20Calls, IERC20Transactions> {
+  extends _TypedProtocolContract<IERC20Calls, IERC20Transactions> {
   readonly filters: {
     Approval(owner?: string | null, spender?: string | null, value?: null): EventFilter;
     Transfer(from?: string | null, to?: string | null, value?: null): EventFilter;

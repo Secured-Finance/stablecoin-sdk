@@ -2,12 +2,14 @@ import { JsonRpcProvider } from "@ethersproject/providers";
 import { Wallet } from "@ethersproject/wallet";
 import dotenv from "dotenv";
 
-import { SubgraphLiquity } from "@secured-finance/lib-subgraph";
+import { SubgraphSfStablecoin } from "@secured-finance/lib-subgraph";
 
 dotenv.config();
 
 export const provider = new JsonRpcProvider("http://localhost:8545");
-export const subgraph = new SubgraphLiquity("http://localhost:8000/subgraphs/name/liquity/subgraph");
+export const subgraph = new SubgraphSfStablecoin(
+  "http://localhost:8000/subgraphs/name/stablecoin-sdk/subgraph"
+);
 
 export const deployer = process.env.DEPLOYER_PRIVATE_KEY
   ? new Wallet(process.env.DEPLOYER_PRIVATE_KEY, provider)

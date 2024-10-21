@@ -4,7 +4,7 @@
 
 ## RedemptionDetails interface
 
-Details of a [redeemDebtToken()](./lib-base.transactableliquity.redeemdebttoken.md) transaction.
+Details of a [redeemDebtToken()](./lib-base.transactableprotocol.redeemdebttoken.md) transaction.
 
 **Signature:**
 

@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect } from "react";
 import { Box, Button, Card, Flex, Heading } from "theme-ui";
 
-import { LiquityStoreState } from "@secured-finance/lib-base";
-import { useLiquitySelector } from "@secured-finance/lib-react";
+import { SfStablecoinStoreState } from "@secured-finance/lib-base";
+import { useSfStablecoinSelector } from "@secured-finance/lib-react";
 
 import { COIN, CURRENCY, GT } from "../../strings";
 import { Icon } from "../Icon";
@@ -16,7 +16,11 @@ import { useStabilityView } from "./context/StabilityViewContext";
 import { RemainingProtocolToken } from "./RemainingProtocolToken";
 import { Yield } from "./Yield";
 
-const selector = ({ stabilityDeposit, trove, debtTokenInStabilityPool }: LiquityStoreState) => ({
+const selector = ({
+  stabilityDeposit,
+  trove,
+  debtTokenInStabilityPool
+}: SfStablecoinStoreState) => ({
   stabilityDeposit,
   trove,
   debtTokenInStabilityPool
@@ -24,7 +28,7 @@ const selector = ({ stabilityDeposit, trove, debtTokenInStabilityPool }: Liquity
 
 export const ActiveDeposit: React.FC = () => {
   const { dispatchEvent } = useStabilityView();
-  const { stabilityDeposit, trove, debtTokenInStabilityPool } = useLiquitySelector(selector);
+  const { stabilityDeposit, trove, debtTokenInStabilityPool } = useSfStablecoinSelector(selector);
 
   const poolShare = stabilityDeposit.currentDebtToken.mulDiv(100, debtTokenInStabilityPool);
 

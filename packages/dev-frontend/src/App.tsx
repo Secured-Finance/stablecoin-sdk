@@ -10,10 +10,10 @@ import { Icon } from "./components/Icon";
 import { TransactionProvider } from "./components/Transaction";
 import { WalletConnector } from "./components/WalletConnector";
 import { getConfig } from "./config";
-import { LiquityProvider } from "./hooks/LiquityContext";
+import { SfStablecoinProvider } from "./hooks/SfStablecoinContext";
 import theme from "./theme";
 
-import { LiquityFrontend } from "./LiquityFrontend";
+import { SfStablecoinFrontend } from "./SfStablecoinFrontend";
 import { AppLoader } from "./components/AppLoader";
 import { useAsyncValue } from "./hooks/AsyncValue";
 import { DisposableWalletProvider } from "./testUtils/DisposableWalletProvider";
@@ -73,7 +73,7 @@ const UnsupportedNetworkFallback: React.FC = () => (
 
 const queryClient = new QueryClient();
 
-const appName = "Liquity";
+const appName = "SfStablecoin";
 const appDescription = "Decentralized borrowing protocol";
 
 const App = () => {
@@ -131,15 +131,15 @@ const App = () => {
           <QueryClientProvider client={queryClient}>
             <ConnectKitProvider options={{ hideBalance: true }}>
               <WalletConnector loader={loader}>
-                <LiquityProvider
+                <SfStablecoinProvider
                   loader={loader}
                   unsupportedNetworkFallback={<UnsupportedNetworkFallback />}
                   unsupportedMainnetFallback={<UnsupportedMainnetFallback />}
                 >
                   <TransactionProvider>
-                    <LiquityFrontend loader={loader} />
+                    <SfStablecoinFrontend loader={loader} />
                   </TransactionProvider>
-                </LiquityProvider>
+                </SfStablecoinProvider>
               </WalletConnector>
             </ConnectKitProvider>
           </QueryClientProvider>

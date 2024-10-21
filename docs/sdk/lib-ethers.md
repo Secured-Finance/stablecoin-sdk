@@ -19,18 +19,18 @@ Description
 </th></tr></thead>
 <tbody><tr><td>
 
-[BlockPolledLiquityStore](./lib-ethers.blockpolledliquitystore.md)
+[BlockPolledSfStablecoinStore](./lib-ethers.blockpolledsfstablecoinstore.md)
 
 
 </td><td>
 
-Ethers-based [LiquityStore](./lib-base.liquitystore.md) that updates state whenever there's a new block.
+Ethers-based [SfStablecoinStore](./lib-base.sfstablecoinstore.md) that updates state whenever there's a new block.
 
 
 </td></tr>
 <tr><td>
 
-[EthersLiquity](./lib-ethers.ethersliquity.md)
+[EthersSfStablecoin](./lib-ethers.etherssfstablecoin.md)
 
 
 </td><td>
@@ -57,29 +57,18 @@ Thrown when a transaction is cancelled or replaced by a different transaction.
 
 </td><td>
 
-Thrown by [EthersLiquity](./lib-ethers.ethersliquity.md) in case of transaction failure.
+Thrown by [EthersSfStablecoin](./lib-ethers.etherssfstablecoin.md) in case of transaction failure.
 
 
 </td></tr>
 <tr><td>
 
-[PopulatableEthersLiquity](./lib-ethers.populatableethersliquity.md)
+[PopulatableEthers](./lib-ethers.populatableethers.md)
 
 
 </td><td>
 
-Ethers-based implementation of [PopulatableLiquity](./lib-base.populatableliquity.md)<!-- -->.
-
-
-</td></tr>
-<tr><td>
-
-[PopulatedEthersLiquityTransaction](./lib-ethers.populatedethersliquitytransaction.md)
-
-
-</td><td>
-
-A transaction that has been prepared for sending.
+Ethers-based implementation of [PopulatableProtocol](./lib-base.populatableprotocol.md)<!-- -->.
 
 
 </td></tr>
@@ -96,29 +85,40 @@ A redemption transaction that has been prepared for sending.
 </td></tr>
 <tr><td>
 
-[ReadableEthersLiquity](./lib-ethers.readableethersliquity.md)
+[PopulatedEthersTransaction](./lib-ethers.populatedetherstransaction.md)
 
 
 </td><td>
 
-Ethers-based implementation of [ReadableLiquity](./lib-base.readableliquity.md)<!-- -->.
+A transaction that has been prepared for sending.
 
 
 </td></tr>
 <tr><td>
 
-[SendableEthersLiquity](./lib-ethers.sendableethersliquity.md)
+[ReadableEthers](./lib-ethers.readableethers.md)
 
 
 </td><td>
 
-Ethers-based implementation of [SendableLiquity](./lib-base.sendableliquity.md)<!-- -->.
+Ethers-based implementation of [ReadableProtocol](./lib-base.readableprotocol.md)<!-- -->.
 
 
 </td></tr>
 <tr><td>
 
-[SentEthersLiquityTransaction](./lib-ethers.sentethersliquitytransaction.md)
+[SendableEthers](./lib-ethers.sendableethers.md)
+
+
+</td><td>
+
+Ethers-based implementation of [SendableProtocol](./lib-base.sendableprotocol.md)<!-- -->.
+
+
+</td></tr>
+<tr><td>
+
+[SentEthersTransaction](./lib-ethers.sentetherstransaction.md)
 
 
 </td><td>
@@ -134,7 +134,7 @@ A transaction that has already been sent.
 
 </td><td>
 
-Thrown when trying to connect to a network where Liquity is not deployed.
+Thrown when trying to connect to a network where the protocol is not deployed.
 
 
 </td></tr>
@@ -155,12 +155,12 @@ Description
 </th></tr></thead>
 <tbody><tr><td>
 
-[BlockPolledLiquityStoreExtraState](./lib-ethers.blockpolledliquitystoreextrastate.md)
+[BlockPolledSfStablecoinStoreExtraState](./lib-ethers.blockpolledsfstablecoinstoreextrastate.md)
 
 
 </td><td>
 
-Extra state added to [LiquityStoreState](./lib-base.liquitystorestate.md) by [BlockPolledLiquityStore](./lib-ethers.blockpolledliquitystore.md)<!-- -->.
+Extra state added to [SfStablecoinStoreState](./lib-base.sfstablecoinstorestate.md) by [BlockPolledSfStablecoinStore](./lib-ethers.blockpolledsfstablecoinstore.md)<!-- -->.
 
 
 </td></tr>
@@ -182,40 +182,40 @@ Optional parameters of a transaction that borrows DebtToken.
 
 </td><td>
 
-Optional parameters taken by [ReadableEthersLiquity](./lib-ethers.readableethersliquity.md) functions.
+Optional parameters taken by [ReadableEthers](./lib-ethers.readableethers.md) functions.
 
 
 </td></tr>
 <tr><td>
 
-[EthersLiquityConnection](./lib-ethers.ethersliquityconnection.md)
+[EthersConnection](./lib-ethers.ethersconnection.md)
 
 
 </td><td>
 
-Information about a connection to the Liquity protocol.
+Information about a connection to the protocol.
 
 
 </td></tr>
 <tr><td>
 
-[EthersLiquityConnectionOptionalParams](./lib-ethers.ethersliquityconnectionoptionalparams.md)
+[EthersConnectionOptionalParams](./lib-ethers.ethersconnectionoptionalparams.md)
 
 
 </td><td>
 
-Optional parameters of [ReadableEthersLiquity.connect()](./lib-ethers.readableethersliquity.connect_1.md) and [EthersLiquity.connect()](./lib-ethers.ethersliquity.connect_1.md)<!-- -->.
+Optional parameters of [ReadableEthers.connect()](./lib-ethers.readableethers.connect_1.md) and [EthersSfStablecoin.connect()](./lib-ethers.etherssfstablecoin.connect_1.md)<!-- -->.
 
 
 </td></tr>
 <tr><td>
 
-[EthersLiquityWithStore](./lib-ethers.ethersliquitywithstore.md)
+[EthersSfStablecoinWithStore](./lib-ethers.etherssfstablecoinwithstore.md)
 
 
 </td><td>
 
-Variant of [EthersLiquity](./lib-ethers.ethersliquity.md) that exposes a [LiquityStore](./lib-base.liquitystore.md)<!-- -->.
+Variant of [EthersSfStablecoin](./lib-ethers.etherssfstablecoin.md) that exposes a [SfStablecoinStore](./lib-base.sfstablecoinstore.md)<!-- -->.
 
 
 </td></tr>
@@ -226,18 +226,18 @@ Variant of [EthersLiquity](./lib-ethers.ethersliquity.md) that exposes a [Liquit
 
 </td><td>
 
-Optional parameters taken by [EthersLiquity](./lib-ethers.ethersliquity.md) transaction functions.
+Optional parameters taken by [EthersSfStablecoin](./lib-ethers.etherssfstablecoin.md) transaction functions.
 
 
 </td></tr>
 <tr><td>
 
-[ReadableEthersLiquityWithStore](./lib-ethers.readableethersliquitywithstore.md)
+[ReadableEthersWithStore](./lib-ethers.readableetherswithstore.md)
 
 
 </td><td>
 
-Variant of [ReadableEthersLiquity](./lib-ethers.readableethersliquity.md) that exposes a [LiquityStore](./lib-base.liquitystore.md)<!-- -->.
+Variant of [ReadableEthers](./lib-ethers.readableethers.md) that exposes a [SfStablecoinStore](./lib-base.sfstablecoinstore.md)<!-- -->.
 
 
 </td></tr>
@@ -258,23 +258,12 @@ Description
 </th></tr></thead>
 <tbody><tr><td>
 
-[BlockPolledLiquityStoreState](./lib-ethers.blockpolledliquitystorestate.md)
+[BlockPolledSfStablecoinStoreState](./lib-ethers.blockpolledsfstablecoinstorestate.md)
 
 
 </td><td>
 
-The type of [BlockPolledLiquityStore](./lib-ethers.blockpolledliquitystore.md)<!-- -->'s [state](./lib-base.liquitystore.state.md)<!-- -->.
-
-
-</td></tr>
-<tr><td>
-
-[EthersLiquityStoreOption](./lib-ethers.ethersliquitystoreoption.md)
-
-
-</td><td>
-
-Possible values for the optional [useStore](./lib-ethers.ethersliquityconnectionoptionalparams.usestore.md) connection parameter.
+The type of [BlockPolledSfStablecoinStore](./lib-ethers.blockpolledsfstablecoinstore.md)<!-- -->'s [state](./lib-base.sfstablecoinstore.state.md)<!-- -->.
 
 
 </td></tr>
@@ -297,6 +286,17 @@ Alias of Ethers' `PopulatedTransaction` type, which implements [UnsignedTransact
 </td><td>
 
 Alias of Ethers' abstract [Provider](https://docs.ethers.io/v5/api/providers/) type.
+
+
+</td></tr>
+<tr><td>
+
+[EthersSfStablecoinStoreOption](./lib-ethers.etherssfstablecoinstoreoption.md)
+
+
+</td><td>
+
+Possible values for the optional [useStore](./lib-ethers.ethersconnectionoptionalparams.usestore.md) connection parameter.
 
 
 </td></tr>

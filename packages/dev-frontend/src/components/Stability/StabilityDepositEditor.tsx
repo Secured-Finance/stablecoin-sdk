@@ -5,11 +5,11 @@ import {
   Decimal,
   Decimalish,
   Difference,
-  LiquityStoreState,
+  SfStablecoinStoreState,
   StabilityDeposit
 } from "@secured-finance/lib-base";
 
-import { useLiquitySelector } from "@secured-finance/lib-react";
+import { useSfStablecoinSelector } from "@secured-finance/lib-react";
 
 import { COIN, CURRENCY, GT } from "../../strings";
 
@@ -18,7 +18,7 @@ import { InfoIcon } from "../InfoIcon";
 import { LoadingOverlay } from "../LoadingOverlay";
 import { EditableRow, StaticRow } from "../Trove/Editor";
 
-const select = ({ debtTokenBalance, debtTokenInStabilityPool }: LiquityStoreState) => ({
+const select = ({ debtTokenBalance, debtTokenInStabilityPool }: SfStablecoinStoreState) => ({
   debtTokenBalance,
   debtTokenInStabilityPool
 });
@@ -37,7 +37,7 @@ export const StabilityDepositEditor: React.FC<StabilityDepositEditorProps> = ({
   dispatch,
   children
 }) => {
-  const { debtTokenBalance, debtTokenInStabilityPool } = useLiquitySelector(select);
+  const { debtTokenBalance, debtTokenInStabilityPool } = useSfStablecoinSelector(select);
   const editingState = useState<string>();
 
   const edited = !editedDebtToken.eq(originalDeposit.currentDebtToken);

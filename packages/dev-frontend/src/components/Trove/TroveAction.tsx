@@ -2,7 +2,7 @@ import { Button } from "theme-ui";
 
 import { Decimal, TroveChange } from "@secured-finance/lib-base";
 
-import { useLiquity } from "../../hooks/LiquityContext";
+import { useSfStablecoin } from "../../hooks/SfStablecoinContext";
 import { useTransactionFunction } from "../Transaction";
 
 type TroveActionProps = React.PropsWithChildren<{
@@ -19,18 +19,18 @@ export const TroveAction: React.FC<TroveActionProps> = ({
   maxBorrowingRate,
   borrowingFeeDecayToleranceMinutes
 }) => {
-  const { liquity } = useLiquity();
+  const { sfStablecoin } = useSfStablecoin();
 
   const [sendTransaction] = useTransactionFunction(
     transactionId,
     change.type === "creation"
-      ? liquity.send.openTrove.bind(liquity.send, change.params, {
+      ? sfStablecoin.send.openTrove.bind(sfStablecoin.send, change.params, {
           maxBorrowingRate,
           borrowingFeeDecayToleranceMinutes
         })
       : change.type === "closure"
-      ? liquity.send.closeTrove.bind(liquity.send)
-      : liquity.send.adjustTrove.bind(liquity.send, change.params, {
+      ? sfStablecoin.send.closeTrove.bind(sfStablecoin.send)
+      : sfStablecoin.send.adjustTrove.bind(sfStablecoin.send, change.params, {
           maxBorrowingRate,
           borrowingFeeDecayToleranceMinutes
         })

@@ -4,7 +4,7 @@
 
 ## CollateralGainTransferDetails interface
 
-Details of a [transferCollateralGainToTrove()](./lib-base.transactableliquity.transfercollateralgaintotrove.md) transaction.
+Details of a [transferCollateralGainToTrove()](./lib-base.transactableprotocol.transfercollateralgaintotrove.md) transaction.
 
 **Signature:**
 

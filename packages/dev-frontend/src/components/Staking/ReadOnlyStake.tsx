@@ -1,7 +1,7 @@
 import { Box, Button, Card, Flex, Heading } from "theme-ui";
 
-import { LiquityStoreState } from "@secured-finance/lib-base";
-import { useLiquitySelector } from "@secured-finance/lib-react";
+import { SfStablecoinStoreState } from "@secured-finance/lib-base";
+import { useSfStablecoinSelector } from "@secured-finance/lib-react";
 
 import { COIN, GT } from "../../strings";
 
@@ -13,14 +13,14 @@ import { DisabledEditableRow, StaticRow } from "../Trove/Editor";
 import { useStakingView } from "./context/StakingViewContext";
 import { StakingGainsAction } from "./StakingGainsAction";
 
-const select = ({ protocolTokenStake, totalStakedProtocolToken }: LiquityStoreState) => ({
+const select = ({ protocolTokenStake, totalStakedProtocolToken }: SfStablecoinStoreState) => ({
   protocolTokenStake,
   totalStakedProtocolToken
 });
 
 export const ReadOnlyStake: React.FC = () => {
   const { changePending, dispatch } = useStakingView();
-  const { protocolTokenStake, totalStakedProtocolToken } = useLiquitySelector(select);
+  const { protocolTokenStake, totalStakedProtocolToken } = useSfStablecoinSelector(select);
 
   const poolShare = protocolTokenStake.stakedProtocolToken.mulDiv(100, totalStakedProtocolToken);
 

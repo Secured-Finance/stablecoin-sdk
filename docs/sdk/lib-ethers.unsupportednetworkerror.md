@@ -4,7 +4,7 @@
 
 ## UnsupportedNetworkError class
 
-Thrown when trying to connect to a network where Liquity is not deployed.
+Thrown when trying to connect to a network where the protocol is not deployed.
 
 **Signature:**
 
@@ -15,7 +15,7 @@ export declare class UnsupportedNetworkError extends Error
 
 ## Remarks
 
-Thrown by [ReadableEthersLiquity.connect()](./lib-ethers.readableethersliquity.connect_1.md) and [EthersLiquity.connect()](./lib-ethers.ethersliquity.connect_1.md)<!-- -->.
+Thrown by [ReadableEthers.connect()](./lib-ethers.readableethers.connect_1.md) and [EthersSfStablecoin.connect()](./lib-ethers.etherssfstablecoin.connect_1.md)<!-- -->.
 
 The constructor for this class is marked as internal. Third-party code should not call the constructor directly or create subclasses that extend the `UnsupportedNetworkError` class.
 

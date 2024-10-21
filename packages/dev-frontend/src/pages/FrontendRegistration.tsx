@@ -5,7 +5,7 @@ import { Decimal } from "@secured-finance/lib-base";
 
 import { Icon } from "../components/Icon";
 import { Transaction, useMyTransactionState } from "../components/Transaction";
-import { useLiquity } from "../hooks/LiquityContext";
+import { useSfStablecoin } from "../hooks/SfStablecoinContext";
 import { shortenAddress } from "../utils/shortenAddress";
 
 type FrontendRegistrationActionProps = {
@@ -14,8 +14,8 @@ type FrontendRegistrationActionProps = {
 
 const FrontendRegistrationAction: React.FC<FrontendRegistrationActionProps> = ({ kickbackRate }) => {
   const {
-    liquity: { send: liquity }
-  } = useLiquity();
+    sfStablecoin: { send: sfStablecoin }
+  } = useSfStablecoin();
 
   const myTransactionId = "register-frontend";
   const myTransactionState = useMyTransactionState(myTransactionId);
@@ -27,14 +27,17 @@ const FrontendRegistrationAction: React.FC<FrontendRegistrationActionProps> = ({
     </Button>
   ) : myTransactionState.type !== "waitingForConfirmation" &&
     myTransactionState.type !== "confirmed" ? (
-    <Transaction id={myTransactionId} send={liquity.registerFrontend.bind(liquity, kickbackRate)}>
+    <Transaction
+      id={myTransactionId}
+      send={sfStablecoin.registerFrontend.bind(sfStablecoin, kickbackRate)}
+    >
       <Button>Register</Button>
     </Transaction>
   ) : null;
 };
 
 export const FrontendRegistration: React.FC = () => {
-  const { account } = useLiquity();
+  const { account } = useSfStablecoin();
 
   const [kickbackRate, setKickbackRate] = useState(Decimal.from(0.8));
   const [cut, setCut] = useState(Decimal.from(0.2));

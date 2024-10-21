@@ -14,7 +14,7 @@ export declare class ProtocolTokenStake
 
 ## Remarks
 
-Returned by the [getProtocolTokenStake()](./lib-base.readableliquity.getprotocoltokenstake.md) function.
+Returned by the [getProtocolTokenStake()](./lib-base.readableprotocol.getprotocoltokenstake.md) function.
 
 The constructor for this class is marked as internal. Third-party code should not call the constructor directly or create subclasses that extend the `ProtocolTokenStake` class.
 

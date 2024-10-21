@@ -1,11 +1,11 @@
 import {
   CRITICAL_COLLATERAL_RATIO,
   Decimal,
-  LiquityStoreState,
   MINIMUM_COLLATERAL_RATIO,
   MINIMUM_DEBT,
   MINIMUM_NET_DEBT,
   Percent,
+  SfStablecoinStoreState,
   Trove,
   TroveAdjustmentParams,
   TroveChange,
@@ -110,7 +110,7 @@ export const selectForTroveChangeValidation = ({
   accountBalance,
   debtTokenBalance,
   numberOfTroves
-}: LiquityStoreState) => ({ price, total, accountBalance, debtTokenBalance, numberOfTroves });
+}: SfStablecoinStoreState) => ({ price, total, accountBalance, debtTokenBalance, numberOfTroves });
 
 type TroveChangeValidationSelectedState = ReturnType<typeof selectForTroveChangeValidation>;
 

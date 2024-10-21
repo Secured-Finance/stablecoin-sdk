@@ -15,7 +15,7 @@ import { HardhatRuntimeEnvironment } from "hardhat/types";
 
 import { Decimal } from "@secured-finance/lib-base";
 
-import { _connectToContracts, _LiquityDeploymentJSON, _priceFeedIsTestnet } from "./src/contracts";
+import { _connectToContracts, _priceFeedIsTestnet, _ProtocolDeploymentJSON } from "./src/contracts";
 import {
   deployAndSetupContracts,
   deployPythCaller,
@@ -132,12 +132,12 @@ const config: HardhatUserConfig = {
 
 declare module "hardhat/types/runtime" {
   interface HardhatRuntimeEnvironment {
-    deployLiquity: (
+    deployProtocol: (
       deployer: Signer,
       useRealPriceFeed?: boolean,
       wrappedNativeTokenAddress?: string,
       overrides?: Overrides
-    ) => Promise<_LiquityDeploymentJSON>;
+    ) => Promise<_ProtocolDeploymentJSON>;
   }
 }
 
@@ -154,7 +154,7 @@ const getContractFactory: (
   : env => env.ethers.getContractFactory;
 
 extendEnvironment(env => {
-  env.deployLiquity = async (
+  env.deployProtocol = async (
     deployer,
     useRealPriceFeed = false,
     wrappedNativeTokenAddress = undefined,
@@ -218,7 +218,7 @@ task("deploy", "Deploys the contracts to the network")
 
       setSilent(false);
 
-      const deployment = await env.deployLiquity(
+      const deployment = await env.deployProtocol(
         deployer,
         useRealPriceFeed,
         wrappedNativeTokenAddress,

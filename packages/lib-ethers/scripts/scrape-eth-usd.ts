@@ -10,8 +10,8 @@ const outputFile = "eth-usd.csv";
 
 const phase = 2;
 const answerDecimals = 8;
-const liquityDecimals = 18;
-const answerMultiplier = BigNumber.from(10).pow(liquityDecimals - answerDecimals);
+const protocolDecimals = 18;
+const answerMultiplier = BigNumber.from(10).pow(protocolDecimals - answerDecimals);
 const firstRound = BigNumber.from("0x10000000000000000").mul(phase);
 
 const aggregatorAddress = "0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419";
@@ -63,15 +63,14 @@ const formatDateTime = (timestamp: number) => {
   const aggregator = new Contract(aggregatorAddress, aggregatorAbi, provider) as Aggregator;
 
   const getRound = (roundId: BigNumberish) =>
-    Promise.all([
-      aggregator.getTimestamp(roundId),
-      aggregator.getAnswer(roundId)
-    ]).then(([timestamp, answer]) => [
-      `${roundId}`,
-      `${timestamp}`,
-      formatDateTime(timestamp.toNumber()),
-      `${Decimal.fromBigNumberString(answer.mul(answerMultiplier).toHexString())}`
-    ]);
+    Promise.all([aggregator.getTimestamp(roundId), aggregator.getAnswer(roundId)]).then(
+      ([timestamp, answer]) => [
+        `${roundId}`,
+        `${timestamp}`,
+        formatDateTime(timestamp.toNumber()),
+        `${Decimal.fromBigNumberString(answer.mul(answerMultiplier).toHexString())}`
+      ]
+    );
 
   const roundsPerPass = 10;
   // const latestRound = await aggregator.latestRound();

@@ -1,25 +1,29 @@
 import React from "react";
 import { Box, Button, Flex, Heading, Text } from "theme-ui";
 
-import { Decimal, LiquityStoreState } from "@secured-finance/lib-base";
-import { useLiquitySelector } from "@secured-finance/lib-react";
+import { Decimal, SfStablecoinStoreState } from "@secured-finance/lib-base";
+import { useSfStablecoinSelector } from "@secured-finance/lib-react";
 
-import { useLiquity } from "../hooks/LiquityContext";
+import { useSfStablecoin } from "../hooks/SfStablecoinContext";
 import { COIN, CURRENCY, GT } from "../strings";
 import { shortenAddress } from "../utils/shortenAddress";
 
 import { ConnectKitButton } from "connectkit";
 import { Icon } from "./Icon";
 
-const select = ({ accountBalance, debtTokenBalance, protocolTokenBalance }: LiquityStoreState) => ({
+const select = ({
+  accountBalance,
+  debtTokenBalance,
+  protocolTokenBalance
+}: SfStablecoinStoreState) => ({
   accountBalance,
   debtTokenBalance,
   protocolTokenBalance
 });
 
 export const UserAccount: React.FC = () => {
-  const { account } = useLiquity();
-  const { accountBalance, debtTokenBalance, protocolTokenBalance } = useLiquitySelector(select);
+  const { account } = useSfStablecoin();
+  const { accountBalance, debtTokenBalance, protocolTokenBalance } = useSfStablecoinSelector(select);
 
   return (
     <Flex>

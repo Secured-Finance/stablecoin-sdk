@@ -23,7 +23,7 @@ cast client --rpc-url "http://localhost:8545" > /dev/null || (echo -e "\n${RED}R
 
 # Check ngrok config file exists
 if ! [ -f "../ngrok.config.yml" ]; then
-    echo "\n${RED}You need to create an ngrok.config.yml inside the Liquity dev repository root."
+    echo "\n${RED}You need to create an ngrok.config.yml inside the dev repository root."
     echo "\nSee ngrok.config.template.yml for an example."
     exit 1
 fi

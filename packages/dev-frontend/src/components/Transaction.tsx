@@ -5,13 +5,13 @@ import React, { useCallback, useContext, useEffect, useState } from "react";
 
 import "react-circular-progressbar/dist/styles.css";
 
-import { LiquityReceipt, SentLiquityTransaction } from "@secured-finance/lib-base";
+import { ProtocolReceipt, SentProtocolTransaction } from "@secured-finance/lib-base";
 import {
   EthersTransactionCancelledError,
   EthersTransactionOverrides
 } from "@secured-finance/lib-ethers";
 
-import { useLiquity } from "../hooks/LiquityContext";
+import { useSfStablecoin } from "../hooks/SfStablecoinContext";
 
 import type { TooltipProps } from "./Tooltip";
 import { Tooltip } from "./Tooltip";
@@ -105,9 +105,9 @@ type ButtonlikeProps = {
   onClick?: () => void;
 };
 
-type SentTransaction = SentLiquityTransaction<
+type SentTransaction = SentProtocolTransaction<
   TransactionResponse,
-  LiquityReceipt<TransactionReceipt>
+  ProtocolReceipt<TransactionReceipt>
 >;
 
 export type TransactionFunction = (
@@ -229,7 +229,7 @@ const tryToGetRevertReason = async (provider: Provider, tx: TransactionReceipt) 
 };
 
 export const TransactionMonitor: React.FC = () => {
-  const { provider } = useLiquity();
+  const { provider } = useSfStablecoin();
   const [transactionState, setTransactionState] = useTransactionState();
 
   const id = transactionState.type !== "idle" ? transactionState.id : undefined;

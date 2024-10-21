@@ -8,12 +8,12 @@ import {
   Difference,
   LIQUIDATION_RESERVE,
   Percent,
-  ReadableLiquity,
+  ReadableProtocol,
   Trove,
   TroveWithPendingRedistribution
 } from "@secured-finance/lib-base";
-import { EthersLiquity, ReadableEthersLiquity } from "@secured-finance/lib-ethers";
-import { SubgraphLiquity } from "@secured-finance/lib-subgraph";
+import { EthersSfStablecoin, ReadableEthers } from "@secured-finance/lib-ethers";
+import { SubgraphSfStablecoin } from "@secured-finance/lib-subgraph";
 
 export const objToString = (o: Record<string, unknown>) =>
   "{ " +
@@ -66,22 +66,22 @@ export const randomDebtChange = ({ debt }: Trove) =>
     ? { repayDebtToken: debt.mul(1.1 * Math.random()) }
     : { borrowDebtToken: debt.mul(0.5 * Math.random()) };
 
-export const getListOfTroves = async (liquity: ReadableLiquity) =>
-  liquity.getTroves({
-    first: await liquity.getNumberOfTroves(),
+export const getListOfTroves = async (protocol: ReadableProtocol) =>
+  protocol.getTroves({
+    first: await protocol.getNumberOfTroves(),
     sortedBy: "descendingCollateralRatio",
     beforeRedistribution: false
   });
 
-export const getListOfTrovesBeforeRedistribution = async (liquity: ReadableLiquity) =>
-  liquity.getTroves({
-    first: await liquity.getNumberOfTroves(),
+export const getListOfTrovesBeforeRedistribution = async (protocol: ReadableProtocol) =>
+  protocol.getTroves({
+    first: await protocol.getNumberOfTroves(),
     sortedBy: "descendingCollateralRatio",
     beforeRedistribution: true
   });
 
-export const getListOfTroveOwners = async (liquity: ReadableLiquity) =>
-  getListOfTrovesBeforeRedistribution(liquity).then(troves =>
+export const getListOfTroveOwners = async (protocol: ReadableProtocol) =>
+  getListOfTrovesBeforeRedistribution(protocol).then(troves =>
     troves.map(trove => trove.ownerAddress)
   );
 
@@ -163,12 +163,12 @@ export const checkTroveOrdering = (
 };
 
 export const checkPoolBalances = async (
-  liquity: ReadableEthersLiquity,
+  protocol: ReadableEthers,
   listOfTroves: TroveWithPendingRedistribution[],
   totalRedistributed: Trove
 ) => {
-  const activePool = await liquity._getActivePool();
-  const defaultPool = await liquity._getDefaultPool();
+  const activePool = await protocol._getActivePool();
+  const defaultPool = await protocol._getDefaultPool();
 
   const [activeTotal, defaultTotal] = listOfTroves.reduce(
     ([activeTotal, defaultTotal], troveActive) => {
@@ -212,12 +212,12 @@ const trovesRoughlyEqual = (troveA: Trove, troveB: Trove) =>
 
 class EqualityCheck<T> {
   private name: string;
-  private get: (l: ReadableLiquity) => Promise<T>;
+  private get: (l: ReadableProtocol) => Promise<T>;
   private equals: (a: T, b: T) => boolean;
 
   constructor(
     name: string,
-    get: (l: ReadableLiquity) => Promise<T>,
+    get: (l: ReadableProtocol) => Promise<T>,
     equals: (a: T, b: T) => boolean
   ) {
     this.name = name;
@@ -225,7 +225,7 @@ class EqualityCheck<T> {
     this.equals = equals;
   }
 
-  async allEqual(liquities: ReadableLiquity[]) {
+  async allEqual(liquities: ReadableProtocol[]) {
     const [a, ...rest] = await Promise.all(liquities.map(l => this.get(l)));
 
     if (!rest.every(b => this.equals(a, b))) {
@@ -242,10 +242,13 @@ const checks = [
   new EqualityCheck("tokensInStabilityPool", l => l.getDebtTokenInStabilityPool(), decimalsEqual)
 ];
 
-export const checkSubgraph = async (subgraph: SubgraphLiquity, l1Liquity: ReadableLiquity) => {
-  await Promise.all(checks.map(check => check.allEqual([subgraph, l1Liquity])));
+export const checkSubgraph = async (
+  subgraph: SubgraphSfStablecoin,
+  l1Protocol: ReadableProtocol
+) => {
+  await Promise.all(checks.map(check => check.allEqual([subgraph, l1Protocol])));
 
-  const l1ListOfTroves = await getListOfTrovesBeforeRedistribution(l1Liquity);
+  const l1ListOfTroves = await getListOfTrovesBeforeRedistribution(l1Protocol);
   const subgraphListOfTroves = await getListOfTrovesBeforeRedistribution(subgraph);
   listOfTrovesShouldBeEqual(l1ListOfTroves, subgraphListOfTroves);
 
@@ -327,4 +330,4 @@ const truncateLastDigits = (n: number) => {
 };
 
 export const connectUsers = (users: Signer[]) =>
-  Promise.all(users.map(user => EthersLiquity.connect(user)));
+  Promise.all(users.map(user => EthersSfStablecoin.connect(user)));

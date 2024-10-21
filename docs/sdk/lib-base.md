@@ -41,23 +41,23 @@ Calculator for fees.
 </td></tr>
 <tr><td>
 
-[LiquityStore](./lib-base.liquitystore.md)
-
-
-</td><td>
-
-Abstract base class of Liquity data store implementations.
-
-
-</td></tr>
-<tr><td>
-
 [ProtocolTokenStake](./lib-base.protocoltokenstake.md)
 
 
 </td><td>
 
 Represents a user's ProtocolToken stake and accrued gains.
+
+
+</td></tr>
+<tr><td>
+
+[SfStablecoinStore](./lib-base.sfstablecoinstore.md)
+
+
+</td><td>
+
+Abstract base class of protocol data store implementations.
 
 
 </td></tr>
@@ -79,7 +79,7 @@ A Stability Deposit and its accrued gains.
 
 </td><td>
 
-Thrown by [TransactableLiquity](./lib-base.transactableliquity.md) functions in case of transaction failure.
+Thrown by [TransactableProtocol](./lib-base.transactableprotocol.md) functions in case of transaction failure.
 
 
 </td></tr>
@@ -138,7 +138,7 @@ Description
 
 </td><td>
 
-Details of a [transferCollateralGainToTrove()](./lib-base.transactableliquity.transfercollateralgaintotrove.md) transaction.
+Details of a [transferCollateralGainToTrove()](./lib-base.transactableprotocol.transfercollateralgaintotrove.md) transaction.
 
 
 </td></tr>
@@ -149,68 +149,24 @@ Details of a [transferCollateralGainToTrove()](./lib-base.transactableliquity.tr
 
 </td><td>
 
-Details of a [liquidate()](./lib-base.transactableliquity.liquidate.md) or [liquidateUpTo()](./lib-base.transactableliquity.liquidateupto.md) transaction.
+Details of a [liquidate()](./lib-base.transactableprotocol.liquidate.md) or [liquidateUpTo()](./lib-base.transactableprotocol.liquidateupto.md) transaction.
 
 
 </td></tr>
 <tr><td>
 
-[LiquityStoreBaseState](./lib-base.liquitystorebasestate.md)
+[PopulatableProtocol](./lib-base.populatableprotocol.md)
 
 
 </td><td>
 
-State variables read from the blockchain.
+Prepare transactions for sending.
 
 
 </td></tr>
 <tr><td>
 
-[LiquityStoreDerivedState](./lib-base.liquitystorederivedstate.md)
-
-
-</td><td>
-
-State variables derived from [LiquityStoreBaseState](./lib-base.liquitystorebasestate.md)<!-- -->.
-
-
-</td></tr>
-<tr><td>
-
-[LiquityStoreListenerParams](./lib-base.liquitystorelistenerparams.md)
-
-
-</td><td>
-
-Parameters passed to [LiquityStore](./lib-base.liquitystore.md) listeners.
-
-
-</td></tr>
-<tr><td>
-
-[PopulatableLiquity](./lib-base.populatableliquity.md)
-
-
-</td><td>
-
-Prepare Liquity transactions for sending.
-
-
-</td></tr>
-<tr><td>
-
-[PopulatedLiquityTransaction](./lib-base.populatedliquitytransaction.md)
-
-
-</td><td>
-
-A transaction that has been prepared for sending.
-
-
-</td></tr>
-<tr><td>
-
-[PopulatedRedemption](./lib-base.populatedredemption.md)
+[PopulatedRedemptionInterface](./lib-base.populatedredemptioninterface.md)
 
 
 </td><td>
@@ -221,12 +177,23 @@ A redemption transaction that has been prepared for sending.
 </td></tr>
 <tr><td>
 
-[ReadableLiquity](./lib-base.readableliquity.md)
+[PopulatedTransactionInterface](./lib-base.populatedtransactioninterface.md)
 
 
 </td><td>
 
-Read the state of the Liquity protocol.
+A transaction that has been prepared for sending.
+
+
+</td></tr>
+<tr><td>
+
+[ReadableProtocol](./lib-base.readableprotocol.md)
+
+
+</td><td>
+
+Read the state of the protocol.
 
 
 </td></tr>
@@ -237,24 +204,24 @@ Read the state of the Liquity protocol.
 
 </td><td>
 
-Details of a [redeemDebtToken()](./lib-base.transactableliquity.redeemdebttoken.md) transaction.
+Details of a [redeemDebtToken()](./lib-base.transactableprotocol.redeemdebttoken.md) transaction.
 
 
 </td></tr>
 <tr><td>
 
-[SendableLiquity](./lib-base.sendableliquity.md)
+[SendableProtocol](./lib-base.sendableprotocol.md)
 
 
 </td><td>
 
-Send Liquity transactions.
+Send transactions.
 
 
 </td></tr>
 <tr><td>
 
-[SentLiquityTransaction](./lib-base.sentliquitytransaction.md)
+[SentProtocolTransaction](./lib-base.sentprotocoltransaction.md)
 
 
 </td><td>
@@ -265,12 +232,45 @@ A transaction that has already been sent.
 </td></tr>
 <tr><td>
 
+[SfStablecoinStoreBaseState](./lib-base.sfstablecoinstorebasestate.md)
+
+
+</td><td>
+
+State variables read from the blockchain.
+
+
+</td></tr>
+<tr><td>
+
+[SfStablecoinStoreDerivedState](./lib-base.sfstablecoinstorederivedstate.md)
+
+
+</td><td>
+
+State variables derived from [SfStablecoinStoreBaseState](./lib-base.sfstablecoinstorebasestate.md)<!-- -->.
+
+
+</td></tr>
+<tr><td>
+
+[SfStablecoinStoreListenerParams](./lib-base.sfstablecoinstorelistenerparams.md)
+
+
+</td><td>
+
+Parameters passed to [SfStablecoinStore](./lib-base.sfstablecoinstore.md) listeners.
+
+
+</td></tr>
+<tr><td>
+
 [StabilityDepositChangeDetails](./lib-base.stabilitydepositchangedetails.md)
 
 
 </td><td>
 
-Details of a [depositDebtTokenInStabilityPool()](./lib-base.transactableliquity.depositdebttokeninstabilitypool.md) or [withdrawDebtTokenFromStabilityPool()](./lib-base.transactableliquity.withdrawdebttokenfromstabilitypool.md) transaction.
+Details of a [depositDebtTokenInStabilityPool()](./lib-base.transactableprotocol.depositdebttokeninstabilitypool.md) or [withdrawDebtTokenFromStabilityPool()](./lib-base.transactableprotocol.withdrawdebttokenfromstabilitypool.md) transaction.
 
 
 </td></tr>
@@ -281,18 +281,18 @@ Details of a [depositDebtTokenInStabilityPool()](./lib-base.transactableliquity.
 
 </td><td>
 
-Details of a [withdrawGainsFromStabilityPool()](./lib-base.transactableliquity.withdrawgainsfromstabilitypool.md) transaction.
+Details of a [withdrawGainsFromStabilityPool()](./lib-base.transactableprotocol.withdrawgainsfromstabilitypool.md) transaction.
 
 
 </td></tr>
 <tr><td>
 
-[TransactableLiquity](./lib-base.transactableliquity.md)
+[TransactableProtocol](./lib-base.transactableprotocol.md)
 
 
 </td><td>
 
-Send Liquity transactions and wait for them to succeed.
+Send transactions and wait for them to succeed.
 
 
 </td></tr>
@@ -303,7 +303,7 @@ Send Liquity transactions and wait for them to succeed.
 
 </td><td>
 
-Details of an [adjustTrove()](./lib-base.transactableliquity.adjusttrove.md) transaction.
+Details of an [adjustTrove()](./lib-base.transactableprotocol.adjusttrove.md) transaction.
 
 
 </td></tr>
@@ -314,7 +314,7 @@ Details of an [adjustTrove()](./lib-base.transactableliquity.adjusttrove.md) tra
 
 </td><td>
 
-Details of a [closeTrove()](./lib-base.transactableliquity.closetrove.md) transaction.
+Details of a [closeTrove()](./lib-base.transactableprotocol.closetrove.md) transaction.
 
 
 </td></tr>
@@ -325,7 +325,7 @@ Details of a [closeTrove()](./lib-base.transactableliquity.closetrove.md) transa
 
 </td><td>
 
-Details of an [openTrove()](./lib-base.transactableliquity.opentrove.md) transaction.
+Details of an [openTrove()](./lib-base.transactableprotocol.opentrove.md) transaction.
 
 
 </td></tr>
@@ -336,7 +336,7 @@ Details of an [openTrove()](./lib-base.transactableliquity.opentrove.md) transac
 
 </td><td>
 
-Parameters of the [getTroves()](./lib-base.readableliquity.gettroves_1.md) function.
+Parameters of the [getTroves()](./lib-base.readableprotocol.gettroves_1.md) function.
 
 
 </td></tr>
@@ -487,29 +487,7 @@ Indicates that the transaction has been mined, but it failed.
 
 </td><td>
 
-Represents whether an address has been registered as a Liquity frontend.
-
-
-</td></tr>
-<tr><td>
-
-[LiquityReceipt](./lib-base.liquityreceipt.md)
-
-
-</td><td>
-
-One of either a [PendingReceipt](./lib-base.pendingreceipt.md)<!-- -->, a [FailedReceipt](./lib-base.failedreceipt.md) or a [SuccessfulReceipt](./lib-base.successfulreceipt.md)<!-- -->.
-
-
-</td></tr>
-<tr><td>
-
-[LiquityStoreState](./lib-base.liquitystorestate.md)
-
-
-</td><td>
-
-Type of [LiquityStore](./lib-base.liquitystore.md)<!-- -->'s [state](./lib-base.liquitystore.state.md)<!-- -->.
+Represents whether an address has been registered as a frontend.
 
 
 </td></tr>
@@ -537,12 +515,34 @@ Indicates that the transaction hasn't been mined yet.
 </td></tr>
 <tr><td>
 
+[ProtocolReceipt](./lib-base.protocolreceipt.md)
+
+
+</td><td>
+
+One of either a [PendingReceipt](./lib-base.pendingreceipt.md)<!-- -->, a [FailedReceipt](./lib-base.failedreceipt.md) or a [SuccessfulReceipt](./lib-base.successfulreceipt.md)<!-- -->.
+
+
+</td></tr>
+<tr><td>
+
 [ProtocolTokenStakeChange](./lib-base.protocoltokenstakechange.md)
 
 
 </td><td>
 
 Represents the change between two states of an ProtocolToken Stake.
+
+
+</td></tr>
+<tr><td>
+
+[SfStablecoinStoreState](./lib-base.sfstablecoinstorestate.md)
+
+
+</td><td>
+
+Type of [SfStablecoinStore](./lib-base.sfstablecoinstore.md)<!-- -->'s [state](./lib-base.sfstablecoinstore.state.md)<!-- -->.
 
 
 </td></tr>
@@ -575,7 +575,7 @@ Indicates that the transaction has succeeded.
 
 </td><td>
 
-Parameters of an [adjustTrove()](./lib-base.transactableliquity.adjusttrove.md) transaction.
+Parameters of an [adjustTrove()](./lib-base.transactableprotocol.adjusttrove.md) transaction.
 
 
 </td></tr>
@@ -597,7 +597,7 @@ Represents the change between two Trove states.
 
 </td><td>
 
-Parameters of a [closeTrove()](./lib-base.transactableliquity.closetrove.md) transaction.
+Parameters of a [closeTrove()](./lib-base.transactableprotocol.closetrove.md) transaction.
 
 
 </td></tr>
@@ -619,7 +619,7 @@ Describes why a Trove could not be created.
 
 </td><td>
 
-Parameters of an [openTrove()](./lib-base.transactableliquity.opentrove.md) transaction.
+Parameters of an [openTrove()](./lib-base.transactableprotocol.opentrove.md) transaction.
 
 
 </td></tr>

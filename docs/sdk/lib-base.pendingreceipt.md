@@ -16,5 +16,5 @@ export declare type PendingReceipt = {
 
 ## Remarks
 
-Returned by [SentLiquityTransaction.getReceipt()](./lib-base.sentliquitytransaction.getreceipt.md)<!-- -->.
+Returned by [SentProtocolTransaction.getReceipt()](./lib-base.sentprotocoltransaction.getreceipt.md)<!-- -->.
 

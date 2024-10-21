@@ -13,8 +13,8 @@ const yaml = (strings, ...keys) =>
 
 const manifest = yaml`
 specVersion: 0.0.2
-description: Liquity is a decentralized borrowing protocol offering interest-free liquidity against collateral in Ether.
-repository: https://github.com/liquity/dev/tree/main/packages/subgraph
+description: This protocol is a decentralized borrowing protocol offering interest-free liquidity against collateral in Filecoin.
+repository: https://github.com/Secured-Finance/stablecoin-sdk/tree/main/packages/subgraph
 schema:
   file: ./schema.graphql
 dataSources:

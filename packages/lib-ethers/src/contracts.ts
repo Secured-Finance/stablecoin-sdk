@@ -137,7 +137,7 @@ const buildEstimatedFunctions = <T>(
     ])
   );
 
-export class _LiquityContract extends Contract {
+export class _ProtocolContract extends Contract {
   readonly estimateAndPopulate: Record<string, EstimatedContractFunction<PopulatedTransaction>>;
 
   constructor(
@@ -160,10 +160,14 @@ export class _LiquityContract extends Contract {
 }
 
 /** @internal */
-export type _TypedLiquityContract<T = unknown, U = unknown> = TypedContract<_LiquityContract, T, U>;
+export type _TypedProtocolContract<T = unknown, U = unknown> = TypedContract<
+  _ProtocolContract,
+  T,
+  U
+>;
 
 /** @internal */
-export interface _LiquityContracts {
+export interface _ProtocolContracts {
   activePool: ActivePool;
   borrowerOperations: BorrowerOperations;
   troveManager: TroveManager;
@@ -193,14 +197,14 @@ export const _priceFeedIsTestnet = (
 export const _uniTokenIsMock = (uniToken: IERC20 | ERC20Mock): uniToken is ERC20Mock =>
   "mint" in uniToken;
 
-type LiquityContractsKey = keyof _LiquityContracts;
+type ProtocolContractsKey = keyof _ProtocolContracts;
 
 /** @internal */
-export type _LiquityContractAddresses = Record<LiquityContractsKey, string>;
+export type _ProtocolContractAddresses = Record<ProtocolContractsKey, string>;
 
-type LiquityContractAbis = Record<LiquityContractsKey, JsonFragment[]>;
+type ProtocolContractAbis = Record<ProtocolContractsKey, JsonFragment[]>;
 
-const getAbi = (priceFeedIsTestnet: boolean, uniTokenIsMock: boolean): LiquityContractAbis => ({
+const getAbi = (priceFeedIsTestnet: boolean, uniTokenIsMock: boolean): ProtocolContractAbis => ({
   activePool: activePoolAbi,
   borrowerOperations: borrowerOperationsAbi,
   troveManager: troveManagerAbi,
@@ -221,18 +225,18 @@ const getAbi = (priceFeedIsTestnet: boolean, uniTokenIsMock: boolean): LiquityCo
   uniToken: uniTokenIsMock ? erc20MockAbi : iERC20Abi
 });
 
-const mapLiquityContracts = <T, U>(
-  contracts: Record<LiquityContractsKey, T>,
-  f: (t: T, key: LiquityContractsKey) => U
+const mapContracts = <T, U>(
+  contracts: Record<ProtocolContractsKey, T>,
+  f: (t: T, key: ProtocolContractsKey) => U
 ) =>
   Object.fromEntries(
-    Object.entries(contracts).map(([key, t]) => [key, f(t, key as LiquityContractsKey)])
-  ) as Record<LiquityContractsKey, U>;
+    Object.entries(contracts).map(([key, t]) => [key, f(t, key as ProtocolContractsKey)])
+  ) as Record<ProtocolContractsKey, U>;
 
 /** @internal */
-export interface _LiquityDeploymentJSON {
+export interface _ProtocolDeploymentJSON {
   readonly chainId: number;
-  readonly addresses: _LiquityContractAddresses;
+  readonly addresses: _ProtocolContractAddresses;
   readonly version: string;
   readonly deploymentDate: number;
   readonly startBlock: number;
@@ -247,13 +251,13 @@ export interface _LiquityDeploymentJSON {
 /** @internal */
 export const _connectToContracts = (
   signerOrProvider: EthersSigner | EthersProvider,
-  { addresses, _priceFeedIsTestnet, _uniTokenIsMock }: _LiquityDeploymentJSON
-): _LiquityContracts => {
+  { addresses, _priceFeedIsTestnet, _uniTokenIsMock }: _ProtocolDeploymentJSON
+): _ProtocolContracts => {
   const abi = getAbi(_priceFeedIsTestnet, _uniTokenIsMock);
 
-  return mapLiquityContracts(
+  return mapContracts(
     addresses,
     (address, key) =>
-      new _LiquityContract(address, abi[key], signerOrProvider) as _TypedLiquityContract
-  ) as _LiquityContracts;
+      new _ProtocolContract(address, abi[key], signerOrProvider) as _TypedProtocolContract
+  ) as _ProtocolContracts;
 };

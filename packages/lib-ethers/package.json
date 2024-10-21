@@ -1,19 +1,18 @@
 {
   "name": "@secured-finance/lib-ethers",
   "version": "0.0.2-beta.1",
-  "description": "Liquity SDK Ethers-based implementation",
+  "description": "SDK Ethers-based implementation",
   "keywords": [
-    "Liquity",
+    "Secured Finance",
     "protocol",
     "DeFi",
     "Ethereum"
   ],
-  "homepage": "https://github.com/liquity/liquity#readme",
+  "homepage": "https://github.com/Secured-Finance/stablecoin-sdk#readme",
   "license": "MIT",
-  "author": "Daniel Simon <dani@liquity.org>",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "repository": "https://github.com/liquity/dev",
+  "repository": "https://github.com/Secured-Finance/stablecoin-sdk",
   "scripts": {
     "hardhat": "hardhat",
     "check-live-version": "ts-node scripts/check-live-version.ts",

@@ -1,25 +1,25 @@
 import { AddressZero } from "@ethersproject/constants";
 import { useEffect, useState } from "react";
 
-import { LiquityStoreState } from "@secured-finance/lib-base";
-import { useLiquitySelector } from "@secured-finance/lib-react";
+import { SfStablecoinStoreState } from "@secured-finance/lib-base";
+import { useSfStablecoinSelector } from "@secured-finance/lib-react";
 
-import { useLiquity } from "../hooks/LiquityContext";
+import { useSfStablecoin } from "../hooks/SfStablecoinContext";
 
 import { Dashboard } from "./Dashboard";
 import { FrontendRegistration } from "./FrontendRegistration";
 import { FrontendRegistrationSuccess } from "./FrontendRegistrationSuccess";
 import { UnregisteredFrontend } from "./UnregisteredFrontend";
 
-const selectFrontend = ({ frontend }: LiquityStoreState) => frontend;
+const selectFrontend = ({ frontend }: SfStablecoinStoreState) => frontend;
 
 export const PageSwitcher: React.FC = () => {
   const {
     account,
     config: { frontendTag }
-  } = useLiquity();
+  } = useSfStablecoin();
 
-  const frontend = useLiquitySelector(selectFrontend);
+  const frontend = useSfStablecoinSelector(selectFrontend);
   const unregistered = frontendTag !== AddressZero && frontend.status === "unregistered";
 
   const [registering, setRegistering] = useState(false);

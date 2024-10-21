@@ -9,17 +9,17 @@ A redemption transaction that has been prepared for sending.
 **Signature:**
 
 ```typescript
-export declare class PopulatedEthersRedemption extends PopulatedEthersLiquityTransaction<RedemptionDetails> implements PopulatedRedemption<EthersPopulatedTransaction, EthersTransactionResponse, EthersTransactionReceipt> 
+export declare class PopulatedEthersRedemption extends PopulatedEthersTransaction<RedemptionDetails> implements PopulatedRedemptionInterface<EthersPopulatedTransaction, EthersTransactionResponse, EthersTransactionReceipt> 
 ```
-**Extends:** [PopulatedEthersLiquityTransaction](./lib-ethers.populatedethersliquitytransaction.md)<!-- -->&lt;[RedemptionDetails](./lib-base.redemptiondetails.md)<!-- -->&gt;
+**Extends:** [PopulatedEthersTransaction](./lib-ethers.populatedetherstransaction.md)<!-- -->&lt;[RedemptionDetails](./lib-base.redemptiondetails.md)<!-- -->&gt;
 
-**Implements:** [PopulatedRedemption](./lib-base.populatedredemption.md)<!-- -->&lt;[EthersPopulatedTransaction](./lib-ethers.etherspopulatedtransaction.md)<!-- -->, [EthersTransactionResponse](./lib-ethers.etherstransactionresponse.md)<!-- -->, [EthersTransactionReceipt](./lib-ethers.etherstransactionreceipt.md)<!-- -->&gt;
+**Implements:** [PopulatedRedemptionInterface](./lib-base.populatedredemptioninterface.md)<!-- -->&lt;[EthersPopulatedTransaction](./lib-ethers.etherspopulatedtransaction.md)<!-- -->, [EthersTransactionResponse](./lib-ethers.etherstransactionresponse.md)<!-- -->, [EthersTransactionReceipt](./lib-ethers.etherstransactionreceipt.md)<!-- -->&gt;
 
 ## Remarks
 
-The Liquity protocol fulfills redemptions by repaying the debt of Troves in ascending order of their collateralization ratio, and taking a portion of their collateral in exchange. Due to the [minimum debt](./lib-base.minimum_debt.md) requirement that Troves must fulfill, some DebtToken amounts are not possible to redeem exactly.
+The protocol fulfills redemptions by repaying the debt of Troves in ascending order of their collateralization ratio, and taking a portion of their collateral in exchange. Due to the [minimum debt](./lib-base.minimum_debt.md) requirement that Troves must fulfill, some DebtToken amounts are not possible to redeem exactly.
 
-When [redeemDebtToken()](./lib-base.populatableliquity.redeemdebttoken.md) is called with an amount that can't be fully redeemed, the amount will be truncated (see the `redeemableDebtTokenAmount` property). When this happens, the redeemer can either redeem the truncated amount by sending the transaction unchanged, or prepare a new transaction by [increasing the amount](./lib-base.populatedredemption.increaseamountbyminimumnetdebt.md) to the next lowest possible value, which is the sum of the truncated amount and [MINIMUM\_NET\_DEBT](./lib-base.minimum_net_debt.md)<!-- -->.
+When [redeemDebtToken()](./lib-base.populatableprotocol.redeemdebttoken.md) is called with an amount that can't be fully redeemed, the amount will be truncated (see the `redeemableDebtTokenAmount` property). When this happens, the redeemer can either redeem the truncated amount by sending the transaction unchanged, or prepare a new transaction by [increasing the amount](./lib-base.populatedredemptioninterface.increaseamountbyminimumnetdebt.md) to the next lowest possible value, which is the sum of the truncated amount and [MINIMUM\_NET\_DEBT](./lib-base.minimum_net_debt.md)<!-- -->.
 
 ## Properties
 

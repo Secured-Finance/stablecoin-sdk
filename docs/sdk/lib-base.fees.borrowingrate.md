@@ -61,7 +61,7 @@ To calculate the borrowing fee in DebtToken, multiply the borrowed DebtToken amo
 
 
 ```typescript
-const fees = await liquity.getFees();
+const fees = await sfStablecoin.getFees();
 
 const borrowedDebtTokenAmount = 100;
 const borrowingRate = fees.borrowingRate();

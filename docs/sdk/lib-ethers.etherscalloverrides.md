@@ -4,7 +4,7 @@
 
 ## EthersCallOverrides interface
 
-Optional parameters taken by [ReadableEthersLiquity](./lib-ethers.readableethersliquity.md) functions.
+Optional parameters taken by [ReadableEthers](./lib-ethers.readableethers.md) functions.
 
 **Signature:**
 

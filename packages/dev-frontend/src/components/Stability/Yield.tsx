@@ -1,5 +1,5 @@
-import { Decimal, LiquityStoreState } from "@secured-finance/lib-base";
-import { useLiquitySelector } from "@secured-finance/lib-react";
+import { Decimal, SfStablecoinStoreState } from "@secured-finance/lib-base";
+import { useSfStablecoinSelector } from "@secured-finance/lib-react";
 import React, { useEffect, useState } from "react";
 import { Card, Paragraph, Text } from "theme-ui";
 import { CURRENCY } from "../../strings";
@@ -10,7 +10,7 @@ import { fetchLqtyPrice } from "./context/fetchLqtyPrice";
 const selector = ({
   debtTokenInStabilityPool,
   remainingStabilityPoolProtocolTokenReward
-}: LiquityStoreState) => ({
+}: SfStablecoinStoreState) => ({
   debtTokenInStabilityPool,
   remainingStabilityPoolProtocolTokenReward
 });
@@ -21,7 +21,7 @@ const dailyIssuancePercentage = dailyIssuanceFraction.mul(100);
 
 export const Yield: React.FC = () => {
   const { debtTokenInStabilityPool, remainingStabilityPoolProtocolTokenReward } =
-    useLiquitySelector(selector);
+    useSfStablecoinSelector(selector);
 
   const [lqtyPrice, setLqtyPrice] = useState<Decimal | undefined>(undefined);
   const hasZeroValue =

@@ -98,7 +98,7 @@ const declareInterface = ({
     "}\n",
 
     `export interface ${contractName}`,
-    `  extends _TypedLiquityContract<${contractName}Calls, ${contractName}Transactions> {`,
+    `  extends _TypedProtocolContract<${contractName}Calls, ${contractName}Transactions> {`,
 
     "  readonly filters: {",
     ...Object.values(events).map(({ name, inputs }) => {
@@ -185,7 +185,7 @@ import {
   EventFilter
 } from "@ethersproject/contracts";
 
-import { _TypedLiquityContract, _TypedLogDescription } from "../src/contracts";
+import { _TypedProtocolContract, _TypedLogDescription } from "../src/contracts";
 
 ${contracts.map(declareInterface).join("\n\n")}
 `;

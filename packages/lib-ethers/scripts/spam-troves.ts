@@ -5,9 +5,9 @@ import WebSocket from "ws";
 
 import { Decimal, MINIMUM_DEBT, Trove } from "@secured-finance/lib-base";
 import {
-  BlockPolledLiquityStore,
-  EthersLiquity,
-  EthersLiquityWithStore
+  BlockPolledSfStablecoinStore,
+  EthersSfStablecoin,
+  EthersSfStablecoinWithStore
 } from "@secured-finance/lib-ethers";
 
 import {
@@ -28,7 +28,7 @@ const funderKey = "0x4d5db4107d237df6a3d58ee5f70ae63d73d7658d4026f2eefd2f204c816
 
 let provider: BatchedProvider & WebSocketAugmentedProvider & JsonRpcProvider;
 let funder: Wallet;
-let liquity: EthersLiquityWithStore<BlockPolledLiquityStore>;
+let sfStablecoin: EthersSfStablecoinWithStore<BlockPolledSfStablecoinStore>;
 
 const waitForSuccess = (tx: TransactionResponse) =>
   tx.wait().then(receipt => {
@@ -51,9 +51,9 @@ const createTrove = async (nominalCollateralRatio: Decimal) => {
     })
     .then(waitForSuccess);
 
-  await liquity.populate
+  await sfStablecoin.populate
     .openTrove(
-      Trove.recreate(new Trove(collateral, debt), liquity.store.state.borrowingRate),
+      Trove.recreate(new Trove(collateral, debt), sfStablecoin.store.state.borrowingRate),
       {},
       { from: randomWallet.address }
     )
@@ -65,7 +65,7 @@ const createTrove = async (nominalCollateralRatio: Decimal) => {
 const runLoop = async () => {
   for (let i = 0; i < numberOfTrovesToCreate; ++i) {
     const collateralRatio = collateralRatioStep.mul(i).add(collateralRatioStart);
-    const nominalCollateralRatio = collateralRatio.div(liquity.store.state.price);
+    const nominalCollateralRatio = collateralRatio.div(sfStablecoin.store.state.price);
 
     await createTrove(nominalCollateralRatio);
 
@@ -87,13 +87,13 @@ const main = async () => {
     network
   );
 
-  liquity = await EthersLiquity.connect(provider, { useStore: "blockPolled" });
+  sfStablecoin = await EthersSfStablecoin.connect(provider, { useStore: "blockPolled" });
 
   let stopStore: () => void;
 
   return new Promise<void>(resolve => {
-    liquity.store.onLoaded = resolve;
-    stopStore = liquity.store.start();
+    sfStablecoin.store.onLoaded = resolve;
+    stopStore = sfStablecoin.store.start();
   })
     .then(runLoop)
     .then(() => {

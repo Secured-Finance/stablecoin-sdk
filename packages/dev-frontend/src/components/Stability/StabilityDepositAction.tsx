@@ -1,8 +1,8 @@
-import { Decimal, LiquityStoreState, StabilityDepositChange } from "@secured-finance/lib-base";
-import { useLiquitySelector } from "@secured-finance/lib-react";
+import { Decimal, SfStablecoinStoreState, StabilityDepositChange } from "@secured-finance/lib-base";
+import { useSfStablecoinSelector } from "@secured-finance/lib-react";
 import { Button } from "theme-ui";
 
-import { useLiquity } from "../../hooks/LiquityContext";
+import { useSfStablecoin } from "../../hooks/SfStablecoinContext";
 import { useTransactionFunction } from "../Transaction";
 
 type StabilityDepositActionProps = React.PropsWithChildren<{
@@ -10,7 +10,7 @@ type StabilityDepositActionProps = React.PropsWithChildren<{
   change: StabilityDepositChange<Decimal>;
 }>;
 
-const selectFrontendRegistered = ({ frontend }: LiquityStoreState) =>
+const selectFrontendRegistered = ({ frontend }: SfStablecoinStoreState) =>
   frontend.status === "registered";
 
 export const StabilityDepositAction: React.FC<StabilityDepositActionProps> = ({
@@ -18,20 +18,23 @@ export const StabilityDepositAction: React.FC<StabilityDepositActionProps> = ({
   transactionId,
   change
 }) => {
-  const { config, liquity } = useLiquity();
-  const frontendRegistered = useLiquitySelector(selectFrontendRegistered);
+  const { config, sfStablecoin } = useSfStablecoin();
+  const frontendRegistered = useSfStablecoinSelector(selectFrontendRegistered);
 
   const frontendTag = frontendRegistered ? config.frontendTag : undefined;
 
   const [sendTransaction] = useTransactionFunction(
     transactionId,
     change.depositDebtToken
-      ? liquity.send.depositDebtTokenInStabilityPool.bind(
-          liquity.send,
+      ? sfStablecoin.send.depositDebtTokenInStabilityPool.bind(
+          sfStablecoin.send,
           change.depositDebtToken,
           frontendTag
         )
-      : liquity.send.withdrawDebtTokenFromStabilityPool.bind(liquity.send, change.withdrawDebtToken)
+      : sfStablecoin.send.withdrawDebtTokenFromStabilityPool.bind(
+          sfStablecoin.send,
+          change.withdrawDebtToken
+        )
   );
 
   return <Button onClick={sendTransaction}>{children}</Button>;

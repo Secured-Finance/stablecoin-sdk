@@ -1,14 +1,14 @@
 import { useEffect } from "react";
 
-import { LiquityStoreState, ProtocolTokenStake } from "@secured-finance/lib-base";
-import { LiquityStoreUpdate, useLiquityReducer } from "@secured-finance/lib-react";
+import { ProtocolTokenStake, SfStablecoinStoreState } from "@secured-finance/lib-base";
+import { SfStablecoinStoreUpdate, useSfStablecoinReducer } from "@secured-finance/lib-react";
 
 import { useMyTransactionState } from "../../Transaction";
 
 import { StakingViewAction, StakingViewContext } from "./StakingViewContext";
 
 type StakingViewProviderAction =
-  | LiquityStoreUpdate
+  | SfStablecoinStoreUpdate
   | StakingViewAction
   | { type: "startChange" | "abortChange" };
 
@@ -18,7 +18,7 @@ type StakingViewProviderState = {
   adjusting: boolean;
 };
 
-const init = ({ protocolTokenStake }: LiquityStoreState): StakingViewProviderState => ({
+const init = ({ protocolTokenStake }: SfStablecoinStoreState): StakingViewProviderState => ({
   protocolTokenStake,
   changePending: false,
   adjusting: false
@@ -71,7 +71,7 @@ const reduce = (
 
 export const StakingViewProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
   const stakingTransactionState = useMyTransactionState("stake");
-  const [{ adjusting, changePending, protocolTokenStake }, dispatch] = useLiquityReducer(
+  const [{ adjusting, changePending, protocolTokenStake }, dispatch] = useSfStablecoinReducer(
     reduce,
     init
   );

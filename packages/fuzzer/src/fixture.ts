@@ -6,12 +6,12 @@ import {
   MINIMUM_DEBT,
   ProtocolTokenStake,
   StabilityDeposit,
-  TransactableLiquity,
+  TransactableProtocol,
   Trove,
   TroveAdjustmentParams
 } from "@secured-finance/lib-base";
 
-import { EthersLiquity as Liquity } from "@secured-finance/lib-ethers";
+import { EthersSfStablecoin as SfStablecoin } from "@secured-finance/lib-ethers";
 
 import {
   benford,
@@ -32,7 +32,7 @@ type _GasHistogramsFrom<T> = {
 };
 
 type GasHistograms = Pick<
-  _GasHistogramsFrom<TransactableLiquity>,
+  _GasHistogramsFrom<TransactableProtocol>,
   | "openTrove"
   | "adjustTrove"
   | "closeTrove"
@@ -44,9 +44,9 @@ type GasHistograms = Pick<
 >;
 
 export class Fixture {
-  private readonly deployerLiquity: Liquity;
+  private readonly deployerSfStablecoin: SfStablecoin;
   private readonly funder: Signer;
-  private readonly funderLiquity: Liquity;
+  private readonly funderSfStablecoin: SfStablecoin;
   private readonly funderAddress: string;
   private readonly frontendAddress: string;
   private readonly gasHistograms: GasHistograms;
@@ -56,16 +56,16 @@ export class Fixture {
   totalNumberOfLiquidations = 0;
 
   private constructor(
-    deployerLiquity: Liquity,
+    deployerSfStablecoin: SfStablecoin,
     funder: Signer,
-    funderLiquity: Liquity,
+    funderSfStablecoin: SfStablecoin,
     funderAddress: string,
     frontendAddress: string,
     price: Decimal
   ) {
-    this.deployerLiquity = deployerLiquity;
+    this.deployerSfStablecoin = deployerSfStablecoin;
     this.funder = funder;
-    this.funderLiquity = funderLiquity;
+    this.funderSfStablecoin = funderSfStablecoin;
     this.funderAddress = funderAddress;
     this.frontendAddress = frontendAddress;
     this.price = price;
@@ -83,21 +83,21 @@ export class Fixture {
   }
 
   static async setup(
-    deployerLiquity: Liquity,
+    deployerSfStablecoin: SfStablecoin,
     funder: Signer,
-    funderLiquity: Liquity,
+    funderSfStablecoin: SfStablecoin,
     frontendAddress: string,
-    frontendLiquity: Liquity
+    frontendSfStablecoin: SfStablecoin
   ) {
     const funderAddress = await funder.getAddress();
-    const price = await deployerLiquity.getPrice();
+    const price = await deployerSfStablecoin.getPrice();
 
-    await frontendLiquity.registerFrontend(Decimal.from(10).div(11));
+    await frontendSfStablecoin.registerFrontend(Decimal.from(10).div(11));
 
     return new Fixture(
-      deployerLiquity,
+      deployerSfStablecoin,
       funder,
-      funderLiquity,
+      funderSfStablecoin,
       funderAddress,
       frontendAddress,
       price
@@ -107,12 +107,12 @@ export class Fixture {
   private async sendDebtTokenFromFunder(toAddress: string, amount: Decimalish) {
     amount = Decimal.from(amount);
 
-    const debtTokenBalance = await this.funderLiquity.getDebtTokenBalance();
+    const debtTokenBalance = await this.funderSfStablecoin.getDebtTokenBalance();
 
     if (debtTokenBalance.lt(amount)) {
-      const trove = await this.funderLiquity.getTrove();
-      const total = await this.funderLiquity.getTotal();
-      const fees = await this.funderLiquity.getFees();
+      const trove = await this.funderSfStablecoin.getTrove();
+      const total = await this.funderSfStablecoin.getTotal();
+      const fees = await this.funderSfStablecoin.getFees();
 
       const targetCollateralRatio =
         trove.isEmpty || !total.collateralRatioIsBelowCritical(this.price)
@@ -133,7 +133,7 @@ export class Fixture {
       if (trove.isEmpty) {
         const params = Trove.recreate(newTrove, fees.borrowingRate());
         console.log(`[funder] openTrove(${objToString(params)})`);
-        await this.funderLiquity.openTrove(params);
+        await this.funderSfStablecoin.openTrove(params);
       } else {
         let newTotal = total.add(newTrove).subtract(trove);
 
@@ -147,26 +147,27 @@ export class Fixture {
 
         const params = trove.adjustTo(newTrove, fees.borrowingRate());
         console.log(`[funder] adjustTrove(${objToString(params)})`);
-        await this.funderLiquity.adjustTrove(params);
+        await this.funderSfStablecoin.adjustTrove(params);
       }
     }
 
-    await this.funderLiquity.sendDebtToken(toAddress, amount);
+    await this.funderSfStablecoin.sendDebtToken(toAddress, amount);
   }
 
   async setRandomPrice() {
     this.price = this.price.add(200 * Math.random() + 100).div(2);
     console.log(`[deployer] setPrice(${this.price})`);
-    await this.deployerLiquity.setPrice(this.price);
+    await this.deployerSfStablecoin.setPrice(this.price);
 
     return this.price;
   }
 
   async liquidateRandomNumberOfTroves(price: Decimal) {
-    const debtTokenInStabilityPoolBefore = await this.deployerLiquity.getDebtTokenInStabilityPool();
+    const debtTokenInStabilityPoolBefore =
+      await this.deployerSfStablecoin.getDebtTokenInStabilityPool();
     console.log(`// Stability Pool balance: ${debtTokenInStabilityPoolBefore}`);
 
-    const trovesBefore = await getListOfTroves(this.deployerLiquity);
+    const trovesBefore = await getListOfTroves(this.deployerSfStablecoin);
 
     if (trovesBefore.length === 0) {
       console.log("// No Troves to liquidate");
@@ -183,9 +184,9 @@ export class Fixture {
 
     const maximumNumberOfTrovesToLiquidate = Math.floor(50 * Math.random()) + 1;
     console.log(`[deployer] liquidateUpTo(${maximumNumberOfTrovesToLiquidate})`);
-    await this.deployerLiquity.liquidateUpTo(maximumNumberOfTrovesToLiquidate);
+    await this.deployerSfStablecoin.liquidateUpTo(maximumNumberOfTrovesToLiquidate);
 
-    const troveOwnersAfter = await getListOfTroveOwners(this.deployerLiquity);
+    const troveOwnersAfter = await getListOfTroveOwners(this.deployerSfStablecoin);
     const liquidatedTroves = listDifference(troveOwnersBefore, troveOwnersAfter);
 
     if (liquidatedTroves.length > 0) {
@@ -196,13 +197,14 @@ export class Fixture {
 
     this.totalNumberOfLiquidations += liquidatedTroves.length;
 
-    const debtTokenInStabilityPoolAfter = await this.deployerLiquity.getDebtTokenInStabilityPool();
+    const debtTokenInStabilityPoolAfter =
+      await this.deployerSfStablecoin.getDebtTokenInStabilityPool();
     console.log(`// Stability Pool balance: ${debtTokenInStabilityPoolAfter}`);
   }
 
-  async openRandomTrove(userAddress: string, liquity: Liquity) {
-    const total = await liquity.getTotal();
-    const fees = await liquity.getFees();
+  async openRandomTrove(userAddress: string, sfStablecoin: SfStablecoin) {
+    const total = await sfStablecoin.getTotal();
+    const fees = await sfStablecoin.getFees();
 
     let newTrove: Trove;
 
@@ -230,20 +232,20 @@ export class Fixture {
       );
 
       await this.gasHistograms.openTrove.expectFailure(() =>
-        liquity.openTrove(params, undefined, { gasPrice: 0 })
+        sfStablecoin.openTrove(params, undefined, { gasPrice: 0 })
       );
     } else {
       console.log(`[${shortenAddress(userAddress)}] openTrove(${objToString(params)})`);
 
       await this.gasHistograms.openTrove.expectSuccess(() =>
-        liquity.send.openTrove(params, undefined, { gasPrice: 0 })
+        sfStablecoin.send.openTrove(params, undefined, { gasPrice: 0 })
       );
     }
   }
 
-  async randomlyAdjustTrove(userAddress: string, liquity: Liquity, trove: Trove) {
-    const total = await liquity.getTotal();
-    const fees = await liquity.getFees();
+  async randomlyAdjustTrove(userAddress: string, sfStablecoin: SfStablecoin, trove: Trove) {
+    const total = await sfStablecoin.getTotal();
+    const fees = await sfStablecoin.getFees();
     const x = Math.random();
 
     const params: TroveAdjustmentParams<Decimal> =
@@ -289,19 +291,19 @@ export class Fixture {
       );
 
       await this.gasHistograms.adjustTrove.expectFailure(() =>
-        liquity.adjustTrove(params, undefined, { gasPrice: 0 })
+        sfStablecoin.adjustTrove(params, undefined, { gasPrice: 0 })
       );
     } else {
       console.log(`[${shortenAddress(userAddress)}] adjustTrove(${objToString(params)})`);
 
       await this.gasHistograms.adjustTrove.expectSuccess(() =>
-        liquity.send.adjustTrove(params, undefined, { gasPrice: 0 })
+        sfStablecoin.send.adjustTrove(params, undefined, { gasPrice: 0 })
       );
     }
   }
 
-  async closeTrove(userAddress: string, liquity: Liquity, trove: Trove) {
-    const total = await liquity.getTotal();
+  async closeTrove(userAddress: string, sfStablecoin: SfStablecoin, trove: Trove) {
+    const total = await sfStablecoin.getTotal();
 
     if (total.collateralRatioIsBelowCritical(this.price)) {
       // Cannot close Trove during recovery mode
@@ -314,12 +316,12 @@ export class Fixture {
     console.log(`[${shortenAddress(userAddress)}] closeTrove()`);
 
     await this.gasHistograms.closeTrove.expectSuccess(() =>
-      liquity.send.closeTrove({ gasPrice: 0 })
+      sfStablecoin.send.closeTrove({ gasPrice: 0 })
     );
   }
 
-  async redeemRandomAmount(userAddress: string, liquity: Liquity) {
-    const total = await liquity.getTotal();
+  async redeemRandomAmount(userAddress: string, sfStablecoin: SfStablecoin) {
+    const total = await sfStablecoin.getTotal();
 
     if (total.collateralRatioIsBelowMinimum(this.price)) {
       console.log("// Skipping redeemDebtToken() when TCR < MCR");
@@ -333,7 +335,7 @@ export class Fixture {
 
     try {
       await this.gasHistograms.redeemDebtToken.expectSuccess(() =>
-        liquity.send.redeemDebtToken(amount, undefined, { gasPrice: 0 })
+        sfStablecoin.send.redeemDebtToken(amount, undefined, { gasPrice: 0 })
       );
     } catch (error) {
       if (error instanceof Error && error.message.includes("amount too low to redeem")) {
@@ -344,7 +346,7 @@ export class Fixture {
     }
   }
 
-  async depositRandomAmountInStabilityPool(userAddress: string, liquity: Liquity) {
+  async depositRandomAmountInStabilityPool(userAddress: string, sfStablecoin: SfStablecoin) {
     const amount = benford(20000);
 
     await this.sendDebtTokenFromFunder(userAddress, amount);
@@ -352,7 +354,7 @@ export class Fixture {
     console.log(`[${shortenAddress(userAddress)}] depositDebtTokenInStabilityPool(${amount})`);
 
     await this.gasHistograms.depositDebtTokenInStabilityPool.expectSuccess(() =>
-      liquity.send.depositDebtTokenInStabilityPool(amount, this.frontendAddress, {
+      sfStablecoin.send.depositDebtTokenInStabilityPool(amount, this.frontendAddress, {
         gasPrice: 0
       })
     );
@@ -360,10 +362,10 @@ export class Fixture {
 
   async withdrawRandomAmountFromStabilityPool(
     userAddress: string,
-    liquity: Liquity,
+    sfStablecoin: SfStablecoin,
     deposit: StabilityDeposit
   ) {
-    const [lastTrove] = await liquity.getTroves({
+    const [lastTrove] = await sfStablecoin.getTroves({
       first: 1,
       sortedBy: "ascendingCollateralRatio"
     });
@@ -380,22 +382,22 @@ export class Fixture {
       );
 
       await this.gasHistograms.withdrawDebtTokenFromStabilityPool.expectFailure(() =>
-        liquity.withdrawDebtTokenFromStabilityPool(amount, { gasPrice: 0 })
+        sfStablecoin.withdrawDebtTokenFromStabilityPool(amount, { gasPrice: 0 })
       );
     } else {
       console.log(`[${shortenAddress(userAddress)}] withdrawDebtTokenFromStabilityPool(${amount})`);
 
       await this.gasHistograms.withdrawDebtTokenFromStabilityPool.expectSuccess(() =>
-        liquity.send.withdrawDebtTokenFromStabilityPool(amount, { gasPrice: 0 })
+        sfStablecoin.send.withdrawDebtTokenFromStabilityPool(amount, { gasPrice: 0 })
       );
     }
   }
 
-  async stakeRandomAmount(userAddress: string, liquity: Liquity) {
-    const protocolTokenBalance = await this.funderLiquity.getProtocolTokenBalance();
+  async stakeRandomAmount(userAddress: string, sfStablecoin: SfStablecoin) {
+    const protocolTokenBalance = await this.funderSfStablecoin.getProtocolTokenBalance();
     const amount = protocolTokenBalance.mul(Math.random() / 2);
 
-    await this.funderLiquity.sendProtocolToken(userAddress, amount);
+    await this.funderSfStablecoin.sendProtocolToken(userAddress, amount);
 
     if (amount.eq(0)) {
       console.log(
@@ -403,40 +405,46 @@ export class Fixture {
       );
 
       await this.gasHistograms.stakeProtocolToken.expectFailure(() =>
-        liquity.stakeProtocolToken(amount, { gasPrice: 0 })
+        sfStablecoin.stakeProtocolToken(amount, { gasPrice: 0 })
       );
     } else {
       console.log(`[${shortenAddress(userAddress)}] stakeProtocolToken(${amount})`);
 
       await this.gasHistograms.stakeProtocolToken.expectSuccess(() =>
-        liquity.send.stakeProtocolToken(amount, { gasPrice: 0 })
+        sfStablecoin.send.stakeProtocolToken(amount, { gasPrice: 0 })
       );
     }
   }
 
-  async unstakeRandomAmount(userAddress: string, liquity: Liquity, stake: ProtocolTokenStake) {
+  async unstakeRandomAmount(
+    userAddress: string,
+    sfStablecoin: SfStablecoin,
+    stake: ProtocolTokenStake
+  ) {
     const amount = stake.stakedProtocolToken.mul(1.1 * Math.random()).add(10 * Math.random());
 
     console.log(`[${shortenAddress(userAddress)}] unstakeProtocolToken(${amount})`);
 
     await this.gasHistograms.unstakeProtocolToken.expectSuccess(() =>
-      liquity.send.unstakeProtocolToken(amount, { gasPrice: 0 })
+      sfStablecoin.send.unstakeProtocolToken(amount, { gasPrice: 0 })
     );
   }
 
-  async sweepDebtToken(liquity: Liquity) {
-    const debtTokenBalance = await liquity.getDebtTokenBalance();
+  async sweepDebtToken(sfStablecoin: SfStablecoin) {
+    const debtTokenBalance = await sfStablecoin.getDebtTokenBalance();
 
     if (debtTokenBalance.nonZero) {
-      await liquity.sendDebtToken(this.funderAddress, debtTokenBalance, { gasPrice: 0 });
+      await sfStablecoin.sendDebtToken(this.funderAddress, debtTokenBalance, { gasPrice: 0 });
     }
   }
 
-  async sweepProtocolToken(liquity: Liquity) {
-    const protocolTokenBalance = await liquity.getProtocolTokenBalance();
+  async sweepProtocolToken(sfStablecoin: SfStablecoin) {
+    const protocolTokenBalance = await sfStablecoin.getProtocolTokenBalance();
 
     if (protocolTokenBalance.nonZero) {
-      await liquity.sendProtocolToken(this.funderAddress, protocolTokenBalance, { gasPrice: 0 });
+      await sfStablecoin.sendProtocolToken(this.funderAddress, protocolTokenBalance, {
+        gasPrice: 0
+      });
     }
   }
 

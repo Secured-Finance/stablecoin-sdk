@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "theme-ui";
 
-import { useLiquity } from "../../../hooks/LiquityContext";
+import { useSfStablecoin } from "../../../hooks/SfStablecoinContext";
 import { useTransactionFunction } from "../../Transaction";
 
 type ClaimRewardsProps = React.PropsWithChildren<{
@@ -9,11 +9,11 @@ type ClaimRewardsProps = React.PropsWithChildren<{
 }>;
 
 export const ClaimRewards: React.FC<ClaimRewardsProps> = ({ disabled, children }) => {
-  const { liquity } = useLiquity();
+  const { sfStablecoin } = useSfStablecoin();
 
   const [sendTransaction] = useTransactionFunction(
     "stability-deposit",
-    liquity.send.withdrawGainsFromStabilityPool.bind(liquity.send)
+    sfStablecoin.send.withdrawGainsFromStabilityPool.bind(sfStablecoin.send)
   );
 
   return (

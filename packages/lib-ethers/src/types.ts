@@ -1,11 +1,15 @@
-import { BigNumberish } from "@ethersproject/bignumber";
-import { Provider } from "@ethersproject/abstract-provider";
+import {
+  BlockTag,
+  Provider,
+  TransactionReceipt,
+  TransactionResponse
+} from "@ethersproject/abstract-provider";
 import { Signer } from "@ethersproject/abstract-signer";
-import { BlockTag, TransactionResponse, TransactionReceipt } from "@ethersproject/abstract-provider";
+import { BigNumberish } from "@ethersproject/bignumber";
 import { PopulatedTransaction } from "@ethersproject/contracts";
 
 /**
- * Optional parameters taken by {@link EthersLiquity} transaction functions.
+ * Optional parameters taken by {@link EthersSfStablecoin} transaction functions.
  *
  * @public
  */
@@ -17,7 +21,7 @@ export interface EthersTransactionOverrides {
 }
 
 /**
- * Optional parameters taken by {@link ReadableEthersLiquity} functions.
+ * Optional parameters taken by {@link ReadableEthers} functions.
  *
  * @public
  */

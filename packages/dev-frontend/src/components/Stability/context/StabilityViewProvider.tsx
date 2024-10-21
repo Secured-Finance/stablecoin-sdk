@@ -1,5 +1,5 @@
-import { LiquityStoreState, StabilityDeposit } from "@secured-finance/lib-base";
-import { useLiquitySelector } from "@secured-finance/lib-react";
+import { SfStablecoinStoreState, StabilityDeposit } from "@secured-finance/lib-base";
+import { useSfStablecoinSelector } from "@secured-finance/lib-react";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { StabilityViewContext } from "./StabilityViewContext";
 import type { StabilityEvent, StabilityView } from "./types";
@@ -38,11 +38,11 @@ const getInitialView = (stabilityDeposit: StabilityDeposit): StabilityView => {
   return stabilityDeposit.isEmpty ? "NONE" : "ACTIVE";
 };
 
-const select = ({ stabilityDeposit }: LiquityStoreState): StabilityDeposit => stabilityDeposit;
+const select = ({ stabilityDeposit }: SfStablecoinStoreState): StabilityDeposit => stabilityDeposit;
 
 export const StabilityViewProvider: React.FC<React.PropsWithChildren> = props => {
   const { children } = props;
-  const stabilityDeposit = useLiquitySelector(select);
+  const stabilityDeposit = useSfStablecoinSelector(select);
 
   const [view, setView] = useState<StabilityView>(getInitialView(stabilityDeposit));
   const viewRef = useRef<StabilityView>(view);

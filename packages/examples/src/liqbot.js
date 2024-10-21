@@ -1,7 +1,7 @@
 const { red, blue, green, yellow, dim, bold } = require("chalk");
 const { Wallet, providers } = require("ethers");
 const { Decimal, UserTrove, LIQUIDATION_RESERVE } = require("@secured-finance/lib-base");
-const { EthersLiquity, EthersLiquityWithStore } = require("@secured-finance/lib-ethers");
+const { EthersSfStablecoin, EthersSfStablecoinWithStore } = require("@secured-finance/lib-ethers");
 
 function log(message) {
   console.log(`${dim(`[${new Date().toLocaleTimeString()}]`)} ${message}`);
@@ -16,21 +16,21 @@ async function main() {
   // Replace URL if not using a local node
   const provider = new providers.JsonRpcProvider("http://localhost:8545");
   const wallet = new Wallet(process.env.PRIVATE_KEY).connect(provider);
-  const liquity = await EthersLiquity.connect(wallet, { useStore: "blockPolled" });
+  const sfStablecoin = await EthersSfStablecoin.connect(wallet, { useStore: "blockPolled" });
 
-  liquity.store.onLoaded = () => {
+  sfStablecoin.store.onLoaded = () => {
     info("Waiting for price drops...");
-    tryToLiquidate(liquity);
+    tryToLiquidate(sfStablecoin);
   };
 
-  liquity.store.subscribe(({ newState, oldState }) => {
+  sfStablecoin.store.subscribe(({ newState, oldState }) => {
     // Try to liquidate whenever the price drops
     if (newState.price.lt(oldState.price)) {
-      tryToLiquidate(liquity);
+      tryToLiquidate(sfStablecoin);
     }
   });
 
-  liquity.store.start();
+  sfStablecoin.store.start();
 }
 
 /**
@@ -47,17 +47,17 @@ const byDescendingCollateral = ({ collateral: a }, { collateral: b }) =>
   b.gt(a) ? 1 : b.lt(a) ? -1 : 0;
 
 /**
- * @param {EthersLiquityWithStore} [liquity]
+ * @param {EthersSfStablecoinWithStore} [sfStablecoin]
  */
-async function tryToLiquidate(liquity) {
-  const { store } = liquity;
+async function tryToLiquidate(sfStablecoin) {
+  const { store } = sfStablecoin;
 
   const [gasPrice, riskiestTroves] = await Promise.all([
-    liquity.connection.provider
+    sfStablecoin.connection.provider
       .getGasPrice()
       .then(bn => Decimal.fromBigNumberString(bn.toHexString())),
 
-    liquity.getTroves({
+    sfStablecoin.getTroves({
       first: 1000,
       sortedBy: "ascendingCollateralRatio"
     })
@@ -76,7 +76,7 @@ async function tryToLiquidate(liquity) {
   const addresses = troves.map(trove => trove.ownerAddress);
 
   try {
-    const liquidation = await liquity.populate.liquidate(addresses, { gasPrice: gasPrice.hex });
+    const liquidation = await sfStablecoin.populate.liquidate(addresses, { gasPrice: gasPrice.hex });
     const gasLimit = liquidation.rawPopulatedTransaction.gasLimit.toNumber();
     const expectedCost = gasPrice.mul(gasLimit).mul(store.state.price);
 

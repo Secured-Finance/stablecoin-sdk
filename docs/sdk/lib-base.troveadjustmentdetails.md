@@ -4,7 +4,7 @@
 
 ## TroveAdjustmentDetails interface
 
-Details of an [adjustTrove()](./lib-base.transactableliquity.adjusttrove.md) transaction.
+Details of an [adjustTrove()](./lib-base.transactableprotocol.adjusttrove.md) transaction.
 
 **Signature:**
 

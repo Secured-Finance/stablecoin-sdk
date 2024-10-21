@@ -13,7 +13,7 @@ export type ProtocolTokenStakeChange<T> =
  * Represents a user's ProtocolToken stake and accrued gains.
  * 
  * @remarks
- * Returned by the {@link ReadableLiquity.getProtocolTokenStake | getProtocolTokenStake()} function.
+ * Returned by the {@link ReadableProtocol.getProtocolTokenStake | getProtocolTokenStake()} function.
 
  * @public
  */

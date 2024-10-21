@@ -4,15 +4,15 @@ import { Button, Flex } from "theme-ui";
 import {
   Decimal,
   Decimalish,
-  LiquityStoreState,
   ProtocolTokenStake,
-  ProtocolTokenStakeChange
+  ProtocolTokenStakeChange,
+  SfStablecoinStoreState
 } from "@secured-finance/lib-base";
 
 import {
-  LiquityStoreUpdate,
-  useLiquityReducer,
-  useLiquitySelector
+  SfStablecoinStoreUpdate,
+  useSfStablecoinReducer,
+  useSfStablecoinSelector
 } from "@secured-finance/lib-react";
 
 import { COIN, GT } from "../../strings";
@@ -25,14 +25,14 @@ import { useStakingView } from "./context/StakingViewContext";
 import { StakingEditor } from "./StakingEditor";
 import { StakingManagerAction } from "./StakingManagerAction";
 
-const init = ({ protocolTokenStake }: LiquityStoreState) => ({
+const init = ({ protocolTokenStake }: SfStablecoinStoreState) => ({
   originalStake: protocolTokenStake,
   editedProtocolToken: protocolTokenStake.stakedProtocolToken
 });
 
 type StakeManagerState = ReturnType<typeof init>;
 type StakeManagerAction =
-  | LiquityStoreUpdate
+  | SfStablecoinStoreUpdate
   | { type: "revert" }
   | { type: "setStake"; newValue: Decimalish };
 
@@ -66,7 +66,7 @@ const reduce = (state: StakeManagerState, action: StakeManagerAction): StakeMana
   return state;
 };
 
-const selectProtocolTokenBalance = ({ protocolTokenBalance }: LiquityStoreState) =>
+const selectProtocolTokenBalance = ({ protocolTokenBalance }: SfStablecoinStoreState) =>
   protocolTokenBalance;
 
 type StakingManagerActionDescriptionProps = {
@@ -125,8 +125,8 @@ const StakingManagerActionDescription: React.FC<StakingManagerActionDescriptionP
 
 export const StakingManager: React.FC = () => {
   const { dispatch: dispatchStakingViewAction } = useStakingView();
-  const [{ originalStake, editedProtocolToken }, dispatch] = useLiquityReducer(reduce, init);
-  const protocolTokenBalance = useLiquitySelector(selectProtocolTokenBalance);
+  const [{ originalStake, editedProtocolToken }, dispatch] = useSfStablecoinReducer(reduce, init);
+  const protocolTokenBalance = useSfStablecoinSelector(selectProtocolTokenBalance);
 
   const change = originalStake.whatChanged(editedProtocolToken);
   const [validChange, description] = !change

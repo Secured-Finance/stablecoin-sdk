@@ -179,7 +179,7 @@ Description
 
 </td><td>
 
-Calculate the result of an [adjustTrove()](./lib-base.transactableliquity.adjusttrove.md) transaction on this Trove.
+Calculate the result of an [adjustTrove()](./lib-base.transactableprotocol.adjusttrove.md) transaction on this Trove.
 
 
 </td></tr>
@@ -193,7 +193,7 @@ Calculate the result of an [adjustTrove()](./lib-base.transactableliquity.adjust
 
 </td><td>
 
-Calculate the parameters of an [adjustTrove()](./lib-base.transactableliquity.adjusttrove.md) transaction that will change this Trove into the given Trove.
+Calculate the parameters of an [adjustTrove()](./lib-base.transactableprotocol.adjusttrove.md) transaction that will change this Trove into the given Trove.
 
 
 </td></tr>
@@ -265,7 +265,7 @@ Whether the Trove is undercollateralized at a given price.
 
 </td><td>
 
-Calculate the result of an [openTrove()](./lib-base.transactableliquity.opentrove.md) transaction.
+Calculate the result of an [openTrove()](./lib-base.transactableprotocol.opentrove.md) transaction.
 
 
 </td></tr>
@@ -319,7 +319,7 @@ Whether the Trove is sufficiently collateralized to be opened during recovery mo
 
 </td><td>
 
-Calculate the parameters of an [openTrove()](./lib-base.transactableliquity.opentrove.md) transaction that will result in the given Trove.
+Calculate the parameters of an [openTrove()](./lib-base.transactableprotocol.opentrove.md) transaction that will result in the given Trove.
 
 
 </td></tr>

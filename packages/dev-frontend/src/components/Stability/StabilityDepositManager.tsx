@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect } from "react";
 import { Button, Flex } from "theme-ui";
 
-import { Decimal, Decimalish, LiquityStoreState } from "@secured-finance/lib-base";
+import { Decimal, Decimalish, SfStablecoinStoreState } from "@secured-finance/lib-base";
 import {
-  LiquityStoreUpdate,
-  useLiquityReducer,
-  useLiquitySelector
+  SfStablecoinStoreUpdate,
+  useSfStablecoinReducer,
+  useSfStablecoinSelector
 } from "@secured-finance/lib-react";
 
 import { COIN } from "../../strings";
@@ -21,7 +21,7 @@ import {
   validateStabilityDepositChange
 } from "./validation/validateStabilityDepositChange";
 
-const init = ({ stabilityDeposit }: LiquityStoreState) => ({
+const init = ({ stabilityDeposit }: SfStablecoinStoreState) => ({
   originalDeposit: stabilityDeposit,
   editedDebtToken: stabilityDeposit.currentDebtToken,
   changePending: false
@@ -29,7 +29,7 @@ const init = ({ stabilityDeposit }: LiquityStoreState) => ({
 
 type StabilityDepositManagerState = ReturnType<typeof init>;
 type StabilityDepositManagerAction =
-  | LiquityStoreUpdate
+  | SfStablecoinStoreUpdate
   | { type: "startChange" | "finishChange" | "revert" }
   | { type: "setDeposit"; newValue: Decimalish };
 
@@ -97,11 +97,11 @@ const reduce = (
 const transactionId = "stability-deposit";
 
 export const StabilityDepositManager: React.FC = () => {
-  const [{ originalDeposit, editedDebtToken, changePending }, dispatch] = useLiquityReducer(
+  const [{ originalDeposit, editedDebtToken, changePending }, dispatch] = useSfStablecoinReducer(
     reduce,
     init
   );
-  const validationContext = useLiquitySelector(selectForStabilityDepositChangeValidation);
+  const validationContext = useSfStablecoinSelector(selectForStabilityDepositChangeValidation);
   const { dispatchEvent } = useStabilityView();
 
   const handleCancel = useCallback(() => {

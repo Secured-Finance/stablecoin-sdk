@@ -8,9 +8,9 @@ import path from "path";
 import { Decimal } from "@secured-finance/lib-base";
 
 import {
-  _LiquityContractAddresses,
-  _LiquityContracts,
-  _LiquityDeploymentJSON,
+  _ProtocolContractAddresses,
+  _ProtocolContracts,
+  _ProtocolDeploymentJSON,
   _connectToContracts
 } from "../src/contracts";
 
@@ -106,7 +106,7 @@ const deployContracts = async (
   networkName: string,
   priceFeedIsTestnet = true,
   overrides?: Overrides
-): Promise<[addresses: Omit<_LiquityContractAddresses, "uniToken">, startBlock: number]> => {
+): Promise<[addresses: Omit<_ProtocolContractAddresses, "uniToken">, startBlock: number]> => {
   const [activePoolAddress, startBlock] = await deployContractAndGetBlockNumber(
     deployer,
     getContractFactory,
@@ -334,7 +334,7 @@ const connectContracts = async (
     gasPool,
     unipool,
     uniToken
-  }: _LiquityContracts,
+  }: _ProtocolContracts,
   deployer: Signer,
   overrides?: Overrides
 ) => {
@@ -464,7 +464,7 @@ const connectContracts = async (
 };
 
 const connectUniswapPoolContract = async (
-  { protocolToken, unipool, uniToken }: _LiquityContracts,
+  { protocolToken, unipool, uniToken }: _ProtocolContracts,
   deployer: Signer,
   overrides?: Overrides
 ) => {
@@ -506,7 +506,7 @@ export const deployAndSetupContracts = async (
   networkName: string,
   wethAddress?: string,
   overrides?: Overrides
-): Promise<_LiquityDeploymentJSON> => {
+): Promise<_ProtocolDeploymentJSON> => {
   if (!deployer.provider) {
     throw new Error("Signer must have a provider.");
   }
@@ -514,7 +514,7 @@ export const deployAndSetupContracts = async (
   log("Deploying contracts...");
   log();
 
-  const deployment: _LiquityDeploymentJSON = {
+  const deployment: _ProtocolDeploymentJSON = {
     chainId: await deployer.getChainId(),
     version: "unknown",
     deploymentDate: new Date().getTime(),

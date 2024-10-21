@@ -1,17 +1,19 @@
-import yargs from "yargs";
 import "colors";
+import yargs from "yargs";
 
 import { chaos, order } from "./commands/chaos";
-import { warzone } from "./commands/warzone";
 import { checkSorting, checkSubgraphCmd, dumpTrovesCmd } from "./commands/checks";
+import { warzone } from "./commands/warzone";
 
-const wrapCmd = <A extends unknown[], R>(cmd: (...args: A) => Promise<R>) => async (...args: A) => {
-  try {
-    return await cmd(...args);
-  } catch (error) {
-    console.error(error);
-  }
-};
+const wrapCmd =
+  <A extends unknown[], R>(cmd: (...args: A) => Promise<R>) =>
+  async (...args: A) => {
+    try {
+      return await cmd(...args);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
 yargs
   .scriptName("yarn fuzzer")
@@ -31,7 +33,7 @@ yargs
 
   .command(
     "chaos",
-    "Try to break Liquity by randomly interacting with it.",
+    "Try to break the protocol by randomly interacting with it.",
     {
       users: {
         alias: "u",
@@ -41,7 +43,7 @@ yargs
       rounds: {
         alias: "n",
         default: 25,
-        description: "How many times each user should interact with Liquity"
+        description: "How many times each user should interact with the protocol"
       },
       subgraph: {
         alias: "g",

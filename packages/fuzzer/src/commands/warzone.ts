@@ -1,7 +1,7 @@
 import { Wallet } from "@ethersproject/wallet";
 
 import { Decimal, MINIMUM_DEBT, Trove } from "@secured-finance/lib-base";
-import { EthersLiquity } from "@secured-finance/lib-ethers";
+import { EthersSfStablecoin } from "@secured-finance/lib-ethers";
 
 import { deployer, funder, provider } from "../globals";
 
@@ -10,9 +10,9 @@ export interface WarzoneParams {
 }
 
 export const warzone = async ({ troves: numberOfTroves }: WarzoneParams) => {
-  const deployerLiquity = await EthersLiquity.connect(deployer);
+  const deployerSfStablecoin = await EthersSfStablecoin.connect(deployer);
 
-  const price = await deployerLiquity.getPrice();
+  const price = await deployerSfStablecoin.getPrice();
 
   for (let i = 1; i <= numberOfTroves; ++i) {
     const user = Wallet.createRandom().connect(provider);
@@ -20,24 +20,24 @@ export const warzone = async ({ troves: numberOfTroves }: WarzoneParams) => {
     const debt = MINIMUM_DEBT.add(99999 * Math.random());
     const collateral = debt.mulDiv(1.11 + 3 * Math.random(), price);
 
-    const liquity = await EthersLiquity.connect(user);
+    const sfStablecoin = await EthersSfStablecoin.connect(user);
 
     await funder.sendTransaction({
       to: userAddress,
       value: Decimal.from(collateral).hex
     });
 
-    const fees = await liquity.getFees();
+    const fees = await sfStablecoin.getFees();
 
-    await liquity.openTrove(
+    await sfStablecoin.openTrove(
       Trove.recreate(new Trove(collateral, debt), fees.borrowingRate()),
       { borrowingFeeDecayToleranceMinutes: 0 },
       { gasPrice: 0 }
     );
 
     if (i % 4 === 0) {
-      const debtTokenBalance = await liquity.getDebtTokenBalance();
-      await liquity.depositDebtTokenInStabilityPool(debtTokenBalance);
+      const debtTokenBalance = await sfStablecoin.getDebtTokenBalance();
+      await sfStablecoin.depositDebtTokenInStabilityPool(debtTokenBalance);
     }
 
     if (i % 10 === 0) {

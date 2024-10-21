@@ -1,10 +1,10 @@
 import { AddressZero } from "@ethersproject/constants";
-import { Decimal, LiquityStoreState, Percent } from "@secured-finance/lib-base";
-import { useLiquitySelector } from "@secured-finance/lib-react";
+import { Decimal, Percent, SfStablecoinStoreState } from "@secured-finance/lib-base";
+import { useSfStablecoinSelector } from "@secured-finance/lib-react";
 import React from "react";
 import { Box, Card, Heading, Link, Text } from "theme-ui";
 
-import { useLiquity } from "../hooks/LiquityContext";
+import { useSfStablecoin } from "../hooks/SfStablecoinContext";
 import * as l from "../lexicon";
 import { CURRENCY } from "../strings";
 import { Statistic } from "./Statistic";
@@ -13,7 +13,7 @@ const selectBalances = ({
   accountBalance,
   debtTokenBalance,
   protocolTokenBalance
-}: LiquityStoreState) => ({
+}: SfStablecoinStoreState) => ({
   accountBalance,
   debtTokenBalance,
   protocolTokenBalance
@@ -21,7 +21,7 @@ const selectBalances = ({
 
 const Balances: React.FC = () => {
   const { accountBalance, debtTokenBalance, protocolTokenBalance } =
-    useLiquitySelector(selectBalances);
+    useSfStablecoinSelector(selectBalances);
 
   return (
     <Box sx={{ mb: 3 }}>
@@ -54,7 +54,7 @@ const select = ({
   redemptionRate,
   totalStakedProtocolToken,
   frontend
-}: LiquityStoreState) => ({
+}: SfStablecoinStoreState) => ({
   numberOfTroves,
   price,
   total,
@@ -67,10 +67,10 @@ const select = ({
 
 export const SystemStats: React.FC<SystemStatsProps> = ({ variant = "info", showBalances }) => {
   const {
-    liquity: {
+    sfStablecoin: {
       connection: { version: contractsVersion, deploymentDate, frontendTag }
     }
-  } = useLiquity();
+  } = useSfStablecoin();
 
   const {
     numberOfTroves,
@@ -80,7 +80,7 @@ export const SystemStats: React.FC<SystemStatsProps> = ({ variant = "info", show
     borrowingRate,
     totalStakedProtocolToken,
     kickbackRate
-  } = useLiquitySelector(select);
+  } = useSfStablecoinSelector(select);
 
   const debtTokenInStabilityPoolPct =
     total.debt.nonZero && new Percent(debtTokenInStabilityPool.div(total.debt));
@@ -92,7 +92,7 @@ export const SystemStats: React.FC<SystemStatsProps> = ({ variant = "info", show
     <Card {...{ variant }}>
       {showBalances && <Balances />}
 
-      <Heading>Liquity statistics</Heading>
+      <Heading>Protocol statistics</Heading>
 
       <Heading as="h2" sx={{ mt: 3, fontWeight: "body" }}>
         Protocol

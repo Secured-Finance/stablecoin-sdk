@@ -1,20 +1,21 @@
 import { Button } from "theme-ui";
 
-import { LiquityStoreState } from "@secured-finance/lib-base";
-import { useLiquitySelector } from "@secured-finance/lib-react";
+import { SfStablecoinStoreState } from "@secured-finance/lib-base";
+import { useSfStablecoinSelector } from "@secured-finance/lib-react";
 
-import { useLiquity } from "../../hooks/LiquityContext";
+import { useSfStablecoin } from "../../hooks/SfStablecoinContext";
 import { useTransactionFunction } from "../Transaction";
 
-const selectProtocolTokenStake = ({ protocolTokenStake }: LiquityStoreState) => protocolTokenStake;
+const selectProtocolTokenStake = ({ protocolTokenStake }: SfStablecoinStoreState) =>
+  protocolTokenStake;
 
 export const StakingGainsAction: React.FC = () => {
-  const { liquity } = useLiquity();
-  const { collateralGain, debtTokenGain } = useLiquitySelector(selectProtocolTokenStake);
+  const { sfStablecoin } = useSfStablecoin();
+  const { collateralGain, debtTokenGain } = useSfStablecoinSelector(selectProtocolTokenStake);
 
   const [sendTransaction] = useTransactionFunction(
     "stake",
-    liquity.send.withdrawGainsFromStaking.bind(liquity.send)
+    sfStablecoin.send.withdrawGainsFromStaking.bind(sfStablecoin.send)
   );
 
   return (

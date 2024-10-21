@@ -20,7 +20,7 @@ export declare type SuccessfulReceipt<R = unknown, D = unknown> = {
 
 The `rawReceipt` property is an implementation-specific transaction receipt object.
 
-The `details` property may contain more information about the transaction. See the return types of [TransactableLiquity](./lib-base.transactableliquity.md) functions for the exact contents of `details` for each type of Liquity transaction.
+The `details` property may contain more information about the transaction. See the return types of [TransactableProtocol](./lib-base.transactableprotocol.md) functions for the exact contents of `details` for each type of transaction.
 
-Returned by [SentLiquityTransaction.getReceipt()](./lib-base.sentliquitytransaction.getreceipt.md) and [SentLiquityTransaction.waitForReceipt()](./lib-base.sentliquitytransaction.waitforreceipt.md)<!-- -->.
+Returned by [SentProtocolTransaction.getReceipt()](./lib-base.sentprotocoltransaction.getreceipt.md) and [SentProtocolTransaction.waitForReceipt()](./lib-base.sentprotocoltransaction.waitforreceipt.md)<!-- -->.
 

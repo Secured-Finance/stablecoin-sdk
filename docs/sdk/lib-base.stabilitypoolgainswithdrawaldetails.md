@@ -4,7 +4,7 @@
 
 ## StabilityPoolGainsWithdrawalDetails interface
 
-Details of a [withdrawGainsFromStabilityPool()](./lib-base.transactableliquity.withdrawgainsfromstabilitypool.md) transaction.
+Details of a [withdrawGainsFromStabilityPool()](./lib-base.transactableprotocol.withdrawgainsfromstabilitypool.md) transaction.
 
 **Signature:**
 

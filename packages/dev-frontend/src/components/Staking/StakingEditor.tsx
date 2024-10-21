@@ -5,10 +5,10 @@ import {
   Decimal,
   Decimalish,
   Difference,
-  LiquityStoreState,
-  ProtocolTokenStake
+  ProtocolTokenStake,
+  SfStablecoinStoreState
 } from "@secured-finance/lib-base";
-import { useLiquitySelector } from "@secured-finance/lib-react";
+import { useSfStablecoinSelector } from "@secured-finance/lib-react";
 
 import { COIN, CURRENCY, GT } from "../../strings";
 
@@ -18,7 +18,7 @@ import { EditableRow, StaticRow } from "../Trove/Editor";
 
 import { useStakingView } from "./context/StakingViewContext";
 
-const select = ({ protocolTokenBalance, totalStakedProtocolToken }: LiquityStoreState) => ({
+const select = ({ protocolTokenBalance, totalStakedProtocolToken }: SfStablecoinStoreState) => ({
   protocolTokenBalance,
   totalStakedProtocolToken
 });
@@ -37,7 +37,7 @@ export const StakingEditor: React.FC<StakingEditorProps> = ({
   editedProtocolToken,
   dispatch
 }) => {
-  const { protocolTokenBalance, totalStakedProtocolToken } = useLiquitySelector(select);
+  const { protocolTokenBalance, totalStakedProtocolToken } = useSfStablecoinSelector(select);
   const { changePending } = useStakingView();
   const editingState = useState<string>();
 

@@ -79,8 +79,8 @@ To calculate the redemption fee in DebtToken, multiply the redeemed DebtToken am
 
 
 ```typescript
-const fees = await liquity.getFees();
-const total = await liquity.getTotal();
+const fees = await sfStablecoin.getFees();
+const total = await sfStablecoin.getTotal();
 
 const redeemedDebtTokenAmount = Decimal.from(100);
 const redeemedFractionOfSupply = redeemedDebtTokenAmount.div(total.debt);

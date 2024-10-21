@@ -1,17 +1,17 @@
-import { LiquityStoreState } from "@secured-finance/lib-base";
-import { useLiquitySelector } from "@secured-finance/lib-react";
+import { SfStablecoinStoreState } from "@secured-finance/lib-base";
+import { useSfStablecoinSelector } from "@secured-finance/lib-react";
 import React, { useCallback } from "react";
 import { Box, Button, Card, Flex, Heading } from "theme-ui";
 import { CollateralSurplusAction } from "../CollateralSurplusAction";
 import { InfoMessage } from "../InfoMessage";
 import { useTroveView } from "./context/TroveViewContext";
 
-const select = ({ collateralSurplusBalance }: LiquityStoreState) => ({
+const select = ({ collateralSurplusBalance }: SfStablecoinStoreState) => ({
   hasSurplusCollateral: !collateralSurplusBalance.isZero
 });
 
 export const LiquidatedTrove: React.FC = () => {
-  const { hasSurplusCollateral } = useLiquitySelector(select);
+  const { hasSurplusCollateral } = useSfStablecoinSelector(select);
   const { dispatchEvent } = useTroveView();
 
   const handleOpenTrove = useCallback(() => {

@@ -4,7 +4,7 @@
 
 ## LiquidationDetails interface
 
-Details of a [liquidate()](./lib-base.transactableliquity.liquidate.md) or [liquidateUpTo()](./lib-base.transactableliquity.liquidateupto.md) transaction.
+Details of a [liquidate()](./lib-base.transactableprotocol.liquidate.md) or [liquidateUpTo()](./lib-base.transactableprotocol.liquidateupto.md) transaction.
 
 **Signature:**
 

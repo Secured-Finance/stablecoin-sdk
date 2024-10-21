@@ -4,10 +4,7 @@ import { TransactionReceipt } from "@ethersproject/abstract-provider";
 import { BigNumber } from "@ethersproject/bignumber";
 
 import { MinedReceipt } from "@secured-finance/lib-base";
-import {
-  EthersTransactionFailedError,
-  SentEthersLiquityTransaction
-} from "@secured-finance/lib-ethers";
+import { EthersTransactionFailedError, SentEthersTransaction } from "@secured-finance/lib-ethers";
 
 // Supports a max of 8 million gas
 const intervalWidth = 10000;
@@ -15,7 +12,7 @@ const numberOfBins = 800;
 
 const retryUpTo = async (
   times: number,
-  sendTx: () => Promise<SentEthersLiquityTransaction>
+  sendTx: () => Promise<SentEthersTransaction>
 ): Promise<[retries: number, receipt: MinedReceipt<TransactionReceipt>]> => {
   let retries = 0;
 
@@ -64,7 +61,7 @@ export class GasHistogram<T> {
       .map((frequency, i) => [intervalWidth * (firstNonZeroIndex + i), frequency]);
   }
 
-  async expectSuccess(sendTx: () => Promise<SentEthersLiquityTransaction<T>>): Promise<void> {
+  async expectSuccess(sendTx: () => Promise<SentEthersTransaction<T>>): Promise<void> {
     const [retries, receipt] = await retryUpTo(1, sendTx);
 
     this.outOfGasFailures += retries;

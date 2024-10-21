@@ -1,4 +1,4 @@
-import { EthersLiquity } from "@secured-finance/lib-ethers";
+import { EthersSfStablecoin } from "@secured-finance/lib-ethers";
 
 import { deployer, subgraph } from "../globals";
 
@@ -10,10 +10,10 @@ import {
 } from "../utils";
 
 export const checkSorting = async () => {
-  const deployerLiquity = await EthersLiquity.connect(deployer);
-  const listOfTroves = await getListOfTrovesBeforeRedistribution(deployerLiquity);
-  const totalRedistributed = await deployerLiquity.getTotalRedistributed();
-  const price = await deployerLiquity.getPrice();
+  const deployerSfStablecoin = await EthersSfStablecoin.connect(deployer);
+  const listOfTroves = await getListOfTrovesBeforeRedistribution(deployerSfStablecoin);
+  const totalRedistributed = await deployerSfStablecoin.getTotalRedistributed();
+  const price = await deployerSfStablecoin.getPrice();
 
   checkTroveOrdering(listOfTroves, totalRedistributed, price);
 
@@ -21,18 +21,18 @@ export const checkSorting = async () => {
 };
 
 export const checkSubgraphCmd = async () => {
-  const deployerLiquity = await EthersLiquity.connect(deployer);
+  const deployerSfStablecoin = await EthersSfStablecoin.connect(deployer);
 
-  await checkSubgraph(subgraph, deployerLiquity);
+  await checkSubgraph(subgraph, deployerSfStablecoin);
 
   console.log("Subgraph looks fine.");
 };
 
 export const dumpTrovesCmd = async () => {
-  const deployerLiquity = await EthersLiquity.connect(deployer);
-  const listOfTroves = await getListOfTrovesBeforeRedistribution(deployerLiquity);
-  const totalRedistributed = await deployerLiquity.getTotalRedistributed();
-  const price = await deployerLiquity.getPrice();
+  const deployerSfStablecoin = await EthersSfStablecoin.connect(deployer);
+  const listOfTroves = await getListOfTrovesBeforeRedistribution(deployerSfStablecoin);
+  const totalRedistributed = await deployerSfStablecoin.getTotalRedistributed();
+  const price = await deployerSfStablecoin.getPrice();
 
   dumpTroves(listOfTroves, totalRedistributed, price);
 };

@@ -5,10 +5,10 @@ import { AddressZero } from "@ethersproject/constants";
 
 import { Decimal } from "@secured-finance/lib-base";
 
-import { _LiquityContracts, _TypedLiquityContract } from "./contracts";
+import { _ProtocolContracts, _TypedProtocolContract } from "./contracts";
 
 type ContractLookup = {
-  [name: string]: _TypedLiquityContract;
+  [name: string]: _TypedProtocolContract;
 };
 
 type InterfaceLookup = {
@@ -99,8 +99,8 @@ const logDescriptionToString = (logDescription: LogDescription, nameLookup: Name
   return `${logDescription.name}({ ${prettyEntries.join(", ")} })`;
 };
 
-export const logsToString = (receipt: TransactionReceipt, contracts: _LiquityContracts): string => {
-  const contractLookup = (contracts as unknown) as ContractLookup;
+export const logsToString = (receipt: TransactionReceipt, contracts: _ProtocolContracts): string => {
+  const contractLookup = contracts as unknown as ContractLookup;
   const interfaceLookup = interfaceLookupFrom(contractLookup);
   const contractNameLookup = nameLookupFrom(contractLookup);
 

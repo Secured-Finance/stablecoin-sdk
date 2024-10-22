@@ -12,7 +12,7 @@
     "prepare": "tsc --project tsconfig.dist.json"
   },
   "peerDependencies": {
-    "@secured-finance/lib-base": "^3.0.0"
+    "@secured-finance/lib-base": "^0.0.2-beta.2"
   },
   "devDependencies": {
     "apollo": "^2.30.3",

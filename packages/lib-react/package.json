@@ -20,7 +20,7 @@
     "prepare:tsc": "tsc --project tsconfig.dist.json"
   },
   "peerDependencies": {
-    "@secured-finance/lib-base": "^3.0.0",
+    "@secured-finance/lib-base": "^0.0.2-beta.2",
     "react": "^16.13.1"
   },
   "devDependencies": {

@@ -168,10 +168,10 @@ const getContracts = (moduleDir: string) => {
 const contracts = [
   ...getContracts(`${artifactsDir}/contracts`),
   ...getContracts(`${artifactsDir}/contracts/LPRewards`),
-  ...getContracts(`${artifactsDir}/contracts/LPRewards/TestContracts`),
   ...getContracts(`${artifactsDir}/contracts/ProtocolToken`),
   ...getContracts(`${artifactsDir}/contracts/TestContracts`),
-  ...getContracts(`${artifactsDir}/@openzeppelin/contracts/token/ERC20`)
+  ...getContracts(`${artifactsDir}/contracts/Dependencies/OpenZeppelin/mocks`),
+  ...getContracts(`${artifactsDir}/contracts/Dependencies/OpenZeppelin/token/ERC20`)
 ];
 
 const output = `

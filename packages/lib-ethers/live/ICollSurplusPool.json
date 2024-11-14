@@ -142,29 +142,6 @@
       ],
       "stateMutability": "view",
       "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "_borrowerOperationsAddress",
-          "type": "address"
-        },
-        {
-          "internalType": "address",
-          "name": "_troveManagerAddress",
-          "type": "address"
-        },
-        {
-          "internalType": "address",
-          "name": "_activePoolAddress",
-          "type": "address"
-        }
-      ],
-      "name": "setAddresses",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
     }
   ],
   "bytecode": "0x",

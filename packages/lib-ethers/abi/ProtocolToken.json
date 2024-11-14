@@ -1,37 +1,6 @@
 [
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_communityIssuanceAddress",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_protocolTokenStakingAddress",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_lockupFactoryAddress",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_bountyAddress",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_lpRewardsAddress",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_multisigAddress",
-        "type": "address"
-      }
-    ],
+    "inputs": [],
     "stateMutability": "nonpayable",
     "type": "constructor"
   },
@@ -58,6 +27,25 @@
       }
     ],
     "name": "Approval",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "previousOwner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "OwnershipTransferred",
     "type": "event"
   },
   {
@@ -231,6 +219,44 @@
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_communityIssuanceAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_protocolTokenStakingAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_lockupFactoryAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_bountyAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_lpRewardsAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_multisigAddress",
+        "type": "address"
+      }
+    ],
+    "name": "initialize",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "lockupContractFactory",
     "outputs": [
@@ -283,6 +309,19 @@
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "owner",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
       }
     ],
     "stateMutability": "view",
@@ -355,6 +394,13 @@
       }
     ],
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "renounceOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -451,6 +497,19 @@
         "type": "bool"
       }
     ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "transferOwnership",
+    "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },

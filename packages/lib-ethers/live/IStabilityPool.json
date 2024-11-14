@@ -616,49 +616,6 @@
       "inputs": [
         {
           "internalType": "address",
-          "name": "_borrowerOperationsAddress",
-          "type": "address"
-        },
-        {
-          "internalType": "address",
-          "name": "_troveManagerAddress",
-          "type": "address"
-        },
-        {
-          "internalType": "address",
-          "name": "_activePoolAddress",
-          "type": "address"
-        },
-        {
-          "internalType": "address",
-          "name": "_debtTokenAddress",
-          "type": "address"
-        },
-        {
-          "internalType": "address",
-          "name": "_sortedTrovesAddress",
-          "type": "address"
-        },
-        {
-          "internalType": "address",
-          "name": "_priceFeedAddress",
-          "type": "address"
-        },
-        {
-          "internalType": "address",
-          "name": "_communityIssuanceAddress",
-          "type": "address"
-        }
-      ],
-      "name": "setAddresses",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
           "name": "_upperHint",
           "type": "address"
         },

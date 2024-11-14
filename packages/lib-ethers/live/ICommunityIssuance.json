@@ -56,6 +56,19 @@
       "type": "function"
     },
     {
+      "inputs": [],
+      "name": "protocolTokenSupplyCap",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
       "inputs": [
         {
           "internalType": "address",
@@ -69,24 +82,6 @@
         }
       ],
       "name": "sendProtocolToken",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "_protocolTokenAddress",
-          "type": "address"
-        },
-        {
-          "internalType": "address",
-          "name": "_stabilityPoolAddress",
-          "type": "address"
-        }
-      ],
-      "name": "setAddresses",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"

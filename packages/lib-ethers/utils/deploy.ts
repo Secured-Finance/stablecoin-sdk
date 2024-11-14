@@ -472,12 +472,7 @@ const connectUniswapPoolContract = async (
     throw new Error("Signer must have a provider.");
   }
 
-  const txCount = await deployer.provider.getTransactionCount(deployer.getAddress());
-
-  await unipool.setParams(protocolToken.address, uniToken.address, 2 * 30 * 24 * 60 * 60, {
-    ...overrides,
-    nonce: txCount
-  });
+  await unipool.setParams(protocolToken.address, uniToken.address, 2 * 30 * 24 * 60 * 60, overrides);
 };
 
 const deployMockUniToken = (

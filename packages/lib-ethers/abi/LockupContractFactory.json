@@ -129,6 +129,19 @@
     "inputs": [
       {
         "internalType": "address",
+        "name": "_protocolTokenAddress",
+        "type": "address"
+      }
+    ],
+    "name": "initialize",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
         "name": "_contractAddress",
         "type": "address"
       }
@@ -192,19 +205,6 @@
   {
     "inputs": [],
     "name": "renounceOwnership",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_protocolTokenAddress",
-        "type": "address"
-      }
-    ],
-    "name": "setProtocolTokenAddress",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

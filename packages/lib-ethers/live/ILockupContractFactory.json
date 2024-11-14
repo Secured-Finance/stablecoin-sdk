@@ -83,19 +83,6 @@
       ],
       "stateMutability": "view",
       "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "_protocolTokenAddress",
-          "type": "address"
-        }
-      ],
-      "name": "setProtocolTokenAddress",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
     }
   ],
   "bytecode": "0x",

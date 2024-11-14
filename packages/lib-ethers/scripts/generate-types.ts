@@ -170,7 +170,6 @@ const contracts = [
   ...getContracts(`${artifactsDir}/contracts/LPRewards`),
   ...getContracts(`${artifactsDir}/contracts/ProtocolToken`),
   ...getContracts(`${artifactsDir}/contracts/TestContracts`),
-  ...getContracts(`${artifactsDir}/contracts/Dependencies/OpenZeppelin/mocks`),
   ...getContracts(`${artifactsDir}/contracts/Dependencies/OpenZeppelin/token/ERC20`)
 ];
 

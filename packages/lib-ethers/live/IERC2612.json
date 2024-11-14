@@ -1,7 +1,7 @@
 {
   "_format": "hh-sol-artifact-1",
   "contractName": "IERC2612",
-  "sourceName": "contracts/Dependencies/IERC2612.sol",
+  "sourceName": "contracts/Dependencies/OpenZeppelin/interfaces/IERC2612.sol",
   "abi": [
     {
       "inputs": [],

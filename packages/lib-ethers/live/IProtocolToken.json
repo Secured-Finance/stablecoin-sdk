@@ -7,6 +7,32 @@
       "anonymous": false,
       "inputs": [
         {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "_annualAllocationRate",
+          "type": "uint256"
+        }
+      ],
+      "name": "AnnualAllocationRateUpdated",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "_annualAllocationRecipient",
+          "type": "address"
+        }
+      ],
+      "name": "AnnualAllocationRecipientUpdated",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
           "indexed": true,
           "internalType": "address",
           "name": "owner",
@@ -148,20 +174,7 @@
     },
     {
       "inputs": [],
-      "name": "getDeploymentStartTime",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "getLpRewardsEntitlement",
+      "name": "getAllocationStartTime",
       "outputs": [
         {
           "internalType": "uint256",

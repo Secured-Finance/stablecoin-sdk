@@ -1,5 +1,5 @@
 import { Signer } from "@ethersproject/abstract-signer";
-import { ContractFactory, ContractTransaction, Overrides } from "@ethersproject/contracts";
+import { ContractFactory, Overrides } from "@ethersproject/contracts";
 import { Wallet } from "@ethersproject/wallet";
 import dotenv from "dotenv";
 import fs from "fs-extra";
@@ -206,7 +206,7 @@ const deployContracts = async (
       deployer,
       getContractFactory,
       networkName,
-      priceFeedIsTestnet ? "PriceFeedTestnet" : "PriceFeed",
+      priceFeedIsTestnet ? "MockPriceFeed" : "PriceFeed",
       "priceFeed",
       { ...overrides }
     ),
@@ -315,154 +315,6 @@ export const deployPythCaller = (
     }
   );
 
-const connectContracts = async (
-  {
-    activePool,
-    borrowerOperations,
-    troveManager,
-    debtToken,
-    collSurplusPool,
-    communityIssuance,
-    defaultPool,
-    protocolToken,
-    hintHelpers,
-    lockupContractFactory,
-    protocolTokenStaking,
-    priceFeed,
-    sortedTroves,
-    stabilityPool,
-    gasPool,
-    unipool,
-    uniToken
-  }: _ProtocolContracts,
-  deployer: Signer,
-  overrides?: Overrides
-) => {
-  if (!deployer.provider) {
-    throw new Error("Signer must have a provider.");
-  }
-
-  const txCount = await deployer.provider.getTransactionCount(deployer.getAddress());
-
-  const connections: ((nonce?: number) => Promise<ContractTransaction | undefined>)[] = [
-    nonce =>
-      sortedTroves.setParams(1e6, troveManager.address, borrowerOperations.address, {
-        ...overrides,
-        nonce
-      }),
-
-    nonce =>
-      troveManager.setAddresses(
-        borrowerOperations.address,
-        activePool.address,
-        defaultPool.address,
-        stabilityPool.address,
-        gasPool.address,
-        collSurplusPool.address,
-        priceFeed.address,
-        debtToken.address,
-        sortedTroves.address,
-        protocolToken.address,
-        protocolTokenStaking.address,
-        { ...overrides, nonce }
-      ),
-
-    nonce =>
-      borrowerOperations.setAddresses(
-        troveManager.address,
-        activePool.address,
-        defaultPool.address,
-        stabilityPool.address,
-        gasPool.address,
-        collSurplusPool.address,
-        priceFeed.address,
-        sortedTroves.address,
-        debtToken.address,
-        protocolTokenStaking.address,
-        { ...overrides, nonce }
-      ),
-
-    nonce =>
-      stabilityPool.setAddresses(
-        borrowerOperations.address,
-        troveManager.address,
-        activePool.address,
-        debtToken.address,
-        sortedTroves.address,
-        priceFeed.address,
-        communityIssuance.address,
-        { ...overrides, nonce }
-      ),
-
-    nonce =>
-      activePool.setAddresses(
-        borrowerOperations.address,
-        troveManager.address,
-        stabilityPool.address,
-        defaultPool.address,
-        { ...overrides, nonce }
-      ),
-
-    nonce =>
-      defaultPool.setAddresses(troveManager.address, activePool.address, {
-        ...overrides,
-        nonce
-      }),
-
-    nonce =>
-      collSurplusPool.setAddresses(
-        borrowerOperations.address,
-        troveManager.address,
-        activePool.address,
-        { ...overrides, nonce }
-      ),
-
-    nonce =>
-      hintHelpers.setAddresses(sortedTroves.address, troveManager.address, {
-        ...overrides,
-        nonce
-      }),
-
-    nonce =>
-      protocolTokenStaking.setAddresses(
-        protocolToken.address,
-        debtToken.address,
-        troveManager.address,
-        borrowerOperations.address,
-        activePool.address,
-        { ...overrides, nonce }
-      ),
-
-    nonce =>
-      lockupContractFactory.setProtocolTokenAddress(protocolToken.address, {
-        ...overrides,
-        nonce
-      }),
-
-    nonce =>
-      communityIssuance.setAddresses(protocolToken.address, stabilityPool.address, {
-        ...overrides,
-        nonce
-      }),
-
-    nonce =>
-      unipool.setParams(protocolToken.address, uniToken.address, 2 * 30 * 24 * 60 * 60, {
-        ...overrides,
-        nonce
-      })
-  ];
-
-  const { chainId } = await deployer.provider?.getNetwork();
-  const isHardhatTest = chainId === 31337;
-
-  const txs = await Promise.all(
-    connections.map((connect, i) => connect(isHardhatTest ? undefined : txCount + i))
-  );
-
-  let i = 0;
-  await Promise.all(txs.map(tx => tx?.wait().then(() => log(`Connected ${++i}`))));
-};
-
 const connectUniswapPoolContract = async (
   { protocolToken, unipool, uniToken }: _ProtocolContracts,
   deployer: Signer,
@@ -541,15 +393,14 @@ export const deployAndSetupContracts = async (
 
   const contracts = _connectToContracts(deployer, deployment);
 
-  if (!useDeployedContracts) {
-    log("Connecting contracts...");
-    await connectContracts(contracts, deployer, overrides);
-  } else {
+  const protocolTokenTotalSupply = await contracts.protocolToken.totalSupply();
+
+  if (useDeployedContracts && protocolTokenTotalSupply.gt(0)) {
     log("Connecting only Unipool contract...");
     await connectUniswapPoolContract(contracts, deployer, overrides);
   }
 
-  const protocolTokenDeploymentTime = await contracts.protocolToken.getDeploymentStartTime();
+  const protocolTokenDeploymentTime = await contracts.protocolToken.getAllocationStartTime();
   const bootstrapPeriod = await contracts.troveManager.BOOTSTRAP_PERIOD();
   const totalStabilityPoolProtocolTokenReward =
     await contracts.communityIssuance.protocolTokenSupplyCap();

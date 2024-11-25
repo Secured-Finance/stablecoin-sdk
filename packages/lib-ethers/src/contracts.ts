@@ -23,9 +23,9 @@ import gasPoolAbi from "../abi/GasPool.json";
 import hintHelpersAbi from "../abi/HintHelpers.json";
 import iERC20Abi from "../abi/IERC20.json";
 import lockupContractFactoryAbi from "../abi/LockupContractFactory.json";
+import mockPriceFeedAbi from "../abi/MockPriceFeed.json";
 import multiTroveGetterAbi from "../abi/MultiTroveGetter.json";
 import priceFeedAbi from "../abi/PriceFeed.json";
-import priceFeedTestnetAbi from "../abi/PriceFeedTestnet.json";
 import protocolTokenAbi from "../abi/ProtocolToken.json";
 import protocolTokenStakingAbi from "../abi/ProtocolTokenStaking.json";
 import sortedTrovesAbi from "../abi/SortedTroves.json";
@@ -45,9 +45,9 @@ import {
   HintHelpers,
   IERC20,
   LockupContractFactory,
+  MockPriceFeed,
   MultiTroveGetter,
   PriceFeed,
-  PriceFeedTestnet,
   ProtocolToken,
   ProtocolTokenStaking,
   SortedTroves,
@@ -180,7 +180,7 @@ export interface _ProtocolContracts {
   lockupContractFactory: LockupContractFactory;
   protocolTokenStaking: ProtocolTokenStaking;
   multiTroveGetter: MultiTroveGetter;
-  priceFeed: PriceFeed | PriceFeedTestnet;
+  priceFeed: PriceFeed | MockPriceFeed;
   sortedTroves: SortedTroves;
   stabilityPool: StabilityPool;
   gasPool: GasPool;
@@ -190,8 +190,8 @@ export interface _ProtocolContracts {
 
 /** @internal */
 export const _priceFeedIsTestnet = (
-  priceFeed: PriceFeed | PriceFeedTestnet
-): priceFeed is PriceFeedTestnet => "setPrice" in priceFeed;
+  priceFeed: PriceFeed | MockPriceFeed
+): priceFeed is MockPriceFeed => "setPrice" in priceFeed;
 
 /** @internal */
 export const _uniTokenIsMock = (uniToken: IERC20 | ERC20Mock): uniToken is ERC20Mock =>
@@ -216,7 +216,7 @@ const getAbi = (priceFeedIsTestnet: boolean, uniTokenIsMock: boolean): ProtocolC
   lockupContractFactory: lockupContractFactoryAbi,
   protocolTokenStaking: protocolTokenStakingAbi,
   multiTroveGetter: multiTroveGetterAbi,
-  priceFeed: priceFeedIsTestnet ? priceFeedTestnetAbi : priceFeedAbi,
+  priceFeed: priceFeedIsTestnet ? mockPriceFeedAbi : priceFeedAbi,
   sortedTroves: sortedTrovesAbi,
   stabilityPool: stabilityPoolAbi,
   gasPool: gasPoolAbi,

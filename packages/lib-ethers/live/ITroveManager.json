@@ -470,6 +470,19 @@
     },
     {
       "inputs": [],
+      "name": "collSurplusPool",
+      "outputs": [
+        {
+          "internalType": "contract ICollSurplusPool",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
       "name": "debtToken",
       "outputs": [
         {
@@ -1091,6 +1104,19 @@
       "name": "setTroveStatus",
       "outputs": [],
       "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "sortedTroves",
+      "outputs": [
+        {
+          "internalType": "contract ISortedTroves",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
       "type": "function"
     },
     {

@@ -3,6 +3,19 @@
     "anonymous": false,
     "inputs": [
       {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_lastGoodPrice",
+        "type": "uint256"
+      }
+    ],
+    "name": "LastGoodPriceUpdated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
         "indexed": true,
         "internalType": "address",
         "name": "previousOwner",
@@ -23,51 +36,12 @@
     "inputs": [
       {
         "indexed": false,
-        "internalType": "address",
-        "name": "_protocolTokenAddress",
-        "type": "address"
+        "internalType": "enum IPriceFeed.Status",
+        "name": "newStatus",
+        "type": "uint8"
       }
     ],
-    "name": "ProtocolTokenAddressSet",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "_protocolTokenSupplyCap",
-        "type": "uint256"
-      }
-    ],
-    "name": "ProtocolTokenSupplyCapUpdated",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "_stabilityPoolAddress",
-        "type": "address"
-      }
-    ],
-    "name": "StabilityPoolAddressSet",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "_totalProtocolTokenIssued",
-        "type": "uint256"
-      }
-    ],
-    "name": "TotalProtocolTokenIssuedUpdated",
+    "name": "PriceFeedStatusChanged",
     "type": "event"
   },
   {
@@ -85,7 +59,20 @@
   },
   {
     "inputs": [],
-    "name": "ISSUANCE_FACTOR",
+    "name": "MAX_PRICE_DEVIATION_FROM_PREVIOUS_ROUND",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "MAX_PRICE_DIFFERENCE_BETWEEN_ORACLES",
     "outputs": [
       {
         "internalType": "uint256",
@@ -111,7 +98,7 @@
   },
   {
     "inputs": [],
-    "name": "SECONDS_IN_ONE_MINUTE",
+    "name": "TARGET_DIGITS",
     "outputs": [
       {
         "internalType": "uint256",
@@ -123,15 +110,54 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "TELLOR_DIGITS",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "TIMEOUT",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "fetchPrice",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "price",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "address",
-        "name": "_protocolTokenAddress",
+        "name": "_priceAggregatorAddress",
         "type": "address"
       },
       {
         "internalType": "address",
-        "name": "_stabilityPoolAddress",
+        "name": "_tellorCallerAddress",
         "type": "address"
       }
     ],
@@ -142,7 +168,7 @@
   },
   {
     "inputs": [],
-    "name": "issueProtocolToken",
+    "name": "lastGoodPrice",
     "outputs": [
       {
         "internalType": "uint256",
@@ -150,7 +176,7 @@
         "type": "uint256"
       }
     ],
-    "stateMutability": "nonpayable",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -168,25 +194,12 @@
   },
   {
     "inputs": [],
-    "name": "protocolToken",
+    "name": "priceAggregator",
     "outputs": [
       {
-        "internalType": "contract IProtocolToken",
+        "internalType": "contract AggregatorV3Interface",
         "name": "",
         "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "protocolTokenSupplyCap",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -202,55 +215,55 @@
   {
     "inputs": [
       {
+        "internalType": "int256",
+        "name": "_price",
+        "type": "int256"
+      }
+    ],
+    "name": "setPrice",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "address",
-        "name": "_account",
+        "name": "_aggregator",
         "type": "address"
       },
       {
-        "internalType": "uint256",
-        "name": "_amount",
-        "type": "uint256"
+        "internalType": "int256",
+        "name": "_price",
+        "type": "int256"
       }
     ],
-    "name": "sendProtocolToken",
+    "name": "setPriceAggregator",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "inputs": [],
-    "name": "stabilityPoolAddress",
+    "name": "status",
     "outputs": [
       {
-        "internalType": "address",
+        "internalType": "enum IPriceFeed.Status",
+        "name": "",
+        "type": "uint8"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "tellorCaller",
+    "outputs": [
+      {
+        "internalType": "contract ITellorCaller",
         "name": "",
         "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "supplyStartTime",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "totalProtocolTokenIssued",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -265,13 +278,6 @@
       }
     ],
     "name": "transferOwnership",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "updateProtocolTokenSupplyCap",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

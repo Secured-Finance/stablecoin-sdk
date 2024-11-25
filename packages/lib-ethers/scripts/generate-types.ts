@@ -133,7 +133,7 @@ const contractList = [
   "IERC20",
   "MultiTroveGetter",
   "PriceFeed",
-  "PriceFeedTestnet",
+  "MockPriceFeed",
   "SortedTroves",
   "StabilityPool",
   "TroveManager",

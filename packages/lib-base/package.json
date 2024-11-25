@@ -1,6 +1,6 @@
 {
   "name": "@secured-finance/lib-base",
-  "version": "0.0.2-beta.3",
+  "version": "0.0.2",
   "description": "Stablecoin SDK shared interfaces",
   "keywords": [
     "Secured Finance",

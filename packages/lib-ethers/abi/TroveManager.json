@@ -10,6 +10,11 @@
         "internalType": "uint256",
         "name": "_minNetDebt",
         "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_bootstrapPeriod",
+        "type": "uint256"
       }
     ],
     "stateMutability": "nonpayable",

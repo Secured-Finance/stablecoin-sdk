@@ -196,6 +196,32 @@
       "type": "event"
     },
     {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "_unallocatedDebtToken",
+          "type": "uint256"
+        }
+      ],
+      "name": "UnallocatedDebtTokenUpdated",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "_unallocatedFIL",
+          "type": "uint256"
+        }
+      ],
+      "name": "UnallocatedFILUpdated",
+      "type": "event"
+    },
+    {
       "inputs": [
         {
           "internalType": "address",

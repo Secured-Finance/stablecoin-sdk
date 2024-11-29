@@ -852,6 +852,8 @@ interface ProtocolTokenStakingCalls {
   stakes(arg0: string, _overrides?: CallOverrides): Promise<BigNumber>;
   totalProtocolTokenStaked(_overrides?: CallOverrides): Promise<BigNumber>;
   troveManagerAddress(_overrides?: CallOverrides): Promise<string>;
+  unallocatedDebtToken(_overrides?: CallOverrides): Promise<BigNumber>;
+  unallocatedFIL(_overrides?: CallOverrides): Promise<BigNumber>;
 }
 
 interface ProtocolTokenStakingTransactions {
@@ -862,6 +864,8 @@ interface ProtocolTokenStakingTransactions {
   stake(_tokenAmount: BigNumberish, _overrides?: Overrides): Promise<void>;
   transferOwnership(newOwner: string, _overrides?: Overrides): Promise<void>;
   unstake(_tokenAmount: BigNumberish, _overrides?: Overrides): Promise<void>;
+  withdrawUnallocatedDebtToken(_overrides?: Overrides): Promise<void>;
+  withdrawUnallocatedFIL(_overrides?: Overrides): Promise<void>;
 }
 
 export interface ProtocolTokenStaking
@@ -880,6 +884,8 @@ export interface ProtocolTokenStaking
     StakingGainsWithdrawn(staker?: string | null, debtTokenGain?: null, FILGain?: null): EventFilter;
     TotalProtocolTokenStakedUpdated(_totalProtocolTokenStaked?: null): EventFilter;
     TroveManagerAddressSet(_troveManager?: null): EventFilter;
+    UnallocatedDebtTokenUpdated(_unallocatedDebtToken?: null): EventFilter;
+    UnallocatedFILUpdated(_unallocatedFIL?: null): EventFilter;
   };
   extractEvents(logs: Log[], name: "ActivePoolAddressSet"): _TypedLogDescription<{ _activePoolAddress: string }>[];
   extractEvents(logs: Log[], name: "BorrowerOperationsAddressSet"): _TypedLogDescription<{ _borrowerOperationsAddress: string }>[];
@@ -894,6 +900,8 @@ export interface ProtocolTokenStaking
   extractEvents(logs: Log[], name: "StakingGainsWithdrawn"): _TypedLogDescription<{ staker: string; debtTokenGain: BigNumber; FILGain: BigNumber }>[];
   extractEvents(logs: Log[], name: "TotalProtocolTokenStakedUpdated"): _TypedLogDescription<{ _totalProtocolTokenStaked: BigNumber }>[];
   extractEvents(logs: Log[], name: "TroveManagerAddressSet"): _TypedLogDescription<{ _troveManager: string }>[];
+  extractEvents(logs: Log[], name: "UnallocatedDebtTokenUpdated"): _TypedLogDescription<{ _unallocatedDebtToken: BigNumber }>[];
+  extractEvents(logs: Log[], name: "UnallocatedFILUpdated"): _TypedLogDescription<{ _unallocatedFIL: BigNumber }>[];
 }
 
 interface ERC20MockCalls {

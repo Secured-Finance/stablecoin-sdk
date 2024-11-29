@@ -211,6 +211,32 @@
     "type": "event"
   },
   {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_unallocatedDebtToken",
+        "type": "uint256"
+      }
+    ],
+    "name": "UnallocatedDebtTokenUpdated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_unallocatedFIL",
+        "type": "uint256"
+      }
+    ],
+    "name": "UnallocatedFILUpdated",
+    "type": "event"
+  },
+  {
     "inputs": [],
     "name": "DECIMAL_PRECISION",
     "outputs": [
@@ -527,6 +553,32 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "unallocatedDebtToken",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "unallocatedFIL",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "uint256",
@@ -535,6 +587,20 @@
       }
     ],
     "name": "unstake",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "withdrawUnallocatedDebtToken",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "withdrawUnallocatedFIL",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

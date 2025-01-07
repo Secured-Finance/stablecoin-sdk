@@ -17,7 +17,7 @@ import {
  * A transaction that has been prepared for sending.
  *
  * @remarks
- * Implemented by {@link @secured-finance/lib-ethers#PopulatedEthersTransaction}.
+ * Implemented by {@link @secured-finance/stablecoin-lib-ethers#PopulatedEthersTransaction}.
  *
  * @public
  */
@@ -31,7 +31,7 @@ export interface PopulatedTransactionInterface<
   /**
    * Send the transaction.
    *
-   * @returns An object that implements {@link @secured-finance/lib-base#SentProtocolTransaction}.
+   * @returns An object that implements {@link @secured-finance/stablecoin-lib-base#SentProtocolTransaction}.
    */
   send(): Promise<T>;
 }
@@ -42,16 +42,16 @@ export interface PopulatedTransactionInterface<
  * @remarks
  * The protocol fulfills redemptions by repaying the debt of Troves in ascending order of
  * their collateralization ratio, and taking a portion of their collateral in exchange. Due to the
- * {@link @secured-finance/lib-base#MINIMUM_DEBT | minimum debt} requirement that Troves must fulfill,
+ * {@link @secured-finance/stablecoin-lib-base#MINIMUM_DEBT | minimum debt} requirement that Troves must fulfill,
  * some DebtToken amounts are not possible to redeem exactly.
  *
- * When {@link @secured-finance/lib-base#PopulatableProtocol.redeemDebtToken | redeemDebtToken()} is called with an
+ * When {@link @secured-finance/stablecoin-lib-base#PopulatableProtocol.redeemDebtToken | redeemDebtToken()} is called with an
  * amount that can't be fully redeemed, the amount will be truncated (see the `redeemableDebtTokenAmount`
  * property). When this happens, the redeemer can either redeem the truncated amount by sending the
  * transaction unchanged, or prepare a new transaction by
- * {@link @secured-finance/lib-base#PopulatedRedemptionInterface.increaseAmountByMinimumNetDebt | increasing the amount}
+ * {@link @secured-finance/stablecoin-lib-base#PopulatedRedemptionInterface.increaseAmountByMinimumNetDebt | increasing the amount}
  * to the next lowest possible value, which is the sum of the truncated amount and
- * {@link @secured-finance/lib-base#MINIMUM_NET_DEBT}.
+ * {@link @secured-finance/stablecoin-lib-base#MINIMUM_NET_DEBT}.
  *
  * @public
  */
@@ -74,7 +74,7 @@ export interface PopulatedRedemptionInterface<P = unknown, S = unknown, R = unkn
    * value.
    *
    * @param maxRedemptionRate - Maximum acceptable
-   *                            {@link @secured-finance/lib-base#Fees.redemptionRate | redemption rate} to
+   *                            {@link @secured-finance/stablecoin-lib-base#Fees.redemptionRate | redemption rate} to
    *                            use in the new transaction.
    *
    * @remarks
@@ -103,7 +103,7 @@ export type _PopulatableFrom<T, P> = {
  * The functions return an object implementing {@link PopulatedTransactionInterface}, which can be
  * used to send the transaction and get a {@link SentProtocolTransaction}.
  *
- * Implemented by {@link @secured-finance/lib-ethers#PopulatableEthers}.
+ * Implemented by {@link @secured-finance/stablecoin-lib-ethers#PopulatableEthers}.
  *
  * @public
  */

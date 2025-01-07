@@ -9,8 +9,8 @@ import {
   Percent,
   SfStablecoinStoreState,
   Trove
-} from "@secured-finance/lib-base";
-import { useSfStablecoinSelector } from "@secured-finance/lib-react";
+} from "@secured-finance/stablecoin-lib-base";
+import { useSfStablecoinSelector } from "@secured-finance/stablecoin-lib-react";
 
 import { COIN, CURRENCY } from "../../strings";
 

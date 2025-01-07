@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Box, Button, Card, Flex, Heading, Input, Label } from "theme-ui";
 
-import { Decimal, SfStablecoinStoreState } from "@secured-finance/lib-base";
-import { useSfStablecoinSelector } from "@secured-finance/lib-react";
+import { Decimal, SfStablecoinStoreState } from "@secured-finance/stablecoin-lib-base";
+import { useSfStablecoinSelector } from "@secured-finance/stablecoin-lib-react";
 
 import { useSfStablecoin } from "../hooks/SfStablecoinContext";
 import { CURRENCY } from "../strings";

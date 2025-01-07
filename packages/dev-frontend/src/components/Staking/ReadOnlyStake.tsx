@@ -1,7 +1,7 @@
 import { Box, Button, Card, Flex, Heading } from "theme-ui";
 
-import { SfStablecoinStoreState } from "@secured-finance/lib-base";
-import { useSfStablecoinSelector } from "@secured-finance/lib-react";
+import { SfStablecoinStoreState } from "@secured-finance/stablecoin-lib-base";
+import { useSfStablecoinSelector } from "@secured-finance/stablecoin-lib-react";
 
 import { COIN, GT } from "../../strings";
 

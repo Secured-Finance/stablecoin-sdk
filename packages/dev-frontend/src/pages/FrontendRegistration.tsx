@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Box, Button, Card, Flex, Heading, Input, Label, Paragraph, Spinner } from "theme-ui";
 
-import { Decimal } from "@secured-finance/lib-base";
+import { Decimal } from "@secured-finance/stablecoin-lib-base";
 
 import { Icon } from "../components/Icon";
 import { Transaction, useMyTransactionState } from "../components/Transaction";

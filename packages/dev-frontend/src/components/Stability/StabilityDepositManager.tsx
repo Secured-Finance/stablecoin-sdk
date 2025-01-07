@@ -1,12 +1,12 @@
 import React, { useCallback, useEffect } from "react";
 import { Button, Flex } from "theme-ui";
 
-import { Decimal, Decimalish, SfStablecoinStoreState } from "@secured-finance/lib-base";
+import { Decimal, Decimalish, SfStablecoinStoreState } from "@secured-finance/stablecoin-lib-base";
 import {
   SfStablecoinStoreUpdate,
   useSfStablecoinReducer,
   useSfStablecoinSelector
-} from "@secured-finance/lib-react";
+} from "@secured-finance/stablecoin-lib-react";
 
 import { COIN } from "../../strings";
 

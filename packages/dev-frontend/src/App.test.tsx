@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import { PointerEventsCheckLevel, userEvent } from "@testing-library/user-event";
 import { expect } from "vitest";
 
-import { Decimal, MINIMUM_NET_DEBT, Trove } from "@secured-finance/lib-base";
+import { Decimal, MINIMUM_NET_DEBT, Trove } from "@secured-finance/stablecoin-lib-base";
 
 import App from "./App";
 

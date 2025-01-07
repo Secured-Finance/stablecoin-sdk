@@ -1,6 +1,6 @@
 import { Button } from "theme-ui";
 
-import { Decimal, TroveChange } from "@secured-finance/lib-base";
+import { Decimal, TroveChange } from "@secured-finance/stablecoin-lib-base";
 
 import { useSfStablecoin } from "../../hooks/SfStablecoinContext";
 import { useTransactionFunction } from "../Transaction";

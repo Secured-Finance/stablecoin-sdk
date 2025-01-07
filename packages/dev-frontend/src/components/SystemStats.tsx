@@ -1,6 +1,6 @@
 import { AddressZero } from "@ethersproject/constants";
-import { Decimal, Percent, SfStablecoinStoreState } from "@secured-finance/lib-base";
-import { useSfStablecoinSelector } from "@secured-finance/lib-react";
+import { Decimal, Percent, SfStablecoinStoreState } from "@secured-finance/stablecoin-lib-base";
+import { useSfStablecoinSelector } from "@secured-finance/stablecoin-lib-react";
 import React from "react";
 import { Box, Card, Heading, Link, Text } from "theme-ui";
 

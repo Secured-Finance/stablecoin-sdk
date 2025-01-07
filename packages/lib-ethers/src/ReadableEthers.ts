@@ -13,7 +13,7 @@ import {
   TroveWithPendingRedistribution,
   UserTrove,
   UserTroveStatus
-} from "@secured-finance/lib-base";
+} from "@secured-finance/stablecoin-lib-base";
 
 import { MultiTroveGetter } from "../types";
 
@@ -77,7 +77,7 @@ const expectPositiveInt = <K extends string>(obj: { [P in K]?: number }, key: K)
 };
 
 /**
- * Ethers-based implementation of {@link @secured-finance/lib-base#ReadableProtocol}.
+ * Ethers-based implementation of {@link @secured-finance/stablecoin-lib-base#ReadableProtocol}.
  *
  * @public
  */
@@ -146,7 +146,7 @@ export class ReadableEthers implements ReadableProtocol {
     return false;
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#ReadableProtocol.getTotalRedistributed} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#ReadableProtocol.getTotalRedistributed} */
   async getTotalRedistributed(overrides?: EthersCallOverrides): Promise<Trove> {
     const { troveManager } = _getContracts(this.connection);
 
@@ -158,7 +158,7 @@ export class ReadableEthers implements ReadableProtocol {
     return new Trove(collateral, debt);
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#ReadableProtocol.getTroveBeforeRedistribution} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#ReadableProtocol.getTroveBeforeRedistribution} */
   async getTroveBeforeRedistribution(
     address?: string,
     overrides?: EthersCallOverrides
@@ -185,7 +185,7 @@ export class ReadableEthers implements ReadableProtocol {
     }
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#ReadableProtocol.getTrove} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#ReadableProtocol.getTrove} */
   async getTrove(address?: string, overrides?: EthersCallOverrides): Promise<UserTrove> {
     const [trove, totalRedistributed] = await Promise.all([
       this.getTroveBeforeRedistribution(address, overrides),
@@ -195,14 +195,14 @@ export class ReadableEthers implements ReadableProtocol {
     return trove.applyRedistribution(totalRedistributed);
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#ReadableProtocol.getNumberOfTroves} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#ReadableProtocol.getNumberOfTroves} */
   async getNumberOfTroves(overrides?: EthersCallOverrides): Promise<number> {
     const { troveManager } = _getContracts(this.connection);
 
     return (await troveManager.getTroveOwnersCount({ ...overrides })).toNumber();
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#ReadableProtocol.getPrice} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#ReadableProtocol.getPrice} */
   getPrice(overrides?: EthersCallOverrides): Promise<Decimal> {
     const { priceFeed } = _getContracts(this.connection);
 
@@ -235,7 +235,7 @@ export class ReadableEthers implements ReadableProtocol {
     return new Trove(liquidatedCollateral, closedDebt);
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#ReadableProtocol.getTotal} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#ReadableProtocol.getTotal} */
   async getTotal(overrides?: EthersCallOverrides): Promise<Trove> {
     const [activePool, defaultPool] = await Promise.all([
       this._getActivePool(overrides),
@@ -245,7 +245,7 @@ export class ReadableEthers implements ReadableProtocol {
     return activePool.add(defaultPool);
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#ReadableProtocol.getStabilityDeposit} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#ReadableProtocol.getStabilityDeposit} */
   async getStabilityDeposit(
     address?: string,
     overrides?: EthersCallOverrides
@@ -270,7 +270,7 @@ export class ReadableEthers implements ReadableProtocol {
     );
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#ReadableProtocol.getRemainingStabilityPoolProtocolTokenReward} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#ReadableProtocol.getRemainingStabilityPoolProtocolTokenReward} */
   async getRemainingStabilityPoolProtocolTokenReward(
     overrides?: EthersCallOverrides
   ): Promise<Decimal> {
@@ -285,14 +285,14 @@ export class ReadableEthers implements ReadableProtocol {
     return issuanceCap.sub(totalProtocolTokenIssued);
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#ReadableProtocol.getDebtTokenInStabilityPool} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#ReadableProtocol.getDebtTokenInStabilityPool} */
   getDebtTokenInStabilityPool(overrides?: EthersCallOverrides): Promise<Decimal> {
     const { stabilityPool } = _getContracts(this.connection);
 
     return stabilityPool.getTotalDebtTokenDeposits({ ...overrides }).then(decimalify);
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#ReadableProtocol.getDebtTokenBalance} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#ReadableProtocol.getDebtTokenBalance} */
   getDebtTokenBalance(address?: string, overrides?: EthersCallOverrides): Promise<Decimal> {
     address ??= _requireAddress(this.connection);
     const { debtToken } = _getContracts(this.connection);
@@ -300,7 +300,7 @@ export class ReadableEthers implements ReadableProtocol {
     return debtToken.balanceOf(address, { ...overrides }).then(decimalify);
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#ReadableProtocol.getProtocolTokenBalance} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#ReadableProtocol.getProtocolTokenBalance} */
   getProtocolTokenBalance(address?: string, overrides?: EthersCallOverrides): Promise<Decimal> {
     address ??= _requireAddress(this.connection);
     const { protocolToken } = _getContracts(this.connection);
@@ -308,7 +308,7 @@ export class ReadableEthers implements ReadableProtocol {
     return protocolToken.balanceOf(address, { ...overrides }).then(decimalify);
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#ReadableProtocol.getUniTokenBalance} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#ReadableProtocol.getUniTokenBalance} */
   getUniTokenBalance(address?: string, overrides?: EthersCallOverrides): Promise<Decimal> {
     address ??= _requireAddress(this.connection);
     const { uniToken } = _getContracts(this.connection);
@@ -316,7 +316,7 @@ export class ReadableEthers implements ReadableProtocol {
     return uniToken.balanceOf(address, { ...overrides }).then(decimalify);
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#ReadableProtocol.getUniTokenAllowance} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#ReadableProtocol.getUniTokenAllowance} */
   getUniTokenAllowance(address?: string, overrides?: EthersCallOverrides): Promise<Decimal> {
     address ??= _requireAddress(this.connection);
     const { uniToken, unipool } = _getContracts(this.connection);
@@ -343,7 +343,7 @@ export class ReadableEthers implements ReadableProtocol {
       );
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#ReadableProtocol.getRemainingProtocolMiningProtocolTokenReward} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#ReadableProtocol.getRemainingProtocolMiningProtocolTokenReward} */
   async getRemainingProtocolMiningProtocolTokenReward(
     overrides?: EthersCallOverrides
   ): Promise<Decimal> {
@@ -355,7 +355,7 @@ export class ReadableEthers implements ReadableProtocol {
     return calculateRemainingProtocolToken(blockTimestamp);
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#ReadableProtocol.getLiquidityMiningStake} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#ReadableProtocol.getLiquidityMiningStake} */
   getLiquidityMiningStake(address?: string, overrides?: EthersCallOverrides): Promise<Decimal> {
     address ??= _requireAddress(this.connection);
     const { unipool } = _getContracts(this.connection);
@@ -363,14 +363,14 @@ export class ReadableEthers implements ReadableProtocol {
     return unipool.balanceOf(address, { ...overrides }).then(decimalify);
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#ReadableProtocol.getTotalStakedUniTokens} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#ReadableProtocol.getTotalStakedUniTokens} */
   getTotalStakedUniTokens(overrides?: EthersCallOverrides): Promise<Decimal> {
     const { unipool } = _getContracts(this.connection);
 
     return unipool.totalSupply({ ...overrides }).then(decimalify);
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#ReadableProtocol.getLiquidityMiningProtocolTokenReward} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#ReadableProtocol.getLiquidityMiningProtocolTokenReward} */
   getLiquidityMiningProtocolTokenReward(
     address?: string,
     overrides?: EthersCallOverrides
@@ -381,7 +381,7 @@ export class ReadableEthers implements ReadableProtocol {
     return unipool.earned(address, { ...overrides }).then(decimalify);
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#ReadableProtocol.getCollateralSurplusBalance} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#ReadableProtocol.getCollateralSurplusBalance} */
   getCollateralSurplusBalance(address?: string, overrides?: EthersCallOverrides): Promise<Decimal> {
     address ??= _requireAddress(this.connection);
     const { collSurplusPool } = _getContracts(this.connection);
@@ -395,7 +395,7 @@ export class ReadableEthers implements ReadableProtocol {
     overrides?: EthersCallOverrides
   ): Promise<TroveWithPendingRedistribution[]>;
 
-  /** {@inheritDoc @secured-finance/lib-base#ReadableProtocol.(getTroves:2)} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#ReadableProtocol.(getTroves:2)} */
   getTroves(params: TroveListingParams, overrides?: EthersCallOverrides): Promise<UserTrove[]>;
 
   async getTroves(
@@ -460,7 +460,7 @@ export class ReadableEthers implements ReadableProtocol {
       );
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#ReadableProtocol.getFees} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#ReadableProtocol.getFees} */
   async getFees(overrides?: EthersCallOverrides): Promise<Fees> {
     const [createFees, total, price, blockTimestamp] = await Promise.all([
       this._getFeesFactory(overrides),
@@ -472,7 +472,7 @@ export class ReadableEthers implements ReadableProtocol {
     return createFees(blockTimestamp, total.collateralRatioIsBelowCritical(price));
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#ReadableProtocol.getProtocolTokenStake} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#ReadableProtocol.getProtocolTokenStake} */
   async getProtocolTokenStake(
     address?: string,
     overrides?: EthersCallOverrides
@@ -491,14 +491,14 @@ export class ReadableEthers implements ReadableProtocol {
     return new ProtocolTokenStake(stakedProtocolToken, collateralGain, debtTokenGain);
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#ReadableProtocol.getTotalStakedProtocolToken} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#ReadableProtocol.getTotalStakedProtocolToken} */
   async getTotalStakedProtocolToken(overrides?: EthersCallOverrides): Promise<Decimal> {
     const { protocolTokenStaking } = _getContracts(this.connection);
 
     return protocolTokenStaking.totalProtocolTokenStaked({ ...overrides }).then(decimalify);
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#ReadableProtocol.getFrontendStatus} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#ReadableProtocol.getFrontendStatus} */
   async getFrontendStatus(
     address?: string,
     overrides?: EthersCallOverrides
@@ -531,7 +531,7 @@ const mapBackendTroves = (troves: BackendTroves): TroveWithPendingRedistribution
   );
 
 /**
- * Variant of {@link ReadableEthers} that exposes a {@link @secured-finance/lib-base#SfStablecoinStore}.
+ * Variant of {@link ReadableEthers} that exposes a {@link @secured-finance/stablecoin-lib-base#SfStablecoinStore}.
  *
  * @public
  */

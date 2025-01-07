@@ -13,7 +13,7 @@ import "@nomiclabs/hardhat-ethers";
 import { extendEnvironment, HardhatUserConfig, task, types } from "hardhat/config";
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 
-import { Decimal } from "@secured-finance/lib-base";
+import { Decimal } from "@secured-finance/stablecoin-lib-base";
 
 import { _connectToContracts, _priceFeedIsTestnet, _ProtocolDeploymentJSON } from "./src/contracts";
 import {

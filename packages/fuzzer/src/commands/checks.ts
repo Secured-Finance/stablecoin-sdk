@@ -1,4 +1,4 @@
-import { EthersSfStablecoin } from "@secured-finance/lib-ethers";
+import { EthersSfStablecoin } from "@secured-finance/stablecoin-lib-ethers";
 
 import { deployer, subgraph } from "../globals";
 

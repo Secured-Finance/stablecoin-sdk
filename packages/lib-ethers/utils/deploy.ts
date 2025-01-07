@@ -5,7 +5,7 @@ import dotenv from "dotenv";
 import fs from "fs-extra";
 import path from "path";
 
-import { Decimal } from "@secured-finance/lib-base";
+import { Decimal } from "@secured-finance/stablecoin-lib-base";
 
 import {
   _ProtocolContractAddresses,

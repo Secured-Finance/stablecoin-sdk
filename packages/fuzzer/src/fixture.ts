@@ -9,9 +9,9 @@ import {
   TransactableProtocol,
   Trove,
   TroveAdjustmentParams
-} from "@secured-finance/lib-base";
+} from "@secured-finance/stablecoin-lib-base";
 
-import { EthersSfStablecoin as SfStablecoin } from "@secured-finance/lib-ethers";
+import { EthersSfStablecoin as SfStablecoin } from "@secured-finance/stablecoin-lib-ethers";
 
 import {
   benford,

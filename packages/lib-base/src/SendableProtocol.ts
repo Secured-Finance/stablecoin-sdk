@@ -17,7 +17,7 @@ import {
  * A transaction that has already been sent.
  *
  * @remarks
- * Implemented by {@link @secured-finance/lib-ethers#SentEthersTransaction}.
+ * Implemented by {@link @secured-finance/stablecoin-lib-ethers#SentEthersTransaction}.
  *
  * @public
  */
@@ -29,7 +29,7 @@ export interface SentProtocolTransaction<S = unknown, T extends ProtocolReceipt 
    * Check whether the transaction has been mined, and whether it was successful.
    *
    * @remarks
-   * Unlike {@link @secured-finance/lib-base#SentProtocolTransaction.waitForReceipt | waitForReceipt()},
+   * Unlike {@link @secured-finance/stablecoin-lib-base#SentProtocolTransaction.waitForReceipt | waitForReceipt()},
    * this function doesn't wait for the transaction to be mined.
    */
   getReceipt(): Promise<T>;
@@ -37,8 +37,8 @@ export interface SentProtocolTransaction<S = unknown, T extends ProtocolReceipt 
   /**
    * Wait for the transaction to be mined, and check whether it was successful.
    *
-   * @returns Either a {@link @secured-finance/lib-base#FailedReceipt} or a
-   *          {@link @secured-finance/lib-base#SuccessfulReceipt}.
+   * @returns Either a {@link @secured-finance/stablecoin-lib-base#FailedReceipt} or a
+   *          {@link @secured-finance/stablecoin-lib-base#SuccessfulReceipt}.
    */
   waitForReceipt(): Promise<Extract<T, MinedReceipt>>;
 }
@@ -136,7 +136,7 @@ export type _SendableFrom<T, R, S> = {
  * The functions return an object implementing {@link SentProtocolTransaction}, which can be used
  * to monitor the transaction and get its details when it succeeds.
  *
- * Implemented by {@link @secured-finance/lib-ethers#SendableEthers}.
+ * Implemented by {@link @secured-finance/stablecoin-lib-ethers#SendableEthers}.
  *
  * @public
  */

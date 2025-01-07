@@ -1,4 +1,4 @@
-import { Decimal } from "@secured-finance/lib-base";
+import { Decimal } from "@secured-finance/stablecoin-lib-base";
 import React from "react";
 import { Adjusting } from "./Adjusting";
 import { useTroveView } from "./context/TroveViewContext";

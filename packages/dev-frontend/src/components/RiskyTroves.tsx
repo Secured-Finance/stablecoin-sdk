@@ -8,9 +8,9 @@ import {
   MINIMUM_COLLATERAL_RATIO,
   Percent,
   UserTrove
-} from "@secured-finance/lib-base";
-import { BlockPolledSfStablecoinStoreState } from "@secured-finance/lib-ethers";
-import { useSfStablecoinSelector } from "@secured-finance/lib-react";
+} from "@secured-finance/stablecoin-lib-base";
+import { BlockPolledSfStablecoinStoreState } from "@secured-finance/stablecoin-lib-ethers";
+import { useSfStablecoinSelector } from "@secured-finance/stablecoin-lib-react";
 
 import { useSfStablecoin } from "../hooks/SfStablecoinContext";
 import { COIN, CURRENCY } from "../strings";

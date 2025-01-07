@@ -11,9 +11,9 @@ import {
   ReadableProtocol,
   Trove,
   TroveWithPendingRedistribution
-} from "@secured-finance/lib-base";
-import { EthersSfStablecoin, ReadableEthers } from "@secured-finance/lib-ethers";
-import { SubgraphSfStablecoin } from "@secured-finance/lib-subgraph";
+} from "@secured-finance/stablecoin-lib-base";
+import { EthersSfStablecoin, ReadableEthers } from "@secured-finance/stablecoin-lib-ethers";
+import { SubgraphSfStablecoin } from "@secured-finance/stablecoin-lib-subgraph";
 
 export const objToString = (o: Record<string, unknown>) =>
   "{ " +

@@ -11,7 +11,7 @@ import {
   TroveChange,
   TroveClosureParams,
   TroveCreationParams
-} from "@secured-finance/lib-base";
+} from "@secured-finance/stablecoin-lib-base";
 
 import { COIN, CURRENCY } from "../../../strings";
 

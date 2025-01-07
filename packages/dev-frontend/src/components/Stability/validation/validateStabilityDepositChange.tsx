@@ -3,7 +3,7 @@ import {
   SfStablecoinStoreState,
   StabilityDeposit,
   StabilityDepositChange
-} from "@secured-finance/lib-base";
+} from "@secured-finance/stablecoin-lib-base";
 
 import { COIN } from "../../../strings";
 import { Amount } from "../../ActionDescription";

@@ -1,7 +1,10 @@
 const { red, blue, green, yellow, dim, bold } = require("chalk");
 const { Wallet, providers } = require("ethers");
-const { Decimal, UserTrove, LIQUIDATION_RESERVE } = require("@secured-finance/lib-base");
-const { EthersSfStablecoin, EthersSfStablecoinWithStore } = require("@secured-finance/lib-ethers");
+const { Decimal, UserTrove, LIQUIDATION_RESERVE } = require("@secured-finance/stablecoin-lib-base");
+const {
+  EthersSfStablecoin,
+  EthersSfStablecoinWithStore
+} = require("@secured-finance/stablecoin-lib-ethers");
 
 function log(message) {
   console.log(`${dim(`[${new Date().toLocaleTimeString()}]`)} ${message}`);

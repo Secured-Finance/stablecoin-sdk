@@ -48,7 +48,7 @@ export interface TroveListingParams {
  * Read the state of the protocol.
  *
  * @remarks
- * Implemented by {@link @secured-finance/lib-ethers#EthersSfStablecoin}.
+ * Implemented by {@link @secured-finance/stablecoin-lib-ethers#EthersSfStablecoin}.
  *
  * @public
  */
@@ -57,7 +57,7 @@ export interface ReadableProtocol {
    * Get the total collateral and debt per stake that has been liquidated through redistribution.
    *
    * @remarks
-   * Needed when dealing with instances of {@link @secured-finance/lib-base#TroveWithPendingRedistribution}.
+   * Needed when dealing with instances of {@link @secured-finance/stablecoin-lib-base#TroveWithPendingRedistribution}.
    */
   getTotalRedistributed(): Promise<Trove>;
 
@@ -68,7 +68,7 @@ export interface ReadableProtocol {
    *
    * @remarks
    * The current state of a Trove can be fetched using
-   * {@link @secured-finance/lib-base#ReadableProtocol.getTrove | getTrove()}.
+   * {@link @secured-finance/stablecoin-lib-base#ReadableProtocol.getTrove | getTrove()}.
    */
   getTroveBeforeRedistribution(address?: string): Promise<TroveWithPendingRedistribution>;
 
@@ -170,7 +170,7 @@ export interface ReadableProtocol {
    * When a Trove gets liquidated or redeemed, any collateral it has above 110% (in case of
    * liquidation) or 100% collateralization (in case of redemption) gets sent to a pool, where it
    * can be withdrawn from using
-   * {@link @secured-finance/lib-base#TransactableProtocol.claimCollateralSurplus | claimCollateralSurplus()}.
+   * {@link @secured-finance/stablecoin-lib-base#TransactableProtocol.claimCollateralSurplus | claimCollateralSurplus()}.
    */
   getCollateralSurplusBalance(address?: string): Promise<Decimal>;
 

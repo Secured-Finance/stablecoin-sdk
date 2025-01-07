@@ -1,5 +1,5 @@
-import { Decimal, SfStablecoinStoreState } from "@secured-finance/lib-base";
-import { useSfStablecoinSelector } from "@secured-finance/lib-react";
+import { Decimal, SfStablecoinStoreState } from "@secured-finance/stablecoin-lib-base";
+import { useSfStablecoinSelector } from "@secured-finance/stablecoin-lib-react";
 import React, { useEffect, useState } from "react";
 import { Card, Paragraph, Text } from "theme-ui";
 import { CURRENCY } from "../../strings";

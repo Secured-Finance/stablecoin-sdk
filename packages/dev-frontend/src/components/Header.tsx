@@ -1,6 +1,6 @@
 import { AddressZero } from "@ethersproject/constants";
-import { SfStablecoinStoreState } from "@secured-finance/lib-base";
-import { useSfStablecoinSelector } from "@secured-finance/lib-react";
+import { SfStablecoinStoreState } from "@secured-finance/stablecoin-lib-base";
+import { useSfStablecoinSelector } from "@secured-finance/stablecoin-lib-react";
 import React from "react";
 import { Box, Container, Flex } from "theme-ui";
 import { useSfStablecoin } from "../hooks/SfStablecoinContext";

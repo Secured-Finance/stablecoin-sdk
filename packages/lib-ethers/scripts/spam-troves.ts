@@ -3,19 +3,19 @@ import { JsonRpcProvider } from "@ethersproject/providers";
 import { Wallet } from "@ethersproject/wallet";
 import WebSocket from "ws";
 
-import { Decimal, MINIMUM_DEBT, Trove } from "@secured-finance/lib-base";
+import { Decimal, MINIMUM_DEBT, Trove } from "@secured-finance/stablecoin-lib-base";
 import {
   BlockPolledSfStablecoinStore,
   EthersSfStablecoin,
   EthersSfStablecoinWithStore
-} from "@secured-finance/lib-ethers";
+} from "@secured-finance/stablecoin-lib-ethers";
 
 import {
   Batched,
   BatchedProvider,
   WebSocketAugmented,
   WebSocketAugmentedProvider
-} from "@secured-finance/providers";
+} from "@secured-finance/stablecoin-providers";
 
 const BatchedWebSocketAugmentedJsonRpcProvider = Batched(WebSocketAugmented(JsonRpcProvider));
 

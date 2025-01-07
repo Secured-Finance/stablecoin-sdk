@@ -1,8 +1,8 @@
 import { AddressZero } from "@ethersproject/constants";
 import { useEffect, useState } from "react";
 
-import { SfStablecoinStoreState } from "@secured-finance/lib-base";
-import { useSfStablecoinSelector } from "@secured-finance/lib-react";
+import { SfStablecoinStoreState } from "@secured-finance/stablecoin-lib-base";
+import { useSfStablecoinSelector } from "@secured-finance/stablecoin-lib-react";
 
 import { useSfStablecoin } from "../hooks/SfStablecoinContext";
 

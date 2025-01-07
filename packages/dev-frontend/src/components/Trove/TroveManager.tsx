@@ -7,13 +7,13 @@ import {
   MINIMUM_DEBT,
   SfStablecoinStoreState,
   Trove
-} from "@secured-finance/lib-base";
+} from "@secured-finance/stablecoin-lib-base";
 
 import {
   SfStablecoinStoreUpdate,
   useSfStablecoinReducer,
   useSfStablecoinSelector
-} from "@secured-finance/lib-react";
+} from "@secured-finance/stablecoin-lib-react";
 
 import { InfoBubble } from "../InfoBubble";
 import { useMyTransactionState } from "../Transaction";

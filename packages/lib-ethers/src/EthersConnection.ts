@@ -1,7 +1,7 @@
 import { Block, BlockTag } from "@ethersproject/abstract-provider";
 import { Signer } from "@ethersproject/abstract-signer";
 
-import { Decimal } from "@secured-finance/lib-base";
+import { Decimal } from "@secured-finance/stablecoin-lib-base";
 
 import devOrNull from "../deployments/dev.json";
 import mainnet from "../deployments/mainnet.json";
@@ -261,7 +261,7 @@ export interface EthersConnectionOptionalParams {
   readonly frontendTag?: string;
 
   /**
-   * Create a {@link @secured-finance/lib-base#SfStablecoinStore} and expose it as the `store` property.
+   * Create a {@link @secured-finance/stablecoin-lib-base#SfStablecoinStore} and expose it as the `store` property.
    *
    * @remarks
    * When set to one of the available {@link EthersSfStablecoinStoreOption | options},
@@ -271,7 +271,7 @@ export interface EthersConnectionOptionalParams {
    * {@link EthersSfStablecoinWithStore}.
    *
    * Note that the store won't start monitoring the blockchain until its
-   * {@link @secured-finance/lib-base#SfStablecoinStore.start | start()} function is called.
+   * {@link @secured-finance/stablecoin-lib-base#SfStablecoinStore.start | start()} function is called.
    */
   readonly useStore?: EthersSfStablecoinStoreOption;
 }

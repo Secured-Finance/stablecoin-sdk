@@ -3,7 +3,7 @@ import { Log, TransactionReceipt } from "@ethersproject/abstract-provider";
 import { BigNumber } from "@ethersproject/bignumber";
 import { AddressZero } from "@ethersproject/constants";
 
-import { Decimal } from "@secured-finance/lib-base";
+import { Decimal } from "@secured-finance/stablecoin-lib-base";
 
 import { _ProtocolContracts, _TypedProtocolContract } from "./contracts";
 

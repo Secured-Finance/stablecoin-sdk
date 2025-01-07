@@ -1,7 +1,10 @@
 const fs = require("fs");
 
 const network = process.argv[2] || "mainnet";
-const { addresses, startBlock } = require(`@secured-finance/lib-ethers/deployments/${network}.json`);
+const {
+  addresses,
+  startBlock
+} = require(`@secured-finance/stablecoin-lib-ethers/deployments/${network}.json`);
 
 console.log(`Preparing subgraph manifest for network "${network}"`);
 

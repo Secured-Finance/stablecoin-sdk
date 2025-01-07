@@ -1,4 +1,4 @@
-import { SfStablecoinStore } from "@secured-finance/lib-base";
+import { SfStablecoinStore } from "@secured-finance/stablecoin-lib-base";
 import React, { createContext, useEffect, useState } from "react";
 
 export const SfStablecoinStoreContext = createContext<SfStablecoinStore | undefined>(undefined);

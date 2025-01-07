@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 
-import { Decimal, TroveChange } from "@secured-finance/lib-base";
-import { PopulatedEthersTransaction } from "@secured-finance/lib-ethers";
+import { Decimal, TroveChange } from "@secured-finance/stablecoin-lib-base";
+import { PopulatedEthersTransaction } from "@secured-finance/stablecoin-lib-ethers";
 
 import { useSfStablecoin } from "../../hooks/SfStablecoinContext";
 import { WarningBubble } from "../WarningBubble";

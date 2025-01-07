@@ -2,7 +2,7 @@ import { JsonRpcProvider } from "@ethersproject/providers";
 import { Wallet } from "@ethersproject/wallet";
 import dotenv from "dotenv";
 
-import { SubgraphSfStablecoin } from "@secured-finance/lib-subgraph";
+import { SubgraphSfStablecoin } from "@secured-finance/stablecoin-lib-subgraph";
 
 dotenv.config();
 

@@ -1,8 +1,8 @@
 import React, { useRef, useState } from "react";
 import { Button, Container, Flex } from "theme-ui";
 
-import { SfStablecoinStoreState } from "@secured-finance/lib-base";
-import { useSfStablecoinSelector } from "@secured-finance/lib-react";
+import { SfStablecoinStoreState } from "@secured-finance/stablecoin-lib-base";
+import { useSfStablecoinSelector } from "@secured-finance/stablecoin-lib-react";
 
 import { Icon } from "./Icon";
 import { SystemStats } from "./SystemStats";

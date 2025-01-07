@@ -7,7 +7,7 @@ import {
   StabilityDeposit,
   Trove,
   TroveWithPendingRedistribution
-} from "@secured-finance/lib-base";
+} from "@secured-finance/stablecoin-lib-base";
 
 import { _getContracts, _requireAddress } from "./EthersConnection";
 import { ReadableEthers } from "./ReadableEthers";

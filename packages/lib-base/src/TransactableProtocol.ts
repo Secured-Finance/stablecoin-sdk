@@ -161,7 +161,7 @@ export interface CollateralGainTransferDetails extends StabilityPoolGainsWithdra
  * The functions return the details of the transaction (if any), or throw an implementation-specific
  * subclass of {@link TransactionFailedError} in case of transaction failure.
  *
- * Implemented by {@link @secured-finance/lib-ethers#EthersSfStablecoin}.
+ * Implemented by {@link @secured-finance/stablecoin-lib-ethers#EthersSfStablecoin}.
  *
  * @public
  */
@@ -171,7 +171,7 @@ export interface TransactableProtocol {
    *
    * @param params - How much to deposit and borrow.
    * @param maxBorrowingRate - Maximum acceptable
-   *                           {@link @secured-finance/lib-base#Fees.borrowingRate | borrowing rate}.
+   *                           {@link @secured-finance/stablecoin-lib-base#Fees.borrowingRate | borrowing rate}.
    *
    * @throws
    * Throws {@link TransactionFailedError} in case of transaction failure.
@@ -198,7 +198,7 @@ export interface TransactableProtocol {
    *
    * @param params - Parameters of the adjustment.
    * @param maxBorrowingRate - Maximum acceptable
-   *                           {@link @secured-finance/lib-base#Fees.borrowingRate | borrowing rate} if
+   *                           {@link @secured-finance/stablecoin-lib-base#Fees.borrowingRate | borrowing rate} if
    *                           `params` includes `borrowDebtToken`.
    *
    * @throws
@@ -206,7 +206,7 @@ export interface TransactableProtocol {
    *
    * @remarks
    * The transaction will fail if the Trove's debt would fall below
-   * {@link @secured-finance/lib-base#MINIMUM_DEBT}.
+   * {@link @secured-finance/stablecoin-lib-base#MINIMUM_DEBT}.
    *
    * If `maxBorrowingRate` is omitted, the current borrowing rate plus 0.5% is used as maximum
    * acceptable rate.
@@ -255,7 +255,7 @@ export interface TransactableProtocol {
    *
    * @param amount - The amount of DebtToken to borrow.
    * @param maxBorrowingRate - Maximum acceptable
-   *                           {@link @secured-finance/lib-base#Fees.borrowingRate | borrowing rate}.
+   *                           {@link @secured-finance/stablecoin-lib-base#Fees.borrowingRate | borrowing rate}.
    *
    * @throws
    * Throws {@link TransactionFailedError} in case of transaction failure.
@@ -325,8 +325,8 @@ export interface TransactableProtocol {
    * The `frontendTag` parameter is only effective when making a new deposit.
    *
    * As a side-effect, the transaction will also pay out an existing Stability Deposit's
-   * {@link @secured-finance/lib-base#StabilityDeposit.collateralGain | collateral gain} and
-   * {@link @secured-finance/lib-base#StabilityDeposit.protocolTokenReward | ProtocolToken reward}.
+   * {@link @secured-finance/stablecoin-lib-base#StabilityDeposit.collateralGain | collateral gain} and
+   * {@link @secured-finance/stablecoin-lib-base#StabilityDeposit.protocolTokenReward | ProtocolToken reward}.
    */
   depositDebtTokenInStabilityPool(
     amount: Decimalish,
@@ -343,14 +343,14 @@ export interface TransactableProtocol {
    *
    * @remarks
    * As a side-effect, the transaction will also pay out the Stability Deposit's
-   * {@link @secured-finance/lib-base#StabilityDeposit.collateralGain | collateral gain} and
-   * {@link @secured-finance/lib-base#StabilityDeposit.protocolTokenReward | ProtocolToken reward}.
+   * {@link @secured-finance/stablecoin-lib-base#StabilityDeposit.collateralGain | collateral gain} and
+   * {@link @secured-finance/stablecoin-lib-base#StabilityDeposit.protocolTokenReward | ProtocolToken reward}.
    */
   withdrawDebtTokenFromStabilityPool(amount: Decimalish): Promise<StabilityDepositChangeDetails>;
 
   /**
-   * Withdraw {@link @secured-finance/lib-base#StabilityDeposit.collateralGain | collateral gain} and
-   * {@link @secured-finance/lib-base#StabilityDeposit.protocolTokenReward | ProtocolToken reward} from Stability Deposit.
+   * Withdraw {@link @secured-finance/stablecoin-lib-base#StabilityDeposit.collateralGain | collateral gain} and
+   * {@link @secured-finance/stablecoin-lib-base#StabilityDeposit.protocolTokenReward | ProtocolToken reward} from Stability Deposit.
    *
    * @throws
    * Throws {@link TransactionFailedError} in case of transaction failure.
@@ -358,7 +358,7 @@ export interface TransactableProtocol {
   withdrawGainsFromStabilityPool(): Promise<StabilityPoolGainsWithdrawalDetails>;
 
   /**
-   * Transfer {@link @secured-finance/lib-base#StabilityDeposit.collateralGain | collateral gain} from
+   * Transfer {@link @secured-finance/stablecoin-lib-base#StabilityDeposit.collateralGain | collateral gain} from
    * Stability Deposit to Trove.
    *
    * @throws
@@ -368,7 +368,7 @@ export interface TransactableProtocol {
    * The collateral gain is transfered to the Trove as additional collateral.
    *
    * As a side-effect, the transaction will also pay out the Stability Deposit's
-   * {@link @secured-finance/lib-base#StabilityDeposit.protocolTokenReward | ProtocolToken reward}.
+   * {@link @secured-finance/stablecoin-lib-base#StabilityDeposit.protocolTokenReward | ProtocolToken reward}.
    */
   transferCollateralGainToTrove(): Promise<CollateralGainTransferDetails>;
 
@@ -399,7 +399,7 @@ export interface TransactableProtocol {
    *
    * @param amount - Amount of DebtToken to be redeemed.
    * @param maxRedemptionRate - Maximum acceptable
-   *                            {@link @secured-finance/lib-base#Fees.redemptionRate | redemption rate}.
+   *                            {@link @secured-finance/stablecoin-lib-base#Fees.redemptionRate | redemption rate}.
    *
    * @throws
    * Throws {@link TransactionFailedError} in case of transaction failure.
@@ -414,7 +414,7 @@ export interface TransactableProtocol {
    * Claim leftover collateral after a liquidation or redemption.
    *
    * @remarks
-   * Use {@link @secured-finance/lib-base#ReadableProtocol.getCollateralSurplusBalance | getCollateralSurplusBalance()}
+   * Use {@link @secured-finance/stablecoin-lib-base#ReadableProtocol.getCollateralSurplusBalance | getCollateralSurplusBalance()}
    * to check the amount of collateral available for withdrawal.
    *
    * @throws
@@ -432,8 +432,8 @@ export interface TransactableProtocol {
    *
    * @remarks
    * As a side-effect, the transaction will also pay out an existing ProtocolToken stake's
-   * {@link @secured-finance/lib-base#ProtocolTokenStake.collateralGain | collateral gain} and
-   * {@link @secured-finance/lib-base#ProtocolTokenStake.debtTokenGain | DebtToken gain}.
+   * {@link @secured-finance/stablecoin-lib-base#ProtocolTokenStake.collateralGain | collateral gain} and
+   * {@link @secured-finance/stablecoin-lib-base#ProtocolTokenStake.debtTokenGain | DebtToken gain}.
    */
   stakeProtocolToken(amount: Decimalish): Promise<void>;
 
@@ -447,14 +447,14 @@ export interface TransactableProtocol {
    *
    * @remarks
    * As a side-effect, the transaction will also pay out the ProtocolToken stake's
-   * {@link @secured-finance/lib-base#ProtocolTokenStake.collateralGain | collateral gain} and
-   * {@link @secured-finance/lib-base#ProtocolTokenStake.debtTokenGain | DebtToken gain}.
+   * {@link @secured-finance/stablecoin-lib-base#ProtocolTokenStake.collateralGain | collateral gain} and
+   * {@link @secured-finance/stablecoin-lib-base#ProtocolTokenStake.debtTokenGain | DebtToken gain}.
    */
   unstakeProtocolToken(amount: Decimalish): Promise<void>;
 
   /**
-   * Withdraw {@link @secured-finance/lib-base#ProtocolTokenStake.collateralGain | collateral gain} and
-   * {@link @secured-finance/lib-base#ProtocolTokenStake.debtTokenGain | DebtToken gain} from ProtocolToken stake.
+   * Withdraw {@link @secured-finance/stablecoin-lib-base#ProtocolTokenStake.collateralGain | collateral gain} and
+   * {@link @secured-finance/stablecoin-lib-base#ProtocolTokenStake.debtTokenGain | DebtToken gain} from ProtocolToken stake.
    *
    * @throws
    * Throws {@link TransactionFailedError} in case of transaction failure.
@@ -463,14 +463,14 @@ export interface TransactableProtocol {
 
   /**
    * Allow the liquidity mining contract to use Uniswap FIL/DebtToken LP tokens for
-   * {@link @secured-finance/lib-base#TransactableProtocol.stakeUniTokens | staking}.
+   * {@link @secured-finance/stablecoin-lib-base#TransactableProtocol.stakeUniTokens | staking}.
    *
    * @param allowance - Maximum amount of LP tokens that will be transferrable to liquidity mining
    *                    (`2^256 - 1` by default).
    *
    * @remarks
    * Must be performed before calling
-   * {@link @secured-finance/lib-base#TransactableProtocol.stakeUniTokens | stakeUniTokens()}.
+   * {@link @secured-finance/stablecoin-lib-base#TransactableProtocol.stakeUniTokens | stakeUniTokens()}.
    *
    * @throws
    * Throws {@link TransactionFailedError} in case of transaction failure.

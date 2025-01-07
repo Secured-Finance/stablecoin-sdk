@@ -6,7 +6,7 @@ import {
   MINIMUM_DEBT,
   Trove,
   TroveWithPendingRedistribution
-} from "@secured-finance/lib-base";
+} from "@secured-finance/stablecoin-lib-base";
 
 import { Fixture } from "../fixture";
 import { deployer, funder, provider, subgraph } from "../globals";

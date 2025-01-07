@@ -1,5 +1,5 @@
 {
-  "name": "@secured-finance/providers",
+  "name": "@secured-finance/stablecoin-providers",
   "version": "0.0.0-semantic-release",
   "description": "Custom Ethers Providers used by Dev UI",
   "keywords": [

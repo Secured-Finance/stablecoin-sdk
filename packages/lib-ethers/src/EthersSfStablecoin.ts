@@ -25,7 +25,7 @@ import {
   TroveListingParams,
   TroveWithPendingRedistribution,
   UserTrove
-} from "@secured-finance/lib-base";
+} from "@secured-finance/stablecoin-lib-base";
 
 import {
   _connect,
@@ -157,12 +157,12 @@ export class EthersSfStablecoin implements ReadableEthers, TransactableProtocol 
     return false;
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#ReadableProtocol.getTotalRedistributed} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#ReadableProtocol.getTotalRedistributed} */
   getTotalRedistributed(overrides?: EthersCallOverrides): Promise<Trove> {
     return this._readable.getTotalRedistributed(overrides);
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#ReadableProtocol.getTroveBeforeRedistribution} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#ReadableProtocol.getTroveBeforeRedistribution} */
   getTroveBeforeRedistribution(
     address?: string,
     overrides?: EthersCallOverrides
@@ -170,17 +170,17 @@ export class EthersSfStablecoin implements ReadableEthers, TransactableProtocol 
     return this._readable.getTroveBeforeRedistribution(address, overrides);
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#ReadableProtocol.getTrove} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#ReadableProtocol.getTrove} */
   getTrove(address?: string, overrides?: EthersCallOverrides): Promise<UserTrove> {
     return this._readable.getTrove(address, overrides);
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#ReadableProtocol.getNumberOfTroves} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#ReadableProtocol.getNumberOfTroves} */
   getNumberOfTroves(overrides?: EthersCallOverrides): Promise<number> {
     return this._readable.getNumberOfTroves(overrides);
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#ReadableProtocol.getPrice} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#ReadableProtocol.getPrice} */
   getPrice(overrides?: EthersCallOverrides): Promise<Decimal> {
     return this._readable.getPrice(overrides);
   }
@@ -195,42 +195,42 @@ export class EthersSfStablecoin implements ReadableEthers, TransactableProtocol 
     return this._readable._getDefaultPool(overrides);
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#ReadableProtocol.getTotal} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#ReadableProtocol.getTotal} */
   getTotal(overrides?: EthersCallOverrides): Promise<Trove> {
     return this._readable.getTotal(overrides);
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#ReadableProtocol.getStabilityDeposit} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#ReadableProtocol.getStabilityDeposit} */
   getStabilityDeposit(address?: string, overrides?: EthersCallOverrides): Promise<StabilityDeposit> {
     return this._readable.getStabilityDeposit(address, overrides);
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#ReadableProtocol.getRemainingStabilityPoolProtocolTokenReward} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#ReadableProtocol.getRemainingStabilityPoolProtocolTokenReward} */
   getRemainingStabilityPoolProtocolTokenReward(overrides?: EthersCallOverrides): Promise<Decimal> {
     return this._readable.getRemainingStabilityPoolProtocolTokenReward(overrides);
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#ReadableProtocol.getDebtTokenInStabilityPool} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#ReadableProtocol.getDebtTokenInStabilityPool} */
   getDebtTokenInStabilityPool(overrides?: EthersCallOverrides): Promise<Decimal> {
     return this._readable.getDebtTokenInStabilityPool(overrides);
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#ReadableProtocol.getDebtTokenBalance} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#ReadableProtocol.getDebtTokenBalance} */
   getDebtTokenBalance(address?: string, overrides?: EthersCallOverrides): Promise<Decimal> {
     return this._readable.getDebtTokenBalance(address, overrides);
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#ReadableProtocol.getProtocolTokenBalance} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#ReadableProtocol.getProtocolTokenBalance} */
   getProtocolTokenBalance(address?: string, overrides?: EthersCallOverrides): Promise<Decimal> {
     return this._readable.getProtocolTokenBalance(address, overrides);
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#ReadableProtocol.getUniTokenBalance} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#ReadableProtocol.getUniTokenBalance} */
   getUniTokenBalance(address?: string, overrides?: EthersCallOverrides): Promise<Decimal> {
     return this._readable.getUniTokenBalance(address, overrides);
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#ReadableProtocol.getUniTokenAllowance} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#ReadableProtocol.getUniTokenAllowance} */
   getUniTokenAllowance(address?: string, overrides?: EthersCallOverrides): Promise<Decimal> {
     return this._readable.getUniTokenAllowance(address, overrides);
   }
@@ -242,22 +242,22 @@ export class EthersSfStablecoin implements ReadableEthers, TransactableProtocol 
     return this._readable._getRemainingProtocolMiningProtocolTokenRewardCalculator(overrides);
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#ReadableProtocol.getRemainingProtocolMiningProtocolTokenReward} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#ReadableProtocol.getRemainingProtocolMiningProtocolTokenReward} */
   getRemainingProtocolMiningProtocolTokenReward(overrides?: EthersCallOverrides): Promise<Decimal> {
     return this._readable.getRemainingProtocolMiningProtocolTokenReward(overrides);
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#ReadableProtocol.getLiquidityMiningStake} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#ReadableProtocol.getLiquidityMiningStake} */
   getLiquidityMiningStake(address?: string, overrides?: EthersCallOverrides): Promise<Decimal> {
     return this._readable.getLiquidityMiningStake(address, overrides);
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#ReadableProtocol.getTotalStakedUniTokens} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#ReadableProtocol.getTotalStakedUniTokens} */
   getTotalStakedUniTokens(overrides?: EthersCallOverrides): Promise<Decimal> {
     return this._readable.getTotalStakedUniTokens(overrides);
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#ReadableProtocol.getLiquidityMiningProtocolTokenReward} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#ReadableProtocol.getLiquidityMiningProtocolTokenReward} */
   getLiquidityMiningProtocolTokenReward(
     address?: string,
     overrides?: EthersCallOverrides
@@ -265,7 +265,7 @@ export class EthersSfStablecoin implements ReadableEthers, TransactableProtocol 
     return this._readable.getLiquidityMiningProtocolTokenReward(address, overrides);
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#ReadableProtocol.getCollateralSurplusBalance} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#ReadableProtocol.getCollateralSurplusBalance} */
   getCollateralSurplusBalance(address?: string, overrides?: EthersCallOverrides): Promise<Decimal> {
     return this._readable.getCollateralSurplusBalance(address, overrides);
   }
@@ -276,7 +276,7 @@ export class EthersSfStablecoin implements ReadableEthers, TransactableProtocol 
     overrides?: EthersCallOverrides
   ): Promise<TroveWithPendingRedistribution[]>;
 
-  /** {@inheritDoc @secured-finance/lib-base#ReadableProtocol.(getTroves:2)} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#ReadableProtocol.(getTroves:2)} */
   getTroves(params: TroveListingParams, overrides?: EthersCallOverrides): Promise<UserTrove[]>;
 
   getTroves(params: TroveListingParams, overrides?: EthersCallOverrides): Promise<UserTrove[]> {
@@ -295,12 +295,12 @@ export class EthersSfStablecoin implements ReadableEthers, TransactableProtocol 
     return this._readable._getFeesFactory(overrides);
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#ReadableProtocol.getFees} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#ReadableProtocol.getFees} */
   getFees(overrides?: EthersCallOverrides): Promise<Fees> {
     return this._readable.getFees(overrides);
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#ReadableProtocol.getProtocolTokenStake} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#ReadableProtocol.getProtocolTokenStake} */
   getProtocolTokenStake(
     address?: string,
     overrides?: EthersCallOverrides
@@ -308,18 +308,18 @@ export class EthersSfStablecoin implements ReadableEthers, TransactableProtocol 
     return this._readable.getProtocolTokenStake(address, overrides);
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#ReadableProtocol.getTotalStakedProtocolToken} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#ReadableProtocol.getTotalStakedProtocolToken} */
   getTotalStakedProtocolToken(overrides?: EthersCallOverrides): Promise<Decimal> {
     return this._readable.getTotalStakedProtocolToken(overrides);
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#ReadableProtocol.getFrontendStatus} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#ReadableProtocol.getFrontendStatus} */
   getFrontendStatus(address?: string, overrides?: EthersCallOverrides): Promise<FrontendStatus> {
     return this._readable.getFrontendStatus(address, overrides);
   }
 
   /**
-   * {@inheritDoc @secured-finance/lib-base#TransactableProtocol.openTrove}
+   * {@inheritDoc @secured-finance/stablecoin-lib-base#TransactableProtocol.openTrove}
    *
    * @throws
    * Throws {@link EthersTransactionFailedError} in case of transaction failure.
@@ -336,7 +336,7 @@ export class EthersSfStablecoin implements ReadableEthers, TransactableProtocol 
   }
 
   /**
-   * {@inheritDoc @secured-finance/lib-base#TransactableProtocol.closeTrove}
+   * {@inheritDoc @secured-finance/stablecoin-lib-base#TransactableProtocol.closeTrove}
    *
    * @throws
    * Throws {@link EthersTransactionFailedError} in case of transaction failure.
@@ -347,7 +347,7 @@ export class EthersSfStablecoin implements ReadableEthers, TransactableProtocol 
   }
 
   /**
-   * {@inheritDoc @secured-finance/lib-base#TransactableProtocol.adjustTrove}
+   * {@inheritDoc @secured-finance/stablecoin-lib-base#TransactableProtocol.adjustTrove}
    *
    * @throws
    * Throws {@link EthersTransactionFailedError} in case of transaction failure.
@@ -364,7 +364,7 @@ export class EthersSfStablecoin implements ReadableEthers, TransactableProtocol 
   }
 
   /**
-   * {@inheritDoc @secured-finance/lib-base#TransactableProtocol.depositCollateral}
+   * {@inheritDoc @secured-finance/stablecoin-lib-base#TransactableProtocol.depositCollateral}
    *
    * @throws
    * Throws {@link EthersTransactionFailedError} in case of transaction failure.
@@ -378,7 +378,7 @@ export class EthersSfStablecoin implements ReadableEthers, TransactableProtocol 
   }
 
   /**
-   * {@inheritDoc @secured-finance/lib-base#TransactableProtocol.withdrawCollateral}
+   * {@inheritDoc @secured-finance/stablecoin-lib-base#TransactableProtocol.withdrawCollateral}
    *
    * @throws
    * Throws {@link EthersTransactionFailedError} in case of transaction failure.
@@ -392,7 +392,7 @@ export class EthersSfStablecoin implements ReadableEthers, TransactableProtocol 
   }
 
   /**
-   * {@inheritDoc @secured-finance/lib-base#TransactableProtocol.borrowDebtToken}
+   * {@inheritDoc @secured-finance/stablecoin-lib-base#TransactableProtocol.borrowDebtToken}
    *
    * @throws
    * Throws {@link EthersTransactionFailedError} in case of transaction failure.
@@ -407,7 +407,7 @@ export class EthersSfStablecoin implements ReadableEthers, TransactableProtocol 
   }
 
   /**
-   * {@inheritDoc @secured-finance/lib-base#TransactableProtocol.repayDebtToken}
+   * {@inheritDoc @secured-finance/stablecoin-lib-base#TransactableProtocol.repayDebtToken}
    *
    * @throws
    * Throws {@link EthersTransactionFailedError} in case of transaction failure.
@@ -426,7 +426,7 @@ export class EthersSfStablecoin implements ReadableEthers, TransactableProtocol 
   }
 
   /**
-   * {@inheritDoc @secured-finance/lib-base#TransactableProtocol.liquidate}
+   * {@inheritDoc @secured-finance/stablecoin-lib-base#TransactableProtocol.liquidate}
    *
    * @throws
    * Throws {@link EthersTransactionFailedError} in case of transaction failure.
@@ -440,7 +440,7 @@ export class EthersSfStablecoin implements ReadableEthers, TransactableProtocol 
   }
 
   /**
-   * {@inheritDoc @secured-finance/lib-base#TransactableProtocol.liquidateUpTo}
+   * {@inheritDoc @secured-finance/stablecoin-lib-base#TransactableProtocol.liquidateUpTo}
    *
    * @throws
    * Throws {@link EthersTransactionFailedError} in case of transaction failure.
@@ -454,7 +454,7 @@ export class EthersSfStablecoin implements ReadableEthers, TransactableProtocol 
   }
 
   /**
-   * {@inheritDoc @secured-finance/lib-base#TransactableProtocol.depositDebtTokenInStabilityPool}
+   * {@inheritDoc @secured-finance/stablecoin-lib-base#TransactableProtocol.depositDebtTokenInStabilityPool}
    *
    * @throws
    * Throws {@link EthersTransactionFailedError} in case of transaction failure.
@@ -471,7 +471,7 @@ export class EthersSfStablecoin implements ReadableEthers, TransactableProtocol 
   }
 
   /**
-   * {@inheritDoc @secured-finance/lib-base#TransactableProtocol.withdrawDebtTokenFromStabilityPool}
+   * {@inheritDoc @secured-finance/stablecoin-lib-base#TransactableProtocol.withdrawDebtTokenFromStabilityPool}
    *
    * @throws
    * Throws {@link EthersTransactionFailedError} in case of transaction failure.
@@ -485,7 +485,7 @@ export class EthersSfStablecoin implements ReadableEthers, TransactableProtocol 
   }
 
   /**
-   * {@inheritDoc @secured-finance/lib-base#TransactableProtocol.withdrawGainsFromStabilityPool}
+   * {@inheritDoc @secured-finance/stablecoin-lib-base#TransactableProtocol.withdrawGainsFromStabilityPool}
    *
    * @throws
    * Throws {@link EthersTransactionFailedError} in case of transaction failure.
@@ -498,7 +498,7 @@ export class EthersSfStablecoin implements ReadableEthers, TransactableProtocol 
   }
 
   /**
-   * {@inheritDoc @secured-finance/lib-base#TransactableProtocol.transferCollateralGainToTrove}
+   * {@inheritDoc @secured-finance/stablecoin-lib-base#TransactableProtocol.transferCollateralGainToTrove}
    *
    * @throws
    * Throws {@link EthersTransactionFailedError} in case of transaction failure.
@@ -511,7 +511,7 @@ export class EthersSfStablecoin implements ReadableEthers, TransactableProtocol 
   }
 
   /**
-   * {@inheritDoc @secured-finance/lib-base#TransactableProtocol.sendDebtToken}
+   * {@inheritDoc @secured-finance/stablecoin-lib-base#TransactableProtocol.sendDebtToken}
    *
    * @throws
    * Throws {@link EthersTransactionFailedError} in case of transaction failure.
@@ -526,7 +526,7 @@ export class EthersSfStablecoin implements ReadableEthers, TransactableProtocol 
   }
 
   /**
-   * {@inheritDoc @secured-finance/lib-base#TransactableProtocol.sendProtocolToken}
+   * {@inheritDoc @secured-finance/stablecoin-lib-base#TransactableProtocol.sendProtocolToken}
    *
    * @throws
    * Throws {@link EthersTransactionFailedError} in case of transaction failure.
@@ -541,7 +541,7 @@ export class EthersSfStablecoin implements ReadableEthers, TransactableProtocol 
   }
 
   /**
-   * {@inheritDoc @secured-finance/lib-base#TransactableProtocol.redeemDebtToken}
+   * {@inheritDoc @secured-finance/stablecoin-lib-base#TransactableProtocol.redeemDebtToken}
    *
    * @throws
    * Throws {@link EthersTransactionFailedError} in case of transaction failure.
@@ -556,7 +556,7 @@ export class EthersSfStablecoin implements ReadableEthers, TransactableProtocol 
   }
 
   /**
-   * {@inheritDoc @secured-finance/lib-base#TransactableProtocol.claimCollateralSurplus}
+   * {@inheritDoc @secured-finance/stablecoin-lib-base#TransactableProtocol.claimCollateralSurplus}
    *
    * @throws
    * Throws {@link EthersTransactionFailedError} in case of transaction failure.
@@ -567,7 +567,7 @@ export class EthersSfStablecoin implements ReadableEthers, TransactableProtocol 
   }
 
   /**
-   * {@inheritDoc @secured-finance/lib-base#TransactableProtocol.stakeProtocolToken}
+   * {@inheritDoc @secured-finance/stablecoin-lib-base#TransactableProtocol.stakeProtocolToken}
    *
    * @throws
    * Throws {@link EthersTransactionFailedError} in case of transaction failure.
@@ -578,7 +578,7 @@ export class EthersSfStablecoin implements ReadableEthers, TransactableProtocol 
   }
 
   /**
-   * {@inheritDoc @secured-finance/lib-base#TransactableProtocol.unstakeProtocolToken}
+   * {@inheritDoc @secured-finance/stablecoin-lib-base#TransactableProtocol.unstakeProtocolToken}
    *
    * @throws
    * Throws {@link EthersTransactionFailedError} in case of transaction failure.
@@ -589,7 +589,7 @@ export class EthersSfStablecoin implements ReadableEthers, TransactableProtocol 
   }
 
   /**
-   * {@inheritDoc @secured-finance/lib-base#TransactableProtocol.withdrawGainsFromStaking}
+   * {@inheritDoc @secured-finance/stablecoin-lib-base#TransactableProtocol.withdrawGainsFromStaking}
    *
    * @throws
    * Throws {@link EthersTransactionFailedError} in case of transaction failure.
@@ -600,7 +600,7 @@ export class EthersSfStablecoin implements ReadableEthers, TransactableProtocol 
   }
 
   /**
-   * {@inheritDoc @secured-finance/lib-base#TransactableProtocol.registerFrontend}
+   * {@inheritDoc @secured-finance/stablecoin-lib-base#TransactableProtocol.registerFrontend}
    *
    * @throws
    * Throws {@link EthersTransactionFailedError} in case of transaction failure.
@@ -620,7 +620,7 @@ export class EthersSfStablecoin implements ReadableEthers, TransactableProtocol 
   }
 
   /**
-   * {@inheritDoc @secured-finance/lib-base#TransactableProtocol.approveUniTokens}
+   * {@inheritDoc @secured-finance/stablecoin-lib-base#TransactableProtocol.approveUniTokens}
    *
    * @throws
    * Throws {@link EthersTransactionFailedError} in case of transaction failure.
@@ -631,7 +631,7 @@ export class EthersSfStablecoin implements ReadableEthers, TransactableProtocol 
   }
 
   /**
-   * {@inheritDoc @secured-finance/lib-base#TransactableProtocol.stakeUniTokens}
+   * {@inheritDoc @secured-finance/stablecoin-lib-base#TransactableProtocol.stakeUniTokens}
    *
    * @throws
    * Throws {@link EthersTransactionFailedError} in case of transaction failure.
@@ -642,7 +642,7 @@ export class EthersSfStablecoin implements ReadableEthers, TransactableProtocol 
   }
 
   /**
-   * {@inheritDoc @secured-finance/lib-base#TransactableProtocol.unstakeUniTokens}
+   * {@inheritDoc @secured-finance/stablecoin-lib-base#TransactableProtocol.unstakeUniTokens}
    *
    * @throws
    * Throws {@link EthersTransactionFailedError} in case of transaction failure.
@@ -653,7 +653,7 @@ export class EthersSfStablecoin implements ReadableEthers, TransactableProtocol 
   }
 
   /**
-   * {@inheritDoc @secured-finance/lib-base#TransactableProtocol.withdrawProtocolTokenRewardFromProtocolMining}
+   * {@inheritDoc @secured-finance/stablecoin-lib-base#TransactableProtocol.withdrawProtocolTokenRewardFromProtocolMining}
    *
    * @throws
    * Throws {@link EthersTransactionFailedError} in case of transaction failure.
@@ -666,7 +666,7 @@ export class EthersSfStablecoin implements ReadableEthers, TransactableProtocol 
   }
 
   /**
-   * {@inheritDoc @secured-finance/lib-base#TransactableProtocol.exitLiquidityMining}
+   * {@inheritDoc @secured-finance/stablecoin-lib-base#TransactableProtocol.exitLiquidityMining}
    *
    * @throws
    * Throws {@link EthersTransactionFailedError} in case of transaction failure.
@@ -678,7 +678,7 @@ export class EthersSfStablecoin implements ReadableEthers, TransactableProtocol 
 }
 
 /**
- * Variant of {@link EthersSfStablecoin} that exposes a {@link @secured-finance/lib-base#SfStablecoinStore}.
+ * Variant of {@link EthersSfStablecoin} that exposes a {@link @secured-finance/stablecoin-lib-base#SfStablecoinStore}.
  *
  * @public
  */

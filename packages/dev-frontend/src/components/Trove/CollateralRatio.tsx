@@ -1,7 +1,12 @@
 import React from "react";
 import { Box, Card, Flex } from "theme-ui";
 
-import { CRITICAL_COLLATERAL_RATIO, Decimal, Difference, Percent } from "@secured-finance/lib-base";
+import {
+  CRITICAL_COLLATERAL_RATIO,
+  Decimal,
+  Difference,
+  Percent
+} from "@secured-finance/stablecoin-lib-base";
 
 import { Icon } from "../Icon";
 

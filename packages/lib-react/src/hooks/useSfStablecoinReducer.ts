@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useReducer, useRef } from "react";
 
-import { SfStablecoinStoreState } from "@secured-finance/lib-base";
+import { SfStablecoinStoreState } from "@secured-finance/stablecoin-lib-base";
 
 import { equals } from "../utils/equals";
 import { useSfStablecoinStore } from "./useSfStablecoinStore";

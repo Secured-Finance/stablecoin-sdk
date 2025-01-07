@@ -1,4 +1,4 @@
-import { Decimal, TroveChange } from "@secured-finance/lib-base";
+import { Decimal, TroveChange } from "@secured-finance/stablecoin-lib-base";
 import { useEffect, useState } from "react";
 
 type ValidTroveChange = Exclude<TroveChange<Decimal>, { type: "invalidCreation" }>;

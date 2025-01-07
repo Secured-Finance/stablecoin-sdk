@@ -34,7 +34,7 @@ import {
   _normalizeTroveCreation,
   _pendingReceipt,
   _successfulReceipt
-} from "@secured-finance/lib-base";
+} from "@secured-finance/stablecoin-lib-base";
 
 import {
   EthersPopulatedTransaction,
@@ -253,13 +253,13 @@ export class SentEthersTransaction<T = unknown>
     }
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#SentProtocolTransaction.getReceipt} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#SentProtocolTransaction.getReceipt} */
   async getReceipt(): Promise<ProtocolReceipt<EthersTransactionReceipt, T>> {
     return this._receiptFrom(await this._waitForRawReceipt(0));
   }
 
   /**
-   * {@inheritDoc @secured-finance/lib-base#SentProtocolTransaction.waitForReceipt}
+   * {@inheritDoc @secured-finance/stablecoin-lib-base#SentProtocolTransaction.waitForReceipt}
    *
    * @throws
    * Throws {@link EthersTransactionCancelledError} if the transaction is cancelled or replaced.
@@ -279,7 +279,7 @@ export class SentEthersTransaction<T = unknown>
  */
 export interface BorrowingOperationOptionalParams {
   /**
-   * Maximum acceptable {@link @secured-finance/lib-base#Fees.borrowingRate | borrowing rate}
+   * Maximum acceptable {@link @secured-finance/stablecoin-lib-base#Fees.borrowingRate | borrowing rate}
    * (default: current borrowing rate plus 0.5%).
    */
   maxBorrowingRate?: Decimalish;
@@ -390,7 +390,7 @@ export class PopulatedEthersTransaction<T = unknown>
     }
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#PopulatedTransactionInterface.send} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#PopulatedTransactionInterface.send} */
   async send(): Promise<SentEthersTransaction<T>> {
     return new SentEthersTransaction(
       await _requireSigner(this._connection).sendTransaction(this.rawPopulatedTransaction),
@@ -401,7 +401,7 @@ export class PopulatedEthersTransaction<T = unknown>
 }
 
 /**
- * {@inheritDoc @secured-finance/lib-base#PopulatedRedemptionInterface}
+ * {@inheritDoc @secured-finance/stablecoin-lib-base#PopulatedRedemptionInterface}
  *
  * @public
  */
@@ -414,13 +414,13 @@ export class PopulatedEthersRedemption
       EthersTransactionReceipt
     >
 {
-  /** {@inheritDoc @secured-finance/lib-base#PopulatedRedemptionInterface.attemptedDebtTokenAmount} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#PopulatedRedemptionInterface.attemptedDebtTokenAmount} */
   readonly attemptedDebtTokenAmount: Decimal;
 
-  /** {@inheritDoc @secured-finance/lib-base#PopulatedRedemptionInterface.redeemableDebtTokenAmount} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#PopulatedRedemptionInterface.redeemableDebtTokenAmount} */
   readonly redeemableDebtTokenAmount: Decimal;
 
-  /** {@inheritDoc @secured-finance/lib-base#PopulatedRedemptionInterface.isTruncated} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#PopulatedRedemptionInterface.isTruncated} */
   readonly isTruncated: boolean;
 
   private readonly _increaseAmountByMinimumNetDebt?: (
@@ -464,7 +464,7 @@ export class PopulatedEthersRedemption
     this._increaseAmountByMinimumNetDebt = increaseAmountByMinimumNetDebt;
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#PopulatedRedemptionInterface.increaseAmountByMinimumNetDebt} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#PopulatedRedemptionInterface.increaseAmountByMinimumNetDebt} */
   increaseAmountByMinimumNetDebt(
     maxRedemptionRate?: Decimalish
   ): Promise<PopulatedEthersRedemption> {
@@ -487,7 +487,7 @@ export interface _TroveChangeWithFees<T> {
 }
 
 /**
- * Ethers-based implementation of {@link @secured-finance/lib-base#PopulatableProtocol}.
+ * Ethers-based implementation of {@link @secured-finance/stablecoin-lib-base#PopulatableProtocol}.
  *
  * @public
  */
@@ -825,7 +825,7 @@ export class PopulatableEthers
     ];
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#PopulatableProtocol.openTrove} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#PopulatableProtocol.openTrove} */
   async openTrove(
     params: TroveCreationParams<Decimalish>,
     maxBorrowingRateOrOptionalParams?: Decimalish | BorrowingOperationOptionalParams,
@@ -903,7 +903,7 @@ export class PopulatableEthers
     );
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#PopulatableProtocol.closeTrove} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#PopulatableProtocol.closeTrove} */
   async closeTrove(
     overrides?: EthersTransactionOverrides
   ): Promise<PopulatedEthersTransaction<TroveClosureDetails>> {
@@ -915,7 +915,7 @@ export class PopulatableEthers
     );
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#PopulatableProtocol.depositCollateral} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#PopulatableProtocol.depositCollateral} */
   depositCollateral(
     amount: Decimalish,
     overrides?: EthersTransactionOverrides
@@ -923,7 +923,7 @@ export class PopulatableEthers
     return this.adjustTrove({ depositCollateral: amount }, undefined, overrides);
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#PopulatableProtocol.withdrawCollateral} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#PopulatableProtocol.withdrawCollateral} */
   withdrawCollateral(
     amount: Decimalish,
     overrides?: EthersTransactionOverrides
@@ -931,7 +931,7 @@ export class PopulatableEthers
     return this.adjustTrove({ withdrawCollateral: amount }, undefined, overrides);
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#PopulatableProtocol.borrowDebtToken} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#PopulatableProtocol.borrowDebtToken} */
   borrowDebtToken(
     amount: Decimalish,
     maxBorrowingRate?: Decimalish,
@@ -940,7 +940,7 @@ export class PopulatableEthers
     return this.adjustTrove({ borrowDebtToken: amount }, maxBorrowingRate, overrides);
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#PopulatableProtocol.repayDebtToken} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#PopulatableProtocol.repayDebtToken} */
   repayDebtToken(
     amount: Decimalish,
     overrides?: EthersTransactionOverrides
@@ -948,7 +948,7 @@ export class PopulatableEthers
     return this.adjustTrove({ repayDebtToken: amount }, undefined, overrides);
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#PopulatableProtocol.adjustTrove} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#PopulatableProtocol.adjustTrove} */
   async adjustTrove(
     params: TroveAdjustmentParams<Decimalish>,
     maxBorrowingRateOrOptionalParams?: Decimalish | BorrowingOperationOptionalParams,
@@ -1041,7 +1041,7 @@ export class PopulatableEthers
     );
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#PopulatableProtocol.claimCollateralSurplus} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#PopulatableProtocol.claimCollateralSurplus} */
   async claimCollateralSurplus(
     overrides?: EthersTransactionOverrides
   ): Promise<PopulatedEthersTransaction<void>> {
@@ -1070,7 +1070,7 @@ export class PopulatableEthers
     );
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#PopulatableProtocol.liquidate} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#PopulatableProtocol.liquidate} */
   async liquidate(
     address: string | string[],
     overrides?: EthersTransactionOverrides
@@ -1097,7 +1097,7 @@ export class PopulatableEthers
     }
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#PopulatableProtocol.liquidateUpTo} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#PopulatableProtocol.liquidateUpTo} */
   async liquidateUpTo(
     maximumNumberOfTrovesToLiquidate: number,
     overrides?: EthersTransactionOverrides
@@ -1114,7 +1114,7 @@ export class PopulatableEthers
     );
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#PopulatableProtocol.depositDebtTokenInStabilityPool} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#PopulatableProtocol.depositDebtTokenInStabilityPool} */
   async depositDebtTokenInStabilityPool(
     amount: Decimalish,
     frontendTag?: string,
@@ -1135,7 +1135,7 @@ export class PopulatableEthers
     );
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#PopulatableProtocol.withdrawDebtTokenFromStabilityPool} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#PopulatableProtocol.withdrawDebtTokenFromStabilityPool} */
   async withdrawDebtTokenFromStabilityPool(
     amount: Decimalish,
     overrides?: EthersTransactionOverrides
@@ -1152,7 +1152,7 @@ export class PopulatableEthers
     );
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#PopulatableProtocol.withdrawGainsFromStabilityPool} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#PopulatableProtocol.withdrawGainsFromStabilityPool} */
   async withdrawGainsFromStabilityPool(
     overrides?: EthersTransactionOverrides
   ): Promise<PopulatedEthersTransaction<StabilityPoolGainsWithdrawalDetails>> {
@@ -1168,7 +1168,7 @@ export class PopulatableEthers
     );
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#PopulatableProtocol.transferCollateralGainToTrove} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#PopulatableProtocol.transferCollateralGainToTrove} */
   async transferCollateralGainToTrove(
     overrides?: EthersTransactionOverrides
   ): Promise<PopulatedEthersTransaction<CollateralGainTransferDetails>> {
@@ -1191,7 +1191,7 @@ export class PopulatableEthers
     );
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#PopulatableProtocol.sendDebtToken} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#PopulatableProtocol.sendDebtToken} */
   async sendDebtToken(
     toAddress: string,
     amount: Decimalish,
@@ -1210,7 +1210,7 @@ export class PopulatableEthers
     );
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#PopulatableProtocol.sendProtocolToken} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#PopulatableProtocol.sendProtocolToken} */
   async sendProtocolToken(
     toAddress: string,
     amount: Decimalish,
@@ -1229,7 +1229,7 @@ export class PopulatableEthers
     );
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#PopulatableProtocol.redeemDebtToken} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#PopulatableProtocol.redeemDebtToken} */
   async redeemDebtToken(
     amount: Decimalish,
     maxRedemptionRate?: Decimalish,
@@ -1303,7 +1303,7 @@ export class PopulatableEthers
     );
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#PopulatableProtocol.stakeProtocolToken} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#PopulatableProtocol.stakeProtocolToken} */
   async stakeProtocolToken(
     amount: Decimalish,
     overrides?: EthersTransactionOverrides
@@ -1316,7 +1316,7 @@ export class PopulatableEthers
     );
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#PopulatableProtocol.unstakeProtocolToken} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#PopulatableProtocol.unstakeProtocolToken} */
   async unstakeProtocolToken(
     amount: Decimalish,
     overrides?: EthersTransactionOverrides
@@ -1329,14 +1329,14 @@ export class PopulatableEthers
     );
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#PopulatableProtocol.withdrawGainsFromStaking} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#PopulatableProtocol.withdrawGainsFromStaking} */
   withdrawGainsFromStaking(
     overrides?: EthersTransactionOverrides
   ): Promise<PopulatedEthersTransaction<void>> {
     return this.unstakeProtocolToken(Decimal.ZERO, overrides);
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#PopulatableProtocol.registerFrontend} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#PopulatableProtocol.registerFrontend} */
   async registerFrontend(
     kickbackRate: Decimalish,
     overrides?: EthersTransactionOverrides
@@ -1372,7 +1372,7 @@ export class PopulatableEthers
     );
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#PopulatableProtocol.approveUniTokens} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#PopulatableProtocol.approveUniTokens} */
   async approveUniTokens(
     allowance?: Decimalish,
     overrides?: EthersTransactionOverrides
@@ -1390,7 +1390,7 @@ export class PopulatableEthers
     );
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#PopulatableProtocol.stakeUniTokens} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#PopulatableProtocol.stakeUniTokens} */
   async stakeUniTokens(
     amount: Decimalish,
     overrides?: EthersTransactionOverrides
@@ -1407,7 +1407,7 @@ export class PopulatableEthers
     );
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#PopulatableProtocol.unstakeUniTokens} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#PopulatableProtocol.unstakeUniTokens} */
   async unstakeUniTokens(
     amount: Decimalish,
     overrides?: EthersTransactionOverrides
@@ -1424,7 +1424,7 @@ export class PopulatableEthers
     );
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#PopulatableProtocol.withdrawProtocolTokenRewardFromProtocolMining} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#PopulatableProtocol.withdrawProtocolTokenRewardFromProtocolMining} */
   async withdrawProtocolTokenRewardFromProtocolMining(
     overrides?: EthersTransactionOverrides
   ): Promise<PopulatedEthersTransaction<void>> {
@@ -1436,7 +1436,7 @@ export class PopulatableEthers
     );
   }
 
-  /** {@inheritDoc @secured-finance/lib-base#PopulatableProtocol.exitLiquidityMining} */
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#PopulatableProtocol.exitLiquidityMining} */
   async exitLiquidityMining(
     overrides?: EthersTransactionOverrides
   ): Promise<PopulatedEthersTransaction<void>> {

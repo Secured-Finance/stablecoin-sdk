@@ -3,8 +3,8 @@ import React from "react";
 import { Route, HashRouter as Router, Switch } from "react-router-dom";
 import { Container, Flex } from "theme-ui";
 
-import { Decimal, Difference, Trove } from "@secured-finance/lib-base";
-import { SfStablecoinStoreProvider } from "@secured-finance/lib-react";
+import { Decimal, Difference, Trove } from "@secured-finance/stablecoin-lib-base";
+import { SfStablecoinStoreProvider } from "@secured-finance/stablecoin-lib-react";
 
 import { Header } from "./components/Header";
 import { SystemStatsPopup } from "./components/SystemStatsPopup";

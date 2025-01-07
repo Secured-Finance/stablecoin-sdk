@@ -10,7 +10,7 @@ import {
   SfStablecoinStoreState,
   StabilityDeposit,
   TroveWithPendingRedistribution
-} from "@secured-finance/lib-base";
+} from "@secured-finance/stablecoin-lib-base";
 
 import { decimalify, promiseAllValues } from "./_utils";
 import { EthersConnection, _getProvider } from "./EthersConnection";
@@ -18,7 +18,7 @@ import { ReadableEthers } from "./ReadableEthers";
 import { EthersCallOverrides, EthersProvider } from "./types";
 
 /**
- * Extra state added to {@link @secured-finance/lib-base#SfStablecoinStoreState} by
+ * Extra state added to {@link @secured-finance/stablecoin-lib-base#SfStablecoinStoreState} by
  * {@link BlockPolledSfStablecoinStore}.
  *
  * @public
@@ -43,7 +43,7 @@ export interface BlockPolledSfStablecoinStoreExtraState {
 
 /**
  * The type of {@link BlockPolledSfStablecoinStore}'s
- * {@link @secured-finance/lib-base#SfStablecoinStore.state | state}.
+ * {@link @secured-finance/stablecoin-lib-base#SfStablecoinStore.state | state}.
  *
  * @public
  */
@@ -51,7 +51,7 @@ export type BlockPolledSfStablecoinStoreState =
   SfStablecoinStoreState<BlockPolledSfStablecoinStoreExtraState>;
 
 /**
- * Ethers-based {@link @secured-finance/lib-base#SfStablecoinStore} that updates state whenever there's a new
+ * Ethers-based {@link @secured-finance/stablecoin-lib-base#SfStablecoinStore} that updates state whenever there's a new
  * block.
  *
  * @public

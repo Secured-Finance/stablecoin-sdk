@@ -8,7 +8,7 @@ import {
   EthersSfStablecoin,
   EthersSfStablecoinWithStore,
   _connectByChainId
-} from "@secured-finance/lib-ethers";
+} from "@secured-finance/stablecoin-lib-ethers";
 
 import { FrontendConfig, getConfig } from "../config";
 import { BatchedProvider } from "../providers/BatchingProvider";

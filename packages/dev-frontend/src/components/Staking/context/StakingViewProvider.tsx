@@ -1,7 +1,10 @@
 import { useEffect } from "react";
 
-import { ProtocolTokenStake, SfStablecoinStoreState } from "@secured-finance/lib-base";
-import { SfStablecoinStoreUpdate, useSfStablecoinReducer } from "@secured-finance/lib-react";
+import { ProtocolTokenStake, SfStablecoinStoreState } from "@secured-finance/stablecoin-lib-base";
+import {
+  SfStablecoinStoreUpdate,
+  useSfStablecoinReducer
+} from "@secured-finance/stablecoin-lib-react";
 
 import { useMyTransactionState } from "../../Transaction";
 

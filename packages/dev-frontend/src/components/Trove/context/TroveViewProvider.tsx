@@ -1,5 +1,5 @@
-import { SfStablecoinStoreState, UserTroveStatus } from "@secured-finance/lib-base";
-import { useSfStablecoinSelector } from "@secured-finance/lib-react";
+import { SfStablecoinStoreState, UserTroveStatus } from "@secured-finance/stablecoin-lib-base";
+import { useSfStablecoinSelector } from "@secured-finance/stablecoin-lib-react";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { TroveViewContext } from "./TroveViewContext";
 import type { TroveEvent, TroveView } from "./types";

@@ -5,11 +5,11 @@ import React, { useCallback, useContext, useEffect, useState } from "react";
 
 import "react-circular-progressbar/dist/styles.css";
 
-import { ProtocolReceipt, SentProtocolTransaction } from "@secured-finance/lib-base";
+import { ProtocolReceipt, SentProtocolTransaction } from "@secured-finance/stablecoin-lib-base";
 import {
   EthersTransactionCancelledError,
   EthersTransactionOverrides
-} from "@secured-finance/lib-ethers";
+} from "@secured-finance/stablecoin-lib-ethers";
 
 import { useSfStablecoin } from "../hooks/SfStablecoinContext";
 

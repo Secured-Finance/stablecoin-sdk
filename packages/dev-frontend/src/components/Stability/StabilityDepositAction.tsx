@@ -1,5 +1,9 @@
-import { Decimal, SfStablecoinStoreState, StabilityDepositChange } from "@secured-finance/lib-base";
-import { useSfStablecoinSelector } from "@secured-finance/lib-react";
+import {
+  Decimal,
+  SfStablecoinStoreState,
+  StabilityDepositChange
+} from "@secured-finance/stablecoin-lib-base";
+import { useSfStablecoinSelector } from "@secured-finance/stablecoin-lib-react";
 import { Button } from "theme-ui";
 
 import { useSfStablecoin } from "../../hooks/SfStablecoinContext";

@@ -209,7 +209,7 @@ const difference = <T>(a: T, b: T) =>
  * The type parameter `T` may be used to type extra state added to {@link SfStablecoinStoreState} by the
  * subclass.
  *
- * Implemented by {@link @secured-finance/lib-ethers#BlockPolledSfStablecoinStore}.
+ * Implemented by {@link @secured-finance/stablecoin-lib-ethers#BlockPolledSfStablecoinStore}.
  *
  * @public
  */

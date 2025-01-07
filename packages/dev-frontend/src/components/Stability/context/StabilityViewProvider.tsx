@@ -1,5 +1,5 @@
-import { SfStablecoinStoreState, StabilityDeposit } from "@secured-finance/lib-base";
-import { useSfStablecoinSelector } from "@secured-finance/lib-react";
+import { SfStablecoinStoreState, StabilityDeposit } from "@secured-finance/stablecoin-lib-base";
+import { useSfStablecoinSelector } from "@secured-finance/stablecoin-lib-react";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { StabilityViewContext } from "./StabilityViewContext";
 import type { StabilityEvent, StabilityView } from "./types";

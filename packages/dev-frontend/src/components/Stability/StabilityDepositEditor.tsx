@@ -7,9 +7,9 @@ import {
   Difference,
   SfStablecoinStoreState,
   StabilityDeposit
-} from "@secured-finance/lib-base";
+} from "@secured-finance/stablecoin-lib-base";
 
-import { useSfStablecoinSelector } from "@secured-finance/lib-react";
+import { useSfStablecoinSelector } from "@secured-finance/stablecoin-lib-react";
 
 import { COIN, CURRENCY, GT } from "../../strings";
 

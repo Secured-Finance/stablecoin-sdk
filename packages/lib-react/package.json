@@ -1,5 +1,5 @@
 {
-  "name": "@secured-finance/lib-react",
+  "name": "@secured-finance/stablecoin-lib-react",
   "version": "0.0.0-semantic-release",
   "description": "Components and hooks for React-based frontends",
   "keywords": [
@@ -20,7 +20,7 @@
     "prepare:tsc": "tsc --project tsconfig.dist.json"
   },
   "peerDependencies": {
-    "@secured-finance/lib-base": "^0.0.3-beta.1",
+    "@secured-finance/stablecoin-lib-base": "^0.0.3",
     "react": "^16.13.1"
   },
   "devDependencies": {

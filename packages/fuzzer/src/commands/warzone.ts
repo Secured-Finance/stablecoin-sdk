@@ -1,7 +1,7 @@
 import { Wallet } from "@ethersproject/wallet";
 
-import { Decimal, MINIMUM_DEBT, Trove } from "@secured-finance/lib-base";
-import { EthersSfStablecoin } from "@secured-finance/lib-ethers";
+import { Decimal, MINIMUM_DEBT, Trove } from "@secured-finance/stablecoin-lib-base";
+import { EthersSfStablecoin } from "@secured-finance/stablecoin-lib-ethers";
 
 import { deployer, funder, provider } from "../globals";
 

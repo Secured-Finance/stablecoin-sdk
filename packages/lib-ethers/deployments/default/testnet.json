@@ -1,7 +1,7 @@
 {
   "chainId": 314159,
-  "version": "12ea54e0792780b6131d72e924a18f4ddb794c52",
-  "deploymentDate": 0,
+  "version": "e9e06fcbdcc1e10de036e7f9c6b7658074aa5a33",
+  "deploymentDate": 1732839900000,
   "bootstrapPeriod": 86400,
   "totalStabilityPoolProtocolTokenReward": "0",
   "liquidityMiningProtocolTokenRewardRate": "0",
@@ -27,6 +27,6 @@
     "debtToken": "0x20DcF0C63662beF635a34D524782a0dE8D80301b",
     "protocolToken": "0xf06FcA918aef6a23affb69860Ac892860b0DBde7",
     "multiTroveGetter": "0x05610C9c4Bf6f0d0C198E8B07ec2e9A968939BD7",
-    "uniToken": "0xB81141dbd2a0E2E7D8b7EAc6e6cc726ee9Ed03f2"
+    "uniToken": "0x3456146e2744Bbd5c9FF203B3d224F3365C64d3c"
   }
 }

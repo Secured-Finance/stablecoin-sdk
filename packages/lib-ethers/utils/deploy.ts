@@ -400,7 +400,7 @@ export const deployAndSetupContracts = async (
     await connectUniswapPoolContract(contracts, deployer, overrides);
   }
 
-  const protocolTokenDeploymentTime = await contracts.protocolToken.getAllocationStartTime();
+  const deploymentStartTime = await contracts.troveManager.deploymentStartTime();
   const bootstrapPeriod = await contracts.troveManager.BOOTSTRAP_PERIOD();
   const totalStabilityPoolProtocolTokenReward =
     await contracts.communityIssuance.protocolTokenSupplyCap();
@@ -408,7 +408,7 @@ export const deployAndSetupContracts = async (
 
   return {
     ...deployment,
-    deploymentDate: protocolTokenDeploymentTime.toNumber() * 1000,
+    deploymentDate: deploymentStartTime.toNumber() * 1000,
     bootstrapPeriod: bootstrapPeriod.toNumber(),
     totalStabilityPoolProtocolTokenReward: `${Decimal.fromBigNumberString(
       totalStabilityPoolProtocolTokenReward.toHexString()

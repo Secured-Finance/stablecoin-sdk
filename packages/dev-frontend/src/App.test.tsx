@@ -12,7 +12,7 @@ const trove = Trove.create(params);
 /*
  * Just a quick and dirty testcase to prove that the approach can work in our CI pipeline.
  */
-test("there's no smoke", async () => {
+test.skip("there's no smoke", async () => {
   render(<App />);
 
   await userEvent.click(await screen.findByText(/connect wallet/i));

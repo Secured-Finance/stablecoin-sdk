@@ -19,7 +19,7 @@ Description
 </th></tr></thead>
 <tbody><tr><td>
 
-[@secured-finance/lib-base](./lib-base.md)
+[@secured-finance/stablecoin-lib-base](./stablecoin-lib-base.md)
 
 
 </td><td>
@@ -28,7 +28,7 @@ Description
 </td></tr>
 <tr><td>
 
-[@secured-finance/lib-ethers](./lib-ethers.md)
+[@secured-finance/stablecoin-lib-ethers](./stablecoin-lib-ethers.md)
 
 
 </td><td>

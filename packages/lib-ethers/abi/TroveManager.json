@@ -212,19 +212,6 @@
       {
         "indexed": false,
         "internalType": "address",
-        "name": "_protocolTokenAddress",
-        "type": "address"
-      }
-    ],
-    "name": "ProtocolTokenAddressChanged",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "address",
         "name": "_protocolTokenStakingAddress",
         "type": "address"
       }
@@ -1435,11 +1422,6 @@
       },
       {
         "internalType": "address",
-        "name": "_protocolTokenAddress",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
         "name": "_protocolTokenStakingAddress",
         "type": "address"
       }
@@ -1533,19 +1515,6 @@
     "outputs": [
       {
         "internalType": "contract IPriceFeed",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "protocolToken",
-    "outputs": [
-      {
-        "internalType": "contract IProtocolToken",
         "name": "",
         "type": "address"
       }

@@ -71,19 +71,6 @@
     "anonymous": false,
     "inputs": [
       {
-        "indexed": false,
-        "internalType": "address",
-        "name": "_newDefaultPoolAddress",
-        "type": "address"
-      }
-    ],
-    "name": "DefaultPoolAddressChanged",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
         "indexed": true,
         "internalType": "address",
         "name": "_depositor",
@@ -695,19 +682,6 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "defaultPool",
-    "outputs": [
-      {
-        "internalType": "contract IDefaultPool",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
         "internalType": "address",
@@ -970,32 +944,6 @@
       {
         "internalType": "uint256",
         "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "getEntireSystemColl",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "entireSystemColl",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "getEntireSystemDebt",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "entireSystemDebt",
         "type": "uint256"
       }
     ],

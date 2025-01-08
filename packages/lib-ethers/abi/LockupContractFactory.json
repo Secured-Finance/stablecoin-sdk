@@ -59,7 +59,7 @@
         "type": "address"
       }
     ],
-    "name": "ProtocolTokenAddressSet",
+    "name": "ProtocolTokenAddressChanged",
     "type": "event"
   },
   {

@@ -1,4 +1,3 @@
-import assert from "assert";
 import "colors";
 import dotenv from "dotenv";
 import fs from "fs";
@@ -10,18 +9,11 @@ import { ContractFactory, Overrides } from "@ethersproject/contracts";
 import { Wallet } from "@ethersproject/wallet";
 
 import "@nomiclabs/hardhat-ethers";
-import { extendEnvironment, HardhatUserConfig, task, types } from "hardhat/config";
+import { extendEnvironment, HardhatUserConfig, task } from "hardhat/config";
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 
-import { Decimal } from "@secured-finance/stablecoin-lib-base";
-
-import { _connectToContracts, _priceFeedIsTestnet, _ProtocolDeploymentJSON } from "./src/contracts";
-import {
-  deployAndSetupContracts,
-  deployPythCaller,
-  deployTellorCaller,
-  setSilent
-} from "./utils/deploy";
+import { _ProtocolDeploymentJSON } from "./src/contracts";
+import { deployAndSetupContracts } from "./utils/deploy";
 
 import accounts from "./accounts.json";
 
@@ -60,34 +52,6 @@ const devChainRichAccount = "0x4d5db4107d237df6a3d58ee5f70ae63d73d7658d4026f2eef
 
 // https://docs.chain.link/docs/ethereum-addresses
 // https://docs.tellor.io/tellor/integration/reference-page
-
-const oracleAddresses = {
-  mainnet: {
-    pyth: "0xA2aa501b19aff244D90cc15a4Cf739D2725B5729",
-    tellor: "0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0"
-  },
-  testnet: {
-    pyth: "0xA2aa501b19aff244D90cc15a4Cf739D2725B5729",
-    tellor: "0xb2CB696fE5244fB9004877e58dcB680cB86Ba444"
-  }
-};
-
-const pythPriceIds = {
-  mainnet: "0x150ac9b959aee0051e4091f0ef5216d941f590e1c5e7f91cf7635b5c11628c0e",
-  testnet: "0x150ac9b959aee0051e4091f0ef5216d941f590e1c5e7f91cf7635b5c11628c0e"
-};
-
-const hasOracles = (network: string): network is keyof typeof oracleAddresses =>
-  network in oracleAddresses;
-
-const wrappedNativeTokenAddresses = {
-  mainnet: "0x60E1773636CF5E4A227d9AC24F20fEca034ee25A",
-  testnet: "0xaC26a4Ab9cF2A8c5DBaB6fb4351ec0F4b07356c4"
-};
-
-const hasWrappedNativeToken = (
-  network: string
-): network is keyof typeof wrappedNativeTokenAddresses => network in wrappedNativeTokenAddresses;
 
 const config: HardhatUserConfig = {
   networks: {
@@ -172,104 +136,6 @@ extendEnvironment(env => {
     return { ...deployment, version: contractsVersion };
   };
 });
-
-type DeployParams = {
-  channel: string;
-  gasPrice?: number;
-  useRealPriceFeed?: boolean;
-  createUniswapPair?: boolean;
-};
-
-const defaultChannel = process.env.CHANNEL || "default";
-
-task("deploy", "Deploys the contracts to the network")
-  .addOptionalParam("channel", "Deployment channel to deploy into", defaultChannel, types.string)
-  .addOptionalParam("gasPrice", "Price to pay for 1 gas [Gwei]", undefined, types.float)
-  .addOptionalParam(
-    "useRealPriceFeed",
-    "Deploy the production version of PriceFeed and connect it to Chainlink",
-    undefined,
-    types.boolean
-  )
-  .addOptionalParam(
-    "createUniswapPair",
-    "Create a real Uniswap v2 WFIL-DebtToken pair instead of a mock ERC20 token",
-    undefined,
-    types.boolean
-  )
-  .setAction(
-    async ({ channel, gasPrice, useRealPriceFeed, createUniswapPair }: DeployParams, env) => {
-      const overrides = { gasPrice: gasPrice && Decimal.from(gasPrice).div(1000000000).hex };
-      const [deployer] = await env.ethers.getSigners();
-
-      useRealPriceFeed ??= env.network.name === "mainnet";
-
-      if (useRealPriceFeed && !hasOracles(env.network.name)) {
-        throw new Error(`PriceFeed not supported on ${env.network.name}`);
-      }
-
-      let wrappedNativeTokenAddress: string | undefined = undefined;
-      if (createUniswapPair) {
-        if (!hasWrappedNativeToken(env.network.name)) {
-          throw new Error(`Wrapped native token not deployed on ${env.network.name}`);
-        }
-        wrappedNativeTokenAddress = wrappedNativeTokenAddresses[env.network.name];
-      }
-
-      setSilent(false);
-
-      const deployment = await env.deployProtocol(
-        deployer,
-        useRealPriceFeed,
-        wrappedNativeTokenAddress,
-        overrides
-      );
-
-      if (useRealPriceFeed) {
-        const contracts = _connectToContracts(deployer, deployment);
-
-        assert(!_priceFeedIsTestnet(contracts.priceFeed));
-
-        if (hasOracles(env.network.name)) {
-          const pythCallerAddress = await deployPythCaller(
-            deployer,
-            getContractFactory(env),
-            oracleAddresses[env.network.name].pyth,
-            pythPriceIds[env.network.name],
-            overrides
-          );
-
-          const tellorCallerAddress = await deployTellorCaller(
-            deployer,
-            getContractFactory(env),
-            oracleAddresses[env.network.name].tellor,
-            overrides
-          );
-
-          console.log(`Hooking up PriceFeed with oracles ...`);
-
-          const tx = await contracts.priceFeed.setAddresses(
-            pythCallerAddress,
-            tellorCallerAddress,
-            overrides
-          );
-
-          await tx.wait();
-        }
-      }
-
-      fs.mkdirSync(path.join("deployments", channel), { recursive: true });
-
-      fs.writeFileSync(
-        path.join("deployments", channel, `${env.network.name}.json`),
-        JSON.stringify(deployment, undefined, 2)
-      );
-
-      console.log();
-      console.log(deployment);
-      console.log();
-    }
-  );
 
 type StorageSlotParams = {
   contractAddress: string;

@@ -28,7 +28,7 @@
         "type": "address"
       }
     ],
-    "name": "ProtocolTokenAddressSet",
+    "name": "ProtocolTokenAddressChanged",
     "type": "event"
   },
   {
@@ -54,7 +54,7 @@
         "type": "address"
       }
     ],
-    "name": "StabilityPoolAddressSet",
+    "name": "StabilityPoolAddressChanged",
     "type": "event"
   },
   {

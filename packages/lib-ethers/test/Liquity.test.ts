@@ -1043,7 +1043,7 @@ describe("EthersSfStablecoin", () => {
       expect(`${remainingProtocolTokenReward}`).to.equal("0");
 
       const protocolTokenBalance = Number(await sfStablecoin.getProtocolTokenBalance());
-      expect(protocolTokenBalance).to.be.within(1333333, 1333334);
+      expect(protocolTokenBalance).to.be.equal(1300000);
     });
   });
 
@@ -1177,7 +1177,7 @@ describe("EthersSfStablecoin", () => {
       // Required gas has just went up.
       const newGasEstimate = await provider.estimateGas(tx.rawPopulatedTransaction);
       const gasIncrease = newGasEstimate.sub(originalGasEstimate).toNumber();
-      expect(gasIncrease).to.be.within(5000, 10000);
+      expect(gasIncrease).to.be.within(3000, 8000);
 
       // This will now have to update lastFeeOperationTime
       await waitForSuccess(tx.send());

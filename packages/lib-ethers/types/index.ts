@@ -926,22 +926,38 @@ export interface ERC20Mock
   extractEvents(logs: Log[], name: "Transfer"): _TypedLogDescription<{ from: string; to: string; value: BigNumber }>[];
 }
 
-interface PriceFeedTestnetCalls {
-  getPrice(_overrides?: CallOverrides): Promise<BigNumber>;
+interface MockPriceFeedCalls {
+  DECIMAL_PRECISION(_overrides?: CallOverrides): Promise<BigNumber>;
+  MAX_PRICE_DIFFERENCE_BETWEEN_ORACLES(_overrides?: CallOverrides): Promise<BigNumber>;
+  NAME(_overrides?: CallOverrides): Promise<string>;
+  TARGET_DIGITS(_overrides?: CallOverrides): Promise<BigNumber>;
+  TELLOR_DIGITS(_overrides?: CallOverrides): Promise<BigNumber>;
+  TIMEOUT(_overrides?: CallOverrides): Promise<BigNumber>;
+  lastGoodPrice(_overrides?: CallOverrides): Promise<BigNumber>;
+  owner(_overrides?: CallOverrides): Promise<string>;
+  priceAggregator(_overrides?: CallOverrides): Promise<string>;
+  status(_overrides?: CallOverrides): Promise<number>;
+  tellorCaller(_overrides?: CallOverrides): Promise<string>;
 }
 
-interface PriceFeedTestnetTransactions {
+interface MockPriceFeedTransactions {
   fetchPrice(_overrides?: Overrides): Promise<BigNumber>;
-  setPrice(price: BigNumberish, _overrides?: Overrides): Promise<boolean>;
+  initialize(_priceAggregatorAddress: string, _tellorCallerAddress: string, _overrides?: Overrides): Promise<void>;
+  renounceOwnership(_overrides?: Overrides): Promise<void>;
+  setPrice(_price: BigNumberish, _overrides?: Overrides): Promise<void>;
+  setPriceAggregator(_aggregator: string, _price: BigNumberish, _overrides?: Overrides): Promise<void>;
+  transferOwnership(newOwner: string, _overrides?: Overrides): Promise<void>;
 }
 
-export interface PriceFeedTestnet
-  extends _TypedProtocolContract<PriceFeedTestnetCalls, PriceFeedTestnetTransactions> {
+export interface MockPriceFeed
+  extends _TypedProtocolContract<MockPriceFeedCalls, MockPriceFeedTransactions> {
   readonly filters: {
     LastGoodPriceUpdated(_lastGoodPrice?: null): EventFilter;
+    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): EventFilter;
     PriceFeedStatusChanged(newStatus?: null): EventFilter;
   };
   extractEvents(logs: Log[], name: "LastGoodPriceUpdated"): _TypedLogDescription<{ _lastGoodPrice: BigNumber }>[];
+  extractEvents(logs: Log[], name: "OwnershipTransferred"): _TypedLogDescription<{ previousOwner: string; newOwner: string }>[];
   extractEvents(logs: Log[], name: "PriceFeedStatusChanged"): _TypedLogDescription<{ newStatus: number }>[];
 }
 

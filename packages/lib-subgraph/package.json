@@ -12,7 +12,7 @@
     "prepare": "tsc --project tsconfig.dist.json"
   },
   "peerDependencies": {
-    "@secured-finance/stablecoin-lib-base": "^0.0.3"
+    "@secured-finance/stablecoin-lib-base": "^0.0.4"
   },
   "devDependencies": {
     "apollo": "^2.30.3",

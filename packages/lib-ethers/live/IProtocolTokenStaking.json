@@ -13,7 +13,7 @@
           "type": "address"
         }
       ],
-      "name": "ActivePoolAddressSet",
+      "name": "ActivePoolAddressChanged",
       "type": "event"
     },
     {
@@ -26,7 +26,7 @@
           "type": "address"
         }
       ],
-      "name": "BorrowerOperationsAddressSet",
+      "name": "BorrowerOperationsAddressChanged",
       "type": "event"
     },
     {
@@ -39,7 +39,7 @@
           "type": "address"
         }
       ],
-      "name": "DebtTokenAddressSet",
+      "name": "DebtTokenAddressChanged",
       "type": "event"
     },
     {
@@ -97,7 +97,7 @@
           "type": "address"
         }
       ],
-      "name": "ProtocolTokenAddressSet",
+      "name": "ProtocolTokenAddressChanged",
       "type": "event"
     },
     {
@@ -192,7 +192,7 @@
           "type": "address"
         }
       ],
-      "name": "TroveManagerAddressSet",
+      "name": "TroveManagerAddressChanged",
       "type": "event"
     },
     {
@@ -220,6 +220,19 @@
       ],
       "name": "UnallocatedFILUpdated",
       "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "debtToken",
+      "outputs": [
+        {
+          "internalType": "contract IDebtToken",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
     },
     {
       "inputs": [
@@ -283,6 +296,19 @@
       "name": "increaseF_FIL",
       "outputs": [],
       "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "protocolToken",
+      "outputs": [
+        {
+          "internalType": "contract IProtocolToken",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
       "type": "function"
     },
     {

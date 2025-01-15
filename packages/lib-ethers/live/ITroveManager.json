@@ -8,19 +8,6 @@
       "inputs": [
         {
           "indexed": false,
-          "internalType": "address",
-          "name": "_activePoolAddress",
-          "type": "address"
-        }
-      ],
-      "name": "ActivePoolAddressChanged",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": false,
           "internalType": "uint256",
           "name": "_baseRate",
           "type": "uint256"
@@ -66,19 +53,6 @@
         }
       ],
       "name": "DebtTokenAddressChanged",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": false,
-          "internalType": "address",
-          "name": "_defaultPoolAddress",
-          "type": "address"
-        }
-      ],
-      "name": "DefaultPoolAddressChanged",
       "type": "event"
     },
     {
@@ -168,19 +142,6 @@
         }
       ],
       "name": "PriceFeedAddressChanged",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": false,
-          "internalType": "address",
-          "name": "_protocolTokenAddress",
-          "type": "address"
-        }
-      ],
-      "name": "ProtocolTokenAddressChanged",
       "type": "event"
     },
     {
@@ -390,6 +351,45 @@
       ],
       "name": "TroveUpdated",
       "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_borrower",
+          "type": "address"
+        }
+      ],
+      "name": "Troves",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "enum ITroveManager.Status",
+          "name": "",
+          "type": "uint8"
+        },
+        {
+          "internalType": "uint128",
+          "name": "",
+          "type": "uint128"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
     },
     {
       "inputs": [
@@ -1008,19 +1008,6 @@
     },
     {
       "inputs": [],
-      "name": "protocolToken",
-      "outputs": [
-        {
-          "internalType": "contract IProtocolToken",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
       "name": "protocolTokenStaking",
       "outputs": [
         {
@@ -1086,6 +1073,30 @@
       "name": "removeStake",
       "outputs": [],
       "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_borrower",
+          "type": "address"
+        }
+      ],
+      "name": "rewardSnapshots",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
       "type": "function"
     },
     {

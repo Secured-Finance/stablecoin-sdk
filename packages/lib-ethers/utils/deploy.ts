@@ -190,7 +190,7 @@ const deployContracts = async (
       deployer,
       getContractFactory,
       networkName,
-      priceFeedIsTestnet ? "PriceFeedTestnet" : "PriceFeed",
+      priceFeedIsTestnet ? "MockPriceFeed" : "PriceFeed",
       "priceFeed",
       [{ ...overrides }]
     ),

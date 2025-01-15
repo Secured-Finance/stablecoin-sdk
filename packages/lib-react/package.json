@@ -20,7 +20,7 @@
     "prepare:tsc": "tsc --project tsconfig.dist.json"
   },
   "peerDependencies": {
-    "@secured-finance/stablecoin-lib-base": "^0.0.3",
+    "@secured-finance/stablecoin-lib-base": "^0.0.4",
     "react": "^16.13.1"
   },
   "devDependencies": {

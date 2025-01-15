@@ -9,19 +9,6 @@
         {
           "indexed": false,
           "internalType": "address",
-          "name": "_activePoolAddress",
-          "type": "address"
-        }
-      ],
-      "name": "ActivePoolAddressChanged",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": false,
-          "internalType": "address",
           "name": "_collSurplusPoolAddress",
           "type": "address"
         }
@@ -59,19 +46,6 @@
         }
       ],
       "name": "DebtTokenBorrowingFeePaid",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": false,
-          "internalType": "address",
-          "name": "_defaultPoolAddress",
-          "type": "address"
-        }
-      ],
-      "name": "DefaultPoolAddressChanged",
       "type": "event"
     },
     {

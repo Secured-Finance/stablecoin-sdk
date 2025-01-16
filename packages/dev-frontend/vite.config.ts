@@ -39,7 +39,8 @@ export default defineConfig(({ mode }) => {
       cors: false
     },
     define: {
-      "process.env.SF_ENV": `"${env.SF_ENV}"`
+      "process.env.LIQUIDATION_RESERVE": env.LIQUIDATION_RESERVE,
+      "process.env.MINIMUM_NET_DEBT": env.MINIMUM_NET_DEBT
     }
   };
 });

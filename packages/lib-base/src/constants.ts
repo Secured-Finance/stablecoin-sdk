@@ -19,7 +19,7 @@ export const MINIMUM_COLLATERAL_RATIO = Decimal.from(1.1);
  *
  * @public
  */
-export const LIQUIDATION_RESERVE = Decimal.from(process.env.SF_ENV === "development" ? 2 : 20);
+export const LIQUIDATION_RESERVE = Decimal.from(process.env.LIQUIDATION_RESERVE || 20);
 
 /**
  * A Trove must always have at least this much debt on top of the
@@ -30,7 +30,7 @@ export const LIQUIDATION_RESERVE = Decimal.from(process.env.SF_ENV === "developm
  *
  * @public
  */
-export const MINIMUM_NET_DEBT = Decimal.from(process.env.SF_ENV === "development" ? 18 : 180);
+export const MINIMUM_NET_DEBT = Decimal.from(process.env.MINIMUM_NET_DEBT || 180);
 
 /**
  * A Trove must always have at least this much debt.

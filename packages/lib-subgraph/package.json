@@ -11,9 +11,6 @@
     "codegen:run": "apollo client:codegen --target=typescript --outputFlat types",
     "prepare": "tsc --project tsconfig.dist.json"
   },
-  "peerDependencies": {
-    "@secured-finance/stablecoin-lib-base": "^0.0.4"
-  },
   "devDependencies": {
     "apollo": "^2.30.3",
     "npm-run-all": "^4.1.5",

@@ -19,6 +19,7 @@ import "tippy.js/dist/tippy.css"; // Tooltip default style
 import { StabilityViewProvider } from "./components/Stability/context/StabilityViewProvider";
 import { StakingViewProvider } from "./components/Staking/context/StakingViewProvider";
 import { TroveViewProvider } from "./components/Trove/context/TroveViewProvider";
+import { RedemptionPage } from "./pages/RedemptionPage";
 
 type SfStablecoinFrontendProps = {
   loader?: React.ReactNode;
@@ -65,6 +66,9 @@ export const SfStablecoinFrontend: React.FC<SfStablecoinFrontendProps> = ({ load
                     </Route>
                     <Route path="/risky-troves">
                       <RiskyTrovesPage />
+                    </Route>
+                    <Route path="/redemption">
+                      <RedemptionPage />
                     </Route>
                   </Switch>
                 </Container>

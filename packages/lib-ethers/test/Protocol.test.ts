@@ -25,16 +25,12 @@ import {
 
 import { HintHelpers } from "../types";
 
-import {
-  PopulatableEthers,
-  PopulatedEthersTransaction,
-  _redeemMaxIterations
-} from "../src/PopulatableEthers";
+import { PopulatableEthers, PopulatedEthersTransaction } from "../src/PopulatableEthers";
 
 import { _ProtocolDeploymentJSON } from "../src/contracts";
 import { _connectToDeployment } from "../src/EthersConnection";
 import { EthersSfStablecoin } from "../src/EthersSfStablecoin";
-import { ReadableEthers } from "../src/ReadableEthers";
+import { ReadableEthers, redeemMaxIterations } from "../src/ReadableEthers";
 import { EthersTransactionReceipt } from "../src/types";
 
 const provider = ethers.provider;
@@ -895,7 +891,7 @@ describe("EthersSfStablecoin", () => {
     const netDebtPerTrove = MINIMUM_BORROWING_RATE.add(1).mul(amountToBorrowPerTrove);
     const collateralPerTrove = netDebtPerTrove.add(LIQUIDATION_RESERVE).mulDiv(1.5, massivePrice);
 
-    const amountToRedeem = netDebtPerTrove.mul(_redeemMaxIterations);
+    const amountToRedeem = netDebtPerTrove.mul(redeemMaxIterations);
     const amountToDeposit = MINIMUM_BORROWING_RATE.add(1)
       .mul(amountToRedeem)
       .add(LIQUIDATION_RESERVE)
@@ -910,8 +906,8 @@ describe("EthersSfStablecoin", () => {
 
       // Deploy new instances of the contracts, for a clean slate
       deployment = await deployProtocol(deployer);
-      const otherUsersSubset = otherUsers.slice(0, _redeemMaxIterations);
-      expect(otherUsersSubset).to.have.length(_redeemMaxIterations);
+      const otherUsersSubset = otherUsers.slice(0, redeemMaxIterations);
+      expect(otherUsersSubset).to.have.length(redeemMaxIterations);
 
       [deployerSfStablecoin, sfStablecoin, ...otherSfStablecoins] = await connectUsers([
         deployer,

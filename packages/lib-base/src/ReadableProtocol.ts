@@ -1,4 +1,6 @@
-import { Decimal } from "./Decimal";
+import { BigNumber } from "@ethersproject/bignumber";
+
+import { Decimal, Decimalish } from "./Decimal";
 import { Fees } from "./Fees";
 import { ProtocolTokenStake } from "./ProtocolTokenStake";
 import { StabilityDeposit } from "./StabilityDeposit";
@@ -210,4 +212,28 @@ export interface ReadableProtocol {
    * @param address - Address to check.
    */
   getFrontendStatus(address?: string): Promise<FrontendStatus>;
+
+  /**
+   * Find the hints for a given nominal collateral ratio.
+   * @param nominalCollateralRatio - The nominal collateral ratio to find hints for.
+   */
+  findHintsForNominalCollateralRatio(
+    nominalCollateralRatio: Decimalish
+  ): Promise<[firstHint: string, secondHint: string]>;
+
+  /**
+   * Find the redemption hints for a given address.
+   * @param amount - The amount of DebtToken to redeem.
+   */
+  findRedemptionHints(
+    amount: Decimalish
+  ): Promise<
+    [
+      truncatedAmount: Decimal,
+      firstRedemptionHint: string,
+      partialRedemptionUpperHint: string,
+      partialRedemptionLowerHint: string,
+      partialRedemptionHintNICR: BigNumber
+    ]
+  >;
 }

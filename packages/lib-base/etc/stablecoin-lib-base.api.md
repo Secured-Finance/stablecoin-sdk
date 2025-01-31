@@ -4,9 +4,21 @@
 
 ```ts
 
+import { BigNumber } from '@ethersproject/bignumber';
+
 // @internal (undocumented)
 export class _CachedReadableProtocol<T extends unknown[]> implements _ReadableProtocolWithExtraParams<T> {
     constructor(readable: _ReadableProtocolWithExtraParams<T>, cache: _ProtocolReadCache<T>);
+    // (undocumented)
+    findHintsForNominalCollateralRatio(nominalCollateralRatio: Decimalish, ...extraParams: T): Promise<[firstHint: string, secondHint: string]>;
+    // (undocumented)
+    findRedemptionHints(amount: Decimalish, ...extraParams: T): Promise<[
+        truncatedAmount: Decimal,
+        firstRedemptionHint: string,
+        partialRedemptionUpperHint: string,
+        partialRedemptionLowerHint: string,
+        partialRedemptionHintNICR: BigNumber
+    ]>;
     // (undocumented)
     getCollateralSurplusBalance(address?: string, ...extraParams: T): Promise<Decimal>;
     // (undocumented)
@@ -422,6 +434,14 @@ export type ProtocolTokenStakeChange<T> = {
 
 // @public
 export interface ReadableProtocol {
+    findHintsForNominalCollateralRatio(nominalCollateralRatio: Decimalish): Promise<[firstHint: string, secondHint: string]>;
+    findRedemptionHints(amount: Decimalish): Promise<[
+        truncatedAmount: Decimal,
+        firstRedemptionHint: string,
+        partialRedemptionUpperHint: string,
+        partialRedemptionLowerHint: string,
+        partialRedemptionHintNICR: BigNumber
+    ]>;
     getCollateralSurplusBalance(address?: string): Promise<Decimal>;
     getDebtTokenBalance(address?: string): Promise<Decimal>;
     getDebtTokenInStabilityPool(): Promise<Decimal>;

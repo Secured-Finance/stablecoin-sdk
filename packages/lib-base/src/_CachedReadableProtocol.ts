@@ -1,4 +1,5 @@
-import { Decimal } from "./Decimal";
+import { BigNumber } from "@ethersproject/bignumber";
+import { Decimal, Decimalish } from "./Decimal";
 import { Fees } from "./Fees";
 import { ProtocolTokenStake } from "./ProtocolTokenStake";
 import { FrontendStatus, ReadableProtocol, TroveListingParams } from "./ReadableProtocol";
@@ -227,6 +228,34 @@ export class _CachedReadableProtocol<T extends unknown[]>
     return (
       this._cache.getFrontendStatus(address, ...extraParams) ??
       this._readable.getFrontendStatus(address, ...extraParams)
+    );
+  }
+
+  async findHintsForNominalCollateralRatio(
+    nominalCollateralRatio: Decimalish,
+    ...extraParams: T
+  ): Promise<[firstHint: string, secondHint: string]> {
+    return (
+      this._cache.findHintsForNominalCollateralRatio(nominalCollateralRatio, ...extraParams) ??
+      this._readable.findHintsForNominalCollateralRatio(nominalCollateralRatio, ...extraParams)
+    );
+  }
+
+  async findRedemptionHints(
+    amount: Decimalish,
+    ...extraParams: T
+  ): Promise<
+    [
+      truncatedAmount: Decimal,
+      firstRedemptionHint: string,
+      partialRedemptionUpperHint: string,
+      partialRedemptionLowerHint: string,
+      partialRedemptionHintNICR: BigNumber
+    ]
+  > {
+    return (
+      this._cache.findRedemptionHints(amount, ...extraParams) ??
+      this._readable.findRedemptionHints(amount, ...extraParams)
     );
   }
 }

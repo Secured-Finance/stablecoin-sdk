@@ -5,6 +5,7 @@ import fetch from "cross-fetch";
 import {
   _emptyTrove,
   Decimal,
+  Decimalish,
   Fees,
   FrontendStatus,
   ObservableProtocol,
@@ -24,6 +25,7 @@ import { TroveRawFields } from "../types/TroveRawFields";
 import { Troves, TrovesVariables } from "../types/Troves";
 import { TroveWithoutRewards, TroveWithoutRewardsVariables } from "../types/TroveWithoutRewards";
 
+import { BigNumber } from "@ethersproject/bignumber";
 import { Query } from "./Query";
 
 const normalizeAddress = (address?: string) => {
@@ -373,6 +375,26 @@ export class SubgraphSfStablecoin implements ReadableProtocol, ObservableProtoco
   }
 
   getRemainingStabilityPoolProtocolTokenReward(): Promise<Decimal> {
+    throw new Error("Method not implemented.");
+  }
+
+  findHintsForNominalCollateralRatio(
+    nominalCollateralRatio: Decimalish
+  ): Promise<[firstHint: string, secondHint: string]> {
+    throw new Error("Method not implemented.");
+  }
+
+  findRedemptionHints(
+    amount: Decimalish
+  ): Promise<
+    [
+      truncatedAmount: Decimal,
+      firstRedemptionHint: string,
+      partialRedemptionUpperHint: string,
+      partialRedemptionLowerHint: string,
+      partialRedemptionHintNICR: BigNumber
+    ]
+  > {
     throw new Error("Method not implemented.");
   }
 }

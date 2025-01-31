@@ -1,4 +1,8 @@
+import assert from "assert";
+
 import { BlockTag } from "@ethersproject/abstract-provider";
+import { BigNumber, BigNumberish } from "@ethersproject/bignumber";
+import { AddressZero } from "@ethersproject/constants";
 
 import {
   Decimal,
@@ -32,6 +36,10 @@ import {
 } from "./EthersConnection";
 
 import { BlockPolledSfStablecoinStore } from "./BlockPolledSfStablecoinStore";
+
+// With 70 iterations redemption costs about ~10M gas, and each iteration accounts for ~138k more
+/** @internal */
+export const redeemMaxIterations = 70;
 
 // TODO: these are constant in the contracts, so it doesn't make sense to make a call for them,
 // but to avoid having to update them here when we change them in the contracts, we could read
@@ -75,6 +83,40 @@ const expectPositiveInt = <K extends string>(obj: { [P in K]?: number }, key: K)
     }
   }
 };
+
+// To get the best entropy available, we'd do something like:
+//
+// const bigRandomNumber = () =>
+//   BigNumber.from(
+//     `0x${Array.from(crypto.getRandomValues(new Uint32Array(8)))
+//       .map(u32 => u32.toString(16).padStart(8, "0"))
+//       .join("")}`
+//   );
+//
+// However, Window.crypto is browser-specific. Since we only use this for randomly picking Troves
+// during the search for hints, Math.random() will do fine, too.
+//
+// This returns a random integer between 0 and Number.MAX_SAFE_INTEGER
+const randomInteger = () => Math.floor(Math.random() * Number.MAX_SAFE_INTEGER);
+
+// Maximum number of trials to perform in a single getApproxHint() call. If the number of trials
+// required to get a statistically "good" hint is larger than this, the search for the hint will
+// be broken up into multiple getApproxHint() calls.
+//
+// This should be low enough to work with popular public Ethereum providers like Infura without
+// triggering any fair use limits.
+const maxNumberOfTrialsAtOnce = 2500;
+
+function* generateTrials(totalNumberOfTrials: number) {
+  assert(Number.isInteger(totalNumberOfTrials) && totalNumberOfTrials > 0);
+
+  while (totalNumberOfTrials) {
+    const numberOfTrials = Math.min(totalNumberOfTrials, maxNumberOfTrialsAtOnce);
+    yield numberOfTrials;
+
+    totalNumberOfTrials -= numberOfTrials;
+  }
+}
 
 /**
  * Ethers-based implementation of {@link @secured-finance/stablecoin-lib-base#ReadableProtocol}.
@@ -512,6 +554,115 @@ export class ReadableEthers implements ReadableProtocol {
       ? { status: "registered", kickbackRate: decimalify(kickbackRate) }
       : { status: "unregistered" };
   }
+
+  async findHintsForNominalCollateralRatio(
+    nominalCollateralRatio: Decimal,
+    ownAddress?: string,
+    overrides?: EthersCallOverrides
+  ): Promise<[string, string]> {
+    const { sortedTroves, hintHelpers } = _getContracts(this.connection);
+    const numberOfTroves = await this.getNumberOfTroves();
+
+    if (!numberOfTroves) {
+      return [AddressZero, AddressZero];
+    }
+
+    if (nominalCollateralRatio.infinite) {
+      return [AddressZero, await sortedTroves.getFirst()];
+    }
+
+    const totalNumberOfTrials = Math.ceil(10 * Math.sqrt(numberOfTroves));
+    const [firstTrials, ...restOfTrials] = generateTrials(totalNumberOfTrials);
+
+    const collectApproxHint = (
+      {
+        latestRandomSeed,
+        results
+      }: {
+        latestRandomSeed: BigNumberish;
+        results: { diff: BigNumber; hintAddress: string }[];
+      },
+      numberOfTrials: number
+    ) =>
+      hintHelpers
+        .getApproxHint(nominalCollateralRatio.hex, numberOfTrials, latestRandomSeed, overrides)
+        .then(({ latestRandomSeed, ...result }) => ({
+          latestRandomSeed,
+          results: [...results, result]
+        }));
+
+    const { results } = await restOfTrials.reduce(
+      (p, numberOfTrials) => p.then(state => collectApproxHint(state, numberOfTrials)),
+      collectApproxHint({ latestRandomSeed: randomInteger(), results: [] }, firstTrials)
+    );
+
+    const { hintAddress } = results.reduce((a, b) => (a.diff.lt(b.diff) ? a : b));
+
+    let [prev, next] = await sortedTroves.findInsertPosition(
+      nominalCollateralRatio.hex,
+      hintAddress,
+      hintAddress
+    );
+
+    if (ownAddress) {
+      // In the case of reinsertion, the address of the Trove being reinserted is not a usable hint,
+      // because it is deleted from the list before the reinsertion.
+      // "Jump over" the Trove to get the proper hint.
+      if (prev === ownAddress) {
+        prev = await sortedTroves.getPrev(prev);
+      } else if (next === ownAddress) {
+        next = await sortedTroves.getNext(next);
+      }
+    }
+
+    // Don't use `address(0)` as hint as it can result in huge gas cost.
+    // (See https://github.com/liquity/dev/issues/600).
+    if (prev === AddressZero) {
+      prev = next;
+    } else if (next === AddressZero) {
+      next = prev;
+    }
+
+    return [prev, next];
+  }
+
+  async findRedemptionHints(
+    amount: Decimal,
+    overrides?: EthersCallOverrides
+  ): Promise<
+    [
+      truncatedAmount: Decimal,
+      firstRedemptionHint: string,
+      partialRedemptionUpperHint: string,
+      partialRedemptionLowerHint: string,
+      partialRedemptionHintNICR: BigNumber
+    ]
+  > {
+    const { hintHelpers } = _getContracts(this.connection);
+    const price = await this.getPrice();
+
+    const { firstRedemptionHint, partialRedemptionHintNICR, truncatedDebtTokenAmount } =
+      await hintHelpers.getRedemptionHints(amount.hex, price.hex, redeemMaxIterations, {
+        ...overrides
+      });
+
+    const [partialRedemptionUpperHint, partialRedemptionLowerHint] =
+      partialRedemptionHintNICR.isZero()
+        ? [AddressZero, AddressZero]
+        : await this.findHintsForNominalCollateralRatio(
+            decimalify(partialRedemptionHintNICR),
+            undefined, // XXX: if we knew the partially redeemed Trove's address, we'd pass it here
+            { ...overrides }
+          );
+
+    return [
+      decimalify(truncatedDebtTokenAmount),
+      firstRedemptionHint,
+      partialRedemptionUpperHint,
+      partialRedemptionLowerHint,
+      partialRedemptionHintNICR
+    ];
+  }
 }
 
 type Resolved<T> = T extends Promise<infer U> ? U : T;
@@ -609,7 +760,7 @@ class _BlockPolledReadableEthers implements ReadableEthersWithStore<BlockPolledS
   }
 
   async getPrice(overrides?: EthersCallOverrides): Promise<Decimal> {
-    return this._blockHit(overrides) ? this.store.state.price : this._readable.getPrice(overrides);
+    return this._blockHit(overrides) ? this.store.state.price : this.getPrice(overrides);
   }
 
   async getTotal(overrides?: EthersCallOverrides): Promise<Trove> {
@@ -747,6 +898,33 @@ class _BlockPolledReadableEthers implements ReadableEthersWithStore<BlockPolledS
     return this._frontendHit(address, overrides)
       ? this.store.state.frontend
       : this._readable.getFrontendStatus(address, overrides);
+  }
+
+  async findHintsForNominalCollateralRatio(
+    nominalCollateralRatio: Decimal,
+    ownAddress?: string,
+    overrides?: EthersCallOverrides
+  ): Promise<[string, string]> {
+    return this._readable.findHintsForNominalCollateralRatio(
+      nominalCollateralRatio,
+      ownAddress,
+      overrides
+    );
+  }
+
+  async findRedemptionHints(
+    amount: Decimal,
+    overrides?: EthersCallOverrides
+  ): Promise<
+    [
+      truncatedAmount: Decimal,
+      firstRedemptionHint: string,
+      partialRedemptionUpperHint: string,
+      partialRedemptionLowerHint: string,
+      partialRedemptionHintNICR: BigNumber
+    ]
+  > {
+    return this._readable.findRedemptionHints(amount, overrides);
   }
 
   getTroves(

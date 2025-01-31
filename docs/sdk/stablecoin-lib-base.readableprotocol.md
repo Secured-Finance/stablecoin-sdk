@@ -31,6 +31,28 @@ Description
 </th></tr></thead>
 <tbody><tr><td>
 
+[findHintsForNominalCollateralRatio(nominalCollateralRatio)](./stablecoin-lib-base.readableprotocol.findhintsfornominalcollateralratio.md)
+
+
+</td><td>
+
+Find the hints for a given nominal collateral ratio.
+
+
+</td></tr>
+<tr><td>
+
+[findRedemptionHints(amount)](./stablecoin-lib-base.readableprotocol.findredemptionhints.md)
+
+
+</td><td>
+
+Find the redemption hints for a given address.
+
+
+</td></tr>
+<tr><td>
+
 [getCollateralSurplusBalance(address)](./stablecoin-lib-base.readableprotocol.getcollateralsurplusbalance.md)
 
 

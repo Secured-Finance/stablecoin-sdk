@@ -247,6 +247,32 @@ Withdraw all staked LP tokens from liquidity mining and claim reward.
 </td></tr>
 <tr><td>
 
+[findHintsForNominalCollateralRatio(nominalCollateralRatio, ownAddress, overrides)](./stablecoin-lib-ethers.etherssfstablecoin.findhintsfornominalcollateralratio.md)
+
+
+</td><td>
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[findRedemptionHints(amount, overrides)](./stablecoin-lib-ethers.etherssfstablecoin.findredemptionhints.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Find the redemption hints for a given address.
+
+
+</td></tr>
+<tr><td>
+
 [getCollateralSurplusBalance(address, overrides)](./stablecoin-lib-ethers.etherssfstablecoin.getcollateralsurplusbalance.md)
 
 

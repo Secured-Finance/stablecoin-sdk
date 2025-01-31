@@ -4,6 +4,7 @@
 
 ```ts
 
+import { BigNumber } from '@ethersproject/bignumber';
 import { BigNumberish } from '@ethersproject/bignumber';
 import { BlockTag } from '@ethersproject/abstract-provider';
 import { CollateralGainTransferDetails } from '@secured-finance/stablecoin-lib-base';
@@ -150,6 +151,16 @@ export class EthersSfStablecoin implements ReadableEthers, TransactableProtocol 
     depositDebtTokenInStabilityPool(amount: Decimalish, frontendTag?: string, overrides?: EthersTransactionOverrides): Promise<StabilityDepositChangeDetails>;
     // (undocumented)
     exitLiquidityMining(overrides?: EthersTransactionOverrides): Promise<void>;
+    // (undocumented)
+    findHintsForNominalCollateralRatio(nominalCollateralRatio: Decimalish, ownAddress?: string, overrides?: EthersCallOverrides): Promise<[string, string]>;
+    // (undocumented)
+    findRedemptionHints(amount: Decimalish, overrides?: EthersCallOverrides): Promise<[
+        truncatedAmount: Decimal,
+        firstRedemptionHint: string,
+        partialRedemptionUpperHint: string,
+        partialRedemptionLowerHint: string,
+        partialRedemptionHintNICR: BigNumber
+    ]>;
     // @internal (undocumented)
     static _from(connection: EthersConnection & {
         useStore: "blockPolled";
@@ -452,6 +463,16 @@ export class ReadableEthers implements ReadableProtocol {
     static connect(signerOrProvider: EthersSigner | EthersProvider, optionalParams?: EthersConnectionOptionalParams): Promise<ReadableEthers>;
     // (undocumented)
     readonly connection: EthersConnection;
+    // (undocumented)
+    findHintsForNominalCollateralRatio(nominalCollateralRatio: Decimal, ownAddress?: string, overrides?: EthersCallOverrides): Promise<[string, string]>;
+    // (undocumented)
+    findRedemptionHints(amount: Decimal, overrides?: EthersCallOverrides): Promise<[
+        truncatedAmount: Decimal,
+        firstRedemptionHint: string,
+        partialRedemptionUpperHint: string,
+        partialRedemptionLowerHint: string,
+        partialRedemptionHintNICR: BigNumber
+    ]>;
     // @internal (undocumented)
     static _from(connection: EthersConnection & {
         useStore: "blockPolled";
@@ -528,7 +549,7 @@ export interface ReadableEthersWithStore<T extends SfStablecoinStore = SfStablec
 }
 
 // @internal (undocumented)
-export const _redeemMaxIterations = 70;
+export const redeemMaxIterations = 70;
 
 // @public
 export class SendableEthers implements SendableProtocol<EthersTransactionReceipt, EthersTransactionResponse> {

@@ -53,13 +53,9 @@ import {
 import { decimalify, promiseAllValues } from "./_utils";
 import { _priceFeedIsTestnet, _uniTokenIsMock } from "./contracts";
 import { logsToString } from "./parseLogs";
-import { ReadableEthers } from "./ReadableEthers";
+import { ReadableEthers, redeemMaxIterations } from "./ReadableEthers";
 
 const bigNumberMax = (a: BigNumber, b?: BigNumber) => (b?.gt(a) ? b : a);
-
-// With 70 iterations redemption costs about ~10M gas, and each iteration accounts for ~138k more
-/** @internal */
-export const _redeemMaxIterations = 70;
 
 const defaultBorrowingRateSlippageTolerance = Decimal.from(0.005); // 0.5%
 const defaultRedemptionRateSlippageTolerance = Decimal.from(0.001); // 0.1%
@@ -88,40 +84,6 @@ const addGasForPotentialListTraversal = (gas: BigNumber) => gas.add(80000);
 const addGasForProtocolTokenIssuance = (gas: BigNumber) => gas.add(50000);
 
 const addGasForUnipoolRewardUpdate = (gas: BigNumber) => gas.add(20000);
-
-// To get the best entropy available, we'd do something like:
-//
-// const bigRandomNumber = () =>
-//   BigNumber.from(
-//     `0x${Array.from(crypto.getRandomValues(new Uint32Array(8)))
-//       .map(u32 => u32.toString(16).padStart(8, "0"))
-//       .join("")}`
-//   );
-//
-// However, Window.crypto is browser-specific. Since we only use this for randomly picking Troves
-// during the search for hints, Math.random() will do fine, too.
-//
-// This returns a random integer between 0 and Number.MAX_SAFE_INTEGER
-const randomInteger = () => Math.floor(Math.random() * Number.MAX_SAFE_INTEGER);
-
-// Maximum number of trials to perform in a single getApproxHint() call. If the number of trials
-// required to get a statistically "good" hint is larger than this, the search for the hint will
-// be broken up into multiple getApproxHint() calls.
-//
-// This should be low enough to work with popular public Ethereum providers like Infura without
-// triggering any fair use limits.
-const maxNumberOfTrialsAtOnce = 2500;
-
-function* generateTrials(totalNumberOfTrials: number) {
-  assert(Number.isInteger(totalNumberOfTrials) && totalNumberOfTrials > 0);
-
-  while (totalNumberOfTrials) {
-    const numberOfTrials = Math.min(totalNumberOfTrials, maxNumberOfTrialsAtOnce);
-    yield numberOfTrials;
-
-    totalNumberOfTrials -= numberOfTrials;
-  }
-}
 
 /** @internal */
 export enum _RawErrorReason {
@@ -713,116 +675,15 @@ export class PopulatableEthers
     return { ...overrides, from: _requireAddress(this._readable.connection, overrides) };
   }
 
-  private async _findHintsForNominalCollateralRatio(
-    nominalCollateralRatio: Decimal,
-    ownAddress?: string
-  ): Promise<[string, string]> {
-    const { sortedTroves, hintHelpers } = _getContracts(this._readable.connection);
-    const numberOfTroves = await this._readable.getNumberOfTroves();
-
-    if (!numberOfTroves) {
-      return [AddressZero, AddressZero];
-    }
-
-    if (nominalCollateralRatio.infinite) {
-      return [AddressZero, await sortedTroves.getFirst()];
-    }
-
-    const totalNumberOfTrials = Math.ceil(10 * Math.sqrt(numberOfTroves));
-    const [firstTrials, ...restOfTrials] = generateTrials(totalNumberOfTrials);
-
-    const collectApproxHint = (
-      {
-        latestRandomSeed,
-        results
-      }: {
-        latestRandomSeed: BigNumberish;
-        results: { diff: BigNumber; hintAddress: string }[];
-      },
-      numberOfTrials: number
-    ) =>
-      hintHelpers
-        .getApproxHint(nominalCollateralRatio.hex, numberOfTrials, latestRandomSeed)
-        .then(({ latestRandomSeed, ...result }) => ({
-          latestRandomSeed,
-          results: [...results, result]
-        }));
-
-    const { results } = await restOfTrials.reduce(
-      (p, numberOfTrials) => p.then(state => collectApproxHint(state, numberOfTrials)),
-      collectApproxHint({ latestRandomSeed: randomInteger(), results: [] }, firstTrials)
-    );
-
-    const { hintAddress } = results.reduce((a, b) => (a.diff.lt(b.diff) ? a : b));
-
-    let [prev, next] = await sortedTroves.findInsertPosition(
-      nominalCollateralRatio.hex,
-      hintAddress,
-      hintAddress
-    );
-
-    if (ownAddress) {
-      // In the case of reinsertion, the address of the Trove being reinserted is not a usable hint,
-      // because it is deleted from the list before the reinsertion.
-      // "Jump over" the Trove to get the proper hint.
-      if (prev === ownAddress) {
-        prev = await sortedTroves.getPrev(prev);
-      } else if (next === ownAddress) {
-        next = await sortedTroves.getNext(next);
-      }
-    }
-
-    // Don't use `address(0)` as hint as it can result in huge gas cost.
-    // (See https://github.com/liquity/dev/issues/600).
-    if (prev === AddressZero) {
-      prev = next;
-    } else if (next === AddressZero) {
-      next = prev;
-    }
-
-    return [prev, next];
-  }
-
   private async _findHints(trove: Trove, ownAddress?: string): Promise<[string, string]> {
     if (trove instanceof TroveWithPendingRedistribution) {
       throw new Error("Rewards must be applied to this Trove");
     }
 
-    return this._findHintsForNominalCollateralRatio(trove._nominalCollateralRatio, ownAddress);
-  }
-
-  private async _findRedemptionHints(
-    amount: Decimal
-  ): Promise<
-    [
-      truncatedAmount: Decimal,
-      firstRedemptionHint: string,
-      partialRedemptionUpperHint: string,
-      partialRedemptionLowerHint: string,
-      partialRedemptionHintNICR: BigNumber
-    ]
-  > {
-    const { hintHelpers } = _getContracts(this._readable.connection);
-    const price = await this._readable.getPrice();
-
-    const { firstRedemptionHint, partialRedemptionHintNICR, truncatedDebtTokenAmount } =
-      await hintHelpers.getRedemptionHints(amount.hex, price.hex, _redeemMaxIterations);
-
-    const [partialRedemptionUpperHint, partialRedemptionLowerHint] =
-      partialRedemptionHintNICR.isZero()
-        ? [AddressZero, AddressZero]
-        : await this._findHintsForNominalCollateralRatio(
-            decimalify(partialRedemptionHintNICR)
-            // XXX: if we knew the partially redeemed Trove's address, we'd pass it here
-          );
-
-    return [
-      decimalify(truncatedDebtTokenAmount),
-      firstRedemptionHint,
-      partialRedemptionUpperHint,
-      partialRedemptionLowerHint,
-      partialRedemptionHintNICR
-    ];
+    return this._readable.findHintsForNominalCollateralRatio(
+      trove._nominalCollateralRatio,
+      ownAddress
+    );
   }
 
   /** {@inheritDoc @secured-finance/stablecoin-lib-base#PopulatableProtocol.openTrove} */
@@ -1243,7 +1104,7 @@ export class PopulatableEthers
       [
         this._readable.getFees(),
         this._readable.getTotal(),
-        this._findRedemptionHints(attemptedDebtTokenAmount)
+        this._readable.findRedemptionHints(attemptedDebtTokenAmount)
       ]
     );
 
@@ -1277,7 +1138,7 @@ export class PopulatableEthers
           truncatedAmount.hex,
           firstRedemptionHint,
           ...partialHints,
-          _redeemMaxIterations,
+          redeemMaxIterations,
           maxRedemptionRateOrDefault.hex
         ),
 

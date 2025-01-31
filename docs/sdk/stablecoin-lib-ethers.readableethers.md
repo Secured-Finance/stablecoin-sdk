@@ -93,6 +93,30 @@ Description
 </td></tr>
 <tr><td>
 
+[findHintsForNominalCollateralRatio(nominalCollateralRatio, ownAddress, overrides)](./stablecoin-lib-ethers.readableethers.findhintsfornominalcollateralratio.md)
+
+
+</td><td>
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[findRedemptionHints(amount, overrides)](./stablecoin-lib-ethers.readableethers.findredemptionhints.md)
+
+
+</td><td>
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
 [getCollateralSurplusBalance(address, overrides)](./stablecoin-lib-ethers.readableethers.getcollateralsurplusbalance.md)
 
 

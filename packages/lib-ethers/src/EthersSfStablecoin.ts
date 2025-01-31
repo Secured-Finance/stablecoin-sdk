@@ -1,5 +1,6 @@
 import { BlockTag } from "@ethersproject/abstract-provider";
 
+import { BigNumber } from "@ethersproject/bignumber";
 import {
   CollateralGainTransferDetails,
   Decimal,
@@ -316,6 +317,35 @@ export class EthersSfStablecoin implements ReadableEthers, TransactableProtocol 
   /** {@inheritDoc @secured-finance/stablecoin-lib-base#ReadableProtocol.getFrontendStatus} */
   getFrontendStatus(address?: string, overrides?: EthersCallOverrides): Promise<FrontendStatus> {
     return this._readable.getFrontendStatus(address, overrides);
+  }
+
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#ReadableProtocol.findHintsForNominalCollateralRatio} */
+  findHintsForNominalCollateralRatio(
+    nominalCollateralRatio: Decimalish,
+    ownAddress?: string,
+    overrides?: EthersCallOverrides
+  ): Promise<[string, string]> {
+    return this._readable.findHintsForNominalCollateralRatio(
+      Decimal.from(nominalCollateralRatio),
+      ownAddress,
+      overrides
+    );
+  }
+
+  /** {@inheritDoc @secured-finance/stablecoin-lib-base#ReadableProtocol.findRedemptionHints} */
+  findRedemptionHints(
+    amount: Decimalish,
+    overrides?: EthersCallOverrides
+  ): Promise<
+    [
+      truncatedAmount: Decimal,
+      firstRedemptionHint: string,
+      partialRedemptionUpperHint: string,
+      partialRedemptionLowerHint: string,
+      partialRedemptionHintNICR: BigNumber
+    ]
+  > {
+    return this._readable.findRedemptionHints(Decimal.from(amount), overrides);
   }
 
   /**

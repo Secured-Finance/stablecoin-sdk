@@ -255,6 +255,8 @@ Withdraw all staked LP tokens from liquidity mining and claim reward.
 
 </td><td>
 
+Find the hints for a given nominal collateral ratio.
+
 
 </td></tr>
 <tr><td>

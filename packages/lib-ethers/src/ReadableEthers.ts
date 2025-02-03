@@ -585,7 +585,9 @@ export class ReadableEthers implements ReadableProtocol {
       numberOfTrials: number
     ) =>
       hintHelpers
-        .getApproxHint(nominalCollateralRatio.hex, numberOfTrials, latestRandomSeed, overrides)
+        .getApproxHint(nominalCollateralRatio.hex, numberOfTrials, latestRandomSeed, {
+          ...overrides
+        })
         .then(({ latestRandomSeed, ...result }) => ({
           latestRandomSeed,
           results: [...results, result]
@@ -601,7 +603,8 @@ export class ReadableEthers implements ReadableProtocol {
     let [prev, next] = await sortedTroves.findInsertPosition(
       nominalCollateralRatio.hex,
       hintAddress,
-      hintAddress
+      hintAddress,
+      { ...overrides }
     );
 
     if (ownAddress) {
@@ -652,7 +655,7 @@ export class ReadableEthers implements ReadableProtocol {
         : await this.findHintsForNominalCollateralRatio(
             decimalify(partialRedemptionHintNICR),
             undefined, // XXX: if we knew the partially redeemed Trove's address, we'd pass it here
-            { ...overrides }
+            overrides
           );
 
     return [

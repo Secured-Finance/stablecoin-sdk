@@ -4,6 +4,8 @@
 
 ## EthersSfStablecoin.findHintsForNominalCollateralRatio() method
 
+Find the hints for a given nominal collateral ratio.
+
 **Signature:**
 
 ```typescript
@@ -39,6 +41,8 @@ nominalCollateralRatio
 
 
 </td><td>
+
+The nominal collateral ratio to find hints for.
 
 
 </td></tr>

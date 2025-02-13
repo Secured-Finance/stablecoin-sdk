@@ -130,12 +130,12 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "owner",
+        "name": "_owner",
         "type": "address"
       },
       {
         "internalType": "address",
-        "name": "spender",
+        "name": "_spender",
         "type": "address"
       }
     ],
@@ -180,12 +180,12 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "spender",
+        "name": "_spender",
         "type": "address"
       },
       {
         "internalType": "uint256",
-        "name": "amount",
+        "name": "_amount",
         "type": "uint256"
       }
     ],
@@ -204,7 +204,7 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "account",
+        "name": "_account",
         "type": "address"
       }
     ],
@@ -298,7 +298,7 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "owner",
+        "name": "_owner",
         "type": "address"
       }
     ],
@@ -330,37 +330,37 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "owner",
+        "name": "_owner",
         "type": "address"
       },
       {
         "internalType": "address",
-        "name": "spender",
+        "name": "_spender",
         "type": "address"
       },
       {
         "internalType": "uint256",
-        "name": "amount",
+        "name": "_amount",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "deadline",
+        "name": "_deadline",
         "type": "uint256"
       },
       {
         "internalType": "uint8",
-        "name": "v",
+        "name": "_v",
         "type": "uint8"
       },
       {
         "internalType": "bytes32",
-        "name": "r",
+        "name": "_r",
         "type": "bytes32"
       },
       {
         "internalType": "bytes32",
-        "name": "s",
+        "name": "_s",
         "type": "bytes32"
       }
     ],
@@ -450,12 +450,12 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "recipient",
+        "name": "_recipient",
         "type": "address"
       },
       {
         "internalType": "uint256",
-        "name": "amount",
+        "name": "_amount",
         "type": "uint256"
       }
     ],
@@ -474,17 +474,17 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "sender",
+        "name": "_sender",
         "type": "address"
       },
       {
         "internalType": "address",
-        "name": "recipient",
+        "name": "_recipient",
         "type": "address"
       },
       {
         "internalType": "uint256",
-        "name": "amount",
+        "name": "_amount",
         "type": "uint256"
       }
     ],

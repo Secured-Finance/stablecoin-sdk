@@ -110,19 +110,6 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "SECONDS_IN_ONE_MINUTE",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
         "internalType": "address",

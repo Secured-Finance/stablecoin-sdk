@@ -30,7 +30,7 @@ export const LIQUIDATION_RESERVE = Decimal.from(process.env.LIQUIDATION_RESERVE 
  *
  * @public
  */
-export const MINIMUM_NET_DEBT = Decimal.from(process.env.MINIMUM_NET_DEBT || 180);
+export const MINIMUM_NET_DEBT = Decimal.from(process.env.MINIMUM_NET_DEBT || 200);
 
 /**
  * A Trove must always have at least this much debt.

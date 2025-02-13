@@ -14,6 +14,7 @@ import {
   _connectToContracts
 } from "../src/contracts";
 
+import { MockPriceFeed } from "../types";
 import { createUniswapV2Pair } from "./UniswapV2Factory";
 
 let silent = true;
@@ -192,7 +193,7 @@ const deployContracts = async (
       networkName,
       priceFeedIsTestnet ? "MockPriceFeed" : "PriceFeed",
       "priceFeed",
-      [{ ...overrides }]
+      [24 * 60 * 60, { ...overrides }]
     ),
     sortedTroves: await deployContract(
       deployer,
@@ -256,31 +257,31 @@ const deployContracts = async (
   ];
 };
 
-export const deployTellorCaller = (
+const deployMockContracts = async (
   deployer: Signer,
   getContractFactory: (name: string, signer: Signer) => Promise<ContractFactory>,
   networkName: string,
-  tellorAddress: string,
   overrides?: Overrides
-): Promise<string> =>
-  deployContract(deployer, getContractFactory, networkName, "TellorCaller", "tellorCaller", [
-    tellorAddress,
-    { ...overrides }
-  ]);
+): Promise<{ mockAggregator: string; mockTellor: string }> => {
+  const mockAggregator = await deployContract(
+    deployer,
+    getContractFactory,
+    networkName,
+    "MockAggregator",
+    "mockAggregator",
+    [{ ...overrides }]
+  );
+  const mockTellor = await deployContract(
+    deployer,
+    getContractFactory,
+    networkName,
+    "MockTellor",
+    "mockTellor",
+    [{ ...overrides }]
+  );
 
-export const deployPythCaller = (
-  deployer: Signer,
-  getContractFactory: (name: string, signer: Signer) => Promise<ContractFactory>,
-  networkName: string,
-  pythPriceFeedAddress: string,
-  pythPriceId: string,
-  overrides?: Overrides
-): Promise<string> =>
-  deployContract(deployer, getContractFactory, networkName, "PythCaller", "pythCaller", [
-    pythPriceFeedAddress,
-    pythPriceId,
-    { ...overrides }
-  ]);
+  return { mockAggregator, mockTellor };
+};
 
 const connectContracts = async (
   {
@@ -301,6 +302,8 @@ const connectContracts = async (
     gasPool,
     unipool
   }: _ProtocolContracts,
+  mockAggregatorAddress: string,
+  mockTellorAddress: string,
   deployer: Signer,
   overrides?: Overrides
 ) => {
@@ -374,6 +377,7 @@ const connectContracts = async (
       activePool.address,
       { ...overrides }
     ),
+    priceFeed.initialize(mockAggregatorAddress, mockTellorAddress, { ...overrides }),
     lockupContractFactory.initialize(protocolToken.address, {
       ...overrides
     }),
@@ -386,7 +390,13 @@ const connectContracts = async (
 
   await Promise.all(txs.map(async tx => (await tx).wait()));
 
-  (
+  await (
+    await (priceFeed as MockPriceFeed)?.setPrice(Decimal.from(10).pow(18).mul(200).toString(), {
+      ...overrides
+    })
+  ).wait();
+
+  await (
     await protocolToken.triggerInitialAllocation(
       [communityIssuance.address, unipool.address],
       ["10000000000000000000000000", "1300000000000000000000000"],
@@ -472,7 +482,19 @@ export const deployAndSetupContracts = async (
 
   if (!useDeployedContracts) {
     log("Connecting contracts...");
-    await connectContracts(contracts, deployer, overrides);
+    const mockContractAddresses = await deployMockContracts(
+      deployer,
+      getContractFactory,
+      networkName,
+      overrides
+    );
+    await connectContracts(
+      contracts,
+      mockContractAddresses.mockAggregator,
+      mockContractAddresses.mockTellor,
+      deployer,
+      overrides
+    );
 
     const protocolTokenTotalSupply = await contracts.protocolToken.totalSupply();
 

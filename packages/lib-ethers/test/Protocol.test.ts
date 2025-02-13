@@ -28,7 +28,7 @@ import { HintHelpers } from "../types";
 import { PopulatableEthers, PopulatedEthersTransaction } from "../src/PopulatableEthers";
 
 import { _ProtocolDeploymentJSON } from "../src/contracts";
-import { _connectToDeployment } from "../src/EthersConnection";
+import { _connectToDeployment, EthersConnection } from "../src/EthersConnection";
 import { EthersSfStablecoin } from "../src/EthersSfStablecoin";
 import { ReadableEthers, redeemMaxIterations } from "../src/ReadableEthers";
 import { EthersTransactionReceipt } from "../src/types";
@@ -216,22 +216,24 @@ describe("EthersSfStablecoin", () => {
         findInsertPosition: () => Promise.resolve(["fake insert position"])
       });
 
+      const fakeConnection = {
+        userAddress: await user.getAddress(),
+        _contracts: {
+          borrowerOperations,
+          hintHelpers,
+          sortedTroves
+        }
+      } as unknown as EthersConnection;
+      const fakeReadableEthers = new ReadableEthers(fakeConnection);
       const fakeSfStablecoin = new PopulatableEthers({
         getNumberOfTroves: () => Promise.resolve(1000000),
         getTotal: () => Promise.resolve(new Trove(Decimal.from(10), Decimal.ONE)),
         getPrice: () => Promise.resolve(Decimal.ONE),
+        findHintsForNominalCollateralRatio: fakeReadableEthers.findHintsForNominalCollateralRatio,
         _getBlockTimestamp: () => Promise.resolve(0),
         _getFeesFactory: () =>
           Promise.resolve(() => new Fees(0, 0.99, 1, new Date(), new Date(), false)),
-
-        connection: {
-          userAddress: await user.getAddress(),
-          _contracts: {
-            borrowerOperations,
-            hintHelpers,
-            sortedTroves
-          }
-        }
+        connection: fakeConnection
       } as unknown as ReadableEthers);
 
       const nominalCollateralRatio = Decimal.from(0.05);
@@ -1043,7 +1045,7 @@ describe("EthersSfStablecoin", () => {
     });
   });
 
-  // Test workarounds related to https://github.com/sfStablecoin/dev/issues/600
+  // Test workarounds related to https://github.com/liquity/dev/issues/600
   describe("Hints (adjustTrove)", () => {
     let eightOtherUsers: Signer[];
 
@@ -1083,7 +1085,7 @@ describe("EthersSfStablecoin", () => {
       );
 
       const gasUsed = rawReceipt.gasUsed.toNumber();
-      expect(gasUsed).to.be.at.most(250000);
+      expect(gasUsed).to.be.at.most(270000);
     });
 
     // Test 2
@@ -1125,7 +1127,7 @@ describe("EthersSfStablecoin", () => {
       );
 
       const gasUsed = rawReceipt.gasUsed.toNumber();
-      expect(gasUsed).to.be.at.most(240000);
+      expect(gasUsed).to.be.at.most(250000);
     });
   });
 

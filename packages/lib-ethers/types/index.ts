@@ -926,6 +926,33 @@ export interface ERC20Mock
   extractEvents(logs: Log[], name: "Transfer"): _TypedLogDescription<{ from: string; to: string; value: BigNumber }>[];
 }
 
+interface MockAggregatorCalls {
+  decimals(_overrides?: CallOverrides): Promise<number>;
+  description(_overrides?: CallOverrides): Promise<string>;
+  getRoundData(arg0: BigNumberish, _overrides?: CallOverrides): Promise<{ roundId: BigNumber; answer: BigNumber; startedAt: BigNumber; updatedAt: BigNumber; answeredInRound: BigNumber }>;
+  latestRoundData(_overrides?: CallOverrides): Promise<{ roundId: BigNumber; answer: BigNumber; startedAt: BigNumber; updatedAt: BigNumber; answeredInRound: BigNumber }>;
+  version(_overrides?: CallOverrides): Promise<BigNumber>;
+}
+
+interface MockAggregatorTransactions {
+  setDecimals(_decimals: BigNumberish, _overrides?: Overrides): Promise<void>;
+  setDecimalsRevert(_overrides?: Overrides): Promise<void>;
+  setLatestRevert(_overrides?: Overrides): Promise<void>;
+  setLatestRoundId(_latestRoundId: BigNumberish, _overrides?: Overrides): Promise<void>;
+  setPrevRevert(_overrides?: Overrides): Promise<void>;
+  setPrevRoundId(_prevRoundId: BigNumberish, _overrides?: Overrides): Promise<void>;
+  setPrevUpdateTime(_prevUpdateTime: BigNumberish, _overrides?: Overrides): Promise<void>;
+  setPrice(_price: BigNumberish, _overrides?: Overrides): Promise<void>;
+  setUpdateTime(_updateTime: BigNumberish, _overrides?: Overrides): Promise<void>;
+  setUseBlockTimestamp(_useBlockTimestamp: boolean, _overrides?: Overrides): Promise<void>;
+}
+
+export interface MockAggregator
+  extends _TypedProtocolContract<MockAggregatorCalls, MockAggregatorTransactions> {
+  readonly filters: {
+  };
+}
+
 interface MockPriceFeedCalls {
   DECIMAL_PRECISION(_overrides?: CallOverrides): Promise<BigNumber>;
   MAX_PRICE_DIFFERENCE_BETWEEN_ORACLES(_overrides?: CallOverrides): Promise<BigNumber>;
@@ -959,6 +986,24 @@ export interface MockPriceFeed
   extractEvents(logs: Log[], name: "LastGoodPriceUpdated"): _TypedLogDescription<{ _lastGoodPrice: BigNumber }>[];
   extractEvents(logs: Log[], name: "OwnershipTransferred"): _TypedLogDescription<{ previousOwner: string; newOwner: string }>[];
   extractEvents(logs: Log[], name: "PriceFeedStatusChanged"): _TypedLogDescription<{ newStatus: number }>[];
+}
+
+interface MockTellorCalls {
+  getDataBefore(arg0: BytesLike, arg1: BigNumberish, _overrides?: CallOverrides): Promise<{ _ifRetrieve: boolean; _value: string; _timestampRetrieved: BigNumber }>;
+  getTimestampbyRequestIDandIndex(arg0: BigNumberish, arg1: BigNumberish, _overrides?: CallOverrides): Promise<BigNumber>;
+}
+
+interface MockTellorTransactions {
+  setDidRetrieve(_didRetrieve: boolean, _overrides?: Overrides): Promise<void>;
+  setPrice(_price: BigNumberish, _overrides?: Overrides): Promise<void>;
+  setRevertRequest(_overrides?: Overrides): Promise<void>;
+  setUpdateTime(_updateTime: BigNumberish, _overrides?: Overrides): Promise<void>;
+}
+
+export interface MockTellor
+  extends _TypedProtocolContract<MockTellorCalls, MockTellorTransactions> {
+  readonly filters: {
+  };
 }
 
 interface IERC20Calls {

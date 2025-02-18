@@ -9,7 +9,7 @@ Represents the change between two states of an ProtocolToken Stake.
 **Signature:**
 
 ```typescript
-export declare type ProtocolTokenStakeChange<T> = {
+export type ProtocolTokenStakeChange<T> = {
     stakeProtocolToken: T;
     unstakeProtocolToken?: undefined;
 } | {

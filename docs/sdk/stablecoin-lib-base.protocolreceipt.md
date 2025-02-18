@@ -9,7 +9,7 @@ One of either a [PendingReceipt](./stablecoin-lib-base.pendingreceipt.md)<!-- --
 **Signature:**
 
 ```typescript
-export declare type ProtocolReceipt<R = unknown, D = unknown> = PendingReceipt | MinedReceipt<R, D>;
+export type ProtocolReceipt<R = unknown, D = unknown> = PendingReceipt | MinedReceipt<R, D>;
 ```
 **References:** [PendingReceipt](./stablecoin-lib-base.pendingreceipt.md)<!-- -->, [MinedReceipt](./stablecoin-lib-base.minedreceipt.md)
 

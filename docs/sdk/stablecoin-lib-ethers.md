@@ -243,6 +243,31 @@ Variant of [ReadableEthers](./stablecoin-lib-ethers.readableethers.md) that expo
 </td></tr>
 </tbody></table>
 
+## Variables
+
+<table><thead><tr><th>
+
+Variable
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[redeemMaxIterations](./stablecoin-lib-ethers.redeemmaxiterations.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>
+
 ## Type Aliases
 
 <table><thead><tr><th>

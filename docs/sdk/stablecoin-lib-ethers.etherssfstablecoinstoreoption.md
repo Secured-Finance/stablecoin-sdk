@@ -9,7 +9,7 @@ Possible values for the optional [useStore](./stablecoin-lib-ethers.ethersconnec
 **Signature:**
 
 ```typescript
-export declare type EthersSfStablecoinStoreOption = "blockPolled";
+export type EthersSfStablecoinStoreOption = "blockPolled";
 ```
 
 ## Remarks

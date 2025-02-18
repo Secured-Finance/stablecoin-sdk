@@ -9,7 +9,7 @@ The type of [BlockPolledSfStablecoinStore](./stablecoin-lib-ethers.blockpolledsf
 **Signature:**
 
 ```typescript
-export declare type BlockPolledSfStablecoinStoreState = SfStablecoinStoreState<BlockPolledSfStablecoinStoreExtraState>;
+export type BlockPolledSfStablecoinStoreState = SfStablecoinStoreState<BlockPolledSfStablecoinStoreExtraState>;
 ```
 **References:** [SfStablecoinStoreState](./stablecoin-lib-base.sfstablecoinstorestate.md)<!-- -->, [BlockPolledSfStablecoinStoreExtraState](./stablecoin-lib-ethers.blockpolledsfstablecoinstoreextrastate.md)
 

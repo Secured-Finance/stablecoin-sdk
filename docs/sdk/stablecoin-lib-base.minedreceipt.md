@@ -9,7 +9,7 @@ Either a [FailedReceipt](./stablecoin-lib-base.failedreceipt.md) or a [Successfu
 **Signature:**
 
 ```typescript
-export declare type MinedReceipt<R = unknown, D = unknown> = FailedReceipt<R> | SuccessfulReceipt<R, D>;
+export type MinedReceipt<R = unknown, D = unknown> = FailedReceipt<R> | SuccessfulReceipt<R, D>;
 ```
 **References:** [FailedReceipt](./stablecoin-lib-base.failedreceipt.md)<!-- -->, [SuccessfulReceipt](./stablecoin-lib-base.successfulreceipt.md)
 

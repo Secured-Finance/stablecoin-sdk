@@ -9,7 +9,7 @@ Parameters of a [closeTrove()](./stablecoin-lib-base.transactableprotocol.closet
 **Signature:**
 
 ```typescript
-export declare type TroveClosureParams<T> = _CollateralWithdrawal<T> & _NoCollateralDeposit & Partial<_DebtTokenRepayment<T>> & _NoDebtTokenBorrowing;
+export type TroveClosureParams<T> = _CollateralWithdrawal<T> & _NoCollateralDeposit & Partial<_DebtTokenRepayment<T>> & _NoDebtTokenBorrowing;
 ```
 
 ## Remarks

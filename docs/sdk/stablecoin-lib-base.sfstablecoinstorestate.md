@@ -9,7 +9,7 @@ Type of [SfStablecoinStore](./stablecoin-lib-base.sfstablecoinstore.md)<!-- -->'
 **Signature:**
 
 ```typescript
-export declare type SfStablecoinStoreState<T = unknown> = SfStablecoinStoreBaseState & SfStablecoinStoreDerivedState & T;
+export type SfStablecoinStoreState<T = unknown> = SfStablecoinStoreBaseState & SfStablecoinStoreDerivedState & T;
 ```
 **References:** [SfStablecoinStoreBaseState](./stablecoin-lib-base.sfstablecoinstorebasestate.md)<!-- -->, [SfStablecoinStoreDerivedState](./stablecoin-lib-base.sfstablecoinstorederivedstate.md)
 

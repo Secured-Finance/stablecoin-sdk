@@ -9,7 +9,7 @@ Parameters of an [openTrove()](./stablecoin-lib-base.transactableprotocol.opentr
 **Signature:**
 
 ```typescript
-export declare type TroveCreationParams<T = unknown> = _CollateralDeposit<T> & _NoCollateralWithdrawal & _DebtTokenBorrowing<T> & _NoDebtTokenRepayment;
+export type TroveCreationParams<T = unknown> = _CollateralDeposit<T> & _NoCollateralWithdrawal & _DebtTokenBorrowing<T> & _NoDebtTokenRepayment;
 ```
 
 ## Remarks

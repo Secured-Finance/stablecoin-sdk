@@ -1,6 +1,6 @@
 import { Wallet } from "@ethersproject/wallet";
 import React from "react";
-import { Route, HashRouter as Router, Switch } from "react-router-dom";
+import { Route, HashRouter as Router, Routes } from "react-router";
 import { Container, Flex } from "theme-ui";
 
 import { Decimal, Difference, Trove } from "@secured-finance/stablecoin-lib-base";
@@ -60,17 +60,11 @@ export const SfStablecoinFrontend: React.FC<SfStablecoinFrontendProps> = ({ load
                     alignItems: "center"
                   }}
                 >
-                  <Switch>
-                    <Route path="/" exact>
-                      <PageSwitcher />
-                    </Route>
-                    <Route path="/risky-troves">
-                      <RiskyTrovesPage />
-                    </Route>
-                    <Route path="/redemption">
-                      <RedemptionPage />
-                    </Route>
-                  </Switch>
+                  <Routes>
+                    <Route path="/" element={<PageSwitcher />} />
+                    <Route path="/risky-troves" element={<RiskyTrovesPage />} />
+                    <Route path="/redemption" element={<RedemptionPage />} />
+                  </Routes>
                 </Container>
               </Flex>
             </StakingViewProvider>

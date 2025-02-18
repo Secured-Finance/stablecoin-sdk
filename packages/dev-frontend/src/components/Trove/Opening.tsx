@@ -9,7 +9,7 @@ import {
 } from "@secured-finance/stablecoin-lib-base";
 import { useSfStablecoinSelector } from "@secured-finance/stablecoin-lib-react";
 import React, { useCallback, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { Box, Button, Card, Flex, Heading, Spinner } from "theme-ui";
 
 import { useStableTroveChange } from "../../hooks/useStableTroveChange";

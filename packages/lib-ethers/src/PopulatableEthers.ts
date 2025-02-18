@@ -120,7 +120,8 @@ export interface _RawTransactionReplacedError extends Error {
   receipt: EthersTransactionReceipt;
 }
 
-const hasProp = <T, P extends string>(o: T, p: P): o is T & { [_ in P]: unknown } => p in o;
+const hasProp = <T extends Error, P extends string>(o: T, p: P): o is T & { [_ in P]: unknown } =>
+  p in o;
 
 const isTransactionFailedError = (error: Error): error is RawTransactionFailedError =>
   hasProp(error, "code") &&
@@ -170,6 +171,7 @@ export class SentEthersTransaction<T = unknown>
   readonly rawSentTransaction: EthersTransactionResponse;
 
   private readonly _connection: EthersConnection;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   private readonly _parse: (rawReceipt: EthersTransactionReceipt) => T;
 
   /** @internal */
@@ -334,6 +336,7 @@ export class PopulatedEthersTransaction<T = unknown>
   readonly gasHeadroom?: number;
 
   private readonly _connection: EthersConnection;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   private readonly _parse: (rawReceipt: EthersTransactionReceipt) => T;
 
   /** @internal */
@@ -386,6 +389,7 @@ export class PopulatedEthersRedemption
   readonly isTruncated: boolean;
 
   private readonly _increaseAmountByMinimumNetDebt?: (
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     maxRedemptionRate?: Decimalish
   ) => Promise<PopulatedEthersRedemption>;
 

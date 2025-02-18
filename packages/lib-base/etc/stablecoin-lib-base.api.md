@@ -657,7 +657,7 @@ export type SuccessfulReceipt<R = unknown, D = unknown> = {
 };
 
 // @internal (undocumented)
-export const _successfulReceipt: <R, D>(rawReceipt: R, details: D, toString?: (() => string) | undefined) => SuccessfulReceipt<R, D>;
+export const _successfulReceipt: <R, D>(rawReceipt: R, details: D, toString?: () => string) => SuccessfulReceipt<R, D>;
 
 // @public
 export interface TransactableProtocol {

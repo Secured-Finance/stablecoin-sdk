@@ -686,7 +686,7 @@ export class Trove {
   static recreate(that: Trove, borrowingRate?: Decimalish): TroveCreationParams<Decimal> {
     const change = _emptyTrove.whatChanged(that, borrowingRate);
     assert(change?.type === "creation");
-    return change.params;
+    return (change as TroveCreation<Decimal>)?.params;
   }
 
   /**
@@ -710,7 +710,7 @@ export class Trove {
   adjustTo(that: Trove, borrowingRate?: Decimalish): TroveAdjustmentParams<Decimal> {
     const change = this.whatChanged(that, borrowingRate);
     assert(change?.type === "adjustment");
-    return change.params;
+    return (change as TroveAdjustment<Decimal>)?.params;
   }
 }
 

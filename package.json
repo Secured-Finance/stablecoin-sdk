@@ -4,14 +4,6 @@
   "workspaces": {
     "packages": [
       "packages/*"
-    ],
-    "nohoist": [
-      "**/web3-eth-abi/@ethersproject/abi",
-      "**/@graphprotocol/*",
-      "**/jest*",
-      "**/@babel/*",
-      "**/babel*",
-      "**/react-scripts"
     ]
   },
   "engines": {

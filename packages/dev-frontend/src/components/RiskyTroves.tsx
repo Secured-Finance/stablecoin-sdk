@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useState } from "react";
-import CopyToClipboard from "react-copy-to-clipboard";
 import { Box, Button, Card, Flex, Heading, Text } from "theme-ui";
 
 import {
@@ -17,6 +16,7 @@ import { COIN, CURRENCY } from "../strings";
 import { shortenAddress } from "../utils/shortenAddress";
 
 import { Abbreviation } from "./Abbreviation";
+import { CopyToClipboard } from "./CopyToClipboard";
 import { Icon } from "./Icon";
 import { LoadingOverlay } from "./LoadingOverlay";
 import { Tooltip } from "./Tooltip";

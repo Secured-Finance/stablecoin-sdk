@@ -1,8 +1,7 @@
-import { memo, useState, useEffect } from "react";
-import { Flex, Box, Text, ThemeUIStyleObject } from "theme-ui";
-import { CircularProgressbarWithChildren } from "react-circular-progressbar";
-import { buildStyles } from "react-circular-progressbar";
+import React, { memo, useEffect, useState } from "react";
+import { buildStyles, CircularProgressbarWithChildren } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+import { Box, Flex, Text, ThemeUIStyleObject } from "theme-ui";
 import { Icon } from "./Icon";
 import type { TransactionState } from "./Transaction";
 

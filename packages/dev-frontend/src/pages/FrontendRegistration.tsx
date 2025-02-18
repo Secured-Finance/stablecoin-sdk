@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Box, Button, Card, Flex, Heading, Input, Label, Paragraph, Spinner } from "theme-ui";
 
 import { Decimal } from "@secured-finance/stablecoin-lib-base";

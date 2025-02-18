@@ -1,6 +1,6 @@
-import { ApolloClient, ApolloQueryResult, DocumentNode } from "@apollo/client";
+import { ApolloClient, ApolloQueryResult, DocumentNode, OperationVariables } from "@apollo/client";
 
-export class Query<T, U, V = undefined> {
+export class Query<T, U, V extends OperationVariables = any> {
   private readonly query: DocumentNode;
   private readonly mapResult: (result: ApolloQueryResult<U>, variables: V) => T;
 

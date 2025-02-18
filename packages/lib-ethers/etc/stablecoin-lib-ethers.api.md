@@ -548,7 +548,7 @@ export interface ReadableEthersWithStore<T extends SfStablecoinStore = SfStablec
     readonly store: T;
 }
 
-// @internal (undocumented)
+// @public (undocumented)
 export const redeemMaxIterations = 70;
 
 // @public

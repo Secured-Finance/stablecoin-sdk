@@ -1,17 +1,17 @@
 import {
-  TransactionRequest,
-  TransactionReceipt,
-  TransactionResponse,
+  Block,
   BlockTag,
   EventType,
   Listener,
   Provider,
-  Block
+  TransactionReceipt,
+  TransactionRequest,
+  TransactionResponse
 } from "@ethersproject/abstract-provider";
-import { BaseProvider, Web3Provider } from "@ethersproject/providers";
+import { hexDataLength } from "@ethersproject/bytes";
 import { Networkish } from "@ethersproject/networks";
 import { Deferrable } from "@ethersproject/properties";
-import { hexDataLength } from "@ethersproject/bytes";
+import { BaseProvider, Web3Provider } from "@ethersproject/providers";
 
 import { WebSocketProvider } from "./WebSocketProvider";
 
@@ -52,38 +52,47 @@ type BlockListenerContext = {
   removeMe: () => void;
 };
 
-const waitFor = <T, U>(f: (t: T) => Promise<U | null>) => (g: (u: U) => void) => (
-  t: T,
-  { isActive }: BlockListenerContext
-) => {
-  f(t).then(u => {
-    if (u !== null && isActive()) {
-      g(u);
-    }
-  });
-};
+const waitFor =
+  <T, U>(f: (t: T) => Promise<U | null>) =>
+  (g: (u: U) => void) =>
+  (t: T, { isActive }: BlockListenerContext) => {
+    f(t).then(u => {
+      if (u !== null && isActive()) {
+        g(u);
+      }
+    });
+  };
 
-const pass = <T>(f: (t: T) => void) => (t: T, _: BlockListenerContext) => {
-  f(t);
-};
-
-const passOnce = <T>(f: (t: T) => void) => (t: T, { removeMe }: BlockListenerContext) => {
-  f(t);
-  removeMe();
-};
-
-const sequence = <T, U, V>(
-  f: (_: (_: U) => void) => (_: T, context: BlockListenerContext) => void,
-  g: (_: (_: V) => void) => (_: U, context: BlockListenerContext) => void
-) => (h: (_: V) => void) => (t: T, context: BlockListenerContext) => {
-  f(u => g(h)(u, context))(t, context);
-};
-
-const defer = <T>(f: (t: T) => void) => (t: T) => {
-  setTimeout(() => {
+const pass =
+  <T>(f: (t: T) => void) =>
+  (t: T, _: BlockListenerContext) => {
     f(t);
-  }, 0);
-};
+  };
+
+const passOnce =
+  <T>(f: (t: T) => void) =>
+  (t: T, { removeMe }: BlockListenerContext) => {
+    f(t);
+    removeMe();
+  };
+
+const sequence =
+  <T, U, V>(
+    f: (_: (_: U) => void) => (_: T, context: BlockListenerContext) => void,
+    g: (_: (_: V) => void) => (_: U, context: BlockListenerContext) => void
+  ) =>
+  (h: (_: V) => void) =>
+  (t: T, context: BlockListenerContext) => {
+    f(u => g(h)(u, context))(t, context);
+  };
+
+const defer =
+  <T>(f: (t: T) => void) =>
+  (t: T) => {
+    setTimeout(() => {
+      f(t);
+    }, 0);
+  };
 
 export const WebSocketAugmented = <T extends new (...args: any[]) => BaseProvider>(Base: T) => {
   let webSocketAugmentedProvider = class extends Base implements WebSocketAugmentedProvider {
@@ -237,7 +246,7 @@ export const WebSocketAugmented = <T extends new (...args: any[]) => BaseProvide
         passReceipt(undefined);
 
         return this._addBlockListener(listener, passReceipt);
-      } else if (eventName === "block") {
+      } else if ((eventName as string) === "block") {
         return this._addBlockListener(...this._wrap(listener, pass));
       } else {
         return super.on(eventName, listener);
@@ -263,7 +272,7 @@ export const WebSocketAugmented = <T extends new (...args: any[]) => BaseProvide
         passReceiptOnce(undefined);
 
         return this._addBlockListener(listener, passReceiptOnce);
-      } else if (eventName === "block") {
+      } else if ((eventName as string) === "block") {
         return this._addBlockListener(...this._wrap(listener, passOnce));
       } else {
         return super.once(eventName, listener);
@@ -271,7 +280,7 @@ export const WebSocketAugmented = <T extends new (...args: any[]) => BaseProvide
     }
 
     off(eventName: EventType, listener: Listener) {
-      if (isTransactionHash(eventName) || eventName === "block") {
+      if (isTransactionHash(eventName) || (eventName as string) === "block") {
         return this._removeBlockListener(listener);
       } else {
         return super.off(eventName, listener);

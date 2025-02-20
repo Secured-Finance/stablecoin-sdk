@@ -1,5 +1,5 @@
 import "colors";
-import dotenv from "dotenv";
+import "dotenv/config";
 import fs from "fs";
 import path from "path";
 
@@ -19,8 +19,6 @@ import { deployAndSetupContracts, setSilent } from "./utils/deploy";
 
 import accounts from "./accounts.json";
 
-dotenv.config();
-
 const numAccounts = 100;
 
 const useLiveVersionEnv = (process.env.USE_LIVE_VERSION ?? "false").toLowerCase();
@@ -28,7 +26,6 @@ const useLiveVersion = !["false", "no", "0"].includes(useLiveVersionEnv);
 
 const contractsDir = path.join("..", "contracts");
 const artifacts = path.join(contractsDir, "artifacts");
-const cache = path.join(contractsDir, "cache");
 
 const contractsVersion = fs
   .readFileSync(path.join(useLiveVersion ? "live" : artifacts, "version"))
@@ -65,6 +62,20 @@ const hasWrappedNativeToken = (
 ): network is keyof typeof wrappedNativeTokenAddresses => network in wrappedNativeTokenAddresses;
 
 const config: HardhatUserConfig = {
+  solidity: {
+    compilers: [
+      {
+        version: "0.7.6",
+        settings: {
+          optimizer: {
+            enabled: true,
+            runs: 100
+          }
+        }
+      }
+    ]
+  },
+
   networks: {
     hardhat: {
       accounts: accounts.slice(0, numAccounts),
@@ -96,12 +107,6 @@ const config: HardhatUserConfig = {
     forkedMainnet: {
       url: "http://localhost:8545"
     }
-  },
-
-  paths: {
-    artifacts,
-    // sources: `${contractsDir}/contracts`,
-    cache
   }
 };
 

@@ -1,20 +1,22 @@
 import { Signer } from "@ethersproject/abstract-signer";
 import { ContractFactory, ContractTransaction, Overrides } from "@ethersproject/contracts";
 import { Wallet } from "@ethersproject/wallet";
-import dotenv from "dotenv";
+import "dotenv/config";
 import fs from "fs-extra";
 import path from "path";
 
 import { Decimal } from "@secured-finance/stablecoin-lib-base";
 
 import {
+  _ProtocolContract,
   _ProtocolContractAddresses,
   _ProtocolContracts,
   _ProtocolDeploymentJSON,
   _connectToContracts
 } from "../src/contracts";
 
-import { MockPriceFeed } from "../types";
+import mockAggregatorAbi from "../abi/MockAggregator.json";
+import { MockAggregator } from "../types";
 import { createUniswapV2Pair } from "./UniswapV2Factory";
 
 let silent = true;
@@ -29,17 +31,15 @@ export const setSilent = (s: boolean): void => {
   silent = s;
 };
 
-dotenv.config();
-
 const useDeployedContractsEnv = (process.env.USE_DEPLOYED_CONTRACTS ?? "false").toLowerCase();
 const useDeployedContracts = !["false", "no", "0"].includes(useDeployedContractsEnv);
 const gasCompensation = Decimal.from(10)
   .pow(18)
-  .mul(process.env.GAS_COMPENSATION ?? 20)
+  .mul(process.env.LIQUIDATION_RESERVE ?? 20)
   .toString();
 const minNetDebt = Decimal.from(10)
   .pow(18)
-  .mul(process.env.MIN_NET_DEBT ?? 180)
+  .mul(process.env.MINIMUM_NET_DEBT ?? 180)
   .toString();
 const bootstrapPeriod = 14 * 24 * 60 * 60;
 
@@ -311,6 +311,23 @@ const connectContracts = async (
     throw new Error("Signer must have a provider.");
   }
 
+  const mockAggregator = new _ProtocolContract(
+    mockAggregatorAddress,
+    mockAggregatorAbi,
+    deployer
+  ) as MockAggregator;
+
+  await Promise.all(
+    [
+      mockAggregator.setPrice(Decimal.from(10).pow(18).mul(200).toString(), {
+        ...overrides
+      }),
+      mockAggregator.setDecimals(18, { ...overrides }),
+      mockAggregator.setLatestRoundId(1, { ...overrides }),
+      mockAggregator.setUseBlockTimestamp(true, { ...overrides })
+    ].map(async tx => (await tx).wait())
+  );
+
   const txs: Promise<ContractTransaction>[] = [
     sortedTroves.initialize(1e6, troveManager.address, borrowerOperations.address, { ...overrides }),
     troveManager.initialize(
@@ -389,12 +406,6 @@ const connectContracts = async (
   ];
 
   await Promise.all(txs.map(async tx => (await tx).wait()));
-
-  await (
-    await (priceFeed as MockPriceFeed)?.setPrice(Decimal.from(10).pow(18).mul(200).toString(), {
-      ...overrides
-    })
-  ).wait();
 
   await (
     await protocolToken.triggerInitialAllocation(

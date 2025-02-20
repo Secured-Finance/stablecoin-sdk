@@ -887,9 +887,8 @@ describe("EthersSfStablecoin", () => {
   describe("Redemption (gas checks)", function () {
     this.timeout("5m");
 
-    const massivePrice = Decimal.from(1000000);
-
-    const amountToBorrowPerTrove = Decimal.from(2000);
+    const massivePrice = Decimal.from(300);
+    const amountToBorrowPerTrove = Decimal.from(200);
     const netDebtPerTrove = MINIMUM_BORROWING_RATE.add(1).mul(amountToBorrowPerTrove);
     const collateralPerTrove = netDebtPerTrove.add(LIQUIDATION_RESERVE).mulDiv(1.5, massivePrice);
 

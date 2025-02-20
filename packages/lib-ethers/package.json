@@ -18,6 +18,7 @@
     "check-live-version": "ts-node scripts/check-live-version.ts",
     "delete-dev-deployments": "ts-node scripts/delete-dev-deployments.ts",
     "prepare": "run-s 'prepare:*'",
+    "prepare:contracts": "ts-node scripts/copy-contracts.ts",
     "prepare:deployments": "ts-node scripts/copy-deployments.ts",
     "prepare:types": "ts-node scripts/generate-types.ts",
     "prepare:eslint": "eslint src",
@@ -28,7 +29,7 @@
     "save-live-version:check": "run-s check-live-version",
     "scrape-eth-usd": "ts-node scripts/scrape-eth-usd.ts",
     "spam-troves": "ts-node scripts/spam-troves.ts",
-    "test": "hardhat test",
+    "test": "DOTENV_CONFIG_PATH=.env.test hardhat test",
     "test-live": "run-s 'test-live:*'",
     "test-live:check-version": "run-s check-live-version",
     "test-live:run": "cross-env USE_LIVE_VERSION=true hardhat test"

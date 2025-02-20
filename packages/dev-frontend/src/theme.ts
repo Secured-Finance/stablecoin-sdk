@@ -1,7 +1,7 @@
 import { Theme, ThemeUIStyleObject } from "theme-ui";
 
 const baseColors = {
-  blue: "#1542cd",
+  blue: "#0091FF",
   purple: "#745ddf",
   cyan: "#2eb6ea",
   green: "#28c081",

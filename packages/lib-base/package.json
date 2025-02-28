@@ -18,6 +18,7 @@
     "prepare:eslint": "eslint src",
     "prepare:tsc": "tsc --project tsconfig.dist.json",
     "prepare:api": "api-extractor run --local",
+    "release": "semantic-release -e semantic-release-monorepo",
     "test": "mocha --require ts-node/register"
   },
   "dependencies": {

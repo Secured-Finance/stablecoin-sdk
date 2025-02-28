@@ -25,6 +25,7 @@
     "prepare:eslint": "eslint src",
     "prepare:tsc": "tsc --project tsconfig.dist.json",
     "prepare:api": "api-extractor run --local",
+    "release": "semantic-release -e semantic-release-monorepo",
     "save-live-version": "run-s 'save-live-version:*'",
     "save-live-version:run": "ts-node scripts/save-live-version.ts",
     "save-live-version:check": "run-s check-live-version",

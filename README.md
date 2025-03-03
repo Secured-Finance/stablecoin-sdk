@@ -69,7 +69,6 @@ Visit [liquity.org](https://www.liquity.org) to find out more and join the discu
 - [Running Tests](#running-tests)
   - [Brownie Tests](#brownie-tests)
   - [OpenEthereum](#openethereum)
-  - [Coverage](#coverage)
 - [System Quantities - Units and Representation](#system-quantities---units-and-representation)
   - [Integer representations of decimals](#integer-representations-of-decimals)
 - [Public Data](#public-data)
@@ -662,20 +661,6 @@ Add OpenZeppelin package:
 ```
 brownie pm install OpenZeppelin/openzeppelin-contracts@3.3.0
 ```
-
-### Coverage
-
-To check test coverage you can run:
-
-```
-yarn coverage
-```
-
-You can see the coverage status at mainnet deployment [here](https://codecov.io/gh/liquity/dev/tree/8f52f2906f99414c0b1c3a84c95c74c319b7a8c6).
-
-![Impacted file tree graph](https://codecov.io/gh/liquity/dev/pull/707/graphs/tree.svg?width=650&height=150&src=pr&token=7AJPQ3TW0O&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=liquity)
-
-There’s also a [pull request](https://github.com/liquity/dev/pull/515) to increase the coverage, but it hasn’t been merged yet because it modifies some smart contracts (mostly removing unnecessary checks).
 
 ## System Quantities - Units and Representation
 
@@ -1386,7 +1371,7 @@ _**Gas compensation:**_ A refund, in LUSD and ETH, automatically paid to the cal
 
 ## Development
 
-The Liquity monorepo is based on Yarn's [workspaces](https://classic.yarnpkg.com/en/docs/workspaces/) feature. You might be able to install some of the packages individually with npm, but to make all interdependent packages see each other, you'll need to use Yarn.
+This monorepo is based on npm's feature. You might be able to install some of the packages individually with npm, but to make all interdependent packages see each other, you'll need to use npm.
 
 In addition, some package scripts require Docker to be installed (Docker Desktop on Windows and Mac, Docker Engine on Linux).
 
@@ -1395,9 +1380,8 @@ In addition, some package scripts require Docker to be installed (Docker Desktop
 You'll need to install the following:
 
 - [Git](https://help.github.com/en/github/getting-started-with-github/set-up-git) (of course)
-- [Node v16.x](https://nodejs.org/dist/latest-v16.x/)
+- [Node v20.x](https://nodejs.org/dist/latest-v20.x/)
 - [Docker](https://docs.docker.com/get-docker/)
-- [Yarn](https://classic.yarnpkg.com/en/docs/install)
 
 #### Making node-gyp work
 
@@ -1410,17 +1394,17 @@ Note: you can skip the manual installation of node-gyp itself (`npm install -g n
 ```
 git clone https://github.com/liquity/dev.git liquity
 cd liquity
-yarn
+npm install
 ```
 
 ### Top-level scripts
 
-There are a number of scripts in the top-level package.json file to ease development, which you can run with yarn.
+There are a number of scripts in the top-level package.json file to ease development, which you can run with npm.
 
 #### Run all tests
 
 ```
-yarn test
+npm run test
 ```
 
 #### Deploy contracts to a testnet
@@ -1428,19 +1412,19 @@ yarn test
 E.g.:
 
 ```
-yarn deploy --network testnet
+npm run deploy --network testnet
 ```
 
 Supported networks are currently: testnet. The above command will deploy into the default channel (the one that's used by the public dev-frontend). To deploy into the internal channel instead:
 
 ```
-yarn deploy --network testnet --channel internal
+npm run deploy --network testnet --channel internal
 ```
 
 You can optionally specify an explicit gas price too:
 
 ```
-yarn deploy --network testnet --gas-price 20
+npm run deploy --network testnet --gas-price 20
 ```
 
 After a successful deployment, the addresses of the newly deployed contracts will be written to a version-controlled JSON file under `packages/lib-ethers/deployments/default`.
@@ -1454,7 +1438,7 @@ To publish a new deployment, you must execute the above command for all of the f
 At some point in the future, we will make this process automatic. Once you're done deploying to all the networks, execute the following command:
 
 ```
-yarn save-live-version
+npm run save-live-version
 ```
 
 This copies the contract artifacts to a version controlled area (`packages/lib/live`) then checks that you really did deploy to all the networks. Next you need to commit and push all changed files. The repo's GitHub workflow will then build a new Docker image of the frontend interfacing with the new addresses.
@@ -1466,12 +1450,12 @@ TBD
 #### Start dev-frontend in development mode
 
 ```
-yarn start-dev-frontend
+npm run start-dev-frontend
 ```
 
 This will start dev-frontend in development mode on http://localhost:3000. The app will automatically be reloaded if you change a source file under `packages/dev-frontend`.
 
-If you make changes to a different package under `packages`, it is recommended to rebuild the entire project with `yarn prepare` in the root directory of the repo. This makes sure that a change in one package doesn't break another.
+If you make changes to a different package under `packages`, it is recommended to rebuild the entire project with `npm run prepare` in the root directory of the repo. This makes sure that a change in one package doesn't break another.
 
 To stop the dev-frontend running in this mode, bring up the terminal in which you've started the command and press Ctrl+C.
 
@@ -1480,7 +1464,7 @@ To stop the dev-frontend running in this mode, bring up the terminal in which yo
 This will automatically start the local blockchain, so you need to make sure that's not already running before you run the following command.
 
 ```
-yarn start-demo
+npm run start-demo
 ```
 
 This spawns a modified version of dev-frontend that ignores MetaMask, and directly uses the local blockchain node. Every time the page is reloaded (at http://localhost:3000), a new random account is created with a balance of 100 ETH. Additionally, transactions are automatically signed, so you no longer need to accept wallet confirmations. This lets you play around with Liquity more freely.
@@ -1488,7 +1472,7 @@ This spawns a modified version of dev-frontend that ignores MetaMask, and direct
 When you no longer need the demo mode, press Ctrl+C in the terminal then run:
 
 ```
-yarn stop-demo
+npm run stop-demo
 ```
 
 #### Start dev-frontend against a mainnet fork RPC node
@@ -1498,11 +1482,11 @@ This will start a hardhat mainnet forked RPC node at the block number configured
 You'll need an Alchemy API key to create the fork.
 
 ```
-ALCHEMY_API_KEY=enter_your_key_here yarn start-fork
+ALCHEMY_API_KEY=enter_your_key_here npm run start-fork
 ```
 
 ```
-yarn start-demo:dev-frontend
+npm run start-demo:dev-frontend
 ```
 
 This spawns a modified version of dev-frontend that automatically signs transactions so you don't need to interact with a browser wallet. It directly uses the local forked RPC node.
@@ -1514,13 +1498,13 @@ You may need to wait a minute or so for your fork mainnet provider to load and c
 In a freshly cloned & installed monorepo, or if you have only modified code inside the dev-frontend package:
 
 ```
-yarn build
+npm run build
 ```
 
 If you have changed something in one or more packages apart from dev-frontend, it's best to use:
 
 ```
-yarn rebuild
+npm run rebuild
 ```
 
 This combines the top-level `prepare` and `build` scripts.

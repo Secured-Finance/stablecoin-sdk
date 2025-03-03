@@ -16,7 +16,7 @@
   "scripts": {
     "eslint": "eslint",
     "prepare": "run-s 'prepare:*'",
-    "prepare:eslint": "eslint src",
+    "xxx:eslint": "eslint src",
     "prepare:tsc": "tsc --project tsconfig.dist.json"
   },
   "peerDependencies": {
@@ -25,7 +25,7 @@
   "devDependencies": {
     "@ethersproject/bignumber": "5.7.0",
     "@types/react": "^18.2.60",
-    "@typescript-eslint/eslint-plugin": "4.17.0",
+    "@typescript-eslint/eslint-plugin": "5.57.1",
     "@typescript-eslint/parser": "5.57.1",
     "eslint": "7.22.0",
     "eslint-plugin-react": "7.22.0",

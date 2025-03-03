@@ -1,11 +1,9 @@
 {
   "name": "stablecoin-sdk",
   "private": true,
-  "workspaces": {
-    "packages": [
-      "packages/*"
-    ]
-  },
+  "workspaces": [
+    "packages/*"
+  ],
   "engines": {
     "node": ">=14.0.0 <17.0.0"
   },
@@ -36,37 +34,34 @@
   },
   "scripts": {
     "build": "run-s 'build:*'",
-    "build:dev-frontend": "yarn workspace @secured-finance/dev-frontend build",
-    "deploy": "yarn workspace @secured-finance/stablecoin-lib-ethers hardhat deploy",
+    "build:dev-frontend": "npm run build --workspace=@secured-finance/dev-frontend",
+    "deploy": "npm run deploy--workspace=@secured-finance/stablecoin-lib-ethers hardhat",
     "docs": "run-s 'docs:*'",
     "docs:collect-sdk-apis": "node scripts/collect-sdk-apis.js",
     "docs:api-documenter": "api-documenter generate -i temp/sdk-apis -o docs/sdk",
-    "fuzzer": "yarn workspace @secured-finance/fuzzer fuzzer",
+    "fuzzer": "npm run fuzzer --workspace=@secured-finance/fuzzer",
     "postinstall": "run-s prepare",
     "prepare": "run-s 'prepare:*'",
-    "prepare:contracts": "yarn workspace @secured-finance/stablecoin-contracts prepare",
-    "prepare:lib-base": "yarn workspace @secured-finance/stablecoin-lib-base prepare",
-    "prepare:lib-ethers": "yarn workspace @secured-finance/stablecoin-lib-ethers prepare",
-    "prepare:lib-react": "yarn workspace @secured-finance/stablecoin-lib-react prepare",
-    "prepare:lib-subgraph": "yarn workspace @secured-finance/stablecoin-lib-subgraph prepare",
-    "prepare:providers": "yarn workspace @secured-finance/stablecoin-providers prepare",
-    "prepare:subgraph": "yarn workspace @secured-finance/stablecoin-subgraph prepare",
+    "prepare:lib-base": "npm run prepare --workspace=@secured-finance/stablecoin-lib-base",
+    "prepare:lib-ethers": "npm run prepare --workspace=@secured-finance/stablecoin-lib-ethers",
+    "prepare:lib-react": "npm run prepare --workspace=@secured-finance/stablecoin-lib-react",
+    "prepare:lib-subgraph": "npm run prepare --workspace=@secured-finance/stablecoin-lib-subgraph",
+    "prepare:providers": "npm run prepare --workspace=@secured-finance/stablecoin-providers",
+    "prepare:subgraph": "npm run prepare --workspace=@secured-finance/stablecoin-subgraph",
     "prepare:docs": "run-s docs",
     "rebuild": "run-s prepare build",
     "release": "run-s 'release:*'",
-    "release:delete-dev-deployments": "yarn workspace @secured-finance/stablecoin-lib-ethers delete-dev-deployments",
-    "release:packages": "yarn semantic-release",
-    "save-live-version": "yarn workspace @secured-finance/stablecoin-lib-ethers save-live-version",
-    "start-dev-frontend": "yarn workspace @secured-finance/dev-frontend start",
-    "start-fork": "hardhat --config hardhat.config.mainnet-fork.ts node",
-    "start-tunnel": "./scripts/start-local-tunnel.sh",
+    "release:delete-dev-deployments": "npm run delete-dev-deployments --workspace=@secured-finance/stablecoin-lib-ethers",
+    "release:packages": "npm run semantic-release",
+    "save-live-version": "npm run save-live-version --workspace=@secured-finance/stablecoin-lib-ethers",
+    "start-dev-frontend": "npm run start --workspace=@secured-finance/dev-frontend",
     "test": "run-s 'test:*'",
-    "test:lib-base": "yarn workspace @secured-finance/stablecoin-lib-base test",
-    "test:lib-ethers": "yarn workspace @secured-finance/stablecoin-lib-ethers test",
+    "test:lib-base": "npm run test --workspace=@secured-finance/stablecoin-lib-base",
+    "test:lib-ethers": "npm run test --workspace=@secured-finance/stablecoin-lib-ethers",
     "test:dev-frontend": "run-s --continue-on-error 'test:dev-frontend:*'",
-    "test:dev-frontend:run": "yarn workspace @secured-finance/dev-frontend test run",
+    "test:dev-frontend:run": "npm run test run --workspace=@secured-finance/dev-frontend",
     "test-live": "run-s 'test-live:*'",
-    "test-live:lib-ethers": "yarn workspace @secured-finance/stablecoin-lib-ethers test-live"
+    "test-live:lib-ethers": "npm run test-live --workspace=@secured-finance/stablecoin-lib-ethers"
   },
   "devDependencies": {
     "@commitlint/cli": "^12.0.1",
@@ -77,6 +72,5 @@
     "prettier": "^2.1.2",
     "semantic-release": "^17.4.2",
     "semantic-release-monorepo": "^7.0.4"
-  },
-  "packageManager": "yarn@3.5.1"
+  }
 }

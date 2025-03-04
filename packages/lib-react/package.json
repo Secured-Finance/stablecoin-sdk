@@ -16,7 +16,7 @@
   "scripts": {
     "eslint": "eslint",
     "prepare": "run-s 'prepare:*'",
-    "xxx:eslint": "eslint src",
+    "prepare:eslint": "eslint src",
     "prepare:tsc": "tsc --project tsconfig.dist.json"
   },
   "peerDependencies": {

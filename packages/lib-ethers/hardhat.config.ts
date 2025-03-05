@@ -24,8 +24,7 @@ const numAccounts = 100;
 const useLiveVersionEnv = (process.env.USE_LIVE_VERSION ?? "false").toLowerCase();
 const useLiveVersion = !["false", "no", "0"].includes(useLiveVersionEnv);
 
-const contractsDir = path.join("..", "contracts");
-const artifacts = path.join(contractsDir, "artifacts");
+const artifacts = path.join("./", "artifacts");
 
 const contractsVersion = fs
   .readFileSync(path.join(useLiveVersion ? "live" : artifacts, "version"))

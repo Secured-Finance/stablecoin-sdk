@@ -18,7 +18,6 @@ export default defineConfig(({ mode }) => {
     ],
     optimizeDeps: {
       include: [
-        "@secured-finance/stablecoin-providers",
         "@secured-finance/stablecoin-lib-ethers",
         "@secured-finance/stablecoin-lib-base",
         "@secured-finance/stablecoin-lib-react"

@@ -15,15 +15,22 @@ class Main {
       .resolve("@secured-finance/stablecoin-contracts/package.json")
       .replace("/package.json", "");
     const contractsDir = path.join(moduleDir, "contracts");
+    const artifactsDir = path.join(moduleDir, "artifacts");
+    const cacheDir = path.join(moduleDir, "cache");
 
-    const destination = `${rootDir}/contracts`;
-    if (existsSync(destination)) {
-      rmSync(destination, { recursive: true });
+    this.copyDirs(contractsDir, `${rootDir}/contracts`);
+    this.copyDirs(artifactsDir, `${rootDir}/artifacts`);
+    this.copyDirs(cacheDir, `${rootDir}/cache`);
+  }
+
+  private copyDirs(src: string, dest: string) {
+    if (existsSync(dest)) {
+      rmSync(dest, { recursive: true });
     }
-    mkdirSync(destination);
+    mkdirSync(dest);
 
-    for (const artifact of readdirSync(contractsDir)) {
-      this.copyDir(`${contractsDir}/${artifact}`, `${destination}/${artifact}`);
+    for (const dir of readdirSync(src)) {
+      this.copyDir(`${src}/${dir}`, `${dest}/${dir}`);
     }
   }
 

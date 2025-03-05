@@ -146,7 +146,7 @@ const contractList = [
   "ProtocolToken"
 ];
 
-const artifactsDir = path.join("..", "contracts", "artifacts");
+const artifactsDir = path.join("./", "artifacts");
 
 fs.removeSync("abi");
 fs.mkdirSync("abi", { recursive: true });

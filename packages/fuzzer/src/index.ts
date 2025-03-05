@@ -16,7 +16,7 @@ const wrapCmd =
   };
 
 yargs
-  .scriptName("yarn fuzzer")
+  .scriptName("npm run fuzzer")
 
   .command(
     "warzone",

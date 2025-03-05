@@ -28,7 +28,6 @@
     "save-live-version:run": "ts-node scripts/save-live-version.ts",
     "save-live-version:check": "run-s check-live-version",
     "scrape-eth-usd": "ts-node scripts/scrape-eth-usd.ts",
-    "spam-troves": "ts-node scripts/spam-troves.ts",
     "test": "DOTENV_CONFIG_PATH=.env.test hardhat test",
     "test-live": "run-s 'test-live:*'",
     "test-live:check-version": "run-s check-live-version",

@@ -46,7 +46,6 @@
     "prepare:lib-ethers": "npm run prepare --workspace=@secured-finance/stablecoin-lib-ethers",
     "prepare:lib-react": "npm run prepare --workspace=@secured-finance/stablecoin-lib-react",
     "prepare:lib-subgraph": "npm run prepare --workspace=@secured-finance/stablecoin-lib-subgraph",
-    "prepare:providers": "npm run prepare --workspace=@secured-finance/stablecoin-providers",
     "prepare:subgraph": "npm run prepare --workspace=@secured-finance/stablecoin-subgraph",
     "prepare:docs": "run-s docs",
     "rebuild": "run-s prepare build",

@@ -230,7 +230,6 @@ Economically, Recovery Mode is designed to encourage collateral top-ups and debt
 - `packages/lib-ethers/` – [Ethers](https://github.com/ethers-io/ethers.js/)-based middleware that can read USDFC state and send transactions
 - `packages/lib-react/` – Components and hooks that React-based apps can use to view USDFC contract state
 - `packages/lib-subgraph/` – [Apollo Client](https://github.com/apollographql/apollo-client)-based middleware backed by the USDFC subgraph that can read USDFC state
-- `packages/providers/` – Subclassed Ethers providers used by the frontend
 - `packages/subgraph/` – [Subgraph](https://thegraph.com) for querying USDFC state as well as historical data like transaction history
 
 Backend development is done in the Hardhat framework, and allows USDFC to be deployed on the Hardhat EVM network for fast compilation and test execution.

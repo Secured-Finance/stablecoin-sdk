@@ -1,6 +1,6 @@
 {
   "chainId": 314159,
-  "version": "f73eca89e826e13022a04d002814395fc39d78cc",
+  "version": "7684d6eced999029f6bb1de2344a7247364018a2",
   "deploymentDate": 1739346540000,
   "bootstrapPeriod": 86400,
   "totalStabilityPoolProtocolTokenReward": "0",
@@ -27,6 +27,6 @@
     "debtToken": "0xc8CC0BF3F5F4C69c9d19DF07Df3f21aB1A285E8d",
     "protocolToken": "0xf029E5A1E8AE348B25403573C594C681c764440B",
     "multiTroveGetter": "0xE6606B43F02178Bf3bb9E8CD23c619f38e6121f9",
-    "uniToken": "0x6eC5F70d7688a4de53866Aa17d7f2661769A5567"
+    "uniToken": "0x9a08E4f91645DB0EBA24522784A46801BF9dfa88"
   }
 }

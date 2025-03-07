@@ -43,7 +43,10 @@ const minNetDebt = Decimal.from(10)
   .toString();
 const bootstrapPeriod = 14 * 24 * 60 * 60;
 
-const deploymentsDir = path.join("..", "contracts", "deployments", "outputs");
+const moduleDir = require
+  .resolve("@secured-finance/stablecoin-contracts/package.json")
+  .replace("/package.json", "");
+const deploymentsDir = path.join(moduleDir, "deployments", "outputs");
 
 const deployContractAndGetBlockNumber = async (
   deployer: Signer,

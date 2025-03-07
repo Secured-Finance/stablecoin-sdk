@@ -15,6 +15,7 @@
   "repository": "https://github.com/Secured-Finance/stablecoin-sdk",
   "scripts": {
     "hardhat": "hardhat",
+    "deploy": "hardhat deploy --network",
     "check-live-version": "ts-node scripts/check-live-version.ts",
     "delete-dev-deployments": "ts-node scripts/delete-dev-deployments.ts",
     "prepare": "run-s 'prepare:*'",

@@ -1,7 +1,7 @@
 import fs from "fs-extra";
 import path from "path";
 
-const artifactsDir = path.join("..", "contracts", "artifacts");
+const artifactsDir = "artifacts";
 const contractsDir = path.join(artifactsDir, "contracts");
 const liveDir = "live";
 

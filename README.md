@@ -16,7 +16,6 @@ USDFC SDK is a comprehensive toolkit for developers to integrate and interact wi
     - [Build dev-frontend for production](#build-dev-frontend-for-production)
   - [Configuring your custom frontend](#configuring-your-custom-frontend)
 - [Known Issues](#known-issues)
-- [Disclaimer](#disclaimer)
 
 ## Protocol Overview
 
@@ -192,28 +191,10 @@ _Example sequence:_
 
 It’s theoretically possible to increase the number of the troves that need to be traversed on-chain. That is, an attacker that sees a pending borrower transaction (or redemption or liquidation transaction) could try to increase the number of traversed troves by introducing additional troves on the way. However, the number of troves that an attacker can inject before the pending transaction gets mined is limited by the amount of spendable gas. Also, the total costs of making the path longer by 1 are significantly higher (gas costs of opening a trove, plus the 0.5% borrowing fee) than the costs of one extra traversal step (simply reading from storage). The attacker also needs significant capital on-hand, since the minimum debt for a trove is 200 USDFC.
 
-In case of a redemption, the “last” trove affected by the transaction may end up being only partially redeemed from, which means that its ICR will change so that it needs to be reinserted at a different place in the sorted trove list (note that this is not the case for partial liquidations in recovery mode, which preserve the ICR). A special ICR hint therefore needs to be provided by the transaction sender for that matter, which may become incorrect if another transaction changes the order before the redemption is processed. The protocol gracefully handles this by terminating the redemption sequence at the last fully redeemed trove (see [here](#hints-for-redeemcollateral)).
+In case of a redemption, the “last” trove affected by the transaction may end up being only partially redeemed from, which means that its ICR will change so that it needs to be reinserted at a different place in the sorted trove list (note that this is not the case for partial liquidations in recovery mode, which preserve the ICR). A special ICR hint therefore needs to be provided by the transaction sender for that matter, which may become incorrect if another transaction changes the order before the redemption is processed. The protocol gracefully handles this by terminating the redemption sequence at the last fully redeemed trove.
 
 An attacker trying to DoS redemptions could be bypassed by redeeming an amount that exactly corresponds to the debt of the affected trove(s).
 
 The attack can be aggravated if a big trove is placed first in the queue, so that any incoming redemption is smaller than its debt, as no USDFC would be redeemed if the hint for that trove fails. But that attack would be very expensive and quite risky (risk of being redeemed if the strategy fails and of being liquidated as it may have a low CR).
 
 Finally, this DoS could be avoided if the initial transaction avoids the public gas auction entirely and is sent direct-to-miner, via (for example) Flashbots.
-
-## Disclaimer
-
-The content of this readme document (“Readme”) is of purely informational nature. In particular, none of the content of the Readme shall be understood as advice provided by Secured Finance AG, any USDFC Project Team member or other contributor to the Readme, nor does any of these persons warrant the actuality and accuracy of the Readme.
-
-Please read this Disclaimer carefully before accessing, interacting with, or using the USDFC protocol Software, consisting of the USDFC protocol technology stack as well as any other USDFC technology such as e.g., the launch kit for frontend operators (together the “USDFC protocol Software”).
-
-While Secured Finance AG developed the USDFC protocol Software, the USDFC protocol Software runs in a fully decentralized and autonomous manner on the Filecoin network. Secured Finance AG is not involved in the operation of the USDFC protocol Software nor has it any control over transactions made using its smart contracts. Further, Secured Finance AG does neither enter into any relationship with users of the USDFC protocol Software and/or frontend operators, nor does it operate an own frontend. Any and all functionalities of the USDFC protocol Software, including the USDFC and the SFC, are of purely technical nature and there is no claim towards any private individual or legal entity in this regard.
-
-SECURED FINANCE AG IS NOT LIABLE TO ANY USER FOR DAMAGES, INCLUDING ANY GENERAL, SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE, IN CONNECTION WITH THE USE OR INABILITY TO USE THE USDFC PROTOCOL SOFTWARE (INCLUDING BUT NOT LIMITED TO LOSS OF FIL, USDFC OR SFC, NON-ALLOCATION OF TECHNICAL FEES TO SFC HOLDERS, LOSS OF DATA, BUSINESS INTERRUPTION, DATA BEING RENDERED INACCURATE OR OTHER LOSSES SUSTAINED BY A USER OR THIRD PARTIES AS A RESULT OF THE USDFC PROTOCOL SOFTWARE AND/OR ANY ACTIVITY OF A FRONTEND OPERATOR OR A FAILURE OF THE USDFC PROTOCOL SOFTWARE TO OPERATE WITH ANY OTHER SOFTWARE).
-
-The USDFC protocol Software has been developed and published under the GNU GPL v3 open-source license, which forms an integral part of this disclaimer.
-
-THE USDFC PROTOCOL SOFTWARE HAS BEEN PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. THE USDFC PROTOCOL SOFTWARE IS HIGHLY EXPERIMENTAL AND ANY REAL FIL AND/OR USDFC AND/OR SFC SENT, STAKED OR DEPOSITED TO THE USDFC PROTOCOL SOFTWARE ARE AT RISK OF BEING LOST INDEFINITELY, WITHOUT ANY KIND OF CONSIDERATION.
-
-There are no official frontend operators, and the use of any frontend is made by users at their own risk. To assess the trustworthiness of a frontend operator lies in the sole responsibility of the users and must be made carefully.
-
-User is solely responsible for complying with applicable law when interacting (in particular, when using FIL, USDFC, SFC or other Token) with the USDFC protocol Software whatsoever.

@@ -1,6 +1,6 @@
 {
   "name": "@secured-finance/stablecoin-lib-ethers",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "SDK Ethers-based implementation",
   "keywords": [
     "Secured Finance",
@@ -43,7 +43,7 @@
     "@ethersproject/wallet": "5.7.0",
     "@microsoft/api-extractor": "7.13.2",
     "@nomiclabs/hardhat-ethers": "^2.0.2",
-    "@secured-finance/stablecoin-contracts": "0.1.1",
+    "@secured-finance/stablecoin-contracts": "0.1.2",
     "@types/chai": "4.2.15",
     "@types/chai-as-promised": "7.1.3",
     "@types/chai-spies": "1.0.3",

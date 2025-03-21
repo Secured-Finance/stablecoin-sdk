@@ -4,15 +4,17 @@ import { Log } from "@ethersproject/abstract-provider";
 import { Signer } from "@ethersproject/abstract-signer";
 import { Overrides } from "@ethersproject/contracts";
 
+import { ethers } from "ethers";
 import { _ProtocolContract, _TypedLogDescription, _TypedProtocolContract } from "../src/contracts";
 import { log } from "./deploy";
 
 const factoryAbi = [
+  "function getPair(address tokenA, address tokenB) external view returns (address pair)",
   "function createPair(address tokenA, address tokenB) returns (address pair)",
   "event PairCreated(address indexed token0, address indexed token1, address pair, uint)"
 ];
 
-const factoryAddress = "0xB4C47eD546Fc31E26470a186eC2C5F19eF09BA41";
+const factoryAddress = "0x9B3336186a38E1b6c21955d112dbb0343Ee061eE";
 
 const hasFactory = (chainId: number) => [314].includes(chainId);
 
@@ -44,6 +46,14 @@ export const createUniswapV2Pair = async (
     factoryAbi,
     signer
   ) as unknown as UniswapV2Factory;
+
+  const pairAddr = await factory.getPair(tokenA, tokenB);
+  console.log("pairAddr:", pairAddr);
+
+  if (pairAddr !== ethers.constants.Zero) {
+    log(`Uniswap v2 WFIL <=> DebtToken pair already exists at ${pairAddr}`);
+    return pairAddr;
+  }
 
   log(`Creating Uniswap v2 WFIL <=> DebtToken pair...`);
 

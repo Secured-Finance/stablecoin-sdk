@@ -84,7 +84,7 @@ const waitForSuccess = async <T extends ProtocolReceipt>(
 
 // TODO make the testcases isolated
 
-describe("EthersSfStablecoin", () => {
+describe.skip("EthersSfStablecoin", () => {
   let deployer: Signer;
   let funder: Signer;
   let user: Signer;

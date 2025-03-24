@@ -1,5 +1,5 @@
 import { Signer } from "@ethersproject/abstract-signer";
-import { ContractFactory, ContractTransaction, Overrides } from "@ethersproject/contracts";
+import { ContractFactory } from "@ethersproject/contracts";
 import { Wallet } from "@ethersproject/wallet";
 import "dotenv/config";
 import fs from "fs-extra";
@@ -15,6 +15,7 @@ import {
   _connectToContracts
 } from "../src/contracts";
 
+import { getContractAddress } from "ethers/lib/utils";
 import mockAggregatorAbi from "../abi/MockAggregator.json";
 import { MockAggregator } from "../types";
 import { createUniswapV2Pair } from "./UniswapV2Factory";
@@ -49,12 +50,14 @@ const moduleDir = require
 const deploymentsDir = path.join(moduleDir, "deployments", "outputs");
 
 const deployContractAndGetBlockNumber = async (
+  isProxy: boolean,
   deployer: Signer,
   getContractFactory: (name: string, signer: Signer) => Promise<ContractFactory>,
   networkName: string,
   contractName: string,
   deploymentKey: string,
-  constructorArgs: unknown[]
+  constructorArgs: unknown[],
+  initializationArgs: unknown[] = []
 ): Promise<[address: string, blockNumber: number]> => {
   let contractAddress: string;
   let blockNumber: number;
@@ -83,7 +86,16 @@ const deployContractAndGetBlockNumber = async (
 
     const factory = await getContractFactory(contractName, deployer);
 
-    const contract = await factory.deploy(...constructorArgs);
+    const { upgrades } = await import("hardhat");
+
+    // const contract = await factory.deploy(...constructorArgs);
+    const contract = isProxy
+      ? await upgrades.deployProxy(factory, initializationArgs, {
+          unsafeAllow: ["constructor", "state-variable-immutable"],
+          constructorArgs,
+          redeployImplementation: "always"
+        })
+      : await factory.deploy(...constructorArgs);
 
     log(`Waiting for transaction ${contract.deployTransaction.hash} ...`);
     const receipt = await contract.deployTransaction.wait();
@@ -104,145 +116,252 @@ const deployContractAndGetBlockNumber = async (
   return [contractAddress, blockNumber];
 };
 
-const deployContract: (
-  ...p: Parameters<typeof deployContractAndGetBlockNumber>
-) => Promise<string> = (...p) => deployContractAndGetBlockNumber(...p).then(([a]) => a);
+type DeployContractParams = [
+  deployer: Signer,
+  getContractFactory: (name: string, signer: Signer) => Promise<ContractFactory>,
+  networkName: string,
+  contractName: string,
+  deploymentKey: string,
+  constructorArgs: unknown[],
+  initializationArgs?: unknown[]
+];
+
+const deployContract: (...p: DeployContractParams) => Promise<string> = (...p) =>
+  deployContractAndGetBlockNumber(false, ...p).then(([a]) => a);
+
+const deployProxyContract: (...p: DeployContractParams) => Promise<string> = (...p) =>
+  deployContractAndGetBlockNumber(true, ...p).then(([a]) => a);
+
+const proxyContractList = [
+  "activePool",
+  "troveManager",
+  "stabilityPool",
+  "borrowerOperations",
+  "collSurplusPool",
+  "communityIssuance",
+  "defaultPool",
+  "hintHelpers",
+  "lockupContractFactory",
+  "protocolTokenStaking",
+  "priceFeed",
+  "sortedTroves",
+  "gasPool",
+  "unipool",
+  "debtToken",
+  "protocolToken"
+];
 
 const deployContracts = async (
   deployer: Signer,
   getContractFactory: (name: string, signer: Signer) => Promise<ContractFactory>,
   networkName: string,
-  priceFeedIsTestnet = true,
-  overrides?: Overrides
+  priceFeedIsTestnet = true
 ): Promise<[addresses: Omit<_ProtocolContractAddresses, "uniToken">, startBlock: number]> => {
+  const mockContractAddresses = await deployMockContracts(deployer, getContractFactory, networkName);
+
+  const addressList = await computeContractAddresses(proxyContractList.length * 2 + 1, deployer);
+
+  // skip nonces for ProxyAdmin
+  addressList.shift();
+
+  const cpContracts = proxyContractList.reduce((acc, contract) => {
+    addressList.shift(); // skip implementation contract
+    acc[contract] = addressList.shift();
+    return acc;
+  }, {} as Record<string, string | undefined>);
+
   const [activePoolAddress, startBlock] = await deployContractAndGetBlockNumber(
+    true,
     deployer,
     getContractFactory,
     networkName,
     "ActivePool",
     "activePool",
-    [{ ...overrides }]
+    [],
+    [
+      cpContracts.borrowerOperations,
+      cpContracts.troveManager,
+      cpContracts.stabilityPool,
+      cpContracts.defaultPool
+    ]
   );
 
   const addresses = {
     activePool: activePoolAddress,
-    borrowerOperations: await deployContract(
-      deployer,
-      getContractFactory,
-      networkName,
-      "BorrowerOperations",
-      "borrowerOperations",
-      [gasCompensation, minNetDebt, { ...overrides }]
-    ),
-    troveManager: await deployContract(
+    troveManager: await deployProxyContract(
       deployer,
       getContractFactory,
       networkName,
       "TroveManager",
       "troveManager",
-      [gasCompensation, minNetDebt, bootstrapPeriod, { ...overrides }]
+      [gasCompensation, minNetDebt, bootstrapPeriod],
+      [
+        cpContracts.borrowerOperations,
+        cpContracts.activePool,
+        cpContracts.defaultPool,
+        cpContracts.stabilityPool,
+        cpContracts.gasPool,
+        cpContracts.collSurplusPool,
+        cpContracts.priceFeed,
+        cpContracts.debtToken,
+        cpContracts.sortedTroves,
+        cpContracts.protocolTokenStaking
+      ]
     ),
-    collSurplusPool: await deployContract(
-      deployer,
-      getContractFactory,
-      networkName,
-      "CollSurplusPool",
-      "collSurplusPool",
-      [{ ...overrides }]
-    ),
-    communityIssuance: await deployContract(
-      deployer,
-      getContractFactory,
-      networkName,
-      "CommunityIssuance",
-      "communityIssuance",
-      [{ ...overrides }]
-    ),
-    defaultPool: await deployContract(
-      deployer,
-      getContractFactory,
-      networkName,
-      "DefaultPool",
-      "defaultPool",
-      [{ ...overrides }]
-    ),
-    hintHelpers: await deployContract(
-      deployer,
-      getContractFactory,
-      networkName,
-      "HintHelpers",
-      "hintHelpers",
-      [gasCompensation, minNetDebt, { ...overrides }]
-    ),
-    lockupContractFactory: await deployContract(
-      deployer,
-      getContractFactory,
-      networkName,
-      "LockupContractFactory",
-      "lockupContractFactory",
-      [{ ...overrides }]
-    ),
-    protocolTokenStaking: await deployContract(
-      deployer,
-      getContractFactory,
-      networkName,
-      "ProtocolTokenStaking",
-      "protocolTokenStaking",
-      [{ ...overrides }]
-    ),
-    priceFeed: await deployContract(
-      deployer,
-      getContractFactory,
-      networkName,
-      priceFeedIsTestnet ? "MockPriceFeed" : "PriceFeed",
-      "priceFeed",
-      [24 * 60 * 60, { ...overrides }]
-    ),
-    sortedTroves: await deployContract(
-      deployer,
-      getContractFactory,
-      networkName,
-      "SortedTroves",
-      "sortedTroves",
-      [{ ...overrides }]
-    ),
-    stabilityPool: await deployContract(
+    stabilityPool: await deployProxyContract(
       deployer,
       getContractFactory,
       networkName,
       "StabilityPool",
       "stabilityPool",
-      [gasCompensation, minNetDebt, { ...overrides }]
+      [gasCompensation, minNetDebt],
+      [
+        cpContracts.borrowerOperations,
+        cpContracts.troveManager,
+        cpContracts.activePool,
+        cpContracts.debtToken,
+        cpContracts.sortedTroves,
+        cpContracts.priceFeed,
+        cpContracts.communityIssuance
+      ]
     ),
-    gasPool: await deployContract(deployer, getContractFactory, networkName, "GasPool", "gasPool", [
-      { ...overrides }
-    ]),
-    unipool: await deployContract(deployer, getContractFactory, networkName, "Unipool", "unipool", [
-      { ...overrides }
-    ])
+    borrowerOperations: await deployProxyContract(
+      deployer,
+      getContractFactory,
+      networkName,
+      "BorrowerOperations",
+      "borrowerOperations",
+      [gasCompensation, minNetDebt],
+      [
+        cpContracts.troveManager,
+        cpContracts.activePool,
+        cpContracts.defaultPool,
+        cpContracts.stabilityPool,
+        cpContracts.gasPool,
+        cpContracts.collSurplusPool,
+        cpContracts.priceFeed,
+        cpContracts.sortedTroves,
+        cpContracts.debtToken,
+        cpContracts.protocolTokenStaking
+      ]
+    ),
+    collSurplusPool: await deployProxyContract(
+      deployer,
+      getContractFactory,
+      networkName,
+      "CollSurplusPool",
+      "collSurplusPool",
+      [],
+      [cpContracts.borrowerOperations, cpContracts.troveManager, cpContracts.activePool]
+    ),
+    communityIssuance: await deployProxyContract(
+      deployer,
+      getContractFactory,
+      networkName,
+      "CommunityIssuance",
+      "communityIssuance",
+      [],
+      [cpContracts.protocolToken, cpContracts.stabilityPool]
+    ),
+    defaultPool: await deployProxyContract(
+      deployer,
+      getContractFactory,
+      networkName,
+      "DefaultPool",
+      "defaultPool",
+      [],
+      [cpContracts.troveManager, cpContracts.activePool]
+    ),
+    hintHelpers: await deployProxyContract(
+      deployer,
+      getContractFactory,
+      networkName,
+      "HintHelpers",
+      "hintHelpers",
+      [gasCompensation, minNetDebt],
+      [cpContracts.sortedTroves, cpContracts.troveManager]
+    ),
+    lockupContractFactory: await deployProxyContract(
+      deployer,
+      getContractFactory,
+      networkName,
+      "LockupContractFactory",
+      "lockupContractFactory",
+      [],
+      [cpContracts.protocolToken]
+    ),
+    protocolTokenStaking: await deployProxyContract(
+      deployer,
+      getContractFactory,
+      networkName,
+      "ProtocolTokenStaking",
+      "protocolTokenStaking",
+      [],
+      [
+        cpContracts.protocolToken,
+        cpContracts.debtToken,
+        cpContracts.troveManager,
+        cpContracts.borrowerOperations,
+        cpContracts.activePool
+      ]
+    ),
+    priceFeed: await deployProxyContract(
+      deployer,
+      getContractFactory,
+      networkName,
+      priceFeedIsTestnet ? "MockPriceFeed" : "PriceFeed",
+      "priceFeed",
+      [24 * 60 * 60],
+      [mockContractAddresses.mockAggregator, mockContractAddresses.mockTellor]
+    ),
+    sortedTroves: await deployProxyContract(
+      deployer,
+      getContractFactory,
+      networkName,
+      "SortedTroves",
+      "sortedTroves",
+      [],
+      [1e6, cpContracts.troveManager, cpContracts.borrowerOperations]
+    ),
+    gasPool: await deployProxyContract(
+      deployer,
+      getContractFactory,
+      networkName,
+      "GasPool",
+      "gasPool",
+      []
+    ),
+    unipool: await deployProxyContract(
+      deployer,
+      getContractFactory,
+      networkName,
+      "Unipool",
+      "unipool",
+      []
+    )
   };
 
   return [
     {
       ...addresses,
-      debtToken: await deployContract(
+      debtToken: await deployProxyContract(
         deployer,
         getContractFactory,
         networkName,
         "DebtToken",
         "debtToken",
-
-        [{ ...overrides }]
+        [],
+        [cpContracts.troveManager, cpContracts.stabilityPool, cpContracts.borrowerOperations]
       ),
 
-      protocolToken: await deployContract(
+      protocolToken: await deployProxyContract(
         deployer,
         getContractFactory,
         networkName,
         "ProtocolToken",
         "protocolToken",
-
-        [{ ...overrides }]
+        [],
+        [cpContracts.protocolTokenStaking, await deployer.getAddress(), "1000"]
       ),
 
       multiTroveGetter: await deployContract(
@@ -251,8 +370,7 @@ const deployContracts = async (
         networkName,
         "MultiTroveGetter",
         "multiTroveGetter",
-
-        [addresses.troveManager, addresses.sortedTroves, { ...overrides }]
+        [cpContracts.troveManager, cpContracts.sortedTroves]
       )
     },
 
@@ -263,8 +381,7 @@ const deployContracts = async (
 const deployMockContracts = async (
   deployer: Signer,
   getContractFactory: (name: string, signer: Signer) => Promise<ContractFactory>,
-  networkName: string,
-  overrides?: Overrides
+  networkName: string
 ): Promise<{ mockAggregator: string; mockTellor: string }> => {
   const mockAggregator = await deployContract(
     deployer,
@@ -272,7 +389,7 @@ const deployMockContracts = async (
     networkName,
     "MockAggregator",
     "mockAggregator",
-    [{ ...overrides }]
+    []
   );
   const mockTellor = await deployContract(
     deployer,
@@ -280,171 +397,48 @@ const deployMockContracts = async (
     networkName,
     "MockTellor",
     "mockTellor",
-    [{ ...overrides }]
+    []
   );
 
-  return { mockAggregator, mockTellor };
-};
-
-const connectContracts = async (
-  {
-    activePool,
-    borrowerOperations,
-    troveManager,
-    debtToken,
-    collSurplusPool,
-    communityIssuance,
-    defaultPool,
-    protocolToken,
-    hintHelpers,
-    lockupContractFactory,
-    protocolTokenStaking,
-    priceFeed,
-    sortedTroves,
-    stabilityPool,
-    gasPool,
-    unipool
-  }: _ProtocolContracts,
-  mockAggregatorAddress: string,
-  mockTellorAddress: string,
-  deployer: Signer,
-  overrides?: Overrides
-) => {
-  if (!deployer.provider) {
-    throw new Error("Signer must have a provider.");
-  }
-
-  const mockAggregator = new _ProtocolContract(
-    mockAggregatorAddress,
+  const mockAggregatorContract = new _ProtocolContract(
+    mockAggregator,
     mockAggregatorAbi,
     deployer
   ) as MockAggregator;
 
   await Promise.all(
     [
-      mockAggregator.setPrice(Decimal.from(10).pow(18).mul(200).toString(), {
-        ...overrides
-      }),
-      mockAggregator.setDecimals(18, { ...overrides }),
-      mockAggregator.setLatestRoundId(1, { ...overrides }),
-      mockAggregator.setUseBlockTimestamp(true, { ...overrides })
+      mockAggregatorContract.setPrice(Decimal.from(10).pow(18).mul(200).toString()),
+      mockAggregatorContract.setDecimals(18),
+      mockAggregatorContract.setLatestRoundId(1),
+      mockAggregatorContract.setUseBlockTimestamp(true)
     ].map(async tx => (await tx).wait())
   );
 
-  const txs: Promise<ContractTransaction>[] = [
-    sortedTroves.initialize(1e6, troveManager.address, borrowerOperations.address, { ...overrides }),
-    troveManager.initialize(
-      borrowerOperations.address,
-      activePool.address,
-      defaultPool.address,
-      stabilityPool.address,
-      gasPool.address,
-      collSurplusPool.address,
-      priceFeed.address,
-      debtToken.address,
-      sortedTroves.address,
-      protocolTokenStaking.address,
-      { ...overrides }
-    ),
-    borrowerOperations.initialize(
-      troveManager.address,
-      activePool.address,
-      defaultPool.address,
-      stabilityPool.address,
-      gasPool.address,
-      collSurplusPool.address,
-      priceFeed.address,
-      sortedTroves.address,
-      debtToken.address,
-      protocolTokenStaking.address,
-      { ...overrides }
-    ),
-    stabilityPool.initialize(
-      borrowerOperations.address,
-      troveManager.address,
-      activePool.address,
-      debtToken.address,
-      sortedTroves.address,
-      priceFeed.address,
-      communityIssuance.address,
-      { ...overrides }
-    ),
-    activePool.initialize(
-      borrowerOperations.address,
-      troveManager.address,
-      stabilityPool.address,
-      defaultPool.address,
-      { ...overrides }
-    ),
-    defaultPool.initialize(troveManager.address, activePool.address, { ...overrides }),
-    collSurplusPool.initialize(
-      borrowerOperations.address,
-      troveManager.address,
-      activePool.address,
-      { ...overrides }
-    ),
-    hintHelpers.initialize(sortedTroves.address, troveManager.address, {
-      ...overrides
-    }),
-    debtToken.initialize(troveManager.address, stabilityPool.address, borrowerOperations.address, {
-      ...overrides
-    }),
-    protocolTokenStaking.initialize(
-      protocolToken.address,
-      debtToken.address,
-      troveManager.address,
-      borrowerOperations.address,
-      activePool.address,
-      { ...overrides }
-    ),
-    priceFeed.initialize(mockAggregatorAddress, mockTellorAddress, { ...overrides }),
-    lockupContractFactory.initialize(protocolToken.address, {
-      ...overrides
-    }),
-    communityIssuance.initialize(protocolToken.address, stabilityPool.address, {
-      ...overrides
-    }),
-    protocolToken.initialize(protocolTokenStaking.address, await deployer.getAddress(), "1000"),
-    unipool.initialize()
-  ];
-
-  await Promise.all(txs.map(async tx => (await tx).wait()));
-
-  await (
-    await protocolToken.triggerInitialAllocation(
-      [communityIssuance.address, unipool.address],
-      ["10000000000000000000000000", "1300000000000000000000000"],
-      { ...overrides }
-    )
-  ).wait();
+  return { mockAggregator, mockTellor };
 };
 
 const connectUniswapPoolContract = async (
   { protocolToken, unipool, uniToken }: _ProtocolContracts,
-  deployer: Signer,
-  overrides?: Overrides
+  deployer: Signer
 ) => {
   if (!deployer.provider) {
     throw new Error("Signer must have a provider.");
   }
 
-  await unipool.setParams(protocolToken.address, uniToken.address, 2 * 30 * 24 * 60 * 60, {
-    ...overrides
-  });
+  await unipool.setParams(protocolToken.address, uniToken.address, 2 * 30 * 24 * 60 * 60);
 };
 
 const deployMockUniToken = (
   deployer: Signer,
   getContractFactory: (name: string, signer: Signer) => Promise<ContractFactory>,
-  networkName: string,
-  overrides?: Overrides
+  networkName: string
 ) =>
-  deployContract(deployer, getContractFactory, networkName, "ERC20Mock", "", [
+  deployProxyContract(deployer, getContractFactory, networkName, "ERC20Mock", "", [
     "Mock Uniswap V2",
     "UNI-V2",
     Wallet.createRandom().address, // initialAccount
-    0, // initialBalance
-    { ...overrides }
+    0 // initialBalance
   ]);
 
 export const deployAndSetupContracts = async (
@@ -452,8 +446,7 @@ export const deployAndSetupContracts = async (
   getContractFactory: (name: string, signer: Signer) => Promise<ContractFactory>,
   _priceFeedIsTestnet = true,
   networkName: string,
-  wethAddress?: string,
-  overrides?: Overrides
+  wethAddress?: string
 ): Promise<_ProtocolDeploymentJSON> => {
   if (!deployer.provider) {
     throw new Error("Signer must have a provider.");
@@ -473,48 +466,36 @@ export const deployAndSetupContracts = async (
     _uniTokenIsMock: !wethAddress,
     _isDev: networkName === "dev",
 
-    ...(await deployContracts(
-      deployer,
-      getContractFactory,
-      networkName,
-      _priceFeedIsTestnet,
-      overrides
-    ).then(async ([addresses, startBlock]) => ({
-      startBlock,
+    ...(await deployContracts(deployer, getContractFactory, networkName, _priceFeedIsTestnet).then(
+      async ([addresses, startBlock]) => ({
+        startBlock,
 
-      addresses: {
-        ...addresses,
+        addresses: {
+          ...addresses,
 
-        uniToken: await (wethAddress
-          ? createUniswapV2Pair(deployer, wethAddress, addresses.debtToken, overrides)
-          : deployMockUniToken(deployer, getContractFactory, networkName, overrides))
-      }
-    })))
+          uniToken: await (wethAddress
+            ? createUniswapV2Pair(deployer, wethAddress, addresses.debtToken)
+            : deployMockUniToken(deployer, getContractFactory, networkName))
+        }
+      })
+    ))
   };
 
   const contracts = _connectToContracts(deployer, deployment);
 
   if (!useDeployedContracts) {
-    log("Connecting contracts...");
-    const mockContractAddresses = await deployMockContracts(
-      deployer,
-      getContractFactory,
-      networkName,
-      overrides
-    );
-    await connectContracts(
-      contracts,
-      mockContractAddresses.mockAggregator,
-      mockContractAddresses.mockTellor,
-      deployer,
-      overrides
-    );
+    await (
+      await contracts.protocolToken.triggerInitialAllocation(
+        [contracts.communityIssuance.address, contracts.unipool.address],
+        ["10000000000000000000000000", "1300000000000000000000000"]
+      )
+    ).wait();
 
     const protocolTokenTotalSupply = await contracts.protocolToken.totalSupply();
 
     if (protocolTokenTotalSupply.gt(0)) {
       log("Connecting only Unipool contract...");
-      await connectUniswapPoolContract(contracts, deployer, overrides);
+      await connectUniswapPoolContract(contracts, deployer);
     }
   }
 
@@ -535,4 +516,19 @@ export const deployAndSetupContracts = async (
       liquidityMiningProtocolTokenRewardRate.toHexString()
     )}`
   };
+};
+
+const computeContractAddresses = async (count: number, deployerWallet: Signer) => {
+  const transactionCount = await deployerWallet.getTransactionCount();
+  const contractAddresses = [];
+
+  for (let i = 0; i < count; i++) {
+    const contractAddress = getContractAddress({
+      from: await deployerWallet.getAddress(),
+      nonce: transactionCount + i
+    });
+    contractAddresses.push(contractAddress);
+  }
+
+  return contractAddresses;
 };

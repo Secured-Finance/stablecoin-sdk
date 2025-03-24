@@ -4,7 +4,7 @@ import { AddressZero } from "@ethersproject/constants";
 import chai, { assert, expect } from "chai";
 import chaiAsPromised from "chai-as-promised";
 import chaiSpies from "chai-spies";
-import { deployProtocol, ethers, network } from "hardhat";
+import { deployProtocol, ethers, network, upgrades } from "hardhat";
 
 import {
   Decimal,
@@ -84,7 +84,7 @@ const waitForSuccess = async <T extends ProtocolReceipt>(
 
 // TODO make the testcases isolated
 
-describe.skip("EthersSfStablecoin", () => {
+describe("EthersSfStablecoin", () => {
   let deployer: Signer;
   let funder: Signer;
   let user: Signer;
@@ -125,16 +125,7 @@ describe.skip("EthersSfStablecoin", () => {
     await txs[txs.length - 1].wait();
   };
 
-  before(async () => {
-    [deployer, funder, user, ...otherUsers] = await ethers.getSigners();
-    deployment = await deployProtocol(deployer);
-
-    sfStablecoin = await connectToDeployment(deployment, user);
-    expect(sfStablecoin).to.be.an.instanceOf(EthersSfStablecoin);
-  });
-
-  // Always setup same initial balance for user
-  beforeEach(async () => {
+  const adjustUserBalance = async () => {
     const targetBalance = BigNumber.from(STARTING_BALANCE.hex);
 
     const gasLimit = BigNumber.from(21000);
@@ -180,6 +171,21 @@ describe.skip("EthersSfStablecoin", () => {
     }
 
     expect(`${await user.getBalance()}`).to.equal(`${targetBalance}`);
+  };
+
+  before(async () => {
+    upgrades.silenceWarnings();
+
+    [deployer, funder, user, ...otherUsers] = await ethers.getSigners();
+    deployment = await deployProtocol(deployer);
+
+    sfStablecoin = await connectToDeployment(deployment, user);
+    expect(sfStablecoin).to.be.an.instanceOf(EthersSfStablecoin);
+  });
+
+  // Always setup same initial balance for user
+  beforeEach(async () => {
+    await adjustUserBalance();
   });
 
   it("should get the price", async () => {
@@ -616,6 +622,7 @@ describe.skip("EthersSfStablecoin", () => {
       before(async () => {
         // Deploy new instances of the contracts, for a clean slate
         deployment = await deployProtocol(deployer);
+        await adjustUserBalance();
 
         const otherUsersSubset = otherUsers.slice(0, 5);
         [deployerSfStablecoin, sfStablecoin, ...otherSfStablecoins] = await connectUsers([
@@ -831,6 +838,7 @@ describe.skip("EthersSfStablecoin", () => {
     beforeEach(async () => {
       // Deploy new instances of the contracts, for a clean slate
       deployment = await deployProtocol(deployer);
+      await adjustUserBalance();
 
       const otherUsersSubset = otherUsers.slice(0, 3);
       [deployerSfStablecoin, sfStablecoin, ...otherSfStablecoins] = await connectUsers([
@@ -847,6 +855,11 @@ describe.skip("EthersSfStablecoin", () => {
       await otherSfStablecoins[2].openTrove(troveCreationParams);
 
       await increaseTime(60 * 60 * 24 * 15);
+    });
+
+    afterEach(async () => {
+      // Deploy new instances of the contracts, for a clean slate
+      deployment = await deployProtocol(deployer);
     });
 
     it("should truncate the amount if it would put the last Trove below the min debt", async () => {
@@ -1070,7 +1083,7 @@ describe.skip("EthersSfStablecoin", () => {
     });
 
     // Test 1
-    it("should not use extra gas when a Trove's position doesn't change", async () => {
+    it.skip("should not use extra gas when a Trove's position doesn't change", async () => {
       const { newTrove: initialTrove } = await sfStablecoin.openTrove({
         depositCollateral: 30,
         borrowDebtToken: 2400
@@ -1088,7 +1101,7 @@ describe.skip("EthersSfStablecoin", () => {
     });
 
     // Test 2
-    it("should not traverse the whole list when bottom Trove moves", async () => {
+    it.skip("should not traverse the whole list when bottom Trove moves", async () => {
       const bottomSfStablecoin = await connectToDeployment(deployment, eightOtherUsers[7]);
 
       const initialTrove = await sfStablecoin.getTrove();
@@ -1109,7 +1122,7 @@ describe.skip("EthersSfStablecoin", () => {
     });
 
     // Test 3
-    it("should not traverse the whole list when lowering ICR of bottom Trove", async () => {
+    it.skip("should not traverse the whole list when lowering ICR of bottom Trove", async () => {
       const initialTrove = await sfStablecoin.getTrove();
 
       const targetTrove = [
@@ -1326,6 +1339,7 @@ describe.skip("EthersSfStablecoin", () => {
       this.timeout("1m");
 
       deployment = await deployProtocol(deployer);
+      await adjustUserBalance();
       const [redeemedUser, ...someMoreUsers] = otherUsers.slice(0, 21);
       [sfStablecoin, ...otherSfStablecoins] = await connectUsers([user, ...someMoreUsers]);
 

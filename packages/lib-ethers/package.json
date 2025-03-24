@@ -44,6 +44,7 @@
     "@ethersproject/wallet": "5.7.0",
     "@microsoft/api-extractor": "7.13.2",
     "@nomiclabs/hardhat-ethers": "^2.0.2",
+    "@openzeppelin/hardhat-upgrades": "1.28.0",
     "@secured-finance/stablecoin-contracts": "1.0.0",
     "@types/chai": "4.2.15",
     "@types/chai-as-promised": "7.1.3",

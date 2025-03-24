@@ -5,14 +5,13 @@ import path from "path";
 
 import { JsonFragment } from "@ethersproject/abi";
 import { Signer } from "@ethersproject/abstract-signer";
-import { ContractFactory, Overrides } from "@ethersproject/contracts";
+import { ContractFactory } from "@ethersproject/contracts";
 import { Wallet } from "@ethersproject/wallet";
 
 import "@nomiclabs/hardhat-ethers";
+import "@openzeppelin/hardhat-upgrades";
 import { extendEnvironment, HardhatUserConfig, task, types } from "hardhat/config";
 import { HardhatRuntimeEnvironment } from "hardhat/types";
-
-import { Decimal } from "@secured-finance/stablecoin-lib-base";
 
 import { _ProtocolDeploymentJSON } from "./src/contracts";
 import { deployAndSetupContracts, setSilent } from "./utils/deploy";
@@ -114,8 +113,7 @@ declare module "hardhat/types/runtime" {
     deployProtocol: (
       deployer: Signer,
       useRealPriceFeed?: boolean,
-      wrappedNativeTokenAddress?: string,
-      overrides?: Overrides
+      wrappedNativeTokenAddress?: string
     ) => Promise<_ProtocolDeploymentJSON>;
   }
 }
@@ -136,16 +134,16 @@ extendEnvironment(env => {
   env.deployProtocol = async (
     deployer,
     useRealPriceFeed = false,
-    wrappedNativeTokenAddress = undefined,
-    overrides?: Overrides
+    wrappedNativeTokenAddress = undefined
   ) => {
+    await env.network.provider.send("hardhat_reset");
+
     const deployment = await deployAndSetupContracts(
       deployer,
       getContractFactory(env),
       !useRealPriceFeed,
       env.network.name,
-      wrappedNativeTokenAddress,
-      overrides
+      wrappedNativeTokenAddress
     );
 
     return { ...deployment, version: contractsVersion };
@@ -176,42 +174,38 @@ task("deploy", "Deploys the contracts to the network")
     undefined,
     types.boolean
   )
-  .setAction(
-    async ({ channel, gasPrice, useRealPriceFeed, createUniswapPair }: DeployParams, env) => {
-      const overrides = { gasPrice: gasPrice && Decimal.from(gasPrice).div(1000000000).hex };
-      const [deployer] = await env.ethers.getSigners();
+  .setAction(async ({ channel, useRealPriceFeed, createUniswapPair }: DeployParams, env) => {
+    const [deployer] = await env.ethers.getSigners();
 
-      useRealPriceFeed ??= env.network.name === "mainnet";
+    useRealPriceFeed ??= env.network.name === "mainnet";
 
-      let wrappedNativeTokenAddress: string | undefined = undefined;
-      if (createUniswapPair) {
-        if (!hasWrappedNativeToken(env.network.name)) {
-          throw new Error(`Wrapped native token not deployed on ${env.network.name}`);
-        }
-        wrappedNativeTokenAddress = wrappedNativeTokenAddresses[env.network.name];
+    let wrappedNativeTokenAddress: string | undefined = undefined;
+    if (createUniswapPair) {
+      if (!hasWrappedNativeToken(env.network.name)) {
+        throw new Error(`Wrapped native token not deployed on ${env.network.name}`);
       }
-
-      setSilent(false);
-
-      const deployment = await env.deployProtocol(
-        deployer,
-        useRealPriceFeed,
-        wrappedNativeTokenAddress,
-        overrides
-      );
-
-      fs.mkdirSync(path.join("deployments", channel), { recursive: true });
-
-      fs.writeFileSync(
-        path.join("deployments", channel, `${env.network.name}.json`),
-        JSON.stringify(deployment, undefined, 2)
-      );
-
-      console.log();
-      console.log(deployment);
-      console.log();
+      wrappedNativeTokenAddress = wrappedNativeTokenAddresses[env.network.name];
     }
-  );
+
+    setSilent(false);
+
+    const deployment = await env.deployProtocol(
+      deployer,
+      useRealPriceFeed,
+      wrappedNativeTokenAddress
+    );
+
+    fs.mkdirSync(path.join("deployments", channel), { recursive: true });
+
+    fs.writeFileSync(
+      path.join("deployments", channel, `${env.network.name}.json`),
+      JSON.stringify(deployment, undefined, 2)
+    );
+
+    console.log();
+    console.log(deployment);
+    console.log();
+  });
 
 type StorageSlotParams = {
   contractAddress: string;

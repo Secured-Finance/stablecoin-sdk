@@ -9,7 +9,7 @@
     "@ethersproject/experimental": "5.7.0",
     "@fortawesome/fontawesome-svg-core": "1.2.34",
     "@fortawesome/free-regular-svg-icons": "5.15.2",
-    "@fortawesome/free-solid-svg-icons": "5.15.2",
+    "@fortawesome/free-solid-svg-icons": "6.7.2",
     "@fortawesome/react-fontawesome": "0.1.14",
     "@metamask/eth-sig-util": "5.0.1",
     "@tanstack/react-query": "^5.24.1",

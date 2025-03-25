@@ -23,7 +23,7 @@
     "react": "^16.13.1"
   },
   "devDependencies": {
-    "@ethersproject/bignumber": "5.7.0",
+    "@ethersproject/bignumber": "5.8.0",
     "@types/react": "^18.2.60",
     "@typescript-eslint/eslint-plugin": "5.57.1",
     "@typescript-eslint/parser": "5.57.1",

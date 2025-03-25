@@ -1,6 +1,6 @@
 {
   "name": "@secured-finance/stablecoin-lib-ethers",
-  "version": "0.2.0",
+  "version": "0.0.0-semantic-release",
   "description": "SDK Ethers-based implementation",
   "keywords": [
     "Secured Finance",

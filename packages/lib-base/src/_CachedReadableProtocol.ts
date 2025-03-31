@@ -258,4 +258,15 @@ export class _CachedReadableProtocol<T extends unknown[]>
       this._readable.findRedemptionHints(amount, ...extraParams)
     );
   }
+
+  async getDebtInFront(
+    address: string,
+    iterations: number,
+    ...extraParams: T
+  ): Promise<[debt: Decimal, next: string]> {
+    return (
+      this._cache.getDebtInFront(address, iterations, ...extraParams) ??
+      this._readable.getDebtInFront(address, iterations, ...extraParams)
+    );
+  }
 }

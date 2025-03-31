@@ -667,6 +667,16 @@ export class ReadableEthers implements ReadableProtocol {
       partialRedemptionHintNICR
     ];
   }
+
+  async getDebtInFront(
+    address: string,
+    iterations: number,
+    overrides?: EthersCallOverrides
+  ): Promise<[debt: Decimal, next: string]> {
+    const { usdfcView } = _getContracts(this.connection);
+    const { next, debt } = await usdfcView.getDebtInFront(address, 0, iterations, { ...overrides });
+    return [decimalify(debt), next];
+  }
 }
 
 type Resolved<T> = T extends Promise<infer U> ? U : T;
@@ -732,7 +742,9 @@ class _BlockPolledReadableEthers implements ReadableEthersWithStore<BlockPolledS
     );
   }
 
-  hasStore(store?: EthersSfStablecoinStoreOption): boolean {
+  hasStore(
+    store?: EthersSfStablecoinStoreOption
+  ): this is ReadableEthersWithStore<BlockPolledSfStablecoinStore> {
     return store === undefined || store === "blockPolled";
   }
 
@@ -929,6 +941,14 @@ class _BlockPolledReadableEthers implements ReadableEthersWithStore<BlockPolledS
     ]
   > {
     return this._readable.findRedemptionHints(amount, overrides);
+  }
+
+  async getDebtInFront(
+    address: string,
+    iterations: number,
+    overrides?: EthersCallOverrides
+  ): Promise<[debt: Decimal, next: string]> {
+    return this._readable.getDebtInFront(address, iterations, overrides);
   }
 
   getTroves(

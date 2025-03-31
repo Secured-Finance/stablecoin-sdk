@@ -371,6 +371,14 @@ const deployContracts = async (
         "MultiTroveGetter",
         "multiTroveGetter",
         [cpContracts.troveManager, cpContracts.sortedTroves]
+      ),
+      usdfcView: await deployContract(
+        deployer,
+        getContractFactory,
+        networkName,
+        "USDFCView",
+        "usdfcView",
+        [cpContracts.troveManager, cpContracts.sortedTroves]
       )
     },
 

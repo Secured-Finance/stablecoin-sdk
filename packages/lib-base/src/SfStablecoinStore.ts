@@ -101,6 +101,9 @@ export interface SfStablecoinStoreBaseState {
 
   /** @internal */
   _riskiestTroveBeforeRedistribution: TroveWithPendingRedistribution;
+
+  /** The sum of DebtToken balance in front of the user's Trove. */
+  debtInFront: [debt: Decimal, next: string];
 }
 
 /**
@@ -480,6 +483,15 @@ export abstract class SfStablecoinStore<T = unknown> {
         equals,
         baseState._riskiestTroveBeforeRedistribution,
         baseStateUpdate._riskiestTroveBeforeRedistribution
+      ),
+
+      debtInFront: this._updateIfChanged(
+        (a: [Decimal, string], b: [Decimal, string]) => {
+          return a[0].eq(b[0]) && a[1] === b[1];
+        },
+        "debtInFront",
+        baseState.debtInFront,
+        baseStateUpdate.debtInFront
       )
     };
   }

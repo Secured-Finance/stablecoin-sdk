@@ -289,6 +289,20 @@ Get the amount of leftover collateral available for withdrawal by an address.
 </td></tr>
 <tr><td>
 
+[getDebtInFront(address, iterations, overrides)](./stablecoin-lib-ethers.etherssfstablecoin.getdebtinfront.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Get the Debt in front of a given address.
+
+
+</td></tr>
+<tr><td>
+
 [getDebtTokenBalance(address, overrides)](./stablecoin-lib-ethers.etherssfstablecoin.getdebttokenbalance.md)
 
 

@@ -174,6 +174,8 @@ export class EthersSfStablecoin implements ReadableEthers, TransactableProtocol 
     // (undocumented)
     getCollateralSurplusBalance(address?: string, overrides?: EthersCallOverrides): Promise<Decimal>;
     // (undocumented)
+    getDebtInFront(address: string, iterations: number, overrides?: EthersCallOverrides): Promise<[debt: Decimal, next: string]>;
+    // (undocumented)
     getDebtTokenBalance(address?: string, overrides?: EthersCallOverrides): Promise<Decimal>;
     // (undocumented)
     getDebtTokenInStabilityPool(overrides?: EthersCallOverrides): Promise<Decimal>;
@@ -485,6 +487,8 @@ export class ReadableEthers implements ReadableProtocol {
     _getBlockTimestamp(blockTag?: BlockTag): Promise<number>;
     // (undocumented)
     getCollateralSurplusBalance(address?: string, overrides?: EthersCallOverrides): Promise<Decimal>;
+    // (undocumented)
+    getDebtInFront(address: string, iterations: number, overrides?: EthersCallOverrides): Promise<[debt: Decimal, next: string]>;
     // (undocumented)
     getDebtTokenBalance(address?: string, overrides?: EthersCallOverrides): Promise<Decimal>;
     // (undocumented)

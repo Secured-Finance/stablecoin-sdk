@@ -397,4 +397,8 @@ export class SubgraphSfStablecoin implements ReadableProtocol, ObservableProtoco
   > {
     throw new Error("Method not implemented.");
   }
+
+  getDebtInFront(address: string, iterations: number): Promise<[debt: Decimal, next: string]> {
+    throw new Error("Method not implemented.");
+  }
 }

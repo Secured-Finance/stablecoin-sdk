@@ -348,6 +348,15 @@ export class EthersSfStablecoin implements ReadableEthers, TransactableProtocol 
     return this._readable.findRedemptionHints(Decimal.from(amount), overrides);
   }
 
+  /** {@inheritdoc @secured-finance/stablecoin-lib-base#ReadableProtocol.getDebtInFront} */
+  getDebtInFront(
+    address: string,
+    iterations: number,
+    overrides?: EthersCallOverrides
+  ): Promise<[debt: Decimal, next: string]> {
+    return this._readable.getDebtInFront(address, iterations, overrides);
+  }
+
   /**
    * {@inheritDoc @secured-finance/stablecoin-lib-base#TransactableProtocol.openTrove}
    *
@@ -730,6 +739,8 @@ class _EthersSfStablecoinWithStore<T extends SfStablecoinStore = SfStablecoinSto
     this.store = readable.store;
   }
 
+  hasStore(): this is EthersSfStablecoinWithStore<SfStablecoinStore<unknown>>;
+  hasStore(store: "blockPolled"): this is EthersSfStablecoinWithStore<BlockPolledSfStablecoinStore>;
   hasStore(store?: EthersSfStablecoinStoreOption): boolean {
     return store === undefined || store === this.connection.useStore;
   }

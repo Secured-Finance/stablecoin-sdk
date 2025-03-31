@@ -21,13 +21,18 @@ class Main {
     this.copyDirs(contractsDir, `${rootDir}/contracts`);
     this.copyDirs(artifactsDir, `${rootDir}/artifacts`);
     this.copyDirs(cacheDir, `${rootDir}/cache`);
+
+    this.copyDirs("../periphery/contracts", `${rootDir}/contracts`, false);
   }
 
-  private copyDirs(src: string, dest: string) {
-    if (existsSync(dest)) {
-      rmSync(dest, { recursive: true });
+  private copyDirs(src: string, dest: string, force = true) {
+    if (force) {
+      if (existsSync(dest)) {
+        rmSync(dest, { recursive: true });
+      }
+
+      mkdirSync(dest);
     }
-    mkdirSync(dest);
 
     for (const dir of readdirSync(src)) {
       this.copyDir(`${src}/${dir}`, `${dest}/${dir}`);

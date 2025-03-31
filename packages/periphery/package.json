@@ -2,12 +2,18 @@
   "name": "@secured-finance/stablecoin-periphery",
   "version": "0.1.0",
   "description": "Peripheral smart contracts for Secured Finance Stablecoin",
+  "files": [
+    "/artifacts/**/*",
+    "/deployments/**/*",
+    "/contracts/**/*.sol"
+  ],
   "scripts": {
     "deploy": "hardhat deploy --network",
     "eslint": "eslint",
     "prepare": "run-s 'prepare:*'",
     "prepare:prettier": "prettier --check '**/*.{ts,js,json,sol}'",
-    "prepare:compile": "hardhat compile"
+    "prepare:compile": "hardhat compile",
+    "prepublishOnly": "hardhat compile"
   },
   "license": "MIT",
   "devDependencies": {

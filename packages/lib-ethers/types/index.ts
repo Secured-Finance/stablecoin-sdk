@@ -1020,3 +1020,18 @@ export interface IERC20
   extractEvents(logs: Log[], name: "Approval"): _TypedLogDescription<{ owner: string; spender: string; value: BigNumber }>[];
   extractEvents(logs: Log[], name: "Transfer"): _TypedLogDescription<{ from: string; to: string; value: BigNumber }>[];
 }
+
+interface USDFCViewCalls {
+  SortedTroves(_overrides?: CallOverrides): Promise<string>;
+  TroveManager(_overrides?: CallOverrides): Promise<string>;
+  getDebtInFront(_of: string, _acc: BigNumberish, _iterations: BigNumberish, _overrides?: CallOverrides): Promise<{ next: string; debt: BigNumber }>;
+}
+
+interface USDFCViewTransactions {
+}
+
+export interface USDFCView
+  extends _TypedProtocolContract<USDFCViewCalls, USDFCViewTransactions> {
+  readonly filters: {
+  };
+}

@@ -149,8 +149,11 @@ const contractList = [
   "USDFCView"
 ];
 
+const peripheryModuleDir = require
+  .resolve("@secured-finance/stablecoin-periphery/package.json")
+  .replace("/package.json", "");
 const artifactsDir = path.join("./", "artifacts");
-const peripheryArtifactsDir = path.join("../periphery", "artifacts");
+const peripheryArtifactsDir = path.join(peripheryModuleDir, "artifacts");
 
 fs.removeSync("abi");
 fs.mkdirSync("abi", { recursive: true });

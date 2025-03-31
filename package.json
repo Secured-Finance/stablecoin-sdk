@@ -34,6 +34,7 @@
     "release:delete-dev-deployments": "npm run delete-dev-deployments --workspace=@secured-finance/stablecoin-lib-ethers",
     "release:lib-base": "npm run release --workspace=@secured-finance/stablecoin-lib-base",
     "release:lib-ethers": "npm run release --workspace=@secured-finance/stablecoin-lib-ethers",
+    "release:periphery": "npm run release --workspace=@secured-finance/stablecoin-periphery",
     "save-live-version": "npm run save-live-version --workspace=@secured-finance/stablecoin-lib-ethers",
     "start-dev-frontend": "npm run start --workspace=@secured-finance/dev-frontend",
     "test": "run-s 'test:*'",

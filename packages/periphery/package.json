@@ -1,6 +1,6 @@
 {
   "name": "@secured-finance/stablecoin-periphery",
-  "version": "0.1.0",
+  "version": "0.0.0-semantic-release",
   "description": "Peripheral smart contracts for Secured Finance Stablecoin",
   "files": [
     "/artifacts/**/*",
@@ -13,7 +13,8 @@
     "prepare": "run-s 'prepare:*'",
     "prepare:prettier": "prettier --check '**/*.{ts,js,json,sol}'",
     "prepare:compile": "hardhat compile",
-    "prepublishOnly": "hardhat compile"
+    "release": "semantic-release -e semantic-release-monorepo",
+    "prepublishOnly": "npm run prepare"
   },
   "license": "MIT",
   "devDependencies": {

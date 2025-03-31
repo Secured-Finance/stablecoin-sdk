@@ -10,11 +10,11 @@
   "scripts": {
     "deploy": "hardhat deploy --network",
     "eslint": "eslint",
-    "prepare": "run-s 'prepare:*'",
-    "prepare:prettier": "prettier --check '**/*.{ts,js,json,sol}'",
-    "prepare:compile": "hardhat compile",
+    "build": "run-s 'build:*'",
+    "build:compile": "hardhat compile",
+    "build:prettier": "prettier --check '**/*.{ts,js,json,sol}'",
     "release": "semantic-release -e semantic-release-monorepo",
-    "prepublishOnly": "npm run prepare"
+    "prepublishOnly": "npm run build"
   },
   "license": "MIT",
   "devDependencies": {

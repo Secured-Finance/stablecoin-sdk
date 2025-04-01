@@ -11,23 +11,32 @@ const excludedContracts = [
 class Main {
   run() {
     const rootDir = process.cwd();
-    const moduleDir = require
+    const coreModuleDir = require
       .resolve("@secured-finance/stablecoin-contracts/package.json")
       .replace("/package.json", "");
-    const contractsDir = path.join(moduleDir, "contracts");
-    const artifactsDir = path.join(moduleDir, "artifacts");
-    const cacheDir = path.join(moduleDir, "cache");
+    const peripheryModuleDir = require
+      .resolve("@secured-finance/stablecoin-periphery/package.json")
+      .replace("/package.json", "");
+    const coreContractsDir = path.join(coreModuleDir, "contracts");
+    const artifactsDir = path.join(coreModuleDir, "artifacts");
+    const cacheDir = path.join(coreModuleDir, "cache");
+    const peripheryContractsDir = path.join(peripheryModuleDir, "contracts");
 
-    this.copyDirs(contractsDir, `${rootDir}/contracts`);
+    this.copyDirs(coreContractsDir, `${rootDir}/contracts`);
     this.copyDirs(artifactsDir, `${rootDir}/artifacts`);
     this.copyDirs(cacheDir, `${rootDir}/cache`);
+
+    this.copyDirs(peripheryContractsDir, `${rootDir}/contracts`, false);
   }
 
-  private copyDirs(src: string, dest: string) {
-    if (existsSync(dest)) {
-      rmSync(dest, { recursive: true });
+  private copyDirs(src: string, dest: string, force = true) {
+    if (force) {
+      if (existsSync(dest)) {
+        rmSync(dest, { recursive: true });
+      }
+
+      mkdirSync(dest);
     }
-    mkdirSync(dest);
 
     for (const dir of readdirSync(src)) {
       this.copyDir(`${src}/${dir}`, `${dest}/${dir}`);

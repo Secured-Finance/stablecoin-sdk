@@ -15,9 +15,10 @@
   "repository": "https://github.com/Secured-Finance/stablecoin-sdk",
   "scripts": {
     "eslint": "eslint",
-    "prepare": "run-s 'prepare:*'",
-    "prepare:eslint": "eslint src",
-    "prepare:tsc": "tsc --project tsconfig.dist.json"
+    "build": "run-s 'build:*'",
+    "build:eslint": "eslint src",
+    "build:tsc": "tsc --project tsconfig.dist.json",
+    "prepublishOnly": "npm run build"
   },
   "peerDependencies": {
     "react": "^16.13.1"

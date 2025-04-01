@@ -64,6 +64,17 @@ Get the amount of leftover collateral available for withdrawal by an address.
 </td></tr>
 <tr><td>
 
+[getDebtInFront(address, iterations)](./stablecoin-lib-base.readableprotocol.getdebtinfront.md)
+
+
+</td><td>
+
+Get the Debt in front of a given address.
+
+
+</td></tr>
+<tr><td>
+
 [getDebtTokenBalance(address)](./stablecoin-lib-base.readableprotocol.getdebttokenbalance.md)
 
 

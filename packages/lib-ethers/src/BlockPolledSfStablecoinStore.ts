@@ -142,7 +142,8 @@ export class BlockPolledSfStablecoinStore extends SfStablecoinStore<BlockPolledS
               }),
               stabilityDeposit: this._readable.getStabilityDeposit(userAddress, { blockTag }),
               protocolTokenStake: this._readable.getProtocolTokenStake(userAddress, { blockTag }),
-              ownFrontend: this._readable.getFrontendStatus(userAddress, { blockTag })
+              ownFrontend: this._readable.getFrontendStatus(userAddress, { blockTag }),
+              debtInFront: this._readable.getDebtInFront(userAddress, 500, { blockTag })
             }
           : {
               accountBalance: Decimal.ZERO,
@@ -165,7 +166,8 @@ export class BlockPolledSfStablecoinStore extends SfStablecoinStore<BlockPolledS
                 AddressZero
               ),
               protocolTokenStake: new ProtocolTokenStake(),
-              ownFrontend: { status: "unregistered" as const }
+              ownFrontend: { status: "unregistered" as const },
+              debtInFront: [Decimal.ZERO, AddressZero] as [debt: Decimal, next: string]
             })
       });
 

@@ -93,12 +93,12 @@ const config: HardhatUserConfig = {
     },
 
     mainnet: {
-      url: process.env.RPC_ENDPOINT || "http://localhost:8545",
+      url: process.env.MAINNET_RPC_ENDPOINT || "http://localhost:8545",
       accounts: [deployerAccount]
     },
 
     testnet: {
-      url: process.env.RPC_ENDPOINT || "http://localhost:8545",
+      url: process.env.TESTNET_RPC_ENDPOINT || "http://localhost:8545",
       accounts: [deployerAccount]
     },
 

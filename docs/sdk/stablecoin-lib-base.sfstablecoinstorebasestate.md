@@ -75,6 +75,25 @@ Amount of leftover collateral available for withdrawal to the user.
 </td></tr>
 <tr><td>
 
+[debtInFront](./stablecoin-lib-base.sfstablecoinstorebasestate.debtinfront.md)
+
+
+</td><td>
+
+
+</td><td>
+
+\[debt: [Decimal](./stablecoin-lib-base.decimal.md)<!-- -->, next: string\]
+
+
+</td><td>
+
+The sum of DebtToken balance in front of the user's Trove.
+
+
+</td></tr>
+<tr><td>
+
 [debtTokenBalance](./stablecoin-lib-base.sfstablecoinstorebasestate.debttokenbalance.md)
 
 

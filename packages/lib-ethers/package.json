@@ -18,13 +18,13 @@
     "deploy": "hardhat deploy --network",
     "check-live-version": "ts-node scripts/check-live-version.ts",
     "delete-dev-deployments": "ts-node scripts/delete-dev-deployments.ts",
-    "prepare": "run-s 'prepare:*'",
-    "prepare:contracts": "ts-node scripts/copy-contracts.ts",
-    "prepare:deployments": "ts-node scripts/copy-deployments.ts",
-    "prepare:types": "ts-node scripts/generate-types.ts",
-    "prepare:eslint": "eslint src",
-    "prepare:tsc": "tsc --project tsconfig.dist.json",
-    "prepare:api": "api-extractor run --local",
+    "build": "run-s 'build:*'",
+    "build:contracts": "ts-node scripts/copy-contracts.ts",
+    "build:deployments": "ts-node scripts/copy-deployments.ts",
+    "build:types": "ts-node scripts/generate-types.ts",
+    "build:eslint": "eslint src",
+    "build:tsc": "tsc --project tsconfig.dist.json",
+    "build:api": "api-extractor run --local",
     "release": "semantic-release -e semantic-release-monorepo",
     "save-live-version": "run-s 'save-live-version:*'",
     "save-live-version:run": "ts-node scripts/save-live-version.ts",
@@ -33,7 +33,8 @@
     "test": "DOTENV_CONFIG_PATH=.env.test hardhat test",
     "test-live": "run-s 'test-live:*'",
     "test-live:check-version": "run-s check-live-version",
-    "test-live:run": "cross-env USE_LIVE_VERSION=true hardhat test"
+    "test-live:run": "cross-env USE_LIVE_VERSION=true hardhat test",
+    "prepublishOnly": "npm run build"
   },
   "peerDependencies": {
     "ethers": "^5.3.0"

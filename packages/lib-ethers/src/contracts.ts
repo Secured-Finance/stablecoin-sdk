@@ -32,6 +32,7 @@ import sortedTrovesAbi from "../abi/SortedTroves.json";
 import stabilityPoolAbi from "../abi/StabilityPool.json";
 import troveManagerAbi from "../abi/TroveManager.json";
 import unipoolAbi from "../abi/Unipool.json";
+import usdfcViewAbi from "../abi/USDFCView.json";
 
 import {
   ActivePool,
@@ -53,7 +54,8 @@ import {
   SortedTroves,
   StabilityPool,
   TroveManager,
-  Unipool
+  Unipool,
+  USDFCView
 } from "../types";
 
 import { EthersProvider, EthersSigner } from "./types";
@@ -167,7 +169,11 @@ export type _TypedProtocolContract<T = unknown, U = unknown> = TypedContract<
 >;
 
 /** @internal */
-export interface _ProtocolContracts {
+export interface _PeripheryContracts {
+  usdfcView: USDFCView;
+}
+
+export interface _ProtocolContracts extends _PeripheryContracts {
   activePool: ActivePool;
   borrowerOperations: BorrowerOperations;
   troveManager: TroveManager;
@@ -222,7 +228,8 @@ const getAbi = (priceFeedIsTestnet: boolean, uniTokenIsMock: boolean): ProtocolC
   gasPool: gasPoolAbi,
   collSurplusPool: collSurplusPoolAbi,
   unipool: unipoolAbi,
-  uniToken: uniTokenIsMock ? erc20MockAbi : iERC20Abi
+  uniToken: uniTokenIsMock ? erc20MockAbi : iERC20Abi,
+  usdfcView: usdfcViewAbi
 });
 
 const mapContracts = <T, U>(

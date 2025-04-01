@@ -236,4 +236,11 @@ export interface ReadableProtocol {
       partialRedemptionHintNICR: BigNumber
     ]
   >;
+
+  /**
+   * Get the Debt in front of a given address.
+   * @param address - The address to get the Debt in front of.
+   * @param iterations - The number of iterations to run the calculation for.
+   */
+  getDebtInFront(address: string, iterations: number): Promise<[debt: Decimal, next: string]>;
 }

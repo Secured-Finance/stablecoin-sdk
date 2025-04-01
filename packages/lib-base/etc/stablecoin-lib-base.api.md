@@ -22,6 +22,8 @@ export class _CachedReadableProtocol<T extends unknown[]> implements _ReadablePr
     // (undocumented)
     getCollateralSurplusBalance(address?: string, ...extraParams: T): Promise<Decimal>;
     // (undocumented)
+    getDebtInFront(address: string, iterations: number, ...extraParams: T): Promise<[debt: Decimal, next: string]>;
+    // (undocumented)
     getDebtTokenBalance(address?: string, ...extraParams: T): Promise<Decimal>;
     // (undocumented)
     getDebtTokenInStabilityPool(...extraParams: T): Promise<Decimal>;
@@ -443,6 +445,7 @@ export interface ReadableProtocol {
         partialRedemptionHintNICR: BigNumber
     ]>;
     getCollateralSurplusBalance(address?: string): Promise<Decimal>;
+    getDebtInFront(address: string, iterations: number): Promise<[debt: Decimal, next: string]>;
     getDebtTokenBalance(address?: string): Promise<Decimal>;
     getDebtTokenInStabilityPool(): Promise<Decimal>;
     getFees(): Promise<Fees>;
@@ -563,6 +566,7 @@ export abstract class SfStablecoinStore<T = unknown> {
 export interface SfStablecoinStoreBaseState {
     accountBalance: Decimal;
     collateralSurplusBalance: Decimal;
+    debtInFront: [debt: Decimal, next: string];
     debtTokenBalance: Decimal;
     debtTokenInStabilityPool: Decimal;
     // @internal (undocumented)

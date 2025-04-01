@@ -122,6 +122,7 @@ const declareInterface = ({
   ].join("\n");
 
 const contractList = [
+  // Core
   "ActivePool",
   "BorrowerOperations",
   "CollSurplusPool",
@@ -143,10 +144,16 @@ const contractList = [
   "CommunityIssuance",
   "LockupContractFactory",
   "ProtocolTokenStaking",
-  "ProtocolToken"
+  "ProtocolToken",
+  // Periphery
+  "USDFCView"
 ];
 
+const peripheryModuleDir = require
+  .resolve("@secured-finance/stablecoin-periphery/package.json")
+  .replace("/package.json", "");
 const artifactsDir = path.join("./", "artifacts");
+const peripheryArtifactsDir = path.join(peripheryModuleDir, "artifacts");
 
 fs.removeSync("abi");
 fs.mkdirSync("abi", { recursive: true });
@@ -172,7 +179,8 @@ const contracts = [
   ...getContracts(`${artifactsDir}/contracts/LPRewards`),
   ...getContracts(`${artifactsDir}/contracts/ProtocolToken`),
   ...getContracts(`${artifactsDir}/contracts/TestContracts`),
-  ...getContracts(`${artifactsDir}/contracts/Dependencies/OpenZeppelin/token/ERC20`)
+  ...getContracts(`${artifactsDir}/contracts/Dependencies/OpenZeppelin/token/ERC20`),
+  ...getContracts(`${peripheryArtifactsDir}/contracts`)
 ];
 
 const output = `

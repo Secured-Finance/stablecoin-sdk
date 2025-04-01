@@ -2,8 +2,6 @@ import { Block, BlockTag } from "@ethersproject/abstract-provider";
 import { Signer } from "@ethersproject/abstract-signer";
 
 import { Decimal } from "@secured-finance/stablecoin-lib-base";
-import usdfcViewMainnetJson from "@secured-finance/stablecoin-periphery/deployments/mainnet/USDFCView.json";
-import usdfcViewTestnetJson from "@secured-finance/stablecoin-periphery/deployments/testnet/USDFCView.json";
 
 import devOrNull from "../deployments/dev.json";
 import mainnet from "../deployments/mainnet.json";
@@ -26,14 +24,8 @@ const dev = devOrNull as _ProtocolDeploymentJSON | null;
 const deployments: {
   [chainId: number]: _ProtocolDeploymentJSON | undefined;
 } = {
-  [mainnet.chainId]: {
-    ...mainnet,
-    addresses: { ...mainnet.addresses, usdfcView: usdfcViewMainnetJson.address }
-  },
-  [testnet.chainId]: {
-    ...testnet,
-    addresses: { ...testnet.addresses, usdfcView: usdfcViewTestnetJson.address }
-  },
+  [mainnet.chainId]: mainnet,
+  [testnet.chainId]: testnet,
 
   ...(dev !== null ? { [dev.chainId]: dev } : {})
 };

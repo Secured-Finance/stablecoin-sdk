@@ -94,12 +94,14 @@ const config: HardhatUserConfig = {
 
     mainnet: {
       url: process.env.MAINNET_RPC_ENDPOINT || "http://localhost:8545",
-      accounts: [deployerAccount]
+      accounts: [deployerAccount],
+      timeout: 600000
     },
 
     testnet: {
       url: process.env.TESTNET_RPC_ENDPOINT || "http://localhost:8545",
-      accounts: [deployerAccount]
+      accounts: [deployerAccount],
+      timeout: 600000
     },
 
     forkedMainnet: {
@@ -136,8 +138,6 @@ extendEnvironment(env => {
     useRealPriceFeed = false,
     wrappedNativeTokenAddress = undefined
   ) => {
-    await env.network.provider.send("hardhat_reset");
-
     const deployment = await deployAndSetupContracts(
       deployer,
       getContractFactory(env),

@@ -462,6 +462,7 @@ describe("EthersSfStablecoin", () => {
 
   describe("StabilityPool", () => {
     before(async () => {
+      await network.provider.send("hardhat_reset");
       deployment = await deployProtocol(deployer);
 
       [deployerSfStablecoin, sfStablecoin, ...otherSfStablecoins] = await connectUsers([
@@ -621,6 +622,7 @@ describe("EthersSfStablecoin", () => {
     describe("when people overstay", () => {
       before(async () => {
         // Deploy new instances of the contracts, for a clean slate
+        await network.provider.send("hardhat_reset");
         deployment = await deployProtocol(deployer);
         await adjustUserBalance();
 
@@ -696,6 +698,7 @@ describe("EthersSfStablecoin", () => {
       }
 
       // Deploy new instances of the contracts, for a clean slate
+      await network.provider.send("hardhat_reset");
       deployment = await deployProtocol(deployer);
 
       const otherUsersSubset = otherUsers.slice(0, 3);
@@ -837,6 +840,7 @@ describe("EthersSfStablecoin", () => {
 
     beforeEach(async () => {
       // Deploy new instances of the contracts, for a clean slate
+      await network.provider.send("hardhat_reset");
       deployment = await deployProtocol(deployer);
       await adjustUserBalance();
 
@@ -859,6 +863,7 @@ describe("EthersSfStablecoin", () => {
 
     afterEach(async () => {
       // Deploy new instances of the contracts, for a clean slate
+      await network.provider.send("hardhat_reset");
       deployment = await deployProtocol(deployer);
     });
 
@@ -919,6 +924,7 @@ describe("EthersSfStablecoin", () => {
       }
 
       // Deploy new instances of the contracts, for a clean slate
+      await network.provider.send("hardhat_reset");
       deployment = await deployProtocol(deployer);
       const otherUsersSubset = otherUsers.slice(0, redeemMaxIterations);
       expect(otherUsersSubset).to.have.length(redeemMaxIterations);
@@ -959,6 +965,7 @@ describe("EthersSfStablecoin", () => {
 
   describe("Liquidity mining", () => {
     before(async () => {
+      await network.provider.send("hardhat_reset");
       deployment = await deployProtocol(deployer);
       [deployerSfStablecoin, sfStablecoin] = await connectUsers([deployer, user]);
     });
@@ -1062,6 +1069,7 @@ describe("EthersSfStablecoin", () => {
     let eightOtherUsers: Signer[];
 
     before(async () => {
+      await network.provider.send("hardhat_reset");
       deployment = await deployProtocol(deployer);
       eightOtherUsers = otherUsers.slice(0, 8);
       sfStablecoin = await connectToDeployment(deployment, user);
@@ -1155,6 +1163,7 @@ describe("EthersSfStablecoin", () => {
         this.skip();
       }
 
+      await network.provider.send("hardhat_reset");
       deployment = await deployProtocol(deployer);
 
       [rudeUser, ...fiveOtherUsers] = otherUsers.slice(0, 6);
@@ -1270,6 +1279,7 @@ describe("EthersSfStablecoin", () => {
         this.skip();
       }
 
+      await network.provider.send("hardhat_reset");
       deployment = await deployProtocol(deployer);
       [deployerSfStablecoin, sfStablecoin] = await connectUsers([deployer, user]);
     });
@@ -1338,6 +1348,7 @@ describe("EthersSfStablecoin", () => {
 
       this.timeout("1m");
 
+      await network.provider.send("hardhat_reset");
       deployment = await deployProtocol(deployer);
       await adjustUserBalance();
       const [redeemedUser, ...someMoreUsers] = otherUsers.slice(0, 21);

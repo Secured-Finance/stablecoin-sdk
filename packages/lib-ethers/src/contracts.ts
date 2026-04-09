@@ -237,7 +237,9 @@ const mapContracts = <T, U>(
   f: (t: T, key: ProtocolContractsKey) => U
 ) =>
   Object.fromEntries(
-    Object.entries(contracts).map(([key, t]) => [key, f(t, key as ProtocolContractsKey)])
+    Object.entries(contracts)
+      .filter(([, t]) => t !== undefined)
+      .map(([key, t]) => [key, f(t, key as ProtocolContractsKey)])
   ) as Record<ProtocolContractsKey, U>;
 
 /** @internal */

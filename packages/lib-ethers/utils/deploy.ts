@@ -66,7 +66,7 @@ const deployContractAndGetBlockNumber = async (
     log(`Fetching ${contractName} ...`);
     const fileContent = fs.readFileSync(`${deploymentsDir}/${networkName}.json`, "utf-8");
     const deployments = JSON.parse(fileContent);
-    contractAddress = deployments[deploymentKey].address;
+    contractAddress = deployments[deploymentKey]?.address;
     // const tx = await deployer.provider?.getTransaction(deployments[deploymentKey].txHash);
 
     // if (!tx?.blockNumber) {
@@ -93,7 +93,8 @@ const deployContractAndGetBlockNumber = async (
       ? await upgrades.deployProxy(factory, initializationArgs, {
           unsafeAllow: ["constructor", "state-variable-immutable"],
           constructorArgs,
-          redeployImplementation: "always"
+          redeployImplementation: "always",
+          timeout: 600000
         })
       : await factory.deploy(...constructorArgs);
 
@@ -311,7 +312,7 @@ const deployContracts = async (
       networkName,
       priceFeedIsTestnet ? "MockPriceFeed" : "PriceFeed",
       "priceFeed",
-      [24 * 60 * 60],
+      [8 * 60 * 60, 24 * 60 * 60],
       [mockContractAddresses.mockAggregator, mockContractAddresses.mockTellor]
     ),
     sortedTroves: await deployProxyContract(
@@ -408,20 +409,22 @@ const deployMockContracts = async (
     []
   );
 
-  const mockAggregatorContract = new _ProtocolContract(
-    mockAggregator,
-    mockAggregatorAbi,
-    deployer
-  ) as MockAggregator;
+  if (!useDeployedContracts) {
+    const mockAggregatorContract = new _ProtocolContract(
+      mockAggregator,
+      mockAggregatorAbi,
+      deployer
+    ) as MockAggregator;
 
-  await Promise.all(
-    [
-      mockAggregatorContract.setPrice(Decimal.from(10).pow(18).mul(200).toString()),
-      mockAggregatorContract.setDecimals(18),
-      mockAggregatorContract.setLatestRoundId(1),
-      mockAggregatorContract.setUseBlockTimestamp(true)
-    ].map(async tx => (await tx).wait())
-  );
+    await Promise.all(
+      [
+        mockAggregatorContract.setPrice(Decimal.from(10).pow(18).mul(200).toString()),
+        mockAggregatorContract.setDecimals(18),
+        mockAggregatorContract.setLatestRoundId(1),
+        mockAggregatorContract.setUseBlockTimestamp(true)
+      ].map(async tx => (await tx).wait())
+    );
+  }
 
   return { mockAggregator, mockTellor };
 };

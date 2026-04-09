@@ -249,7 +249,7 @@ export class ReadableEthers implements ReadableProtocol {
   getPrice(overrides?: EthersCallOverrides): Promise<Decimal> {
     const { priceFeed } = _getContracts(this.connection);
 
-    return priceFeed.callStatic.fetchPrice({ ...overrides }).then(decimalify);
+    return priceFeed.callStatic.fetchPriceView({ ...overrides }).then(decimalify);
   }
 
   /** @internal */

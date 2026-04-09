@@ -1,6 +1,6 @@
 {
   "chainId": 314,
-  "version": "e16f9841f424857265937f9749099484031cf911",
+  "version": "fb4b9bf636a43ebab2f4389306cbe7cd1c72ffdc",
   "deploymentDate": 1742528370000,
   "bootstrapPeriod": 1209600,
   "totalStabilityPoolProtocolTokenReward": "0",
@@ -11,8 +11,9 @@
   "startBlock": 0,
   "addresses": {
     "activePool": "0x8637Ac7FdBB4c763B72e26504aFb659df71c7803",
-    "borrowerOperations": "0x1dE3c2e21DD5AF7e5109D2502D0d570D57A1abb0",
     "troveManager": "0x5aB87c2398454125Dd424425e39c8909bBE16022",
+    "stabilityPool": "0x791Ad78bBc58324089D3E0A8689E7D045B9592b5",
+    "borrowerOperations": "0x1dE3c2e21DD5AF7e5109D2502D0d570D57A1abb0",
     "collSurplusPool": "0x212799bEA5c2ed87D84b9Ae3C1Fb0fdc1bFC7AE9",
     "communityIssuance": "0xCA468925813DA4FAf00C73C50ab5B7Ce8612F341",
     "defaultPool": "0xAda716f497da8EC9F766F9a94779E1b6e73d29fF",
@@ -21,7 +22,6 @@
     "protocolTokenStaking": "0xc8707b3d426E7D7A0706C48dcd1A4b83bc220dB3",
     "priceFeed": "0x80e651c9739C1ed15A267c11b85361780164A368",
     "sortedTroves": "0x2C32e48e358d5b893C46906b69044D342d8DDd5F",
-    "stabilityPool": "0x791Ad78bBc58324089D3E0A8689E7D045B9592b5",
     "gasPool": "0xbd73175383ac35b2BfdD89377D9D8BDC11dA1bF8",
     "unipool": "0xC32f12aB8713C18930c70b007063faDf86649018",
     "debtToken": "0x80B98d3aa09ffff255c3ba4A241111Ff1262F045",

@@ -8,6 +8,31 @@
     "anonymous": false,
     "inputs": [
       {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_newProtocolTokenSupplyCap",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_additionalAmount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_issuedOffset",
+        "type": "uint256"
+      }
+    ],
+    "name": "NewEmissionEpochStarted",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
         "indexed": true,
         "internalType": "address",
         "name": "previousOwner",
@@ -28,12 +53,12 @@
     "inputs": [
       {
         "indexed": false,
-        "internalType": "address",
-        "name": "_protocolTokenAddress",
-        "type": "address"
+        "internalType": "uint256",
+        "name": "pendingProtocolTokenIssuance",
+        "type": "uint256"
       }
     ],
-    "name": "ProtocolTokenAddressChanged",
+    "name": "PendingProtocolTokenIssuanceUpdated",
     "type": "event"
   },
   {
@@ -41,12 +66,12 @@
     "inputs": [
       {
         "indexed": false,
-        "internalType": "uint256",
-        "name": "_protocolTokenSupplyCap",
-        "type": "uint256"
+        "internalType": "address",
+        "name": "_protocolTokenAddress",
+        "type": "address"
       }
     ],
-    "name": "ProtocolTokenSupplyCapUpdated",
+    "name": "ProtocolTokenAddressChanged",
     "type": "event"
   },
   {
@@ -147,6 +172,19 @@
   },
   {
     "inputs": [],
+    "name": "issuedOffset",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "owner",
     "outputs": [
       {
@@ -160,10 +198,23 @@
   },
   {
     "inputs": [],
+    "name": "pendingProtocolTokenIssuance",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "protocolToken",
     "outputs": [
       {
-        "internalType": "contract IProtocolToken",
+        "internalType": "contract IERC20",
         "name": "",
         "type": "address"
       }
@@ -223,6 +274,19 @@
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "additionalAmount",
+        "type": "uint256"
+      }
+    ],
+    "name": "startNewEmissionEpoch",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "supplyStartTime",
     "outputs": [
@@ -257,13 +321,6 @@
       }
     ],
     "name": "transferOwnership",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "updateProtocolTokenSupplyCap",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

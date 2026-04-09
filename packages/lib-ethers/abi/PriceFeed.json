@@ -3,7 +3,12 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "_timeout",
+        "name": "_oracleTimeout",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_lastGoodPriceTimeout",
         "type": "uint256"
       }
     ],
@@ -70,6 +75,19 @@
   },
   {
     "inputs": [],
+    "name": "LAST_GOOD_PRICE_TIMEOUT",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "MAX_PRICE_DEVIATION_FROM_PREVIOUS_ROUND",
     "outputs": [
       {
@@ -109,6 +127,19 @@
   },
   {
     "inputs": [],
+    "name": "ORACLE_TIMEOUT",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "TARGET_DIGITS",
     "outputs": [
       {
@@ -122,20 +153,20 @@
   },
   {
     "inputs": [],
-    "name": "TIMEOUT",
+    "name": "fetchPrice",
     "outputs": [
       {
         "internalType": "uint256",
-        "name": "",
+        "name": "price",
         "type": "uint256"
       }
     ],
-    "stateMutability": "view",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "inputs": [],
-    "name": "fetchPrice",
+    "name": "fetchPriceView",
     "outputs": [
       {
         "internalType": "uint256",
@@ -167,6 +198,19 @@
   {
     "inputs": [],
     "name": "lastGoodPrice",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "lastGoodPriceTimestamp",
     "outputs": [
       {
         "internalType": "uint256",

@@ -8,12 +8,24 @@
       "inputs": [
         {
           "indexed": false,
-          "internalType": "address",
-          "name": "_protocolTokenAddress",
-          "type": "address"
+          "internalType": "uint256",
+          "name": "_newProtocolTokenSupplyCap",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "_additionalAmount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "_issuedOffset",
+          "type": "uint256"
         }
       ],
-      "name": "ProtocolTokenAddressChanged",
+      "name": "NewEmissionEpochStarted",
       "type": "event"
     },
     {
@@ -22,11 +34,24 @@
         {
           "indexed": false,
           "internalType": "uint256",
-          "name": "_protocolTokenSupplyCap",
+          "name": "pendingProtocolTokenIssuance",
           "type": "uint256"
         }
       ],
-      "name": "ProtocolTokenSupplyCapUpdated",
+      "name": "PendingProtocolTokenIssuanceUpdated",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "_protocolTokenAddress",
+          "type": "address"
+        }
+      ],
+      "name": "ProtocolTokenAddressChanged",
       "type": "event"
     },
     {

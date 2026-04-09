@@ -75,6 +75,7 @@ interface BorrowerOperationsCalls {
   getCompositeDebt(_debt: BigNumberish, _overrides?: CallOverrides): Promise<BigNumber>;
   getEntireSystemColl(_overrides?: CallOverrides): Promise<BigNumber>;
   getEntireSystemDebt(_overrides?: CallOverrides): Promise<BigNumber>;
+  lastTroveActionBlock(arg0: string, _overrides?: CallOverrides): Promise<BigNumber>;
   owner(_overrides?: CallOverrides): Promise<string>;
   priceFeed(_overrides?: CallOverrides): Promise<string>;
   protocolTokenStaking(_overrides?: CallOverrides): Promise<string>;
@@ -172,7 +173,11 @@ export interface CollSurplusPool
 }
 
 interface DebtTokenCalls {
+  CANCEL_AUTHORIZATION_TYPEHASH(_overrides?: CallOverrides): Promise<string>;
+  RECEIVE_WITH_AUTHORIZATION_TYPEHASH(_overrides?: CallOverrides): Promise<string>;
+  TRANSFER_WITH_AUTHORIZATION_TYPEHASH(_overrides?: CallOverrides): Promise<string>;
   allowance(_owner: string, _spender: string, _overrides?: CallOverrides): Promise<BigNumber>;
+  authorizationState(_authorizer: string, _nonce: BytesLike, _overrides?: CallOverrides): Promise<boolean>;
   balanceOf(_account: string, _overrides?: CallOverrides): Promise<BigNumber>;
   borrowerOperationsAddress(_overrides?: CallOverrides): Promise<string>;
   decimals(_overrides?: CallOverrides): Promise<number>;
@@ -191,21 +196,26 @@ interface DebtTokenCalls {
 interface DebtTokenTransactions {
   approve(_spender: string, _amount: BigNumberish, _overrides?: Overrides): Promise<boolean>;
   burn(_account: string, _amount: BigNumberish, _overrides?: Overrides): Promise<void>;
+  cancelAuthorization(_authorizer: string, _nonce: BytesLike, _v: BigNumberish, _r: BytesLike, _s: BytesLike, _overrides?: Overrides): Promise<void>;
   initialize(_troveManagerAddress: string, _stabilityPoolAddress: string, _borrowerOperationsAddress: string, _overrides?: Overrides): Promise<void>;
   mint(_account: string, _amount: BigNumberish, _overrides?: Overrides): Promise<void>;
   permit(_owner: string, _spender: string, _amount: BigNumberish, _deadline: BigNumberish, _v: BigNumberish, _r: BytesLike, _s: BytesLike, _overrides?: Overrides): Promise<void>;
+  receiveWithAuthorization(_from: string, _to: string, _value: BigNumberish, _validAfter: BigNumberish, _validBefore: BigNumberish, _nonce: BytesLike, _v: BigNumberish, _r: BytesLike, _s: BytesLike, _overrides?: Overrides): Promise<void>;
   renounceOwnership(_overrides?: Overrides): Promise<void>;
   returnFromPool(_poolAddress: string, _receiver: string, _amount: BigNumberish, _overrides?: Overrides): Promise<void>;
   sendToPool(_sender: string, _poolAddress: string, _amount: BigNumberish, _overrides?: Overrides): Promise<void>;
   transfer(_recipient: string, _amount: BigNumberish, _overrides?: Overrides): Promise<boolean>;
   transferFrom(_sender: string, _recipient: string, _amount: BigNumberish, _overrides?: Overrides): Promise<boolean>;
   transferOwnership(newOwner: string, _overrides?: Overrides): Promise<void>;
+  transferWithAuthorization(_from: string, _to: string, _value: BigNumberish, _validAfter: BigNumberish, _validBefore: BigNumberish, _nonce: BytesLike, _v: BigNumberish, _r: BytesLike, _s: BytesLike, _overrides?: Overrides): Promise<void>;
 }
 
 export interface DebtToken
   extends _TypedProtocolContract<DebtTokenCalls, DebtTokenTransactions> {
   readonly filters: {
     Approval(owner?: string | null, spender?: string | null, value?: null): EventFilter;
+    AuthorizationCanceled(authorizer?: string | null, nonce?: BytesLike | null): EventFilter;
+    AuthorizationUsed(authorizer?: string | null, nonce?: BytesLike | null): EventFilter;
     BorrowerOperationsAddressChanged(_newBorrowerOperationsAddress?: null): EventFilter;
     OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): EventFilter;
     StabilityPoolAddressChanged(_newStabilityPoolAddress?: null): EventFilter;
@@ -213,6 +223,8 @@ export interface DebtToken
     TroveManagerAddressChanged(_troveManagerAddress?: null): EventFilter;
   };
   extractEvents(logs: Log[], name: "Approval"): _TypedLogDescription<{ owner: string; spender: string; value: BigNumber }>[];
+  extractEvents(logs: Log[], name: "AuthorizationCanceled"): _TypedLogDescription<{ authorizer: string; nonce: string }>[];
+  extractEvents(logs: Log[], name: "AuthorizationUsed"): _TypedLogDescription<{ authorizer: string; nonce: string }>[];
   extractEvents(logs: Log[], name: "BorrowerOperationsAddressChanged"): _TypedLogDescription<{ _newBorrowerOperationsAddress: string }>[];
   extractEvents(logs: Log[], name: "OwnershipTransferred"): _TypedLogDescription<{ previousOwner: string; newOwner: string }>[];
   extractEvents(logs: Log[], name: "StabilityPoolAddressChanged"): _TypedLogDescription<{ _newStabilityPoolAddress: string }>[];
@@ -334,12 +346,14 @@ export interface MultiTroveGetter
 
 interface PriceFeedCalls {
   DECIMAL_PRECISION(_overrides?: CallOverrides): Promise<BigNumber>;
+  LAST_GOOD_PRICE_TIMEOUT(_overrides?: CallOverrides): Promise<BigNumber>;
   MAX_PRICE_DEVIATION_FROM_PREVIOUS_ROUND(_overrides?: CallOverrides): Promise<BigNumber>;
   MAX_PRICE_DIFFERENCE_BETWEEN_ORACLES(_overrides?: CallOverrides): Promise<BigNumber>;
   NAME(_overrides?: CallOverrides): Promise<string>;
+  ORACLE_TIMEOUT(_overrides?: CallOverrides): Promise<BigNumber>;
   TARGET_DIGITS(_overrides?: CallOverrides): Promise<BigNumber>;
-  TIMEOUT(_overrides?: CallOverrides): Promise<BigNumber>;
   lastGoodPrice(_overrides?: CallOverrides): Promise<BigNumber>;
+  lastGoodPriceTimestamp(_overrides?: CallOverrides): Promise<BigNumber>;
   owner(_overrides?: CallOverrides): Promise<string>;
   priceAggregator(_overrides?: CallOverrides): Promise<string>;
   status(_overrides?: CallOverrides): Promise<number>;
@@ -348,6 +362,7 @@ interface PriceFeedCalls {
 
 interface PriceFeedTransactions {
   fetchPrice(_overrides?: Overrides): Promise<BigNumber>;
+  fetchPriceView(_overrides?: Overrides): Promise<BigNumber>;
   initialize(_priceAggregatorAddress: string, _tellorCallerAddress: string, _overrides?: Overrides): Promise<void>;
   renounceOwnership(_overrides?: Overrides): Promise<void>;
   transferOwnership(newOwner: string, _overrides?: Overrides): Promise<void>;
@@ -708,7 +723,9 @@ interface CommunityIssuanceCalls {
   DECIMAL_PRECISION(_overrides?: CallOverrides): Promise<BigNumber>;
   ISSUANCE_FACTOR(_overrides?: CallOverrides): Promise<BigNumber>;
   NAME(_overrides?: CallOverrides): Promise<string>;
+  issuedOffset(_overrides?: CallOverrides): Promise<BigNumber>;
   owner(_overrides?: CallOverrides): Promise<string>;
+  pendingProtocolTokenIssuance(_overrides?: CallOverrides): Promise<BigNumber>;
   protocolToken(_overrides?: CallOverrides): Promise<string>;
   protocolTokenSupplyCap(_overrides?: CallOverrides): Promise<BigNumber>;
   stabilityPoolAddress(_overrides?: CallOverrides): Promise<string>;
@@ -721,22 +738,24 @@ interface CommunityIssuanceTransactions {
   issueProtocolToken(_overrides?: Overrides): Promise<BigNumber>;
   renounceOwnership(_overrides?: Overrides): Promise<void>;
   sendProtocolToken(_account: string, _amount: BigNumberish, _overrides?: Overrides): Promise<void>;
+  startNewEmissionEpoch(additionalAmount: BigNumberish, _overrides?: Overrides): Promise<void>;
   transferOwnership(newOwner: string, _overrides?: Overrides): Promise<void>;
-  updateProtocolTokenSupplyCap(_overrides?: Overrides): Promise<void>;
 }
 
 export interface CommunityIssuance
   extends _TypedProtocolContract<CommunityIssuanceCalls, CommunityIssuanceTransactions> {
   readonly filters: {
+    NewEmissionEpochStarted(_newProtocolTokenSupplyCap?: null, _additionalAmount?: null, _issuedOffset?: null): EventFilter;
     OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): EventFilter;
+    PendingProtocolTokenIssuanceUpdated(pendingProtocolTokenIssuance?: null): EventFilter;
     ProtocolTokenAddressChanged(_protocolTokenAddress?: null): EventFilter;
-    ProtocolTokenSupplyCapUpdated(_protocolTokenSupplyCap?: null): EventFilter;
     StabilityPoolAddressChanged(_stabilityPoolAddress?: null): EventFilter;
     TotalProtocolTokenIssuedUpdated(_totalProtocolTokenIssued?: null): EventFilter;
   };
+  extractEvents(logs: Log[], name: "NewEmissionEpochStarted"): _TypedLogDescription<{ _newProtocolTokenSupplyCap: BigNumber; _additionalAmount: BigNumber; _issuedOffset: BigNumber }>[];
   extractEvents(logs: Log[], name: "OwnershipTransferred"): _TypedLogDescription<{ previousOwner: string; newOwner: string }>[];
+  extractEvents(logs: Log[], name: "PendingProtocolTokenIssuanceUpdated"): _TypedLogDescription<{ pendingProtocolTokenIssuance: BigNumber }>[];
   extractEvents(logs: Log[], name: "ProtocolTokenAddressChanged"): _TypedLogDescription<{ _protocolTokenAddress: string }>[];
-  extractEvents(logs: Log[], name: "ProtocolTokenSupplyCapUpdated"): _TypedLogDescription<{ _protocolTokenSupplyCap: BigNumber }>[];
   extractEvents(logs: Log[], name: "StabilityPoolAddressChanged"): _TypedLogDescription<{ _stabilityPoolAddress: string }>[];
   extractEvents(logs: Log[], name: "TotalProtocolTokenIssuedUpdated"): _TypedLogDescription<{ _totalProtocolTokenIssued: BigNumber }>[];
 }
@@ -948,12 +967,14 @@ export interface MockAggregator
 
 interface MockPriceFeedCalls {
   DECIMAL_PRECISION(_overrides?: CallOverrides): Promise<BigNumber>;
+  LAST_GOOD_PRICE_TIMEOUT(_overrides?: CallOverrides): Promise<BigNumber>;
   MAX_PRICE_DEVIATION_FROM_PREVIOUS_ROUND(_overrides?: CallOverrides): Promise<BigNumber>;
   MAX_PRICE_DIFFERENCE_BETWEEN_ORACLES(_overrides?: CallOverrides): Promise<BigNumber>;
   NAME(_overrides?: CallOverrides): Promise<string>;
+  ORACLE_TIMEOUT(_overrides?: CallOverrides): Promise<BigNumber>;
   TARGET_DIGITS(_overrides?: CallOverrides): Promise<BigNumber>;
-  TIMEOUT(_overrides?: CallOverrides): Promise<BigNumber>;
   lastGoodPrice(_overrides?: CallOverrides): Promise<BigNumber>;
+  lastGoodPriceTimestamp(_overrides?: CallOverrides): Promise<BigNumber>;
   owner(_overrides?: CallOverrides): Promise<string>;
   priceAggregator(_overrides?: CallOverrides): Promise<string>;
   status(_overrides?: CallOverrides): Promise<number>;
@@ -962,10 +983,11 @@ interface MockPriceFeedCalls {
 
 interface MockPriceFeedTransactions {
   fetchPrice(_overrides?: Overrides): Promise<BigNumber>;
+  fetchPriceView(_overrides?: Overrides): Promise<BigNumber>;
   initialize(_priceAggregatorAddress: string, _tellorCallerAddress: string, _overrides?: Overrides): Promise<void>;
   renounceOwnership(_overrides?: Overrides): Promise<void>;
   setPrice(_price: BigNumberish, _overrides?: Overrides): Promise<void>;
-  setPriceAggregator(_aggregator: string, _price: BigNumberish, _overrides?: Overrides): Promise<void>;
+  setPriceAggregator(_aggregator: string, _overrides?: Overrides): Promise<void>;
   transferOwnership(newOwner: string, _overrides?: Overrides): Promise<void>;
 }
 

@@ -9,6 +9,7 @@ import {
   Fees,
   FrontendStatus,
   LiquidationDetails,
+  PriceWithSource,
   ProtocolTokenStake,
   RedemptionDetails,
   SfStablecoinStore,
@@ -184,6 +185,11 @@ export class EthersSfStablecoin implements ReadableEthers, TransactableProtocol 
   /** {@inheritDoc @secured-finance/stablecoin-lib-base#ReadableProtocol.getPrice} */
   getPrice(overrides?: EthersCallOverrides): Promise<Decimal> {
     return this._readable.getPrice(overrides);
+  }
+
+  /** Get the current price together with the oracle source actually used. */
+  getPriceWithSource(overrides?: EthersCallOverrides): Promise<PriceWithSource> {
+    return this._readable.getPriceWithSource(overrides);
   }
 
   /** @internal */

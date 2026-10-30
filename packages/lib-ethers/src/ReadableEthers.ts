@@ -8,6 +8,8 @@ import {
   Decimal,
   Fees,
   FrontendStatus,
+  PriceSource,
+  PriceWithSource,
   ProtocolTokenStake,
   ReadableProtocol,
   SfStablecoinStore,
@@ -67,6 +69,15 @@ const userTroveStatusFrom = (backendStatus: BackendTroveStatus): UserTroveStatus
     : backendStatus === BackendTroveStatus.closedByRedemption
     ? "closedByRedemption"
     : panic(new Error(`invalid backendStatus ${backendStatus}`));
+
+const priceSourceFrom = (backendSource: number): PriceSource =>
+  backendSource === 0
+    ? "primaryOracle"
+    : backendSource === 1
+    ? "fallbackOracle"
+    : backendSource === 2
+    ? "lastGoodPrice"
+    : "unknown";
 
 const convertToDate = (timestamp: number) => new Date(timestamp * 1000);
 
@@ -250,6 +261,36 @@ export class ReadableEthers implements ReadableProtocol {
     const { priceFeed } = _getContracts(this.connection);
 
     return priceFeed.callStatic.fetchPriceView({ ...overrides }).then(decimalify);
+  }
+
+  /**
+   * Get the current price together with the oracle source actually used.
+   *
+   * Unlike protocol transactions, this method does not revert when the last good price is stale.
+   */
+  async getPriceWithSource(overrides?: EthersCallOverrides): Promise<PriceWithSource> {
+    const { priceFeed } = _getContracts(this.connection);
+    const response = await priceFeed.callStatic.fetchPriceWithSourceView({
+      ...overrides
+    });
+    const { price: rawPrice, source: rawSource } = response;
+    const source = priceSourceFrom(rawSource);
+
+    if (source !== "lastGoodPrice") {
+      return { price: decimalify(rawPrice), source, isStale: false };
+    }
+
+    const [lastGoodPriceTimestamp, lastGoodPriceTimeout, blockTimestamp] = await Promise.all([
+      priceFeed.lastGoodPriceTimestamp({ ...overrides }),
+      priceFeed.LAST_GOOD_PRICE_TIMEOUT({ ...overrides }),
+      this._getBlockTimestamp(overrides?.blockTag)
+    ]);
+
+    return {
+      price: decimalify(rawPrice),
+      source,
+      isStale: blockTimestamp - lastGoodPriceTimestamp.toNumber() > lastGoodPriceTimeout.toNumber()
+    };
   }
 
   /** @internal */
@@ -776,7 +817,17 @@ class _BlockPolledReadableEthers implements ReadableEthersWithStore<BlockPolledS
   }
 
   async getPrice(overrides?: EthersCallOverrides): Promise<Decimal> {
-    return this._blockHit(overrides) ? this.store.state.price : this.getPrice(overrides);
+    return this._blockHit(overrides) ? this.store.state.price : this._readable.getPrice(overrides);
+  }
+
+  async getPriceWithSource(overrides?: EthersCallOverrides): Promise<PriceWithSource> {
+    return this._blockHit(overrides)
+      ? {
+          price: this.store.state.price,
+          source: this.store.state.priceSource,
+          isStale: this.store.state.isPriceStale
+        }
+      : this._readable.getPriceWithSource(overrides);
   }
 
   async getTotal(overrides?: EthersCallOverrides): Promise<Trove> {

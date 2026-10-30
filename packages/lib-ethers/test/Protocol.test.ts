@@ -193,6 +193,44 @@ describe("EthersSfStablecoin", () => {
     expect(price).to.be.an.instanceOf(Decimal);
   });
 
+  it("should get the price with its source", async () => {
+    const { price, source, isStale } = await sfStablecoin.getPriceWithSource();
+
+    expect(price).to.be.an.instanceOf(Decimal);
+    expect(source).to.equal("primaryOracle");
+    expect(isStale).to.equal(false);
+  });
+
+  it("should get an uncached block-tagged price when using the block-polled store", async () => {
+    const connection = _connectToDeployment(deployment, user, {
+      userAddress: await user.getAddress(),
+      useStore: "blockPolled"
+    }) as EthersConnection & { useStore: "blockPolled" };
+    const sfStablecoinWithStore = EthersSfStablecoin._from(connection);
+    const loaded = new Promise<void>(resolve => {
+      sfStablecoinWithStore.store.onLoaded = resolve;
+    });
+    const stopStore = sfStablecoinWithStore.store.start();
+
+    try {
+      await loaded;
+
+      expect(sfStablecoinWithStore.store.state.priceSource).to.equal("primaryOracle");
+      expect(sfStablecoinWithStore.store.state.isPriceStale).to.equal(false);
+
+      const currentBlock = await provider.getBlockNumber();
+      const uncachedBlock =
+        sfStablecoinWithStore.store.state.blockTag === currentBlock - 1
+          ? currentBlock - 2
+          : currentBlock - 1;
+      const price = await sfStablecoinWithStore.getPrice({ blockTag: uncachedBlock });
+
+      expect(price).to.be.an.instanceOf(Decimal);
+    } finally {
+      stopStore();
+    }
+  });
+
   describe("findHintForCollateralRatio", () => {
     it("should pick the closest approx hint", async () => {
       type Resolved<T> = T extends Promise<infer U> ? U : never;

@@ -52,12 +52,38 @@
     "inputs": [
       {
         "indexed": false,
+        "internalType": "address",
+        "name": "_newPriceAggregatorAddress",
+        "type": "address"
+      }
+    ],
+    "name": "PriceAggregatorAddressChanged",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
         "internalType": "enum IPriceFeed.Status",
         "name": "newStatus",
         "type": "uint8"
       }
     ],
     "name": "PriceFeedStatusChanged",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "_newTellorCallerAddress",
+        "type": "address"
+      }
+    ],
+    "name": "TellorCallerAddressChanged",
     "type": "event"
   },
   {
@@ -172,6 +198,42 @@
         "internalType": "uint256",
         "name": "price",
         "type": "uint256"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "fetchPriceWithSource",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "price",
+        "type": "uint256"
+      },
+      {
+        "internalType": "enum IPriceFeed.PriceSource",
+        "name": "source",
+        "type": "uint8"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "fetchPriceWithSourceView",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "price",
+        "type": "uint256"
+      },
+      {
+        "internalType": "enum IPriceFeed.PriceSource",
+        "name": "source",
+        "type": "uint8"
       }
     ],
     "stateMutability": "nonpayable",
@@ -315,6 +377,24 @@
       }
     ],
     "name": "transferOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_priceAggregatorAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_tellorCallerAddress",
+        "type": "address"
+      }
+    ],
+    "name": "updateOracleAddresses",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

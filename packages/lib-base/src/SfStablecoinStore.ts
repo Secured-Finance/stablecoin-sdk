@@ -3,7 +3,7 @@ import assert from "assert";
 import { Decimal } from "./Decimal";
 import { Fees } from "./Fees";
 import { ProtocolTokenStake } from "./ProtocolTokenStake";
-import { FrontendStatus } from "./ReadableProtocol";
+import { FrontendStatus, PriceSource } from "./ReadableProtocol";
 import { StabilityDeposit } from "./StabilityDeposit";
 import { Trove, TroveWithPendingRedistribution, UserTrove } from "./Trove";
 
@@ -60,6 +60,12 @@ export interface SfStablecoinStoreBaseState {
 
   /** Current price of the native currency (e.g. Ether) in USD. */
   price: Decimal;
+
+  /** Oracle source used to obtain the current price. */
+  priceSource: PriceSource;
+
+  /** Whether the current last good price is older than the configured timeout. */
+  isPriceStale: boolean;
 
   /** Total amount of DebtToken currently deposited in the Stability Pool. */
   debtTokenInStabilityPool: Decimal;
@@ -422,6 +428,20 @@ export abstract class SfStablecoinStore<T = unknown> {
       ),
 
       price: this._updateIfChanged(eq, "price", baseState.price, baseStateUpdate.price),
+
+      priceSource: this._updateIfChanged(
+        strictEquals,
+        "priceSource",
+        baseState.priceSource,
+        baseStateUpdate.priceSource
+      ),
+
+      isPriceStale: this._updateIfChanged(
+        strictEquals,
+        "isPriceStale",
+        baseState.isPriceStale,
+        baseStateUpdate.isPriceStale
+      ),
 
       debtTokenInStabilityPool: this._updateIfChanged(
         eq,

@@ -363,9 +363,12 @@ interface PriceFeedCalls {
 interface PriceFeedTransactions {
   fetchPrice(_overrides?: Overrides): Promise<BigNumber>;
   fetchPriceView(_overrides?: Overrides): Promise<BigNumber>;
+  fetchPriceWithSource(_overrides?: Overrides): Promise<{ price: BigNumber; source: number }>;
+  fetchPriceWithSourceView(_overrides?: Overrides): Promise<{ price: BigNumber; source: number }>;
   initialize(_priceAggregatorAddress: string, _tellorCallerAddress: string, _overrides?: Overrides): Promise<void>;
   renounceOwnership(_overrides?: Overrides): Promise<void>;
   transferOwnership(newOwner: string, _overrides?: Overrides): Promise<void>;
+  updateOracleAddresses(_priceAggregatorAddress: string, _tellorCallerAddress: string, _overrides?: Overrides): Promise<void>;
 }
 
 export interface PriceFeed
@@ -373,11 +376,15 @@ export interface PriceFeed
   readonly filters: {
     LastGoodPriceUpdated(_lastGoodPrice?: null): EventFilter;
     OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): EventFilter;
+    PriceAggregatorAddressChanged(_newPriceAggregatorAddress?: null): EventFilter;
     PriceFeedStatusChanged(newStatus?: null): EventFilter;
+    TellorCallerAddressChanged(_newTellorCallerAddress?: null): EventFilter;
   };
   extractEvents(logs: Log[], name: "LastGoodPriceUpdated"): _TypedLogDescription<{ _lastGoodPrice: BigNumber }>[];
   extractEvents(logs: Log[], name: "OwnershipTransferred"): _TypedLogDescription<{ previousOwner: string; newOwner: string }>[];
+  extractEvents(logs: Log[], name: "PriceAggregatorAddressChanged"): _TypedLogDescription<{ _newPriceAggregatorAddress: string }>[];
   extractEvents(logs: Log[], name: "PriceFeedStatusChanged"): _TypedLogDescription<{ newStatus: number }>[];
+  extractEvents(logs: Log[], name: "TellorCallerAddressChanged"): _TypedLogDescription<{ _newTellorCallerAddress: string }>[];
 }
 
 interface SortedTrovesCalls {
@@ -984,11 +991,14 @@ interface MockPriceFeedCalls {
 interface MockPriceFeedTransactions {
   fetchPrice(_overrides?: Overrides): Promise<BigNumber>;
   fetchPriceView(_overrides?: Overrides): Promise<BigNumber>;
+  fetchPriceWithSource(_overrides?: Overrides): Promise<{ price: BigNumber; source: number }>;
+  fetchPriceWithSourceView(_overrides?: Overrides): Promise<{ price: BigNumber; source: number }>;
   initialize(_priceAggregatorAddress: string, _tellorCallerAddress: string, _overrides?: Overrides): Promise<void>;
   renounceOwnership(_overrides?: Overrides): Promise<void>;
   setPrice(_price: BigNumberish, _overrides?: Overrides): Promise<void>;
   setPriceAggregator(_aggregator: string, _overrides?: Overrides): Promise<void>;
   transferOwnership(newOwner: string, _overrides?: Overrides): Promise<void>;
+  updateOracleAddresses(_priceAggregatorAddress: string, _tellorCallerAddress: string, _overrides?: Overrides): Promise<void>;
 }
 
 export interface MockPriceFeed
@@ -996,11 +1006,15 @@ export interface MockPriceFeed
   readonly filters: {
     LastGoodPriceUpdated(_lastGoodPrice?: null): EventFilter;
     OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): EventFilter;
+    PriceAggregatorAddressChanged(_newPriceAggregatorAddress?: null): EventFilter;
     PriceFeedStatusChanged(newStatus?: null): EventFilter;
+    TellorCallerAddressChanged(_newTellorCallerAddress?: null): EventFilter;
   };
   extractEvents(logs: Log[], name: "LastGoodPriceUpdated"): _TypedLogDescription<{ _lastGoodPrice: BigNumber }>[];
   extractEvents(logs: Log[], name: "OwnershipTransferred"): _TypedLogDescription<{ previousOwner: string; newOwner: string }>[];
+  extractEvents(logs: Log[], name: "PriceAggregatorAddressChanged"): _TypedLogDescription<{ _newPriceAggregatorAddress: string }>[];
   extractEvents(logs: Log[], name: "PriceFeedStatusChanged"): _TypedLogDescription<{ newStatus: number }>[];
+  extractEvents(logs: Log[], name: "TellorCallerAddressChanged"): _TypedLogDescription<{ _newTellorCallerAddress: string }>[];
 }
 
 interface MockTellorCalls {

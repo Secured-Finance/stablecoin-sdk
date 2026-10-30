@@ -21,6 +21,7 @@ import { PopulatableProtocol } from '@secured-finance/stablecoin-lib-base';
 import { PopulatedRedemptionInterface } from '@secured-finance/stablecoin-lib-base';
 import { PopulatedTransaction } from '@ethersproject/contracts';
 import { PopulatedTransactionInterface } from '@secured-finance/stablecoin-lib-base';
+import { PriceWithSource } from '@secured-finance/stablecoin-lib-base';
 import { ProtocolReceipt } from '@secured-finance/stablecoin-lib-base';
 import { ProtocolTokenStake } from '@secured-finance/stablecoin-lib-base';
 import { Provider } from '@ethersproject/abstract-provider';
@@ -195,6 +196,7 @@ export class EthersSfStablecoin implements ReadableEthers, TransactableProtocol 
     getNumberOfTroves(overrides?: EthersCallOverrides): Promise<number>;
     // (undocumented)
     getPrice(overrides?: EthersCallOverrides): Promise<Decimal>;
+    getPriceWithSource(overrides?: EthersCallOverrides): Promise<PriceWithSource>;
     // (undocumented)
     getProtocolTokenBalance(address?: string, overrides?: EthersCallOverrides): Promise<Decimal>;
     // (undocumented)
@@ -509,6 +511,7 @@ export class ReadableEthers implements ReadableProtocol {
     getNumberOfTroves(overrides?: EthersCallOverrides): Promise<number>;
     // (undocumented)
     getPrice(overrides?: EthersCallOverrides): Promise<Decimal>;
+    getPriceWithSource(overrides?: EthersCallOverrides): Promise<PriceWithSource>;
     // (undocumented)
     getProtocolTokenBalance(address?: string, overrides?: EthersCallOverrides): Promise<Decimal>;
     // (undocumented)

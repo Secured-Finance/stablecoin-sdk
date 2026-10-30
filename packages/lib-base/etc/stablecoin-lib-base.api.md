@@ -390,6 +390,16 @@ export interface PopulatedTransactionInterface<P = unknown, T extends SentProtoc
     send(): Promise<T>;
 }
 
+// @public
+export type PriceSource = "primaryOracle" | "fallbackOracle" | "lastGoodPrice" | "unknown";
+
+// @public
+export interface PriceWithSource {
+    isStale: boolean;
+    price: Decimal;
+    source: PriceSource;
+}
+
 // @internal (undocumented)
 export interface _ProtocolReadCache<T extends unknown[]> extends _ProtocolReadCacheBase<T> {
     // (undocumented)
@@ -572,11 +582,13 @@ export interface SfStablecoinStoreBaseState {
     // @internal (undocumented)
     _feesInNormalMode: Fees;
     frontend: FrontendStatus;
+    isPriceStale: boolean;
     liquidityMiningProtocolTokenReward: Decimal;
     liquidityMiningStake: Decimal;
     numberOfTroves: number;
     ownFrontend: FrontendStatus;
     price: Decimal;
+    priceSource: PriceSource;
     protocolTokenBalance: Decimal;
     protocolTokenStake: ProtocolTokenStake;
     remainingProtocolMiningProtocolTokenReward: Decimal;

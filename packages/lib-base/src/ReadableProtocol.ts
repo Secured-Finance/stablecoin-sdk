@@ -22,6 +22,29 @@ export type FrontendStatus =
   | { status: "registered"; kickbackRate: Decimal };
 
 /**
+ * Identifies the source of the price returned by the protocol's price feed.
+ *
+ * @public
+ */
+export type PriceSource = "primaryOracle" | "fallbackOracle" | "lastGoodPrice" | "unknown";
+
+/**
+ * A price together with the source used by the price feed.
+ *
+ * @public
+ */
+export interface PriceWithSource {
+  /** Current price of the native currency (e.g. Ether) in USD. */
+  price: Decimal;
+
+  /** Oracle source used to obtain the price. */
+  source: PriceSource;
+
+  /** Whether the last good price is older than the configured timeout. */
+  isStale: boolean;
+}
+
+/**
  * Parameters of the {@link ReadableProtocol.(getTroves:2) | getTroves()} function.
  *
  * @public
